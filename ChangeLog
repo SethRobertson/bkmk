@@ -1,5 +1,8 @@
 2001-12-05  Alexander Dupuy  <dupuy@sysdetect.com>
 
+	* Make.targets (BK_SUBDIRRULE): allow top-level [module] directories
+	to be absent
+
 	* force: CVS Update.prog script to run whenever bkmk or top-level
 	cvs update performed [does make clean in bkmk]
 

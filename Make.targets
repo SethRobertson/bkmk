@@ -1,6 +1,6 @@
 # -*- makefile -*-
 # 
-# $Id: Make.targets,v 1.21 2001/11/30 07:49:10 dupuy Exp $
+# $Id: Make.targets,v 1.22 2001/12/05 18:13:48 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -23,7 +23,10 @@
 ifeq ($(strip $(BK_SUBDIR)),)
 BK_SUBDIRRULE= # No sub-directories
 else # BK_SUBDIR
-BK_SUBDIRRULE=@BK_SUBDIR="${BK_SUBDIR}"; if [ -n "$$BK_SUBDIR" ]; then for d in $$BK_SUBDIR; do (cd $$d && $(MAKE) $(MFLAGS) $@) || exit $$?; done; fi
+BK_SUBDIRRULE=@BK_SUBDIR="${BK_SUBDIR}"; if [ -n "$$BK_SUBDIR" ]; then \
+	for d in $$BK_SUBDIR; do \
+	(cd $$d && $(MAKE) $(MFLAGS) $@) || [ "$(PKGTOP)" = . ] || exit $$?; \
+	done; fi
 endif # BK_SUBDIR
 
 
