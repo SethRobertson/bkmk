@@ -49,7 +49,7 @@ EOF
 fi
 
 # Shell source script to define getcwd()
-. $pwd
+. "$pwd"
 
 # The name of this program.
 progname=`$echo "$0" | sed 's%^.*/%%'`
@@ -3591,6 +3591,9 @@ sed_quote_subst='$sed_quote_subst'
 # The HP-UX ksh and POSIX shell print the target directory to stdout
 # if CDPATH is set.
 if test \"\${CDPATH+set}\" = set; then CDPATH=:; export CDPATH; fi
+
+# Shell source script to define getcwd()
+. \"$pwd\"
 
 relink_command=\"$relink_command\"
 
