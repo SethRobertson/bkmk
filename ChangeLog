@@ -1,3 +1,13 @@
+2002-01-04  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.targets (install): deal with VPATH of .a dependencies,
+	avoid extra ${RANLIB} of libraries
+
+	* Make.variables (INSTALL_LIBFLAGS): preserve timestamps
+
+	* Make.production ($(BK_LARGE_INTERNALPROG)): don't try to build
+	this using ${AR}
+
 2001-12-27  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* configure.in, libbk_autoconf.h.in: also check netinet/if_ether.h

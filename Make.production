@@ -1,10 +1,10 @@
 # -*- makefile -*-
 #
-# $Id: Make.production,v 1.21 2001/12/22 00:18:01 dupuy Exp $
+# $Id: Make.production,v 1.22 2002/01/04 19:14:08 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
-# Copyright (c) 2001 The Authors.  All rights reserved.
+# Copyright (c) 2001,2002 The Authors.  All rights reserved.
 #
 # This source code is licensed to you under the terms of the file
 # LICENSE.TXT in this release for further details.
@@ -74,7 +74,7 @@ BK_LARGE_LIBOBJ:=$(patsubst %.c,%.o,$(BK_LARGE_LIBSRC))
 BK_LARGE_LIBOBJ:=$(patsubst %.y,%.tab.o,$(BK_LARGE_LIBOBJ))
 BK_LARGE_LIBOBJ:=$(patsubst %.l,%.o,$(BK_LARGE_LIBOBJ))
 
-$(BK_LARGE_INTERNALPROG) $(BK_LARGE_LIB): $(BK_LARGE_LIBOBJ)
+$(BK_LARGE_LIB): $(BK_LARGE_LIBOBJ)
 	$(AR) $(ARFLAGS) $@ $?
 	$(RANLIB) $@
 
