@@ -1,3 +1,12 @@
+2002-11-05  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* aclocal.m4: nuke useless GMTIME_R_PROTOTYPE, add C_ALIGN_FUNCTIONS
+	for deprecation of -malign-functions vs. old gcc doesn't grok that
+	
+	* configure.in: nuke useless GMTIME_R_PROTOTYPE, add C_ALIGN_FUNCTIONS
+
+	* Make.config.in, Make.variables: better function alignment settings
+
 2002-10-31  James Tanis  <jtt@hawking.sysdetect.com>
 
 	* Make.variables (EDIT_LT_LIBINSTALL): Quiet perl 5.8.0 unicode gripes

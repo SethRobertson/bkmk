@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.117 2002/10/31 22:01:41 jtt Exp $
+# $Id: Make.variables,v 1.118 2002/11/05 07:36:34 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -385,21 +385,33 @@ ifneq ($(NO_WERROR),true)
 COMPILER_DEBUG_ERROR=-Werror
 endif # NO_WERROR
 
+ifneq ($(findstring -f,$(ALIGN_FUNCTIONS_SWITCH)),)
+GCCHWOPT=$(ALIGN_FUNCTIONS_SWITCH)
+else
+ifneq ($(findstring -,$(ALIGN_FUNCTIONS_SWITCH)),)
+GCCHWOPT=$(ALIGN_FUNCTIONS_SWITCH)=$(ALIGN_FUNCTIONS)
+endif
+endif
+
+# default for most platforms
+ALIGN_FUNCTIONS=4
+
 ifneq ($(findstring -i386,$(BK_ARCHNAME)),)
-GCCHWOPT= -mcpu=i686 -march=i686 -falign-functions=4
+GCCHWOPT+= -mcpu=i686 -march=i686
 endif
 ifneq ($(findstring -i686,$(BK_ARCHNAME)),)
-GCCHWOPT= -mcpu=i686 -march=i686 -falign-functions=4
+GCCHWOPT+= -mcpu=i686 -march=i686
 endif
 ifneq ($(findstring -sun4,$(BK_ARCHNAME)),)
 # reasonable settings for 32-bit mode
-GCCHWOPT= -m32 -mcpu=v8 -mtune=supersparc
+GCCHWOPT+= -m32 -mcpu=v8 -mtune=supersparc
 endif
 ifneq ($(findstring -sun4u,$(BK_ARCHNAME)),)
 # reasonable settings for 32-bit mode
-GCCHWOPT= -m32 -mcpu=v8 -mtune=ultrasparc
+GCCHWOPT+= -m32 -mcpu=v8 -mtune=ultrasparc
 # reasonable settings for 64-bit mode
-#GCCHWOPT= -m64 -mcpu=ultrasparc
+#ALIGN_FUNCTIONS=32
+#GCCHWOPT+= -m64 -mcpu=ultrasparc
 endif
 
 ifneq ($(NO_OPT),true)
