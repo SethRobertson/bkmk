@@ -1,3 +1,9 @@
+2001-08-26  Seth Robertson  <seth@yeah.baka.org>
+
+	* Make.variables: Working library vpath style
+	* Make.production: New library dependency style
+	* Make.include (BKMKDIR): Need to include dependancy information.
+
 2001-07-05  Seth Robertson  <seth@yeah.baka.org>
 
 	* Make.variables (MKDEP): Remove := immediate assignment to allow

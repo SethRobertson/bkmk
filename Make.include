@@ -1,4 +1,4 @@
-# $Id: Make.include,v 1.5 2001/06/20 18:12:41 seth Exp $
+# $Id: Make.include,v 1.6 2001/08/27 03:10:21 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -23,3 +23,5 @@ include $(BKMKDIR)/Make.variables
 include $(BKMKDIR)/Make.targets
 include $(BKMKDIR)/Make.production
 -include $(BKMKDIR)/Make.$(BK_OSNAME)-post
+
+-include .depend

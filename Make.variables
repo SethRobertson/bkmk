@@ -1,4 +1,4 @@
-# $Id: Make.variables,v 1.15 2001/07/15 02:13:31 jtt Exp $
+# $Id: Make.variables,v 1.16 2001/08/27 03:10:21 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -76,7 +76,7 @@ RESOLVER_DEFINES=-DRESOLVER=RESOLV
 RESOLVER_INCLUDES=
 RESOLVER_LDS=
 LIBRESOLVER=-lresolv $(LIB44BSD)
-LIB44BSD=-l44bsd
+LIB44BSD=#-l44bsd
 
 # Libraries
 DBM_LIBS=-ldb
@@ -124,11 +124,13 @@ BK_LIBS+= -ldmalloc
 BK_DEFINES+=-DUSING_DMALLOC -DDMALLOC_FUNC_CHECK
 endif
 
+OS_SEARCHPATH=/usr/local/lib /usr/lib /usr/local/gnu/lib
 
 BK_ALLDEFINES=$(LOCAL_DEFINES) $(GROUP_DEFINES) $(PKG_DEFINES) $(BK_DEFINES) $(OS_DEFINES)
 BK_ALLINCS=$(LOCAL_INCS) $(GROUP_INCS) $(PKG_INCS) $(BK_INCS) $(OS_INCS)
 BK_ALLLDS=$(LOCAL_LDS) $(GROUP_LDS) $(PKG_LDS) $(BK_LDS) $(OS_LDS)
 BK_ALLLIBS=$(LOCAL_LIBS) $(GROUP_LIBS) $(PKG_LIBS) $(BK_LIBS) $(OS_LIBS)
+BK_LIBDIR=$(OS_SEARCHPATH) $(patsubst -L%,%,$(filter -L%,$(BK_ALLLDS)))
 
 
 ######################################################################
@@ -141,3 +143,4 @@ vpath %.3 $(BK_TRUECWD)
 vpath %.5 $(BK_TRUECWD)
 vpath %.1 $(BK_TRUECWD)
 vpath %.8 $(BK_TRUECWD)
+vpath %.a $(BK_LIBDIR)
