@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.30 2002/05/24 20:52:59 brian Exp $
+dnl $Id: configure.in,v 1.31 2002/06/07 21:56:05 dupuy Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.30 $)dnl
+AC_REVISION($Revision: 1.31 $)dnl
 AC_INIT(Make.bkvariables)
 AC_CONFIG_AUX_DIR(acaux)
 
@@ -60,6 +60,7 @@ fi
 AC_CHECK_FUNCS(ntohll memrchr strndup strnlen strverscmp)
 AC_CHECK_FUNCS(strptime gmtime_r timegm)
 AC_FUNC_STRFTIME
+AC_FUNC_GETTEXT
 AC_STACKDIRECTION
 AC_FUNC_ALLOCA
 

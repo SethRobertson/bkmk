@@ -1,5 +1,5 @@
 /*				-*- C -*-
- * $Id: libbk_autoconf.h.in,v 1.13 2002/05/20 15:51:58 jtt Exp $
+ * $Id: libbk_autoconf.h.in,v 1.14 2002/06/07 21:56:05 dupuy Exp $
  *
  * ++Copyright LIBBK++
  *
@@ -45,6 +45,7 @@
 #undef HAVE_GMTIME_R
 #undef HAVE_TIMEGM
 #undef HAVE_STRFTIME
+#undef HAVE_GETTEXT
 #undef MKTIME_HAS_BUGS
 #undef HAVE_ALLOCA
 

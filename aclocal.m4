@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.5 2002/03/25 22:57:39 dupuy Exp $
+# $Id: aclocal.m4,v 1.6 2002/06/07 21:56:05 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -107,6 +107,21 @@ AC_CHECK_LIB(nsl, inet_pton,
              [AC_DEFINE(HAVE_INET_PTON)
 LIBS="-lnsl $LIBS"])])dnl
 ])# AC_FUNC_INET_PTON
+
+
+# This works well for now; in the future if we need to get this from a strange
+# location, we might want to use AC_SEARCH_LIB instead of AC_CHECK_LIB
+#
+# AC_FUNC_GETTEXT
+# ----------------
+AC_DEFUN([AC_FUNC_GETTEXT],
+[AC_CHECK_FUNCS(gettext, [],
+[# gettext is in -lintl on BSD, Solaris, other systems
+AC_CHECK_LIB(intl, gettext,
+             [AC_DEFINE(HAVE_GETTEXT)
+LIBS="-lintl $LIBS"])])dnl
+])# AC_FUNC_GETTEXT
+
 
 #
 # BSD-based systems have an sa_len field in struct sockaddr that may need to
