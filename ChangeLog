@@ -2,6 +2,7 @@
 
 	* Make.targets (actual_install): Added BK_PERL_LIBS and
 	BK_INSTALLPERLLIB for per-project perl modules and libraries.
+	(actual_install): Add BK_PERL_MODS.
 
 2003-06-10  Seth Robertson  <seth@startide.sysdetect.com>
 
