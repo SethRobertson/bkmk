@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.124 2002/12/10 21:24:03 jtt Exp $
+# $Id: Make.variables,v 1.125 2003/01/20 23:20:54 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -438,13 +438,17 @@ endif # NO_DEBUG
 
 endif # COMPILER_NAME=gcc
 
-ifeq ($(BK_WANT_STATIC),true)
-LDFLAGS+=$(LINK_STATIC_FLAG)
-endif # BK_WANT_STATIC
-
 else # BK_USING_INSURE==true
 COPTDEBUG=-g
 endif # BK_USING_INSURE==true
+
+################################################################
+#
+# WARNING -- INSURE++ really really loaths static linking now. (use at your own risk)
+#
+ifeq ($(BK_WANT_STATIC),true)
+LDFLAGS+=$(LINK_STATIC_FLAG)
+endif # BK_WANT_STATIC
 
 CFLAGS=$(COPTDEBUG)
 CPPFLAGS=$(BK_ALLINCS) $(BK_ALLDEFINES)
@@ -516,7 +520,8 @@ endif # BK_USING_DMALLOC
 
 ifeq ($(BK_USING_INSURE),true)
 # it's not called insight any more; use auto-defined __INSURE__
-# BK_DEFINES+=-D__INSIGHT__
+# Except that it is *not* defined, I have no idea why.
+BK_DEFINES+=-D__INSURE__
 CC=$(INSURE)
 endif # BK_USING_INSURE
 
