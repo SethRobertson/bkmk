@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.75 2002/07/13 04:40:51 jtt Exp $
+# $Id: Make.variables,v 1.76 2002/07/14 03:41:24 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -34,7 +34,7 @@ BK_INSTALLRPATH=$(shell $(PERL) -e $(NORMALIZERPATH))
 NORMALIZEPATH="\$$_ = qq^`$(PWD)`/$(BK_INSTALLPROGDIR)^;"$(NORMALIZE)
 BK_INSTALLPATH=$(shell $(PERL) -e $(NORMALIZEPATH))
 
-ifndef ($(BK_WANT_LIBTOOL))
+ifndef BK_WANT_LIBTOOL
 BK_WANT_LIBTOOL=true
 endif
 
