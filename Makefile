@@ -1,15 +1,6 @@
 
 default:
 
-# This tarball install target is fairly bogus, and doesn't really belong here,
-# but until we decide on a packaging system and have something better, it will
-# suffice.
-install:
-	@(cd ../.install; \
-	  P=`pwd | bash -pc 'read P; P=\$${P%/*}; P=\$${P##*/}; echo \$$P'`; \
-	  tar -zcvf ../$$P.tar.gz bin/worker bin/*.sh etc/ lib/*.so* java/ || \
-	  rm -rf ../$$P.tar.gz) 2>/dev/null
-
 ################################################################
 #
 # Print an error message if someone tries to run a toplevel make
