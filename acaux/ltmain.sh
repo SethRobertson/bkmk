@@ -778,6 +778,7 @@ compiler."
     preload=no
     prev=
     prevarg=
+    pthread=no
     release=
     rpath=
     xrpath=
@@ -1137,6 +1138,11 @@ compiler."
 
       -thread-safe)
 	thread_safe=yes
+	continue
+	;;
+
+      -pthread)
+	pthread=yes
 	continue
 	;;
 
@@ -2896,6 +2902,22 @@ EOF
 	      libobjs="$libobjs "`find $xdir -name \*.o -print -o -name \*.lo -print | $NL2SP`
 	    done
 	  fi
+	fi
+
+	if test "$pthread" = yes; then
+	  eval flag=\"-pthread\"
+	  linker_flags="$linker_flags $flag"
+	  case $host in
+	  *-*-openbsd* | *-*-freebsd*)
+	    deplibs="$deplibs -lc_r"
+	    ;;
+	  esac
+	else
+	  case $host in
+	  *-*-openbsd* | *-*-freebsd*)
+	    deplibs="$deplibs -lc"
+	    ;;
+	  esac
 	fi
 
 	if test "$thread_safe" = yes && test -n "$thread_safe_flag_spec"; then

@@ -3,6 +3,7 @@
 	* configure.in: use ACX_PTHREAD
 
 	* Make.variables (BK_DEFINES, CFLAGS, CC_CONFIG): get pthreads settings
+	(LT_LDFLAGS, LT_M_LDFLAGS): pass -pthread flag to libtool, if needed
 
 	* Make.config.in (PTHREAD_LIBS, PTHREAD_CFLAGS, PTHREAD_CC): autoconf
 
@@ -11,8 +12,9 @@
 	* aclocal.m4 (ACX_PTHREAD): BSD- [and other OS-] compatible test
 	for pthread library and interfaces.
 
-	* acaux/ltmain.sh: -lc_r treatment for FreeBSD as well as OpenBSD
-
+	* acaux/ltmain.sh: -lc_r treatment for FreeBSD as well as OpenBSD;
+	append -lc or -lc_r to link based on presence/absence of -pthread
+	
 2003-04-15  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.production ($(BK_LARGE_MODULE)): use -no-undefined to get
