@@ -1,5 +1,5 @@
 /*				-*- C -*-
- * $Id: libbk_autoconf.h.in,v 1.52 2004/06/25 00:25:10 dupuy Exp $
+ * $Id: libbk_autoconf.h.in,v 1.53 2004/07/08 04:40:13 lindauer Exp $
  *
  * ++Copyright LIBBK++
  *
@@ -70,6 +70,12 @@
 #undef HAVE_SYS_IOCTL_H
 #undef HAVE_SYS_FILIO_H
 #undef HAVE_VALGRIND_MEMCHECK_H
+
+#undef HAVE_CRT_EXTERNS_H
+#undef HAVE_NSGETENVIRON
+
+#undef HAVE_MACH_VM_MAP_H
+#undef HAVE_VM_REGION
 
 #undef HAVE_LIBSSL
 

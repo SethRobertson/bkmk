@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.187 2004/07/02 19:46:45 seth Exp $
+# $Id: Make.variables,v 1.188 2004/07/08 04:40:11 lindauer Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -347,7 +347,7 @@ ifneq ($(strip $(BK_USING_SSL)),false)
 GROUP_LIBS+= -lbkssl
 endif
 
-BK_LIBS+= -lbkxml -lbk -lutil -ldict -lfsma -lpqueue -lpopt $(LIBRESOLVER) $(BK_LIBM) $(COMPRESS_LIBS)
+BK_LIBS+= -lbkxml -lbk -ldict -lfsma -lpqueue -lpopt $(LIBRESOLVER) $(BK_LIBM) $(COMPRESS_LIBS)
 
 LT_LDLIBS+= $(AC_LIBS)
 
@@ -709,3 +709,6 @@ vpath %.la $(BK_VPATH_A)
 
 # -l library extensions pattern rule to recognize libtool libraries
 .LIBPATTERNS=lib%$(LIBEXT) lib%.so lib%.a
+ifneq ($(strip $(OS_LIBEXT)),)
+  .LIBPATTERNS+=lib%$(OS_LIBEXT)
+endif

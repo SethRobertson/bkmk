@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.FreeBSD-5.2-pre,v 1.1 2004/06/23 20:25:00 dupuy Exp $
+# $Id: Make.FreeBSD-5.2-pre,v 1.2 2004/07/08 04:40:11 lindauer Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -19,7 +19,7 @@
 
 OS_INCS=-I/usr/local/include
 OS_LDS=-L/usr/local/lib
-OS_LIBS=
+OS_LIBS=-lutil
 
 # Provide safe default so that LD_LIBRARY_PATH will be used in preference
 # to ELF-embedded RPATH (Linux/Solaris/etc. use RUNPATH which works right).

@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.111 2004/06/25 00:25:10 dupuy Exp $
+dnl $Id: configure.in,v 1.112 2004/07/08 04:40:13 lindauer Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.111 $)dnl
+AC_REVISION($Revision: 1.112 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
@@ -124,6 +124,12 @@ AC_CHECK_HEADERS(sys/capability.h sys/msg.h)
 AC_CHECK_HEADERS(sys/ioctl.h sys/filio.h)
 AC_CHECK_HEADERS(valgrind/memcheck.h)
 
+AC_CHECK_HEADERS(crt_externs.h)
+AC_CHECK_FUNC(_NSGetEnviron, [AC_DEFINE(HAVE_NSGETENVIRON, 1, [Define if your system needs _NSGetEnviron to set up the environment])])
+
+AC_CHECK_HEADERS(mach/vm_map.h)
+AC_CHECK_FUNC(vm_region, [AC_DEFINE(HAVE_VM_REGION, 1, [Define for Mach-O systems])])
+
 AC_SA_LEN
 AC_SOCKLEN_T
 AC_IN_ADDR_T
@@ -145,6 +151,8 @@ AC_SEARCH_LIBS([aioread64],[aio])
 AC_SEARCH_LIBS([socket],[socket])
 AC_SEARCH_LIBS([gethostbyname],[resolv nsl])
 AC_SEARCH_LIBS([inet_aton],[resolv nsl])
+
+AC_SEARCH_LIBS([openpty],[util System])
 
 ACX_PTHREAD(
   [HAVE_PTHREADS=true
