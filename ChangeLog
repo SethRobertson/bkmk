@@ -1,3 +1,7 @@
+2004-07-12  Brian Lindauer  <lindauer@malkmus.sysdetect.com>
+
+	* libbk_autoconf.h.in: Comment out HAVE_PRAGMA_INIT.
+
 2004-07-09  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.variables (LT_LDFLAGS, LT_M_LDFLAGS): add -no-undefined

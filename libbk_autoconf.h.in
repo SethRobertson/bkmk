@@ -1,5 +1,5 @@
 /*				-*- C -*-
- * $Id: libbk_autoconf.h.in,v 1.54 2004/07/12 17:23:37 jtt Exp $
+ * $Id: libbk_autoconf.h.in,v 1.55 2004/07/12 18:07:42 lindauer Exp $
  *
  * ++Copyright LIBBK++
  *
@@ -49,7 +49,16 @@
 #undef HAVE__FUNCTION__
 
 #undef HAVE_CONSTRUCTOR_ATTRIBUTE
+
+/*
+ * We always use ltdl_open now, and we call
+ * the init functions ourselves.  So we 
+ * don't want anybody also declaring 
+ * constructors with pragma init.
+ */
+#if 0
 #undef HAVE_PRAGMA_INIT
+#endif
 
 #undef BK_TIME_MAX
 
