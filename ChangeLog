@@ -1,3 +1,17 @@
+2002-02-06  James Tanis  <jtt@winwood.sysdetect.com>
+
+	* Make.targets ($(BK_INSTALLDOCDIR)/doxygen/Doxyfile): Make
+	doxygen build man pages in the expected man3 directory.
+
+2002-02-05  James Tanis  <jtt@saint.sysdetect.com>
+
+	* Make.variables (COPTDEBUG+): Remove omit-frame-pointer if debug on. Kills gdb.
+
+	* Make.targets: Provide mechanism for overriding default target.
+
+	* Make.variables (LIBTOOL): make WANT_LIBTOOL, BK_WANT_LIBTOOL
+	just to make it synch with other symbols
+
 2002-02-01  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Makefile (config.status): rerun configure if acaux files change

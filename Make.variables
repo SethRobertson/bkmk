@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.54 2002/02/01 21:59:12 dupuy Exp $
+# $Id: Make.variables,v 1.55 2002/02/06 15:05:01 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -214,7 +214,7 @@ COMPILER_DEBUG_ERROR=-Werror
 ifneq ($(NO_OPT),true)
 ifneq ($(USING_INSURE),true)
 #COPTDEBUG+=-O
-COPTDEBUG+=-O3 -mcpu=i686 -march=i686 -fforce-addr -fomit-frame-pointer -funroll-loops -frerun-cse-after-loop -frerun-loop-opt -malign-functions=4
+COPTDEBUG+=-O3 -mcpu=i686 -march=i686 -fforce-addr -funroll-loops -frerun-cse-after-loop -frerun-loop-opt -malign-functions=4
 # gcc doesn't support -Wuninitialized without -O. And if using insure++ you
 # get it anyway.
 COMPILER_DEBUG+=-Wuninitialized 
@@ -223,6 +223,8 @@ endif
 
 ifneq ($(NO_DEBUG),true)
 COPTDEBUG+=-g $(COMPILER_DEBUG)
+else
+COPTDEBUG+=-fomit-frame-pointer
 endif
 
 endif # CC is gcc
@@ -242,11 +244,11 @@ endif
 ######################################################################
 # What are you using, and what do you want?
 
-ifeq ($(WANT_LIBTOOL),false)
+ifeq ($(BK_WANT_LIBTOOL),false)
 LT=
 LTCC=
 LTLD=
-LIBTOOL=: no-libtool [WANT_LIBTOOL=false]
+LIBTOOL=: no-libtool [BK_WANT_LIBTOOL=false]
 LIBEXT=.a
 LT_CFLAGS=
 LT_LDFLAGS=

@@ -1,6 +1,6 @@
 # -*- makefile -*-
 # 
-# $Id: Make.targets,v 1.38 2002/02/01 21:59:12 dupuy Exp $
+# $Id: Make.targets,v 1.39 2002/02/06 15:05:00 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -32,6 +32,7 @@ BK_SUBDIRRULE=@ \
 	done; exit $$ERR
 endif # BK_SUBDIR
 
+ifeq ($(BK_WANT_DEFAULT),true)
 #
 # Default rule--standard target to compile everything
 #
@@ -48,7 +49,7 @@ default:: help
 endif # BK_JAVA_HELP_LANG
 endif # BK_JAVA_HELP
 endif # BK_WANT_JAVA
-
+endif # BK_WANT_DEFAULT
 
 
 
@@ -275,18 +276,22 @@ endif # BK_WANT_JAVA
 #
 BK_SUBDOX=$(BK_SUBDIR)
 BK_DOXDIRS=$(foreach DIR, $(BK_SUBDOX), $(BK_REALTOP)/$(DIR))
+BK_REALMANDIR=$(BK_REALTOP)/$(BK_INSTALLMANDIR)
 $(BK_INSTALLDOCDIR)/doxygen/Doxyfile:
 	@if [ "" = "$(BK_INSTALLDOCDIR)" ]; then \
 	  echo "\$$BK_INSTALLDOCDIR not set in Make.preinstall"; exit 1;\
 	fi
 	-@$(MKDIR) $(BK_INSTALLDOCDIR)/doxygen 2>/dev/null && \
-	 { cd $(BK_INSTALLDOCDIR)/doxygen; \
+	$(MKDIR) $(BK_INSTALLMANDIR)/man3 2>/dev/null && \
+	 { THIS_TOPDIR=`pwd`; cd $(BK_INSTALLDOCDIR)/doxygen; \
 	   $(DOXYGEN) -g > /dev/null;	 \
 	   $(MV) Doxyfile Doxyfile.orig && \
 	   $(SED) -e '/^PROJECT_NAME/s%=.*%= $(BK_PKGNAME)%' \
 		  -e '/^OUTPUT_DIR/s%=.*%= $(BK_INSTALLDOCDIR)/doxygen%' \
+		  -e '/^MAN_OUT/s%=.*%= $(BK_REALMANDIR)%' \
 		  -e '/^INPUT[ \t]/s%=.*%= $(BK_DOXDIRS)%' \
 		  -e '/^FILE_PATTERNS/s%=.*%= *.[chyls] *.java%' \
+		  -e '/^GENERATE_MAN[ \t]/s%=.*%= YES%' \
 		  -e '/^RECURSIVE[ \t]/s%=.*%= YES%' \
 		  -e '/^EXCLUDE_PATTERNS/s%=.*%= *Test Test*%' \
 		  -e '/^EXTRACT_STATIC/s%=.*%= YES%' \
