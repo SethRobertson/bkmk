@@ -1,4 +1,4 @@
-# $Id: Make.production,v 1.11 2001/11/30 01:57:29 dupuy Exp $
+# $Id: Make.production,v 1.12 2001/11/30 02:17:03 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -63,7 +63,8 @@ $(BK_LARGE_INTERNALPROG) $(BK_LARGE_LIB): $(BK_LARGE_LIBOBJ)
 BK_JAVA_CLASS:=$(patsubst %.java,$(BK_JAVA_PKG)/%.class,$(BK_JAVA_SRC))
 BK_JAVA_TCLASS:=$(patsubst %.java,$(BK_JAVA_PKG)/%.class,$(BK_JAVA_TEST))
 BK_JAVA_ICLASS_TMP=\
-	$(foreach tmp, $(BK_JAVA_CLASS), $(wildcard $(BK_JAVADIR)/$(tmp)$$*))
+	$(foreach tmp, $(patsubst %.class,%,$(BK_JAVA_CLASS)), \
+		$(wildcard $(BK_JAVADIR)/$(tmp)$$*.class))
 BK_JAVA_ICLASS=\
 	$(subst $$,\$$,$(patsubst $(BK_JAVADIR)/%,%,$(BK_JAVA_ICLASS_TMP)))
 BK_JAVA_PROPS=$(wildcard $(GROUPTOP)/$(LOCALE)/*.properties)
