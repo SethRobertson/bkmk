@@ -1,5 +1,5 @@
 /*				-*- C -*-
- * $Id: libbk_autoconf.h.in,v 1.22 2002/10/17 21:15:52 jtt Exp $
+ * $Id: libbk_autoconf.h.in,v 1.23 2002/10/18 18:12:15 dupuy Exp $
  *
  * ++Copyright LIBBK++
  *
@@ -65,7 +65,7 @@
 
 /*
  * The errno value returned by system on *second* connect to refused
- * port.It should be ECONNREFUSED (and is on most systems), but *BSD*, of
+ * port.  It should be ECONNREFUSED (and is on most systems), but *BSD*, of
  * all OS's, gets it wrong.
  */
 #undef BK_SECOND_REFUSED_CONNECT_ERRNO

@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.17 2002/10/18 17:46:54 lindauer Exp $
+# $Id: aclocal.m4,v 1.18 2002/10/18 18:12:15 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -61,103 +61,6 @@ AC_DEFUN([AC_CONSTRUCTORS],
 ])# AC_CONSTRUCTORS
 
 
-# AC_INADDR_T
-# ---------------------------------
-#
-# This macro determines if in_addr_t is defined or not.
-#
-AC_DEFUN([AC_INADDR_T], [AC_CACHE_CHECK([for in_addr_t typedef], ac_inaddr_t_defined,
-	AC_TRY_COMPILE(
-[
-#include <sys/types.h>
-#include <netinet/in.h>
-], [ in_addr_t foo; ],
-[ ac_inaddr_t_defined=yes; ],[ ac_inaddr_t_defined=no;]))
- if test $ac_inaddr_t_defined = 'yes' ; then
-  AC_DEFINE(HAVE_IN_ADDR_T)
- fi
-])
-
-
-# AC_SECOND_CONNECT_TO_REFUSED_PORT
-# ---------------------------------
-#
-# This macro determines the correct errno value for calls to connect(2) on
-# sockets which have already been refused at the endpoint. Most OS's seem to
-# return ECONNREFUSED (again) which you would expect. Oddly *BSD returns
-# EINVAL.
-#
-#
-# <WARNING> This program test usnig a blocking (as opposed to non-blocking)
-# socket. The errno determined here seems to be the one we are looking for,
-# but it's possible on some bizzare OS the two errnos might differ. At that
-# point some poor sucker will have to convert this test to use asynchronous
-# sockets. HA HA HA HA HA HA. <WARNING>
-#
-AC_DEFUN([AC_SECOND_CONNECT_TO_REFUSED_PORT], [AC_CACHE_CHECK([errno value of second connect to refused port], ac_cv_second_connect_errno,
-	AC_TRY_RUN(
-[
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <errno.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-
-int
-main(int argc, char **argv)
-{
-  int s;
-  unsigned short port;
-  struct sockaddr_in sin;
-changequote(, )dnl
-  char buf[2048];
-changequote([, ])dnl
-  int ret;
-
-  // <TRICKY> This program is expected to return a value, so "0" mean *failure* </TRICKY>
-
-  port = 40000;
-  sin.sin_family = AF_INET;
-  sin.sin_addr.s_addr = INADDR_ANY;
-
- do	
-  {
-    port++;
-    sin.sin_port = htons(port);
-
-    if ((s = socket(PF_INET, SOCK_STREAM, 0)) < 0)
-      exit(0);
-
-    ret = bind(s, (struct sockaddr *)(&sin), sizeof(sin));
-    
-    close(s);
-
-    if ((port == 0xffff) && (ret == -1))
-      exit(0);
-  } while (ret < 0);
-
-  // Located an available, unbound port
-  if ((s = socket(PF_INET, SOCK_STREAM, 0)) < 0)
-    exit(0);
-
-  if (connect(s, (struct sockaddr *)(&sin), sizeof(sin)) == 0)
-    exit(0);
-
-  if (connect(s, (struct sockaddr *)(&sin), sizeof(sin)) == 0)
-    exit(0);
-
-  exit(errno);
-}],,
-[ ac_cv_second_connect_errno=$ac_status]))
-if test "X$ac_cv_second_connect_errno" != "X" 
-then
-	AC_DEFINE_UNQUOTED(BK_SECOND_REFUSED_CONNECT_ERRNO, $ac_cv_second_connect_errno)
-fi
-])
-
-
-
-
 #
 # C 99 has an implicit local variable __func__ (a constant string) and several
 # C 89 compilers (notably GCC) have __FUNCTION__ and/or __PRETTY_FUNCTION__
@@ -193,6 +96,24 @@ AC_DEFUN([AC_C__FUNC__],
   fi
  fi
 ])# AC_C__FUNC__
+
+
+# AC_INADDR_T
+# ---------------------------------
+#
+# This macro determines if in_addr_t is defined or not.
+#
+AC_DEFUN([AC_INADDR_T], [AC_CACHE_CHECK([for in_addr_t typedef], ac_inaddr_t_defined,
+	AC_TRY_COMPILE(
+[
+#include <sys/types.h>
+#include <netinet/in.h>
+], [ in_addr_t foo; ],
+[ ac_inaddr_t_defined=yes; ],[ ac_inaddr_t_defined=no;]))
+ if test $ac_inaddr_t_defined = 'yes' ; then
+  AC_DEFINE(HAVE_IN_ADDR_T)
+ fi
+])
 
 
 # AC_FUNC_INET_PTON
@@ -260,6 +181,46 @@ AC_DEFUN([AC_SA_LEN],
 ])# AC_SA_LEN
 
 
+# AC_STACKDIRECTION
+# -----------------
+AC_DEFUN([AC_STACKDIRECTION],
+[AC_CACHE_CHECK([stack direction for C],
+               [ac_cv_c_stack_direction],
+[AC_RUN_IFELSE([AC_LANG_SOURCE(
+[int
+find_stack_direction ()
+{
+  static char *addr = 0;
+  auto char dummy;
+  if (addr == 0)
+    {
+      addr = &dummy;
+      return find_stack_direction ();
+    }
+  else
+    return (&dummy > addr) ? 1 : -1;
+}
+
+int
+main ()
+{
+  exit (find_stack_direction () < 0);
+}])],
+               [ac_cv_c_stack_direction=1],
+               [ac_cv_c_stack_direction=-1],
+               [ac_cv_c_stack_direction=0])])
+AH_VERBATIM([STACK_DIRECTION],
+[/* Define if you know the
+   direction of stack growth for your system; otherwise it will be
+   automatically deduced at run-time.
+        STACK_DIRECTION > 0 => grows toward higher addresses
+        STACK_DIRECTION < 0 => grows toward lower addresses
+        STACK_DIRECTION = 0 => direction of growth unknown */
+@%:@undef STACK_DIRECTION])dnl
+AC_DEFINE_UNQUOTED(STACK_DIRECTION, $ac_cv_c_stack_direction)
+])# AC_STACKDIRECTION
+
+
 # AC_TIME_MAX
 # -----------------
 AC_DEFUN([AC_TIME_MAX],
@@ -317,8 +278,8 @@ main()
   }
 }
 ])],
-               [echo $ECHO_N "(UNKNOWN)" >&6; unset ac_cv_$1],
-               [case $ac_status in
+	[echo $ECHO_N "(UNKNOWN)" >&6; unset ac_cv_$1],
+	[case $ac_status in
  10) ac_cv_$1=ULONG_MAX;;
  11) ac_cv_$1=LONG_MAX;;
  12) ac_cv_$1=ULLONG_MAX;;
@@ -327,7 +288,7 @@ main()
  15) ac_cv_$1=INT_MAX;;
  *) echo $ECHO_N "(UNKNOWN)" >&6; unset ac_cv_$1;;
 esac;],
-               [ac_cv_$1=LONG_MAX])])
+	[ac_cv_$1=LONG_MAX])])
 AH_VERBATIM($1,
 [/* Define as an appropriately typed constant for maximum time_t value. */
 @%:@undef $1])dnl
@@ -337,44 +298,109 @@ fi
 ])# AC_TIME_MAX
 
 
-# AC_STACKDIRECTION
-# -----------------
-AC_DEFUN([AC_STACKDIRECTION],
-[AC_CACHE_CHECK([stack direction for C],
-               [ac_cv_c_stack_direction],
+# AC_SECOND_CONNECT_TO_REFUSED_PORT
+# ---------------------------------
+#
+# This macro determines the correct errno value for calls to connect(2) on
+# sockets which have already been refused at the endpoint. Most OS's seem to
+# return ECONNREFUSED (again) which you would expect. Oddly *BSD returns
+# EINVAL.
+#
+#
+# <WARNING>This program test uses a blocking (as opposed to non-blocking)
+# socket.  The errno determined here seems to be the one we are looking for,
+# but it's possible on some bizzare OS the two errnos might differ.  At that
+# point some poor sucker will have to convert this test to use asynchronous
+# sockets. HA HA HA HA HA HA.<WARNING>
+#
+AC_DEFUN([AC_SECOND_CONNECT_TO_REFUSED_PORT],
+[AC_CACHE_CHECK([errno value of second connect to refused port],
+               [ac_cv_$1],
 [AC_RUN_IFELSE([AC_LANG_SOURCE(
-[int
-find_stack_direction ()
-{
-  static char *addr = 0;
-  auto char dummy;
-  if (addr == 0)
-    {
-      addr = &dummy;
-      return find_stack_direction ();
-    }
-  else
-    return (&dummy > addr) ? 1 : -1;
-}
+[
+#include <stdio.h>
+#include <errno.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 
 int
-main ()
+main(int argc, char **argv)
 {
-  exit (find_stack_direction () < 0);
-}])],
-               [ac_cv_c_stack_direction=1],
-               [ac_cv_c_stack_direction=-1],
-               [ac_cv_c_stack_direction=0])])
-AH_VERBATIM([STACK_DIRECTION],
-[/* Define if you know the
-   direction of stack growth for your system; otherwise it will be
-   automatically deduced at run-time.
-        STACK_DIRECTION > 0 => grows toward higher addresses
-        STACK_DIRECTION < 0 => grows toward lower addresses
-        STACK_DIRECTION = 0 => direction of growth unknown */
-@%:@undef STACK_DIRECTION])dnl
-AC_DEFINE_UNQUOTED(STACK_DIRECTION, $ac_cv_c_stack_direction)
-])# AC_STACKDIRECTION
+  int s;
+  int ret;
+  unsigned short port;
+  struct sockaddr_in sin;
+
+  /*
+   * <WARNING>We hope that errno won't be in range 1..9, since we use exit
+   * code 1 for errors (or unexpected success when we want failure) and the
+   * compiler/linker may exit with these codes as well.</WARNING>
+   */
+
+  port = 40000;
+  sin.sin_family = AF_INET;
+  sin.sin_addr.s_addr = INADDR_ANY;
+
+  // Locate an available, unbound port
+  do	
+  {
+    port++;
+    sin.sin_port = htons(port);
+
+    if ((s = socket(PF_INET, SOCK_STREAM, 0)) < 0)
+    {
+      perror("socket");
+      exit(1);
+    }
+
+    ret = bind(s, (struct sockaddr *)(&sin), sizeof(sin));
+    
+    close(s);
+
+    if ((port == 0xffff) && (ret == -1))
+    {
+      fprintf(stderr, "all sockets in use");
+      exit(1);
+    }
+  } while (ret < 0);
+
+  if ((s = socket(PF_INET, SOCK_STREAM, 0)) < 0)
+  {
+    perror("socket");
+    exit(1);
+  }
+
+  if (connect(s, (struct sockaddr *)(&sin), sizeof(sin)) == 0)
+  {
+    fprintf(stderr, "connect succeeded - should have failed");
+    exit(1);
+  }
+
+  if (connect(s, (struct sockaddr *)(&sin), sizeof(sin)) == 0)
+  {
+    fprintf(stderr, "connect succeeded - should have failed");
+    exit(1);
+  }
+
+  exit(errno);
+}
+])],
+	[echo $ECHO_N "(UNKNOWN)" >&6; unset ac_cv$1],
+	[case $ac_status in
+ 1|2|3|4|5|6|7|8|9) echo $ECHO_N "(UNKNOWN)" >&6; unset ac_cv$1;;
+ *) ac_cv_$1=$ac_status;;
+esac;],
+	[ac_cv_$1=ECONNREFUSED])])
+AH_VERBATIM($1,
+[/* Define as errno returned from second connect to unbound socket. */
+@%:@undef $1])dnl
+if test -n "$ac_cv_$1"; then
+  AC_DEFINE_UNQUOTED($1, $ac_cv_$1)
+fi
+])# AC_SECOND_CONNECT_TO_REFUSED_PORT
+
 
 #
 # Remainder of the file is incorporated verbatim from libtool.m4

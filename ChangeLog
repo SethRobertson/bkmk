@@ -1,3 +1,11 @@
+2002-10-18  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* chcopy.pl: Insure doesn't mind unused static const char arrays;
+	update e-mail addresses
+	
+	* Make.production, Make.variables: get useful gcc error messages from
+	Insure++ by running the compiler with -D__INSURE__ directly
+	
 2002-10-18  Brian Lindauer  <lindauer@malkmus.sysdetect.com>
 
 	* aclocal.m4: Fix in_addr_t test to work on FreeBSD, too.

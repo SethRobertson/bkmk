@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.47 2002/10/17 21:15:52 jtt Exp $
+dnl $Id: configure.in,v 1.48 2002/10/18 18:12:15 dupuy Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.47 $)dnl
+AC_REVISION($Revision: 1.48 $)dnl
 AC_INIT(Make.bkvariables)
 AC_CONFIG_AUX_DIR(acaux)
 
@@ -75,11 +75,14 @@ AC_LIBTOOL_WIN32_DLL
 AC_LIBTOOL_DLOPEN
 AC_PROG_LIBTOOL
 
+AC_SUBST(link_static_flag)
+
 AC_C__FUNC__
 AC_CONSTRUCTORS
 AC_SYS_LARGEFILE
 AC_CHECK_HEADERS(net/ethernet.h netinet/if_ether.h paths.h)
 AC_SA_LEN
+AC_INADDR_T
 AC_FUNC_INET_PTON
 
 AC_FUNC_MKTIME
@@ -94,6 +97,8 @@ AC_FUNC_STRFTIME
 AC_FUNC_GETTEXT
 AC_STACKDIRECTION
 AC_FUNC_ALLOCA
+
+AC_SECOND_CONNECT_TO_REFUSED_PORT(BK_SECOND_REFUSED_CONNECT_ERRNO)
 
 AC_PATH_PROG(RM, rm)
 AC_PATH_PROG(FALSE, false)
@@ -131,13 +136,6 @@ AC_PATH_PROG(AR, ar)
 
 AC_DEFINE_UNQUOTED(PATH_SEPARATOR, "$PATH_SEPARATOR")
 
-AC_SECOND_CONNECT_TO_REFUSED_PORT
-AC_INADDR_T
-
-
 AC_CONFIG_HEADER(libbk_autoconf.h)
-
-AC_SUBST(link_static_flag)
-
 AC_CONFIG_FILES(Make.config)
 AC_OUTPUT

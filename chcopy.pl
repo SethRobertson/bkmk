@@ -6,7 +6,7 @@
 ######################################################################
 ## BAKA
 $BAKAHDR = <<EOF;
-#if !defined(lint) && !defined(__INSURE__)
+#if !defined(lint)
 static const char libbk__rcsid[] = "\$Id\$";
 static const char libbk__copyright[] = "Copyright (c) 2002";
 static const char libbk__contact[] = "<projectbaka\@baka.org>";
@@ -29,10 +29,10 @@ EOF
 ######################################################################
 ## System Detection
 $SYSDHDR = <<EOF;
-#if !defined(lint) && !defined(__INSURE__)
-static char sysd__rcsid[] = "\$Id\$";
-static char sysd__copyright[] = "Copyright (c) 2002 System Detection";
-static char sysd__contact[] = "System Detection <support\@systemdetection.com>";
+#if !defined(lint)
+static const char sysd__rcsid[] = "\$Id\$";
+static const char sysd__copyright[] = "Copyright (c) 2002 System Detection";
+static const char sysd__contact[] = "System Detection <support\@sysd.com>";
 #endif /* not lint */
 EOF
 
@@ -53,7 +53,7 @@ System Detection
 New York, NY 10011-4240
 
 +1 212 206-1900
-<support\@systemdetection.com>
+<support\@sysd.com>
 
 --Copyright SYSDETECT--
 EOF
@@ -70,14 +70,14 @@ if ($opt_b)
   $prod = 0;
 }
 
-$q1 = '\#if \!defined\(lint\) \&\& \!defined\(__INS...T?__\)';
+$q1 = '\#if \!defined\(lint\)';
 $q2 = '\#endif \/\* not lint \*\/';
 
 while (<>)
 {
   # Header stuff
   # (Only try header stuff if first line)
-  if ($. < 5 && /^$q1$/)
+  if ($. < 5 && /^$q1/)
     {
       while (<>)
 	{
