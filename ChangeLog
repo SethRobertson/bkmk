@@ -1,3 +1,7 @@
+2003-09-12  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.targets (nuke): use buildhelp -r, not -l, to get removable list
+
 2003-09-08  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.GNUmakefile (NORMALIZEBASE): correctly handle $PWD prefixing

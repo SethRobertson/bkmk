@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.targets,v 1.91 2003/08/27 16:55:17 jtt Exp $
+# $Id: Make.targets,v 1.92 2003/09/12 09:36:15 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -132,8 +132,8 @@ dotdepend .depend: $(foreach HLANG,$(BK_JAVA_HELP_LANG),$(HLANG)/Map.jhm)
 	done > .depend
 
 nuke::
-	for L in $(BK_JAVA_HELP_LANG); do \
-	  $(RM) `$(BK_INSTALLPROGDIR)/buildhelp -l $(BK_JAVA_HELP) $$L/Map.jhm`; \
+	for L in $(BK_JAVA_HELP_LANG); do	      \
+	  $(RM) `$(BK_INSTALLPROGDIR)/buildhelp -r $(BK_JAVA_HELP) $$L/Map.jhm`; \
 	done
 	$(RM) $(BK_JAVA_HELP_JAR) $(BK_JAVA_HELP_PDF)
 endif # BK_JAVA_HELPLANG
