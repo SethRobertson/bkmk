@@ -1,4 +1,4 @@
-#!/bin/perl
+#!/usr/bin/perl
 $topdir_inode=(stat("$ARGV[0]"))[1]; 
 $last_inode=0;
 $done=0; 
