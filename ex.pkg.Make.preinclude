@@ -1,5 +1,5 @@
 ######################################################################
-# $Id: ex.pkg.Make.preinclude,v 1.3 2002/03/16 06:25:34 dupuy Exp $
+# $Id: ex.pkg.Make.preinclude,v 1.4 2002/04/05 21:45:07 matt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -22,6 +22,7 @@ BK_INSTALLPROGDIR=$(BK_INSTALLBASE)/bin
 BK_INSTALLLIBDIR=$(BK_INSTALLBASE)/lib
 BK_INSTALLINCDIR=$(BK_INSTALLBASE)/include
 BK_INSTALLDATADIR=$(BK_INSTALLBASE)/etc
+BK_INSTALLCONFIGDIR=$(BK_INSTALLBASE)/etc
 BK_INSTALLMANDIR=$(BK_INSTALLBASE)/man
 BK_INSTALLDOCDIR=$(BK_INSTALLBASE)/doc
 BK_INSTALLJAVADIR=$(BK_INSTALLBASE)/java
