@@ -1,6 +1,6 @@
 # -*- makefile -*-
 # 
-# $Id: Make.targets,v 1.77 2003/03/13 23:58:00 jtt Exp $
+# $Id: Make.targets,v 1.78 2003/03/25 08:55:14 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -164,7 +164,7 @@ depend::
 #
 ifneq ($(strip $(PKGSUBDIR)),)
 build::
-	-d=BUILD/$(BK_ARCHNAME); (ls ./Make*; find $(BK_ALL_SUBDIR) -name Make\* -print) | while read f; do mkdir -p $$d/`dirname $$f`; ln -s `$(PWDPROG)`/$$f $$d/$$f; done
+	-d=BUILD/$(BK_ARCHNAME); (ls ./Make*; find $(BK_ALL_SUBDIR) -name Make\* -print) | while read f; do mkdir -p $$d/`dirname $$f`; ln -s $(PWD)/$$f $$d/$$f; done
 	@echo "To compile: cd BUILD/$(BK_ARCHNAME) and type make"
 endif # PKGSUBDIR
 
@@ -388,11 +388,12 @@ subtags:: $(BK_SIMPLE_CSRC) $(BK_LARGE_CSRC) $(BK_LARGE_LIBCSRC) $(BK_LOCAL_CSRC
 #
 USERXREFRC=$(HOME)/.xrefrc
 TMPXREFRC=/tmp/$(shell basename $(USERXREFRC)).$USER.bkmk-tmp
+ALTPWD=$(shell . $(BKMKDIR)/getcwd.sh; pawd `/bin/pwd`)
 xref::
 	@echo "Regenerating $(USERXREFRC) for $(PWD)";
 	@$(PERL) -ne '/BEGIN\sBK\-GEN\:\s$$ENV{PWD}/ && ($$cut=1); print unless ($$cut == 1); /END\sBK\-GEN\:\s$$ENV{PWD}/ && ($$cut=0);' $(USERXREFRC) > $(TMPXREFRC) && cat $(TMPXREFRC) > $(USERXREFRC) && rm $(TMPXREFRC)
 	@echo "// BEGIN BK-GEN: $(PWD)" >> $(USERXREFRC); \
-	echo "[$(PWD):`$(PWDPROG)`]" >> $(USERXREFRC); \
+	echo "[$(PWD):$(ALTPWD):`/bin/pwd`]" >> $(USERXREFRC); \
 	echo "// dynamic listing of files to include" >> $(USERXREFRC); \
 	echo "\`find $(PWD)/ -type f \( -name \*.[chyls] -o -name \*.java \) -not \( -path \*$(BK_JAVADIR)\* -o -path \*$$(basename $(BK_INSTALLBASE))\* \)\`" >> $(USERXREFRC); \
 	echo "-refs $(PWD)/.xrefs" >> $(USERXREFRC); \
@@ -437,7 +438,7 @@ $(BK_INSTALLDOCDIR)/doxygen/Doxyfile:
 	fi
 	-@$(MKDIR) $(BK_INSTALLDOCDIR)/doxygen 2>/dev/null && \
 	$(MKDIR) $(BK_INSTALLMANDIR)/man3 2>/dev/null && \
-	 { THIS_TOPDIR=`$(PWDPROG)`; cd $(BK_INSTALLDOCDIR)/doxygen; \
+	 { THIS_TOPDIR=$(PWD); cd $(BK_INSTALLDOCDIR)/doxygen; \
 	   $(DOXYGEN) -g > /dev/null;	 \
 	   $(MV) Doxyfile Doxyfile.orig && \
 	   $(SED) -e '/^PROJECT_NAME/s%=.*%= $(BK_PKGNAME)%' \

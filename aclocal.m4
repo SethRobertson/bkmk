@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.30 2002/11/21 01:08:58 dupuy Exp $
+# $Id: aclocal.m4,v 1.31 2003/03/25 08:55:14 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -297,7 +297,6 @@ AC_DEFUN([AC_IN6_MULTICAST],
     fi
   fi
 ])
-
 
 
 # AC_STACKDIRECTION
@@ -2986,6 +2985,10 @@ need_lc=${lt_cv_archive_cmds_need_lc-yes}
 ##
 ## END FIXME
 
+. ./getcwd.sh.in
+getcwd=`getcwd`/getcwd.sh
+
+
 ## FIXME: this should be a separate macro
 ##
 # The second clause should only fire when bootstrapping the
@@ -3011,7 +3014,8 @@ if test -f "$ltmain"; then
   # careful not to overquote the AC_SUBSTed values.  We take copies of the
   # variables and quote the copies for generation of the libtool script.
   for var in echo old_CC old_CFLAGS \
-    AR AR_FLAGS CC LD LN_S PWDPROG NM SHELL \
+    AR AR_FLAGS CC LD LN_S NM SHELL \
+    getcwd \
     reload_flag reload_cmds wl \
     pic_flag link_static_flag no_builtin_flag export_dynamic_flag_spec \
     thread_safe_flag_spec whole_archive_flag_spec libname_spec \
@@ -3121,8 +3125,8 @@ LD=$lt_LD
 # Whether we need hard or soft links.
 LN_S=$lt_LN_S
 
-# Possibly a version of pwd that normalizes automount paths
-pwd=$lt_PWDPROG
+# Shell source script to define getcwd()
+pwd=$lt_getcwd
 
 # A BSD-compatible nm program.
 NM=$lt_NM

@@ -1,0 +1,91 @@
+#! /bin/sh -
+#! /bin/bash --norc
+#! /bin/ksh -p
+######################################################################
+# $Id: getcwd.sh.in,v 1.1 2003/03/25 08:55:14 dupuy Exp $
+#
+# ++Copyright LIBBK++
+# 
+# Copyright (c) 2003 The Authors. All rights reserved.
+# 
+# This source code is licensed to you under the terms of the file
+# LICENSE.TXT in this release for further details.
+# 
+# Mail <projectbaka@baka.org> for further information
+# 
+# --Copyright LIBBK--
+#
+# Get current working directory: prefer environment $PWD if not incorrect.
+# (modern /bin/sh resets $PWD if incorrect, but we check just to be sure).
+#
+# If @PAWD@ is present (and portmapper is running), use it to normalize
+# path.
+#
+# Handles directories with whitespace (other than newline) in name.
+#
+# This file can also be sourced ". getcwd.sh" into sh/ksh/bash scripts, which
+# will define a getcwd() function that performs the operation of this script,
+# as well as a pawd() function that will perform automounter normalization,
+# if possible, and a verifypath() function that tests inode-equality of two
+# paths and returns the first path if equal, the second path if not.
+#
+PAWD=${PAWD-"@PAWD@"}
+typeset -i > /dev/null 2>&1 && typeset=typeset || typeset=unset
+
+verifypath() {
+  f1=$1 f2=$2
+  $typeset IFS
+IFS='
+'
+  set - `ls -id1 "$f1" "$f2" 2>/dev/null`
+  unset IFS
+  i1=$1 i2=$2
+  set - $i1
+  i1=$1
+  set - $i2
+  i2=$1
+  if [ "$i1" = "$i2" ]; then
+    echo "$f1"
+  else
+    echo "$f2"
+  fi
+}
+
+if [ -x "$PAWD" ] && PATH=$PATH:/usr/sbin rpcinfo -p >/dev/null 2>&1; then
+  pawd() {
+    $typeset path
+    path=`"$PAWD" "$1"` 2>/dev/null
+    if [ -n "$path" -a "$path" != "$1" ]; then
+      verifypath "$path" "$1"
+    else
+      echo "$1"
+    fi
+    $typeset pawd
+  }
+else
+  pawd() {
+    echo "$1"
+  }
+fi
+
+name=getcwd
+getcwd() {
+  $typeset cwd
+  cwd=`pwd`
+  if [ -z "$cwd" -a -n "$PWD" ]; then
+    cwd=$PWD
+  elif [ -n "$PWD" -a "$PWD" != "$cwd" ]; then
+    cwd=`verifypath "$PWD" "$cwd"`
+  fi
+
+  cwd=`pawd "$cwd"`
+  echo "$cwd"
+  $typeset cwd
+}
+
+# only do anything if this script is run rather than sourced
+case "$0" in
+  $name|$name.sh|*/$name|*/$name.sh) $name ;;
+esac
+
+unset name

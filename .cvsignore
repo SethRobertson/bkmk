@@ -7,6 +7,7 @@ confdef*
 config.*
 conftest
 conftest.*
+getcwd.sh
 lex.yy.c
 libbk_autoconf.h
 libtool

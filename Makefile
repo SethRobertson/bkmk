@@ -1,10 +1,11 @@
 OSFILE=.config_os_type
 OSNAME = $(shell uname -s | tr / - | sed 's/_.*//')-$(shell uname -r | sed 's/\(\.[^.()-]*\)[-.].*/\1/')
 
+SRCFILES:=$(subst configure.in,,$(wildcard *.in))
+GENFILES=$(subst .in,,$(SRCFILES))
 
 
 default:
-
 ################################################################
 #
 # Print an error message if someone tries to run a toplevel make
@@ -26,14 +27,21 @@ autoconf:
 
 clean nuke:
 	rm -f $(OSFILE) confdefs.h config.cache config.status config.log \
-	 libbk_autoconf.h .timestamp
+	 $(filter-out Make%,$(GENFILES)) libtool .timestamp
 
 %.status: ./%ure
 	./configure --disable-fast-install
+	@-chmod +x $(filter %.sh %.pl,$(GENFILES))
 	echo "$(OSNAME)" > $(OSFILE) && : > .timestamp
 
-.timestamp: *.in config.status
-	@./config.status && : > $@
+# <TRICKY>In order for this rule to run once, regardless of the number of out
+# of date configure-generated files, we use a phony pattern with % stem of '.';
+# requiring each generated file to contain exactly one . in its name.</TRICKY>
+GENPAT=$(subst .,%,$(GENFILES))
+$(GENPAT) %timestamp: $(addsuffix .in,$(GENPAT)) config%status
+	@./config.status && : > .timestamp
+	@-chmod +x $(filter %.sh %.pl,$(GENFILES))
+
 
 config.status: acaux/config.* acaux/ltmain.sh
 

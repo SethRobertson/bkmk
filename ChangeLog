@@ -1,3 +1,7 @@
+2003-03-25  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* gethome.sh, getcwd.sh.in: centralize pwd and path normalization
+
 2003-03-18  James Tanis  <jtt@saint.sysdetect.com>
 
 	* configure.in: Check sizes of int and long.
