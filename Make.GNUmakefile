@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.GNUmakefile,v 1.26 2003/11/11 00:05:36 dupuy Exp $
+# $Id: Make.GNUmakefile,v 1.27 2003/11/14 02:42:29 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -115,7 +115,7 @@ endif
 	      eval `echo $$INSTBASE					      \
 		    | $(SED) 's@\(/.*\)\(/opt/.*\)@DESTDIR=\1 INSTBASE=\2@'`; \
 	      ;;							      \
-	    '') INSTBASE=$(INSTBASE) ;;					      \
+	    '') INSTBASE='$(INSTBASE)' ;;				      \
 	  esac;								      \
 	fi;								      \
 	$(CONFIGCMD) &&							      \

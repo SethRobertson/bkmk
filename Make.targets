@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.targets,v 1.95 2003/10/27 20:52:07 dupuy Exp $
+# $Id: Make.targets,v 1.96 2003/11/14 02:42:29 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -393,10 +393,10 @@ nukectags::
 # We use /bin/pwd here rather than $(PWD) since we *want* the ugly automounter
 # path, as that is what [ec]tags sees and uses to compute relative pathnames.
 etags:: nukeetags
-	$(MAKE) TAGCMD=$(ETAGS) TAGOUT=`/bin/pwd`/TAGS subtags
+	$(MAKE) 'TAGCMD=$(ETAGS)' 'TAGOUT=`/bin/pwd`/TAGS' subtags
 
 ctags:: nukectags
-	$(MAKE) TAGCMD=$(CTAGS) TAGOUT=`/bin/pwd`/tags subtags
+	$(MAKE) 'TAGCMD=$(CTAGS)' 'TAGOUT=`/bin/pwd`/tags' subtags
 
 tags:: etags
 
