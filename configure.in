@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.51 2002/10/18 22:51:01 jtt Exp $
+dnl $Id: configure.in,v 1.52 2002/10/20 05:17:53 jtt Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.51 $)dnl
+AC_REVISION($Revision: 1.52 $)dnl
 AC_INIT(Make.bkvariables)
 AC_CONFIG_AUX_DIR(acaux)
 
@@ -39,6 +39,13 @@ AC_PROG_CPP
 AC_PROG_CXXCPP
 AC_PROG_CC_C_O
 
+if test "$ac_cv_prog_ac_ct_CC" = "gcc"
+then
+	CFLAGS_OLD="$CFLAGS"
+	CFLAGS="$CFLAGS -Werror -Wchar-subscripts"
+	BK_C_OVERZEALOUS_CHAR_SUBSCRIPTS
+	CFLAGS="$CFLAGS_OLD"
+fi
 
 echo $ECHO_N "checking for compiler warning flags... $ECHO_C" >&6
 SAVE_CFLAGS="$CFLAGS"
@@ -48,6 +55,7 @@ AC_SUBST(BK_SPECIAL_DEBUG)
 CFLAGS="$SAVE_CFLAGS"
 echo "${ECHO_T}$BK_SPECIAL_DEBUG" >&6
 
+AC_C_BIGENDIAN
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PATH_PROG(PWDPROG, pawd, pwd)
@@ -78,7 +86,7 @@ AC_SUBST(link_static_flag)
 AC_C__FUNC__
 AC_CONSTRUCTORS
 AC_SYS_LARGEFILE
-AC_CHECK_HEADERS(net/ethernet.h netinet/if_ether.h paths.h ieeefp.h)
+AC_CHECK_HEADERS(net/ethernet.h netinet/if_ether.h paths.h ieeefp.h alloca.h)
 AC_SA_LEN
 AC_INADDR_T
 AC_FUNC_INET_PTON
@@ -89,7 +97,7 @@ if test $ac_cv_func_working_mktime = no; then
 fi
 AC_TIME_MAX(BK_TIME_MAX)
 
-AC_CHECK_FUNCS(ntohll memmem memrchr strndup strnlen strverscmp)
+AC_CHECK_FUNCS(ntohll memmem memrchr setenv strndup strnlen strverscmp)
 AC_CHECK_FUNCS(strptime gmtime_r timegm)
 AC_GMTIME_R_PROTOTYPE
 AC_FUNC_STRFTIME

@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.21 2002/10/18 22:51:00 jtt Exp $
+# $Id: aclocal.m4,v 1.22 2002/10/20 05:17:52 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -130,6 +130,27 @@ AC_DEFUN([BK_TYPE_QUAD_INT], [AC_CACHE_CHECK([for quad_t as in integer type], bk
 if test "$bk_type_quad_int" = "yes"
 then
 	AC_DEFINE(HAVE_QUAD_INT)
+fi
+])
+
+# BK_C_OVERZEALOUS_CHAR_SUBSCRIPTS
+# --------------------------------
+# 
+# Check if gcc -Wchar-subscripts is too overzealous for our tastes
+#
+#
+AC_DEFUN([BK_C_OVERZEALOUS_CHAR_SUBSCRIPTS],dnl
+[AC_CACHE_CHECK([if -Wchar-subscripts is overzealous], bk_c_overzealous_char_subscripts,
+ AC_TRY_COMPILE(
+[
+#include <ctype.h>
+],[char *c="a"; isspace(*c)],
+[ bk_c_overzealous_char_subscripts=no; ],[ bk_c_overzealous_char_subscripts=yes; ]))
+if test "$bk_c_overzealous_char_subscripts" = "yes"
+then
+	HAVE_OVERZEALOUS_CHAR_SUBSCRIPT=true
+	AC_SUBST(HAVE_OVERZEALOUS_CHAR_SUBSCRIPT)
+	AC_WARN([Will not be using -fchar-subscripts. Some annoying errors might be missed])
 fi
 ])
 

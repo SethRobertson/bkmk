@@ -1,5 +1,5 @@
 /*				-*- C -*-
- * $Id: libbk_autoconf.h.in,v 1.26 2002/10/18 22:51:01 jtt Exp $
+ * $Id: libbk_autoconf.h.in,v 1.27 2002/10/20 05:17:53 jtt Exp $
  *
  * ++Copyright LIBBK++
  *
@@ -26,6 +26,8 @@
  * #defined constants be present in this file, as #undef (*not* #define) and
  * with *no* comments on the same line as the definition.</TRICKY>
  */
+
+#undef WORDS_BIGENDIAN
 
 #undef u_int8_t
 #undef u_int16_t
@@ -67,6 +69,8 @@
 #undef HAVE_ALLOCA
 #undef HAVE_ORACLE
 #undef HAVE_ISINF
+#undef HAVE_SETENV
+#undef HAVE_ALLOCA_H
 
 #undef STACK_DIRECTION
 
@@ -79,8 +83,10 @@
  */
 #undef BK_SECOND_REFUSED_CONNECT_ERRNO
 
+#ifndef _FILE_OFFSET_BITS
 // value of _FILE_OFFSET_BITS needed for large files
 #undef _FILE_OFFSET_BITS
+#endif
 
 // if _LARGE_FILES needed for large files
 #undef _LARGE_FILES
