@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.119 2004/12/27 23:52:07 jtt Exp $
+dnl $Id: configure.in,v 1.120 2004/12/28 04:56:19 dupuy Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.119 $)dnl
+AC_REVISION($Revision: 1.120 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
@@ -162,8 +162,6 @@ AC_SEARCH_LIBS([socket],[socket])
 AC_SEARCH_LIBS([gethostbyname],[resolv nsl])
 AC_SEARCH_LIBS([inet_aton],[resolv nsl])
 
-AC_SEARCH_LIBS([openpty],[util System])
-
 ACX_PTHREAD(
   [HAVE_PTHREADS=true
     AC_CHECK_HEADERS(pthread_np.h, [], [], [
@@ -177,7 +175,7 @@ AC_SUBST(HAVE_PTHREADS)
 dnl <TODO bugid="881">should use getaddressinfo function instead</TODO>>
 AC_SEARCH_LIBS([gethostbyname2],[resolv],[AC_DEFINE(HAVE_GETHOSTBYNAME2)])
 
-AC_SEARCH_LIBS([openpty],[c util],
+AC_SEARCH_LIBS([openpty],[c util System],
   [AC_DEFINE(HAVE_OPENPTY)
    AC_CHECK_HEADERS(pty.h util.h libutil.h)]
 )

@@ -1,3 +1,20 @@
+2004-12-27  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* configure.in: only need -lutil once, if at all
+
+	* Make.Linux-2.6-pre: Linux kernel 2.6 placeholder
+
+	* Make.Linux-2.4-pre, Make.FreeBSD-5.2-pre: eliminate redundant -lutil
+
+2004-12-27  James Tanis  <jtt@sysdetect.com>
+
+	* Make.variables, Make.config.in:
+	Only add --large-function-insns if GCC_VERSION is new enough
+
+	* configure.in: find expr
+
+	* Make.variables: static fedora build
+
 2004-12-23  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* configure.in: check for localtime_r as well
