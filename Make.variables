@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.69 2002/04/04 21:35:45 kjs Exp $
+# $Id: Make.variables,v 1.70 2002/04/29 22:32:52 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -42,7 +42,7 @@ BK_NEATSTUFF=$(BK_LOCALJUNK) $(BK_GROUPJUNK) $(BK_PKGJUNK) $(BK_BKJUNK) $(BK_STD
 BK_CLEANSTUFF=$(BK_NEATSTUFF) $(BK_LOCALCLEANJUNK) $(BK_GROUPCLEANJUNK) $(BK_PKGCLEANJUNK) $(BK_BKCLEANJUNK)
 BK_NUKESTUFF=$(BK_CLEANSTUFF) $(BK_NUKEJUNK) $(BK_LOCALNUKEJUNK) $(BK_GROUPNUKEJUNK) $(BK_PKGNUKEJUNK) $(BK_BKNUKEJUNK)
 BK_BKJUNK=$(BK_SIMPLE_PROGS) $(BK_LARGE_PROG) $(BK_LARGE_LIB) $(BK_SIMPLE_INTERNALPROGS) $(BK_LARGE_INTERNALPROG) $(BK_LARGE_INTERNALLIB) $(BK_JAVA_JAR)
-BK_STDJUNK=*.o *.obj *.lo *.a *.la core tca.log tca.map .libs .inslog* _1001.out a.out mon.out *.core *.class *.err
+BK_STDJUNK=*.o *.obj *.lo *.a *.la core tca.log tca.map .libs .inslog* _1001.out a.out mon.out *.core *.class *.err *.htm
 BK_BKCLEANJUNK=.depend tags TAGS *.rpt
 BK_BKNUKEJUNK=.\\\#* \\\#* *.rej *.orig *~
 
