@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.bkvariables,v 1.42 2003/08/27 15:10:00 jtt Exp $
+# $Id: Make.bkvariables,v 1.43 2003/08/27 15:51:14 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -66,10 +66,13 @@ BK_CONFIG_OS_TYPE=$(shell cat $(BKMK_OSFILE) 2>/dev/null)
 F2=/dev/fd/2
 BK_TTY:=$(shell test -c $(F2) && test -w $(F2) && echo $(F2) || echo /dev/tty)
 
-ifneq ($(findstring $(MAKECMDGOALS),neat clean nuke),)
 BK_GOAL_IS_CLEAN:=true
-else
+ifeq ($(findstring neat,$(MAKECMDGOALS)),)
+ifeq ($(findstring clean,$(MAKECMDGOALS)),)
+ifeq ($(findstring nuke,$(MAKECMDGOALS)),)
 BK_GOAL_IS_CLEAN:=false
+endif
+endif
 endif
 
 ifneq ($(BK_CONFIG_OS_TYPE),$(BK_OSNAME))
@@ -93,7 +96,7 @@ BK_DUMMY:=$(shell							      \
      NEAT=false;							      \
    fi;									      \
    rm -f $(BKMK_OSFILE);						      \
-   (cd $(BKMKDIR) && [ $$NEAT = "true" -o $(BK_GOAL_IS_CLEAN) = "false" ] {   \
+   (cd $(BKMKDIR) && [ $$NEAT = "true" -o $(BK_GOAL_IS_CLEAN) = "false" ] && {\
      rm -f config.cache config.status;					      \
      $(MAKE) -s config.status OSNAME=$(BK_OSNAME) OSFILE=$(BK_OSFILE); }; );  \
    ($$NEAT && cd $(GROUPTOP)/$(PKGTOP) && {				      \
