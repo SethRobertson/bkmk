@@ -1,3 +1,7 @@
+2002-02-06  larry ogrodnek  <ldog@sysdetect.com>
+
+	* configure.in: look for jhindexer (used by the help target).
+
 2002-02-06  James Tanis  <jtt@winwood.sysdetect.com>
 
 	* Make.targets ($(BK_INSTALLDOCDIR)/doxygen/Doxyfile): Make
