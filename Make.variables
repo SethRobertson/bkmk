@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.98 2002/08/27 02:45:17 dupuy Exp $
+# $Id: Make.variables,v 1.99 2002/08/27 02:48:36 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -254,7 +254,7 @@ BK_JAVA_PNGS:=$(foreach I,$(IMAGES),$(wildcard $(GROUPTOP)/$(I)/*.png))
 BK_JAVA_JPGS:=$(foreach I,$(IMAGES),$(wildcard $(GROUPTOP)/$(I)/*.jpg))
 # Don't use GIFs - they are patented by Unisys
 #BK_JAVA_GIFS:=$(foreach I,$(IMAGES),$(wildcard $(GROUPTOP)/$(I)/*.gif))
-BK_JAVA_IMAGES:=$(patsubst $(GROUPTOP)/%,%,$(BK_JAVA_PNGS) $(BK_JAVA_JPGS)
+BK_JAVA_IMAGES:=$(patsubst $(GROUPTOP)/%,%,$(BK_JAVA_PNGS) $(BK_JAVA_JPGS))
 
 BK_JAVA_PKG_CLASS:=$(patsubst %,$(BK_JAVADIR)/%,$(BK_JAVA_CLASS))
 BK_JAVA_PKG_TCLASS:=$(patsubst %,$(BK_JAVADIR)/%,$(BK_JAVA_TCLASS))
