@@ -1,5 +1,5 @@
 /*				-*- C -*-
- * $Id: libbk_autoconf.h.in,v 1.30 2002/11/12 23:23:58 lindauer Exp $
+ * $Id: libbk_autoconf.h.in,v 1.31 2002/11/18 22:06:46 dupuy Exp $
  *
  * ++Copyright LIBBK++
  *
@@ -46,10 +46,12 @@
 #undef HAVE_UNISTD_H
 #undef HAVE_SYS_TIME_H
 #undef TIME_WITH_SYS_TIME
-#undef HAVE_NET_ETHERNET_H
-#undef HAVE_NETINET_IF_ETHER_H
 #undef HAVE_PATHS_H
 #undef HAVE_IEEEFP_H
+#undef HAVE_ALLOCA_H
+#undef HAVE_NET_ETHERNET_H
+#undef HAVE_NETINET_IF_ETHER_H
+#undef HAVE_SYS_CAPABILITY_H
 
 #undef HAVE_IN_ADDR_T
 #undef HAVE_SOCKADDR_SA_LEN
@@ -71,7 +73,6 @@
 #undef HAVE_ORACLE
 #undef HAVE_ISINF
 #undef HAVE_SETENV
-#undef HAVE_ALLOCA_H
 #undef HAVE_GETHOSTBYNAME2
 
 #undef STACK_DIRECTION
