@@ -1,4 +1,4 @@
-# $Id: Make.targets,v 1.17 2001/11/08 09:26:44 dupuy Exp $
+# $Id: Make.targets,v 1.18 2001/11/08 22:33:10 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -195,6 +195,7 @@ $(BK_INSTALLDOCDIR)/doxygen/Doxyfile:
 doxygen: $(BK_INSTALLDOCDIR)/doxygen/Doxyfile
 	-@ $(ECHO) "Rebuilding oxygen database in $(BK_INSTALLDOCDIR)/doxygen" 
 	-@ 	$(CD) $(BK_INSTALLDOCDIR)/doxygen && \
+		$(RM) -rf [a-z]* && \
 		$(DOXYGEN) ./Doxyfile > .lastbuild 2>&1
 
 viewdox: doxygen

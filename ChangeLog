@@ -1,3 +1,8 @@
+2001-11-08  Seth Robertson  <seth@startide.sysdetect.com>
+
+	* Make.targets (doxygen): Modified doxygen target to nuke
+	doxy-files to prevent stale files from lying around.
+
 2001-11-08  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* configure (LN_S): regenerated with newer autoconf 2.52; configure
