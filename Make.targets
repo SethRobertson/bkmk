@@ -1,6 +1,6 @@
 # -*- makefile -*-
 # 
-# $Id: Make.targets,v 1.33 2002/01/04 21:27:34 jtt Exp $
+# $Id: Make.targets,v 1.34 2002/01/26 00:11:54 ldog Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -42,7 +42,14 @@ default:: $(BK_LOCALTARGETS) $(BK_GROUPTARGETS) $(BK_PACKAGETARGETS) $(BK_LARGE_
 
 ifneq ($(strip $(BK_WANT_JAVA)),false)
 default:: $(BK_JAVA_JAR)
+ifneq ($(strip $(BK_JAVA_HELP)),)
+ifneq ($(strip $(BK_JAVA_HELP_LANG)),)
+default:: help
+endif # BK_JAVA_HELP_LANG
+endif # BK_JAVA_HELP
 endif # BK_WANT_JAVA
+
+
 
 
 #
@@ -91,7 +98,19 @@ endif # We Have Source
 depend::
 	$(BK_SUBDIRRULE)
 
-
+ifneq ($(strip $(BK_WANT_JAVA)),false)
+ifneq ($(strip $(BK_JAVA_HELP)),)
+ifneq ($(strip $(BK_JAVA_HELP_LANG)),)
+depend::
+	rm -f .depend
+	for L in $(BK_JAVA_HELP_LANG); do \
+	  echo -n "$(BK_JAVA_HELP)_$$L.jar: " >> .depend; \
+	  $(BUILDHELP) -l $(BK_JAVA_HELP) $$L/Map.jhm >> .depend; \
+	  echo "" >> .depend; \
+	done
+endif # BK_WANT_JAVA
+endif # BK_JAVA_LANG
+endif # BK_JAVA_HELP
 #
 # Multi-architecture support
 #
@@ -148,6 +167,11 @@ ifneq ($(strip $(BK_JAVA_JAR)),)
 	$(MKDIR) $(BK_INSTALLJAVADIR)
 	$(INSTALL) $(INSTALL_OTHERFLAGS) $(BK_JAVA_JAR) $(BK_INSTALLJAVADIR)
 endif # BK_JAVA_JAR
+ifneq ($(strip $(BK_JAVA_HELP)),)
+	$(INSTALL) $(INSTALL_OTHERFLAGS) \
+	  $(BK_JAVA_HELP)_$(BK_JAVA_HELP_LANG).jar \
+	  $(BK_INSTALLJAVADIR)
+endif # BK_JAVA_HELP
 endif # BK_INSTALLJAVADIR
 endif # BK_WANT_JAVA
 ifneq ($(strip $(BK_INSTALLINCDIR)),)
@@ -274,6 +298,23 @@ viewdox: doxygen
 	        && exit 0 ;; \
 	  esac; \
 	  $(BROWSER) file:$(CURDIR)/$$URL
+
+
+#
+# Generate Help Documentation
+#
+ifneq ($(strip $(BK_WANT_JAVA)),false)
+ifneq ($(strip $(BK_JAVA_HELP)),)
+ifneq ($(strip $(BK_JAVA_HELP_LANG)),)
+
+help: $(patsubst %, $(BK_JAVA_HELP)_%.jar, $(BK_JAVA_HELP_LANG))
+
+$(BK_JAVA_HELP)_%.jar: %/Map.jhm
+	$(BUILDHELP) $(BK_JAVA_HELP) $<
+
+endif # BK_WANT_JAVA
+endif # BK_JAVA_LANG
+endif # BK_JAVA_HELP
 
 #
 # Prevent targets from being files

@@ -1,3 +1,15 @@
+2002-01-25  larry ogrodnek  <ldog@sysdetect.com>
+
+	* configure: find buildhelp.
+	
+	* Make.config.in: add BUILDHELP.
+	
+	* Make.targets (default): add "help" if BK_WANT_JAVA,
+	BK_JAVA_HELP, and BK_JAVA_HELP_LANG are defined.
+	(depend): create help file dependencies if BK_WANT_JAVA,
+	BK_JAVA_HELP and BK_JAVA_HELP_LANG are defined.
+	(help): add help target to create user docs.
+
 2002-01-24  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* libbk_autoconf.h.in: add new #defines from updated configure

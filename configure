@@ -3329,6 +3329,45 @@ else
 echo "${ECHO_T}no" >&6
 fi
 
+
+# Extract the first word of "buildhelp", so it can be a program name with args.
+set dummy buildhelp; ac_word=$2
+echo "$as_me:3296: checking for $ac_word" >&5
+echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6
+if test "${ac_cv_path_BUILDHELP+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  case $BUILDHELP in
+  [\\/]* | ?:[\\/]*)
+  ac_cv_path_BUILDHELP="$BUILDHELP" # Let the user override the test with a path.
+  ;;
+  *)
+  ac_save_IFS=$IFS; IFS=$ac_path_separator
+ac_dummy="$PATH:/usr/local/java/bin"
+for ac_dir in $ac_dummy; do
+  IFS=$ac_save_IFS
+  test -z "$ac_dir" && ac_dir=.
+  if $as_executable_p "$ac_dir/$ac_word"; then
+   ac_cv_path_BUILDHELP="$ac_dir/$ac_word"
+   echo "$as_me:3313: found $ac_dir/$ac_word" >&5
+   break
+fi
+done
+
+  test -z "$ac_cv_path_BUILDHELP" && ac_cv_path_BUILDHELP="$FALSE"
+  ;;
+esac
+fi
+BUILDHELP=$ac_cv_path_BUILDHELP
+
+if test -n "$BUILDHELP"; then
+  echo "$as_me:3325: result: $BUILDHELP" >&5
+echo "${ECHO_T}$BUILDHELP" >&6
+else
+  echo "$as_me:3328: result: no" >&5
+echo "${ECHO_T}no" >&6
+fi
+
 # Extract the first word of "doxygen", so it can be a program name with args.
 set dummy doxygen; ac_word=$2
 echo "$as_me:3334: checking for $ac_word" >&5
@@ -4909,6 +4948,7 @@ s,@TEST@,$TEST,;t t
 s,@PERL@,$PERL,;t t
 s,@JAVAC@,$JAVAC,;t t
 s,@JAR@,$JAR,;t t
+s,@BUILDHELP@,$BUILDHELP,;t t
 s,@DOXYGEN@,$DOXYGEN,;t t
 s,@HAVE_DOT@,$HAVE_DOT,;t t
 s,@BROWSER@,$BROWSER,;t t
