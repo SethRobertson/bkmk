@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.bkvariables,v 1.8 2001/11/30 07:49:10 dupuy Exp $
+# $Id: Make.bkvariables,v 1.9 2002/01/04 21:27:34 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -44,11 +44,18 @@ ifneq ($(BK_CONFIG_OS_TYPE),$(BK_OSNAME))
 # tty. BTW: Note the use of "rm", since we can't depend on configured $(RM);
 # this could technically fail, but it's pretty unlikely.
 
-BK_DUMMY:=$(shell (cd $(BKMKDIR); rm config.cache; ./configure; echo "$(BK_OSNAME)" > .config_os_type)2>/dev/null >/dev/tty)
+BK_DUMMY:=$(shell (cd $(BKMKDIR); rm .timestamp; make -s .timestamp; echo "$(BK_OSNAME)" > .config_os_type)2>/dev/null >/dev/tty)
+
+else
+
+BK_DUMMY:=$(shell (cd $(BKMKDIR); make -s .timestamp; echo "$(BK_OSNAME)" > .config_os_type)2>/dev/null >/dev/tty)
+
+
+endif # BK_CONFIG_OS_TYPE != BK_OSNAME
+
 #
 ##################################################
 
-endif # BK_CONFIG_OS_TYPE != BK_OSNAME
 
 
 endif # BKMK_VAR_CORRECT
