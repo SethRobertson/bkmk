@@ -1,3 +1,7 @@
+2002-01-18  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.GNUmakefile: common parts of bkmk GNUmakefile adaptors
+
 2002-01-15  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* configure.in: set PATH_SEPARATOR in config header
