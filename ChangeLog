@@ -1,3 +1,8 @@
+2002-05-16  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.GNUmakefile (install): must always be double-colon, now
+	that awb/Make.include has install:: target for fset/model samples
+
 2002-05-13  James Tanis  <jtt@saint.sysdetect.com>
 
 	* Make.production ($(filter %.la,$(BK_LARGE_LIB))): Need to create

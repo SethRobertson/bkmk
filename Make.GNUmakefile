@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.GNUmakefile,v 1.3 2002/04/03 17:22:42 dupuy Exp $
+# $Id: Make.GNUmakefile,v 1.4 2002/05/16 16:15:33 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -35,7 +35,7 @@ endif
 
 include $(PKGTOP)/Make.include
 
-install: $(CONFIGURED)
+install:: $(CONFIGURED)
 	-mkdir -p $(INSTBASE)
 ifneq ($(strip $(BK_WANT_C)),false)
 	cd $(ARCH) && $(MAKE) && $(MAKE) $@
