@@ -1,4 +1,4 @@
-# $Id: Make.variables,v 1.3 2001/06/18 20:09:50 seth Exp $
+# $Id: Make.variables,v 1.4 2001/06/18 21:02:32 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -25,7 +25,7 @@ BK_NUKESTUFF=$(BK_CLEANSTUFF) $(BK_NUKEJUNK) $(BK_LOCALNUKEJUNK) $(BK_GROUPNUKEJ
 BK_BKJUNK=$(BK_SIMPLE_PROGS) $(BK_LARGE_PROG) $(BK_LARGE_LIB)
 BK_STDJUNK=*.o *.a core tca.log tca.map .inslog _1001.out a.out mon.out gmon.core *.core
 BK_BKCLEANJUNK=.depend tags TAGS
-BK_BKNUKEJUNK=.#* #* *.rej *.orig *~
+BK_BKNUKEJUNK=.\\\#* \\\#* *.rej *.orig *~
 
 
 #
@@ -83,10 +83,12 @@ TERMINAL_LIBS=-ltermcap
 MATH_LIBS=-lm
 
 # BK issues
+ifneq ($(NO_STDBKCCSTUFF),true)
 BK_DEFINES= $(RESOLVER_DEFINES)
 BK_INCS= $(RESOLVER_INCLUDES)
 BK_LDS= $(RESOLVER_LDS)
 BK_LIBS= -lbk -ldict -lfsma -lpq $(LIBRESOLVER)
+endif # NO_STDBKCCSTUFF
 
 # C
 CC_normal=gcc $(GCCOPTS)

@@ -2,36 +2,46 @@
 #
 #
 #
-$FIRST="## BEGIN BKSTANDARD MAKEFILE";
-$MIDDLE=<<'EOF';
+sub BEGIN
+{
+  $FIRST="## BEGIN BKSTANDARD MAKEFILE";
+  $MIDDLE=<<'EOF';
 -include $(GROUPTOP)/Make.preinclude
 include $(GROUPTOP)/$(PKGTOP)/bkmk/Make.include
 -include $(GROUPTOP)/$(PKGTOP)/Make.include
 -include $(GROUPTOP)/Make.include
 -include ./Make.include
 EOF
-$LAST="## END BKSTANDARD MAKEFILE";
-$state = 0;
+  $LAST="## END BKSTANDARD MAKEFILE";
+}
 
 while (<>)
 {
-  if ($state == 0)
+  if ($. == 1)
     {
-      unless (/^$FIRST/)
-	{
-	  print;
-	  next;
-	}
-      $state = 1;
-      print "$FIRST\n$MIDDLE$LAST\n";
-      next;
+print STDERR "Looking $ARGV\n" ;
+      $state = 0;
+    }
+  if ($state == 2)
+    {
+      print;
     }
   if ($state == 1)
     {
-      /^$LAST/ || next;
-      $state = 2;
-      next;
+      $state = 2 if /^$LAST/;
     }
-
-  print;
+  if ($state == 0)
+    {
+      if (/^$FIRST/)
+	{
+print STDERR "FOUND $ARGV\n";
+	  $state = 1;
+	  print "$FIRST\n$MIDDLE$LAST\n";
+	}
+      else
+	{
+	  print;
+	}
+    }
+  close ARGV if eof;              # Reset $.
 }
