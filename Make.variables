@@ -1,4 +1,4 @@
-# $Id: Make.variables,v 1.16 2001/08/27 03:10:21 seth Exp $
+# $Id: Make.variables,v 1.17 2001/09/07 16:27:17 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -75,7 +75,9 @@ MFLAGS=
 RESOLVER_DEFINES=-DRESOLVER=RESOLV
 RESOLVER_INCLUDES=
 RESOLVER_LDS=
-LIBRESOLVER=-lresolv $(LIB44BSD)
+#make it work on Windows for now
+#LIBRESOLVER=-lresolv $(LIB44BSD)
+LIBRESOLVER=
 LIB44BSD=#-l44bsd
 
 # Libraries
