@@ -4,7 +4,7 @@ OS_LIBS=-lintl
 
 
 # -avoid-version causes OpenBSD ld to use archives instead of shared objects
-LT_LDFLAGS=--mode link
+override LT_LDFLAGS=
 # (we don't need to override LT_M_LDFLAGS since ld doesn't search for modules)
 
 
@@ -18,7 +18,7 @@ ifneq ($(WANT_LIBTOOL),false)
 ifneq ($(NO_OPT),true)
 ifneq ($(USING_INSURE),true)
 # this really should be controlled by several independent make variables
-override COPTDEBUG+=-O2 -mcpu=i686 -march=i686 -fforce-addr -fomit-frame-pointer -funroll-loops -frerun-cse-after-loop -frerun-loop-opt -malign-functions=4
+override COPTDEBUG+=-O2 -mcpu=i686 -march=i686 -fforce-addr -funroll-loops -frerun-cse-after-loop -frerun-loop-opt -malign-functions=4 -g $(COMPILER_DEBUG)
 endif
 endif
 endif

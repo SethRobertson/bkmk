@@ -1,3 +1,8 @@
+2002-02-21  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.OpenBSD-2.9-pre (LT_LDFLAGS, COPTDEBUG): must override,
+	update override values to work same as Make.variables definitions
+
 2002-02-19  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.production ($(BK_JAVA_JAR)): avoid emacs compile mode stack
