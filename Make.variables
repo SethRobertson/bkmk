@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.100 2002/08/27 23:03:42 dupuy Exp $
+# $Id: Make.variables,v 1.101 2002/09/03 01:09:19 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -41,26 +41,26 @@ BK_INSTALLPATH=$(shell $(PERL) -e $(NORMALIZEPATH))
 
 BKMKVAR_VAR_CORRECT=true
 export BK_INSTALLRDIR BK_INSTALLPATH BKMKVAR_VAR_CORRECT
-endif
+endif # BKMKVAR_VAR_CORRECT
 
 # Provide safe default so that LD_LIBRARY_PATH will be used
 # If BK_INSTALLRPATH is "installdir" use the default install directory
 # If BK_INSTALLRPATH is some other value, use that
 ifndef BK_INSTALLRPATH
 BK_INSTALLRPATH=/Use/LD_LIBRARY_PATH/Instead/Of/Hardcoded/Paths/Silly/Linux/Libtool/Grr/Grr/Grr
-else
+else # BK_INSTALLRPATH
 ifeq ($(BK_INSTALLRPATH),installdir)
 BK_INSTALLRPATH=$(BK_INSTALLRDIR)
-endif
-endif
+endif # BK_INSTALLRPATH
+endif # BK_INSTALLRPATH
 
 ifndef BK_WANT_LIBTOOL
 BK_WANT_LIBTOOL=true
-endif
+endif # !BK_WANT_LIBTOOL
 
 ifeq ($(BK_WANT_LIBTOOL),)
 BK_WANT_LIBTOOL=true
-endif
+endif # !BK_WANT_LIBTOOL
 
 #
 # Junk
@@ -81,11 +81,11 @@ ifeq ($(BK_WANT_STATIC), true)
 # Sigh.. libtool *claims* to support both a -static and a --all-static link mode argument,
 # but it does not (or at least ours does not).
 BK_WANT_LIBTOOL=false
-endif
+endif # BK_WANT_STATIC
 
 ifeq ($(BK_WANT_LIBTOOL), false)
 BK_NO_USER_SHARED_LIBS=true
-endif
+endif # BK_WANT_LIBTOOL
 
 #
 # C source filenames for standard production rules
@@ -142,12 +142,12 @@ ifeq ($(BK_WANT_LIBTOOL), true)
 LIBTOOL_COMPILE=$(LIBTOOL) --mode=compile
 LIBTOOL_LINK=$(LIBTOOL) --mode=$(LINKMODE)
 LIBTOOL_INSTALL=$(LIBTOOL) --mode=install --quiet
-else
+else # BK_WANT_LIBTOOL
 LIBTOOL_COMPILE=
 LIBTOOL_LINK=
 LIBTOOL_INSTALL=
 BK_INSTALLRPATH=$(BK_INSTALLRDIR)
-endif
+endif # BK_WANT_LIBTOOL
 
 #
 # <WARNING>If $(BK_INSTALLRDIR) != $(BK_INSTALLRPATH), libtool support gets
@@ -193,7 +193,7 @@ LINKMODE=link
 EDIT_LT_PROGLINK=:
 EDIT_LT_LIBINSTALL=:
 EDIT_LT_MODINSTALL=:
-else
+else # BK_INSTALLRDIR==BK_INSTALLRPATH
 LINKMODE=prelink
 EDIT_LT_PROGLINK=\
 	$(PERL) -pi.BAK -e " \
@@ -218,7 +218,7 @@ EDIT_LT_MODINSTALL=\
 	$(PERL) -pi -e " \
 	  s|$(BK_INSTALLRPATH)(/[^ ]*\.la)|$(BK_INSTALLRDIR)\1|g \
 	    if (/^dependency_libs=/);" $(BK_INSTALLRDIR)/$(^F)
-endif
+endif # BK_INSTALLRDIR==BK_INSTALLRPATH
 
 ######################################################################
 # Java stuff
@@ -277,16 +277,16 @@ JTESTERR={ $(SED) -n -e 's/^\[\([^,]*\), line \([0-9]*\)\]/\1:\2:/' \
 
 ifeq ($(DISPLAY),)
 JTESTOUT=-nogui
-endif
+endif # !DISPLAY
 ifeq ($(JTESTUI),)
 JTESTOUT=-nogui
-endif
+endif # !JTESTUI
 
 ifeq ($(JTESTOUT),)
 JTESTERR=true
 # don't be nuking generated .ctp files when user may have tweaked them
 .PRECIOUS: %.ctp
-endif
+endif # !JTESTOUT
 
 BK_JAVA_JTEST:=$(patsubst %.java,%.rpt,$(BK_JAVA_SRC))
 # what about inner classes?
@@ -326,17 +326,17 @@ CC_CONFIG=$(BGCC)
 CCOPTS+=-fbounds-checking
 COMPILER_NAME=gcc
 BK_DEFINES+=-DBGCC_BOUNDS_CHECKING
-endif
+endif # CC_CONFIG==gcc
 # NB: At SYSD, this does not yet work
 ifeq ($(CXX_CONFIG),g++)
 CXXOPTS+=-fbounds-checking
 COMPILER_NAME=gcc
-endif
-endif
+endif # CXX_CONFIG=g++
+endif # BK_USING_BOUNDS_CHECKING
 
 ifeq ($(CC_CONFIG),gcc)
 COMPILER_NAME=gcc
-endif
+endif # CC_CONFIG=gcc
 
 # C
 CC_normal=$(CC_CONFIG) $(CCOPTS)
@@ -353,40 +353,40 @@ COMPILER_DEBUG+=-Wmissing-prototypes -Wstrict-prototypes -Wchar-subscripts -Wcom
 # options for gcc only
 ifeq ($(CC_CONFIG),gcc)
 COMPILER_DEBUG+=-Wreturn-type -Wpointer-arith 
-endif
+endif # CC_CONFIG=gcc
 
 COMPILER_DEBUG+=$(BK_SPECIAL_DEBUG)
 
 ifneq ($(NO_WERROR),true)
 COMPILER_DEBUG_ERROR=-Werror
-endif
+endif # NO_WERROR
 
 ifneq ($(NO_OPT),true)
-ifneq ($(BK_USING_INSURE),true)
 ifeq ($(BK_DEBUG_OPT),true)
 COPTDEBUG+=-O2
-else
+else # BK_DEBUG_OPT
 COPTDEBUG+=-O3 -mcpu=i686 -march=i686 -fforce-addr -funroll-loops -frerun-cse-after-loop -frerun-loop-opt -malign-functions=4
-endif
+endif # BK_DEBUG_OPT
 # gcc doesn't support -Wuninitialized without -O. And if using insure++ you
 # get it anyway.
 COMPILER_DEBUG+=-Wuninitialized 
-endif
-endif
+endif # NO_OPT
 
 ifneq ($(NO_DEBUG),true)
 COPTDEBUG+=-g $(COMPILER_DEBUG)
-else
+else # NO_DEBUG
 COPTDEBUG+=-fomit-frame-pointer
-endif
+endif # NO_DEBUG
 
-endif # BK_USING_INSURE
+endif # COMPILER_NAME=gcc
 
 ifeq ($(BK_WANT_STATIC),true)
 LDFLAGS+=$(LINK_STATIC_FLAG)
-endif
+endif # BK_WANT_STATIC
 
-endif # CC is gcc
+else # BK_USING_INSURE!=true
+COPTDEBUG=-g -W -Wall
+endif # BK_USING_INSURE!=true
 
 CFLAGS=$(COPTDEBUG)
 CPPFLAGS=$(BK_ALLINCS) $(BK_ALLDEFINES)
@@ -396,9 +396,9 @@ LDLIBS=$(BK_ALLLIBS)
 OBJEXT=.$(OBJEXT_CONFIG)
 ifeq ($(strip $(EXEEXT_CONFIG)),)
 EXEEXT=
-else
+else # !EXEEXT_CONFIG
 EXEEXT=.$(EXEEXT_CONFIG)
-endif
+endif # !EXEEXT_CONFIG
 
 ######################################################################
 # What are you using, and what do you want?
@@ -411,36 +411,36 @@ LIBTOOL=: no-libtool [BK_WANT_LIBTOOL=false]
 LIBEXT=.a
 LT_CFLAGS=
 LT_LDFLAGS=
-else
+else # !BK_WANT_LIBTOOL
 LT=$(LIBTOOL)
 LTCC=$(LIBTOOL_COMPILE)
 LTLD=$(LIBTOOL_LINK)
 LIBEXT=.la
 OBJEXT=.lo
 top_builddir=$(BKMKDIR)
-endif
+endif # !BK_WANT_LIBTOOL
 
 ifeq ($(BK_USING_GPROF),true)
 CFLAGS += -pg
 # This isn't *strictly* an OS lib, but it's close enough
 OS_LIBS += -lc_p
-endif
+endif # BK_USING_GPROF
 
 ifeq ($(BK_USING_PROF),true)
 CFLAGS += -p
 # This isn't *strictly* an OS lib, but it's close enough
 OS_LIBS += -lc_p
-endif
+endif # BK_USING_PROF
 
 ifeq ($(BK_USING_DMALLOC),true)
 BK_LIBS+= -ldmalloc
 BK_DEFINES+=-DUSING_DMALLOC -DDMALLOC_FUNC_CHECK
-endif
+endif # BK_USING_DMALLOC
 
 ifeq ($(BK_USING_INSURE),true)
 BK_DEFINES+=-D__INSIGHT__
 CC=$(INSURE)
-endif
+endif # BK_USING_INSURE
 
 OS_SEARCHPATH=/usr/local/lib /usr/lib /usr/local/gnu/lib
 
