@@ -1,3 +1,7 @@
+2002-11-21  James Tanis  <jtt@hawking.sysdetect.com>
+
+	* configure.in (LIBS): Find "true" and "cp".
+
 2002-11-20  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.bkvariables (BK_DUMMY): get correct echo args on arch change

@@ -11479,11 +11479,85 @@ else
 echo "${ECHO_T}no" >&6
 fi
 
+# Extract the first word of "true", so it can be a program name with args.
+set dummy true; ac_word=$2
+echo "$as_me:11484: checking for $ac_word" >&5
+echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6
+if test "${ac_cv_path_TRUE+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  case $TRUE in
+  [\\/]* | ?:[\\/]*)
+  ac_cv_path_TRUE="$TRUE" # Let the user override the test with a path.
+  ;;
+  *)
+  ac_save_IFS=$IFS; IFS=$ac_path_separator
+ac_dummy="$PATH"
+for ac_dir in $ac_dummy; do
+  IFS=$ac_save_IFS
+  test -z "$ac_dir" && ac_dir=.
+  if $as_executable_p "$ac_dir/$ac_word"; then
+   ac_cv_path_TRUE="$ac_dir/$ac_word"
+   echo "$as_me:11501: found $ac_dir/$ac_word" >&5
+   break
+fi
+done
+
+  ;;
+esac
+fi
+TRUE=$ac_cv_path_TRUE
+
+if test -n "$TRUE"; then
+  echo "$as_me:11512: result: $TRUE" >&5
+echo "${ECHO_T}$TRUE" >&6
+else
+  echo "$as_me:11515: result: no" >&5
+echo "${ECHO_T}no" >&6
+fi
+
+# Extract the first word of "cp", so it can be a program name with args.
+set dummy cp; ac_word=$2
+echo "$as_me:11521: checking for $ac_word" >&5
+echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6
+if test "${ac_cv_path_CP+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  case $CP in
+  [\\/]* | ?:[\\/]*)
+  ac_cv_path_CP="$CP" # Let the user override the test with a path.
+  ;;
+  *)
+  ac_save_IFS=$IFS; IFS=$ac_path_separator
+ac_dummy="$PATH"
+for ac_dir in $ac_dummy; do
+  IFS=$ac_save_IFS
+  test -z "$ac_dir" && ac_dir=.
+  if $as_executable_p "$ac_dir/$ac_word"; then
+   ac_cv_path_CP="$ac_dir/$ac_word"
+   echo "$as_me:11538: found $ac_dir/$ac_word" >&5
+   break
+fi
+done
+
+  ;;
+esac
+fi
+CP=$ac_cv_path_CP
+
+if test -n "$CP"; then
+  echo "$as_me:11549: result: $CP" >&5
+echo "${ECHO_T}$CP" >&6
+else
+  echo "$as_me:11552: result: no" >&5
+echo "${ECHO_T}no" >&6
+fi
+
 for ac_prog in mv cp
 do
   # Extract the first word of "$ac_prog", so it can be a program name with args.
 set dummy $ac_prog; ac_word=$2
-echo "$as_me:11486: checking for $ac_word" >&5
+echo "$as_me:11560: checking for $ac_word" >&5
 echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6
 if test "${ac_cv_path_MV+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -11500,7 +11574,7 @@ for ac_dir in $ac_dummy; do
   test -z "$ac_dir" && ac_dir=.
   if $as_executable_p "$ac_dir/$ac_word"; then
    ac_cv_path_MV="$ac_dir/$ac_word"
-   echo "$as_me:11503: found $ac_dir/$ac_word" >&5
+   echo "$as_me:11577: found $ac_dir/$ac_word" >&5
    break
 fi
 done
@@ -11511,10 +11585,10 @@ fi
 MV=$ac_cv_path_MV
 
 if test -n "$MV"; then
-  echo "$as_me:11514: result: $MV" >&5
+  echo "$as_me:11588: result: $MV" >&5
 echo "${ECHO_T}$MV" >&6
 else
-  echo "$as_me:11517: result: no" >&5
+  echo "$as_me:11591: result: no" >&5
 echo "${ECHO_T}no" >&6
 fi
 
@@ -11524,7 +11598,7 @@ test -n "$MV" || MV="$FALSE"
 
 # Extract the first word of "mkdir", so it can be a program name with args.
 set dummy mkdir; ac_word=$2
-echo "$as_me:11527: checking for $ac_word" >&5
+echo "$as_me:11601: checking for $ac_word" >&5
 echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6
 if test "${ac_cv_path_MKDIR+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -11541,7 +11615,7 @@ for ac_dir in $ac_dummy; do
   test -z "$ac_dir" && ac_dir=.
   if $as_executable_p "$ac_dir/$ac_word"; then
    ac_cv_path_MKDIR="$ac_dir/$ac_word"
-   echo "$as_me:11544: found $ac_dir/$ac_word" >&5
+   echo "$as_me:11618: found $ac_dir/$ac_word" >&5
    break
 fi
 done
@@ -11553,16 +11627,16 @@ fi
 MKDIR=$ac_cv_path_MKDIR
 
 if test -n "$MKDIR"; then
-  echo "$as_me:11556: result: $MKDIR" >&5
+  echo "$as_me:11630: result: $MKDIR" >&5
 echo "${ECHO_T}$MKDIR" >&6
 else
-  echo "$as_me:11559: result: no" >&5
+  echo "$as_me:11633: result: no" >&5
 echo "${ECHO_T}no" >&6
 fi
 
 # Extract the first word of "ls", so it can be a program name with args.
 set dummy ls; ac_word=$2
-echo "$as_me:11565: checking for $ac_word" >&5
+echo "$as_me:11639: checking for $ac_word" >&5
 echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6
 if test "${ac_cv_path_LS+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -11579,7 +11653,7 @@ for ac_dir in $ac_dummy; do
   test -z "$ac_dir" && ac_dir=.
   if $as_executable_p "$ac_dir/$ac_word"; then
    ac_cv_path_LS="$ac_dir/$ac_word"
-   echo "$as_me:11582: found $ac_dir/$ac_word" >&5
+   echo "$as_me:11656: found $ac_dir/$ac_word" >&5
    break
 fi
 done
@@ -11591,16 +11665,16 @@ fi
 LS=$ac_cv_path_LS
 
 if test -n "$LS"; then
-  echo "$as_me:11594: result: $LS" >&5
+  echo "$as_me:11668: result: $LS" >&5
 echo "${ECHO_T}$LS" >&6
 else
-  echo "$as_me:11597: result: no" >&5
+  echo "$as_me:11671: result: no" >&5
 echo "${ECHO_T}no" >&6
 fi
 
 # Extract the first word of "cat", so it can be a program name with args.
 set dummy cat; ac_word=$2
-echo "$as_me:11603: checking for $ac_word" >&5
+echo "$as_me:11677: checking for $ac_word" >&5
 echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6
 if test "${ac_cv_path_CAT+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -11617,7 +11691,7 @@ for ac_dir in $ac_dummy; do
   test -z "$ac_dir" && ac_dir=.
   if $as_executable_p "$ac_dir/$ac_word"; then
    ac_cv_path_CAT="$ac_dir/$ac_word"
-   echo "$as_me:11620: found $ac_dir/$ac_word" >&5
+   echo "$as_me:11694: found $ac_dir/$ac_word" >&5
    break
 fi
 done
@@ -11629,16 +11703,16 @@ fi
 CAT=$ac_cv_path_CAT
 
 if test -n "$CAT"; then
-  echo "$as_me:11632: result: $CAT" >&5
+  echo "$as_me:11706: result: $CAT" >&5
 echo "${ECHO_T}$CAT" >&6
 else
-  echo "$as_me:11635: result: no" >&5
+  echo "$as_me:11709: result: no" >&5
 echo "${ECHO_T}no" >&6
 fi
 
 # Extract the first word of "basename", so it can be a program name with args.
 set dummy basename; ac_word=$2
-echo "$as_me:11641: checking for $ac_word" >&5
+echo "$as_me:11715: checking for $ac_word" >&5
 echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6
 if test "${ac_cv_path_BASENAME+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -11655,7 +11729,7 @@ for ac_dir in $ac_dummy; do
   test -z "$ac_dir" && ac_dir=.
   if $as_executable_p "$ac_dir/$ac_word"; then
    ac_cv_path_BASENAME="$ac_dir/$ac_word"
-   echo "$as_me:11658: found $ac_dir/$ac_word" >&5
+   echo "$as_me:11732: found $ac_dir/$ac_word" >&5
    break
 fi
 done
@@ -11667,16 +11741,16 @@ fi
 BASENAME=$ac_cv_path_BASENAME
 
 if test -n "$BASENAME"; then
-  echo "$as_me:11670: result: $BASENAME" >&5
+  echo "$as_me:11744: result: $BASENAME" >&5
 echo "${ECHO_T}$BASENAME" >&6
 else
-  echo "$as_me:11673: result: no" >&5
+  echo "$as_me:11747: result: no" >&5
 echo "${ECHO_T}no" >&6
 fi
 
 # Extract the first word of "sed", so it can be a program name with args.
 set dummy sed; ac_word=$2
-echo "$as_me:11679: checking for $ac_word" >&5
+echo "$as_me:11753: checking for $ac_word" >&5
 echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6
 if test "${ac_cv_path_SED+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -11693,7 +11767,7 @@ for ac_dir in $ac_dummy; do
   test -z "$ac_dir" && ac_dir=.
   if $as_executable_p "$ac_dir/$ac_word"; then
    ac_cv_path_SED="$ac_dir/$ac_word"
-   echo "$as_me:11696: found $ac_dir/$ac_word" >&5
+   echo "$as_me:11770: found $ac_dir/$ac_word" >&5
    break
 fi
 done
@@ -11705,16 +11779,16 @@ fi
 SED=$ac_cv_path_SED
 
 if test -n "$SED"; then
-  echo "$as_me:11708: result: $SED" >&5
+  echo "$as_me:11782: result: $SED" >&5
 echo "${ECHO_T}$SED" >&6
 else
-  echo "$as_me:11711: result: no" >&5
+  echo "$as_me:11785: result: no" >&5
 echo "${ECHO_T}no" >&6
 fi
 
 # Extract the first word of "test", so it can be a program name with args.
 set dummy test; ac_word=$2
-echo "$as_me:11717: checking for $ac_word" >&5
+echo "$as_me:11791: checking for $ac_word" >&5
 echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6
 if test "${ac_cv_path_TEST+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -11731,7 +11805,7 @@ for ac_dir in $ac_dummy; do
   test -z "$ac_dir" && ac_dir=.
   if $as_executable_p "$ac_dir/$ac_word"; then
    ac_cv_path_TEST="$ac_dir/$ac_word"
-   echo "$as_me:11734: found $ac_dir/$ac_word" >&5
+   echo "$as_me:11808: found $ac_dir/$ac_word" >&5
    break
 fi
 done
@@ -11743,16 +11817,16 @@ fi
 TEST=$ac_cv_path_TEST
 
 if test -n "$TEST"; then
-  echo "$as_me:11746: result: $TEST" >&5
+  echo "$as_me:11820: result: $TEST" >&5
 echo "${ECHO_T}$TEST" >&6
 else
-  echo "$as_me:11749: result: no" >&5
+  echo "$as_me:11823: result: no" >&5
 echo "${ECHO_T}no" >&6
 fi
 
 # Extract the first word of "perl", so it can be a program name with args.
 set dummy perl; ac_word=$2
-echo "$as_me:11755: checking for $ac_word" >&5
+echo "$as_me:11829: checking for $ac_word" >&5
 echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6
 if test "${ac_cv_path_PERL+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -11769,7 +11843,7 @@ for ac_dir in $ac_dummy; do
   test -z "$ac_dir" && ac_dir=.
   if $as_executable_p "$ac_dir/$ac_word"; then
    ac_cv_path_PERL="$ac_dir/$ac_word"
-   echo "$as_me:11772: found $ac_dir/$ac_word" >&5
+   echo "$as_me:11846: found $ac_dir/$ac_word" >&5
    break
 fi
 done
@@ -11781,16 +11855,16 @@ fi
 PERL=$ac_cv_path_PERL
 
 if test -n "$PERL"; then
-  echo "$as_me:11784: result: $PERL" >&5
+  echo "$as_me:11858: result: $PERL" >&5
 echo "${ECHO_T}$PERL" >&6
 else
-  echo "$as_me:11787: result: no" >&5
+  echo "$as_me:11861: result: no" >&5
 echo "${ECHO_T}no" >&6
 fi
 
 # Extract the first word of "xml2-config", so it can be a program name with args.
 set dummy xml2-config; ac_word=$2
-echo "$as_me:11793: checking for $ac_word" >&5
+echo "$as_me:11867: checking for $ac_word" >&5
 echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6
 if test "${ac_cv_path_XML2CONFIG+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -11807,7 +11881,7 @@ for ac_dir in $ac_dummy; do
   test -z "$ac_dir" && ac_dir=.
   if $as_executable_p "$ac_dir/$ac_word"; then
    ac_cv_path_XML2CONFIG="$ac_dir/$ac_word"
-   echo "$as_me:11810: found $ac_dir/$ac_word" >&5
+   echo "$as_me:11884: found $ac_dir/$ac_word" >&5
    break
 fi
 done
@@ -11819,17 +11893,17 @@ fi
 XML2CONFIG=$ac_cv_path_XML2CONFIG
 
 if test -n "$XML2CONFIG"; then
-  echo "$as_me:11822: result: $XML2CONFIG" >&5
+  echo "$as_me:11896: result: $XML2CONFIG" >&5
 echo "${ECHO_T}$XML2CONFIG" >&6
 else
-  echo "$as_me:11825: result: no" >&5
+  echo "$as_me:11899: result: no" >&5
 echo "${ECHO_T}no" >&6
 fi
 
 # not everybody puts /usr/local/gnu/bin in their PATH
 # Extract the first word of "bgcc", so it can be a program name with args.
 set dummy bgcc; ac_word=$2
-echo "$as_me:11832: checking for $ac_word" >&5
+echo "$as_me:11906: checking for $ac_word" >&5
 echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6
 if test "${ac_cv_path_BGCC+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -11846,7 +11920,7 @@ for ac_dir in $ac_dummy; do
   test -z "$ac_dir" && ac_dir=.
   if $as_executable_p "$ac_dir/$ac_word"; then
    ac_cv_path_BGCC="$ac_dir/$ac_word"
-   echo "$as_me:11849: found $ac_dir/$ac_word" >&5
+   echo "$as_me:11923: found $ac_dir/$ac_word" >&5
    break
 fi
 done
@@ -11858,16 +11932,16 @@ fi
 BGCC=$ac_cv_path_BGCC
 
 if test -n "$BGCC"; then
-  echo "$as_me:11861: result: $BGCC" >&5
+  echo "$as_me:11935: result: $BGCC" >&5
 echo "${ECHO_T}$BGCC" >&6
 else
-  echo "$as_me:11864: result: no" >&5
+  echo "$as_me:11938: result: no" >&5
 echo "${ECHO_T}no" >&6
 fi
 
 # Extract the first word of "insure", so it can be a program name with args.
 set dummy insure; ac_word=$2
-echo "$as_me:11870: checking for $ac_word" >&5
+echo "$as_me:11944: checking for $ac_word" >&5
 echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6
 if test "${ac_cv_path_INSURE+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -11884,7 +11958,7 @@ for ac_dir in $ac_dummy; do
   test -z "$ac_dir" && ac_dir=.
   if $as_executable_p "$ac_dir/$ac_word"; then
    ac_cv_path_INSURE="$ac_dir/$ac_word"
-   echo "$as_me:11887: found $ac_dir/$ac_word" >&5
+   echo "$as_me:11961: found $ac_dir/$ac_word" >&5
    break
 fi
 done
@@ -11896,10 +11970,10 @@ fi
 INSURE=$ac_cv_path_INSURE
 
 if test -n "$INSURE"; then
-  echo "$as_me:11899: result: $INSURE" >&5
+  echo "$as_me:11973: result: $INSURE" >&5
 echo "${ECHO_T}$INSURE" >&6
 else
-  echo "$as_me:11902: result: no" >&5
+  echo "$as_me:11976: result: no" >&5
 echo "${ECHO_T}no" >&6
 fi
 
@@ -11907,7 +11981,7 @@ fi
 
 # Extract the first word of "javac", so it can be a program name with args.
 set dummy javac; ac_word=$2
-echo "$as_me:11910: checking for $ac_word" >&5
+echo "$as_me:11984: checking for $ac_word" >&5
 echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6
 if test "${ac_cv_path_JAVAC+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -11924,7 +11998,7 @@ for ac_dir in $ac_dummy; do
   test -z "$ac_dir" && ac_dir=.
   if $as_executable_p "$ac_dir/$ac_word"; then
    ac_cv_path_JAVAC="$ac_dir/$ac_word"
-   echo "$as_me:11927: found $ac_dir/$ac_word" >&5
+   echo "$as_me:12001: found $ac_dir/$ac_word" >&5
    break
 fi
 done
@@ -11936,16 +12010,16 @@ fi
 JAVAC=$ac_cv_path_JAVAC
 
 if test -n "$JAVAC"; then
-  echo "$as_me:11939: result: $JAVAC" >&5
+  echo "$as_me:12013: result: $JAVAC" >&5
 echo "${ECHO_T}$JAVAC" >&6
 else
-  echo "$as_me:11942: result: no" >&5
+  echo "$as_me:12016: result: no" >&5
 echo "${ECHO_T}no" >&6
 fi
 
 # Extract the first word of "jar", so it can be a program name with args.
 set dummy jar; ac_word=$2
-echo "$as_me:11948: checking for $ac_word" >&5
+echo "$as_me:12022: checking for $ac_word" >&5
 echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6
 if test "${ac_cv_path_JAR+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -11962,7 +12036,7 @@ for ac_dir in $ac_dummy; do
   test -z "$ac_dir" && ac_dir=.
   if $as_executable_p "$ac_dir/$ac_word"; then
    ac_cv_path_JAR="$ac_dir/$ac_word"
-   echo "$as_me:11965: found $ac_dir/$ac_word" >&5
+   echo "$as_me:12039: found $ac_dir/$ac_word" >&5
    break
 fi
 done
@@ -11974,16 +12048,16 @@ fi
 JAR=$ac_cv_path_JAR
 
 if test -n "$JAR"; then
-  echo "$as_me:11977: result: $JAR" >&5
+  echo "$as_me:12051: result: $JAR" >&5
 echo "${ECHO_T}$JAR" >&6
 else
-  echo "$as_me:11980: result: no" >&5
+  echo "$as_me:12054: result: no" >&5
 echo "${ECHO_T}no" >&6
 fi
 
 # Extract the first word of "jhindexer", so it can be a program name with args.
 set dummy jhindexer; ac_word=$2
-echo "$as_me:11986: checking for $ac_word" >&5
+echo "$as_me:12060: checking for $ac_word" >&5
 echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6
 if test "${ac_cv_path_JHINDEXER+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -12000,7 +12074,7 @@ for ac_dir in $ac_dummy; do
   test -z "$ac_dir" && ac_dir=.
   if $as_executable_p "$ac_dir/$ac_word"; then
    ac_cv_path_JHINDEXER="$ac_dir/$ac_word"
-   echo "$as_me:12003: found $ac_dir/$ac_word" >&5
+   echo "$as_me:12077: found $ac_dir/$ac_word" >&5
    break
 fi
 done
@@ -12012,16 +12086,16 @@ fi
 JHINDEXER=$ac_cv_path_JHINDEXER
 
 if test -n "$JHINDEXER"; then
-  echo "$as_me:12015: result: $JHINDEXER" >&5
+  echo "$as_me:12089: result: $JHINDEXER" >&5
 echo "${ECHO_T}$JHINDEXER" >&6
 else
-  echo "$as_me:12018: result: no" >&5
+  echo "$as_me:12092: result: no" >&5
 echo "${ECHO_T}no" >&6
 fi
 
 # Extract the first word of "doxygen", so it can be a program name with args.
 set dummy doxygen; ac_word=$2
-echo "$as_me:12024: checking for $ac_word" >&5
+echo "$as_me:12098: checking for $ac_word" >&5
 echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6
 if test "${ac_cv_path_DOXYGEN+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -12038,7 +12112,7 @@ for ac_dir in $ac_dummy; do
   test -z "$ac_dir" && ac_dir=.
   if $as_executable_p "$ac_dir/$ac_word"; then
    ac_cv_path_DOXYGEN="$ac_dir/$ac_word"
-   echo "$as_me:12041: found $ac_dir/$ac_word" >&5
+   echo "$as_me:12115: found $ac_dir/$ac_word" >&5
    break
 fi
 done
@@ -12050,16 +12124,16 @@ fi
 DOXYGEN=$ac_cv_path_DOXYGEN
 
 if test -n "$DOXYGEN"; then
-  echo "$as_me:12053: result: $DOXYGEN" >&5
+  echo "$as_me:12127: result: $DOXYGEN" >&5
 echo "${ECHO_T}$DOXYGEN" >&6
 else
-  echo "$as_me:12056: result: no" >&5
+  echo "$as_me:12130: result: no" >&5
 echo "${ECHO_T}no" >&6
 fi
 
 # Extract the first word of "dot", so it can be a program name with args.
 set dummy dot; ac_word=$2
-echo "$as_me:12062: checking for $ac_word" >&5
+echo "$as_me:12136: checking for $ac_word" >&5
 echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6
 if test "${ac_cv_prog_HAVE_DOT+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -12074,7 +12148,7 @@ for ac_dir in $ac_dummy; do
   test -z "$ac_dir" && ac_dir=.
   $as_executable_p "$ac_dir/$ac_word" || continue
 ac_cv_prog_HAVE_DOT="YES"
-echo "$as_me:12077: found $ac_dir/$ac_word" >&5
+echo "$as_me:12151: found $ac_dir/$ac_word" >&5
 break
 done
 
@@ -12083,10 +12157,10 @@ fi
 fi
 HAVE_DOT=$ac_cv_prog_HAVE_DOT
 if test -n "$HAVE_DOT"; then
-  echo "$as_me:12086: result: $HAVE_DOT" >&5
+  echo "$as_me:12160: result: $HAVE_DOT" >&5
 echo "${ECHO_T}$HAVE_DOT" >&6
 else
-  echo "$as_me:12089: result: no" >&5
+  echo "$as_me:12163: result: no" >&5
 echo "${ECHO_T}no" >&6
 fi
 
@@ -12094,7 +12168,7 @@ for ac_prog in browser netscape konqueror mozilla iexplore.exe lynx
 do
   # Extract the first word of "$ac_prog", so it can be a program name with args.
 set dummy $ac_prog; ac_word=$2
-echo "$as_me:12097: checking for $ac_word" >&5
+echo "$as_me:12171: checking for $ac_word" >&5
 echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6
 if test "${ac_cv_path_BROWSER+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -12111,7 +12185,7 @@ for ac_dir in $ac_dummy; do
   test -z "$ac_dir" && ac_dir=.
   if $as_executable_p "$ac_dir/$ac_word"; then
    ac_cv_path_BROWSER="$ac_dir/$ac_word"
-   echo "$as_me:12114: found $ac_dir/$ac_word" >&5
+   echo "$as_me:12188: found $ac_dir/$ac_word" >&5
    break
 fi
 done
@@ -12122,10 +12196,10 @@ fi
 BROWSER=$ac_cv_path_BROWSER
 
 if test -n "$BROWSER"; then
-  echo "$as_me:12125: result: $BROWSER" >&5
+  echo "$as_me:12199: result: $BROWSER" >&5
 echo "${ECHO_T}$BROWSER" >&6
 else
-  echo "$as_me:12128: result: no" >&5
+  echo "$as_me:12202: result: no" >&5
 echo "${ECHO_T}no" >&6
 fi
 
@@ -12135,7 +12209,7 @@ test -n "$BROWSER" || BROWSER="$FALSE"
 
 # Extract the first word of "ar", so it can be a program name with args.
 set dummy ar; ac_word=$2
-echo "$as_me:12138: checking for $ac_word" >&5
+echo "$as_me:12212: checking for $ac_word" >&5
 echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6
 if test "${ac_cv_path_AR+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -12152,7 +12226,7 @@ for ac_dir in $ac_dummy; do
   test -z "$ac_dir" && ac_dir=.
   if $as_executable_p "$ac_dir/$ac_word"; then
    ac_cv_path_AR="$ac_dir/$ac_word"
-   echo "$as_me:12155: found $ac_dir/$ac_word" >&5
+   echo "$as_me:12229: found $ac_dir/$ac_word" >&5
    break
 fi
 done
@@ -12163,16 +12237,16 @@ fi
 AR=$ac_cv_path_AR
 
 if test -n "$AR"; then
-  echo "$as_me:12166: result: $AR" >&5
+  echo "$as_me:12240: result: $AR" >&5
 echo "${ECHO_T}$AR" >&6
 else
-  echo "$as_me:12169: result: no" >&5
+  echo "$as_me:12243: result: no" >&5
 echo "${ECHO_T}no" >&6
 fi
 
 if test "$ac_cv_search_gethostbyname2" = "no"
 then
-  { echo "$as_me:12175: WARNING: you will not be able to resolve IPv6 names" >&5
+  { echo "$as_me:12249: WARNING: you will not be able to resolve IPv6 names" >&5
 echo "$as_me: WARNING: you will not be able to resolve IPv6 names" >&2;}
 fi
 
@@ -12263,7 +12337,7 @@ DEFS=-DHAVE_CONFIG_H
 : ${CONFIG_STATUS=./config.status}
 ac_clean_files_save=$ac_clean_files
 ac_clean_files="$ac_clean_files $CONFIG_STATUS"
-{ echo "$as_me:12266: creating $CONFIG_STATUS" >&5
+{ echo "$as_me:12340: creating $CONFIG_STATUS" >&5
 echo "$as_me: creating $CONFIG_STATUS" >&6;}
 cat >$CONFIG_STATUS <<_ACEOF
 #! $SHELL
@@ -12441,7 +12515,7 @@ cat >>$CONFIG_STATUS <<\EOF
     echo "$ac_cs_version"; exit 0 ;;
   --he | --h)
     # Conflict between --help and --header
-    { { echo "$as_me:12444: error: ambiguous option: $1
+    { { echo "$as_me:12518: error: ambiguous option: $1
 Try \`$0 --help' for more information." >&5
 echo "$as_me: error: ambiguous option: $1
 Try \`$0 --help' for more information." >&2;}
@@ -12460,7 +12534,7 @@ Try \`$0 --help' for more information." >&2;}
     ac_need_defaults=false;;
 
   # This is an error.
-  -*) { { echo "$as_me:12463: error: unrecognized option: $1
+  -*) { { echo "$as_me:12537: error: unrecognized option: $1
 Try \`$0 --help' for more information." >&5
 echo "$as_me: error: unrecognized option: $1
 Try \`$0 --help' for more information." >&2;}
@@ -12497,7 +12571,7 @@ do
   # Handling of arguments.
   "Make.config" ) CONFIG_FILES="$CONFIG_FILES Make.config" ;;
   "libbk_autoconf.h" ) CONFIG_HEADERS="$CONFIG_HEADERS libbk_autoconf.h" ;;
-  *) { { echo "$as_me:12500: error: invalid argument: $ac_config_target" >&5
+  *) { { echo "$as_me:12574: error: invalid argument: $ac_config_target" >&5
 echo "$as_me: error: invalid argument: $ac_config_target" >&2;}
    { (exit 1); exit 1; }; };;
   esac
@@ -12631,6 +12705,8 @@ s,@HAVE_PTHREADS@,$HAVE_PTHREADS,;t t
 s,@ALLOCA@,$ALLOCA,;t t
 s,@RM@,$RM,;t t
 s,@FALSE@,$FALSE,;t t
+s,@TRUE@,$TRUE,;t t
+s,@CP@,$CP,;t t
 s,@MV@,$MV,;t t
 s,@MKDIR@,$MKDIR,;t t
 s,@LS@,$LS,;t t
@@ -12763,7 +12839,7 @@ done; }
   esac
 
   if test x"$ac_file" != x-; then
-    { echo "$as_me:12766: creating $ac_file" >&5
+    { echo "$as_me:12842: creating $ac_file" >&5
 echo "$as_me: creating $ac_file" >&6;}
     rm -f "$ac_file"
   fi
@@ -12781,7 +12857,7 @@ echo "$as_me: creating $ac_file" >&6;}
       -) echo $tmp/stdin ;;
       [\\/$]*)
          # Absolute (can't be DOS-style, as IFS=:)
-         test -f "$f" || { { echo "$as_me:12784: error: cannot find input file: $f" >&5
+         test -f "$f" || { { echo "$as_me:12860: error: cannot find input file: $f" >&5
 echo "$as_me: error: cannot find input file: $f" >&2;}
    { (exit 1); exit 1; }; }
          echo $f;;
@@ -12794,7 +12870,7 @@ echo "$as_me: error: cannot find input file: $f" >&2;}
            echo $srcdir/$f
          else
            # /dev/null tree
-           { { echo "$as_me:12797: error: cannot find input file: $f" >&5
+           { { echo "$as_me:12873: error: cannot find input file: $f" >&5
 echo "$as_me: error: cannot find input file: $f" >&2;}
    { (exit 1); exit 1; }; }
          fi;;
@@ -12855,7 +12931,7 @@ for ac_file in : $CONFIG_HEADERS; do test "x$ac_file" = x: && continue
   * )   ac_file_in=$ac_file.in ;;
   esac
 
-  test x"$ac_file" != x- && { echo "$as_me:12858: creating $ac_file" >&5
+  test x"$ac_file" != x- && { echo "$as_me:12934: creating $ac_file" >&5
 echo "$as_me: creating $ac_file" >&6;}
 
   # First look for the input files in the build tree, otherwise in the
@@ -12866,7 +12942,7 @@ echo "$as_me: creating $ac_file" >&6;}
       -) echo $tmp/stdin ;;
       [\\/$]*)
          # Absolute (can't be DOS-style, as IFS=:)
-         test -f "$f" || { { echo "$as_me:12869: error: cannot find input file: $f" >&5
+         test -f "$f" || { { echo "$as_me:12945: error: cannot find input file: $f" >&5
 echo "$as_me: error: cannot find input file: $f" >&2;}
    { (exit 1); exit 1; }; }
          echo $f;;
@@ -12879,7 +12955,7 @@ echo "$as_me: error: cannot find input file: $f" >&2;}
            echo $srcdir/$f
          else
            # /dev/null tree
-           { { echo "$as_me:12882: error: cannot find input file: $f" >&5
+           { { echo "$as_me:12958: error: cannot find input file: $f" >&5
 echo "$as_me: error: cannot find input file: $f" >&2;}
    { (exit 1); exit 1; }; }
          fi;;
@@ -12996,7 +13072,7 @@ cat >>$CONFIG_STATUS <<\EOF
   rm -f $tmp/in
   if test x"$ac_file" != x-; then
     if cmp -s $ac_file $tmp/config.h 2>/dev/null; then
-      { echo "$as_me:12999: $ac_file is unchanged" >&5
+      { echo "$as_me:13075: $ac_file is unchanged" >&5
 echo "$as_me: $ac_file is unchanged" >&6;}
     else
       ac_dir=`$as_expr X"$ac_file" : 'X\(.*[^/]\)//*[^/][^/]*/*$' \| \
