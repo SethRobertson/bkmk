@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.37 2003/04/18 11:31:37 jtt Exp $
+# $Id: aclocal.m4,v 1.38 2003/04/18 12:24:52 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -95,11 +95,11 @@ AC_DEFUN([AC_C_ALIGN_FUNCTIONS],
 #
 AC_DEFUN([BK_SOCKLEN_T],dnl
 [AC_CACHE_CHECK([if socklen_t is defined in sys/socket.h], bk_socklen_t,
-AC_TRY_COMPILE([sys/socket.h],[socklen_t len],[bk_socklen_t=true],[bk_socklen_t=false]))
+AC_TRY_COMPILE([#include <sys/socket.h>],[socklen_t len],[bk_socklen_t=true],[bk_socklen_t=false]))
 if test "$bk_socklen_t" = "true"
 then
 	HAVE_SOCKLEN_T=true
-	AC_SUBST(HAVE_SOCKLEN)
+	AC_DEFINE(HAVE_SOCKLEN_T)
 fi
 ])
 
