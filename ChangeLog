@@ -1,3 +1,7 @@
+2002-04-02  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Makefile (install): package up tarball from top-level .install
+
 2002-03-25  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* aclocal.m4 (AC_STACKDIRECTION): get system stack direction
