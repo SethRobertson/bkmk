@@ -4,6 +4,7 @@ Make.config
 confcache*
 confdef*
 config.*
+conftest
 conftest.*
 lex.yy.c
 libbk_autoconf.h
