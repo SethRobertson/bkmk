@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.30 2005/01/31 22:47:41 dupuy Exp $
+# $Id: Makefile,v 1.31 2005/02/09 01:32:25 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -57,6 +57,15 @@ ifeq ($(word $(words $(BK_CMDGOALS)),$(BK_CMDGOALS)),nuke)
 	  rm -f $(filter Make%,$(GENFILES))
 endif
 endif
+
+-include ../.user-variables
+
+ifeq ($(BK_BUILD_32BIT_ON_64),true)
+CC = gcc -m32
+CXX = g++ -m32
+export CC CXX
+endif # BK_BUILD_32BIT_ON_64
+
 
 %.status: ./%ure
 	./configure --config-cache $(CONFIGURE_ARGS)

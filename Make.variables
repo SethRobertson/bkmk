@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.199 2005/02/05 03:17:12 seth Exp $
+# $Id: Make.variables,v 1.200 2005/02/09 01:32:25 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -375,6 +375,12 @@ ifeq ($(shell basename $(CC_CONFIG)),gcc)
 COMPILER_NAME=gcc
 endif # CC_CONFIG=gcc
 
+# Placed in bkmk configure due to non-bkmk requirements
+#ifeq ($(BK_BUILD_32BIT_ON_64),true)
+#CCOPTS += -m32
+#CXXOPTS += -m32
+#endif # BK_BUILD_32BIT_ON_64
+
 # C
 CC_normal=$(strip $(CC_CONFIG) $(CCOPTS))
 CC_strict=$(strip $(CXX_CONFIG) $(CXXOPTS))
@@ -391,7 +397,7 @@ GCC_VERSION:=$(shell $(CC_CONFIG) --version | $(AWK) ' NR==1 { print $$3 }')
 # don't eliminate inline warnings
 # make them work, remove them, or tweak the inliner settings (SEE
 # COMPILER_INLINER LIMIT)
-# 
+#
 # Believe it or not, expr handles > 3.4.2 "properly". Kinda bizzare, but useful.
 #
 ifeq ($(shell $(EXPR) $(GCC_VERSION) '>=' '3.4.2'),1)
@@ -412,7 +418,7 @@ endif
 
 # raise the default instruction limit for the inliner so that some of
 # our bigger functions will be inlined. changing this value may affect
-# code bloat, but hey, they _are_ inlined functions... 
+# code bloat, but hey, they _are_ inlined functions...
 # NB: this only works with gcc 3.3+, but is ignored otherwise. these
 # problems exisited in prior versions but warnings weren't issued
 COMPILER_INLINE_LIMIT=1200

@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.GNUmakefile,v 1.34 2005/02/07 18:50:42 seth Exp $
+# $Id: Make.GNUmakefile,v 1.35 2005/02/09 01:32:25 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -60,6 +60,14 @@ else
 endif
 
 include $(PKGTOP)/Make.include
+
+-include $(GROUPTOP)/$(PKGTOP)/.user-variables
+
+ifeq ($(BK_BUILD_32BIT_ON_64),true)
+CC = gcc -m32
+CXX = g++ -m32
+export CC CXX
+endif # BK_BUILD_32BIT_ON_64
 
 install-normal install-last:
 
