@@ -1,4 +1,4 @@
-# $Id: Make.targets,v 1.6 2001/06/18 22:21:05 seth Exp $
+# $Id: Make.targets,v 1.7 2001/06/18 22:41:46 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -28,7 +28,7 @@ endif # BK_SUBDIR
 #
 # Default rule--standard target to compile everything
 #
-default:: $(BK_LOCALTARGETS) $(BK_GROUPTARGETS) $(BK_PACKAGETARGETS) $(BK_LARGE_LIB) $(BK_SIMPLE_PROGS) $(BK_LARGE_PROG)
+default:: $(BK_LOCALTARGETS) $(BK_GROUPTARGETS) $(BK_PACKAGETARGETS) $(BK_LARGE_LIB) $(BK_LARGE_INTERNALLIB) $(BK_SIMPLE_PROGS) $(BK_LARGE_PROG) $(BK_SIMPLE_INTERNALPROGS) $(BK_LARGE_INTERNALPROG)
 	$(BK_SUBDIRRULE)	
 
 
@@ -120,7 +120,6 @@ ifneq ($(strip $(BK_DATAFILES)),)
 endif # BK_DATAFILES
 endif # BK_INSTALLDATADIR
 ifneq ($(strip $(BK_INSTALLMANDIR)),)
-ifneq ($(strip $(BK_MAN)),)
 ifneq ($(strip $(_BK_MAN1)),)
 	$(MKDIR) $(BK_INSTALLMANDIR)/man1
 	$(INSTALL) $(INSTALL_OTHERFLAGS) $(_BK_MAN1) $(BK_INSTALLMANDIR)/man1
@@ -137,7 +136,6 @@ ifneq ($(strip $(_BK_MAN8)),)
 	$(MKDIR) $(BK_INSTALLMANDIR)/man8
 	$(INSTALL) $(INSTALL_OTHERFLAGS) $(_BK_MAN8) $(BK_INSTALLMANDIR)/man8
 endif # _BK_MAN8
-endif # BK_MAN
 endif # BK_INSTALLMANDIR
 	$(BK_SUBDIRRULE)
 
