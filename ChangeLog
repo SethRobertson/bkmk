@@ -1,3 +1,7 @@
+2001-09-05  Seth Robertson  <seth@yeah.baka.org>
+
+	* Make.targets (default): Build subdirectories before local targets.
+
 2001-08-26  Seth Robertson  <seth@yeah.baka.org>
 
 	* Make.variables: Working library vpath style
