@@ -1,3 +1,8 @@
+2003-06-13  Brian Lindauer  <lindauer@malkmus.sysdetect.com>
+
+	* Make.targets (actual_install): Added BK_PERL_LIBS and
+	BK_INSTALLPERLLIB for per-project perl modules and libraries.
+
 2003-06-10  Seth Robertson  <seth@startide.sysdetect.com>
 
 	* Make.include: Rework WANT_BOUNDS_CHECKING, WANT_DMALLOC,
