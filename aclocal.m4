@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.16 2002/10/16 04:49:07 seth Exp $
+# $Id: aclocal.m4,v 1.17 2002/10/18 17:46:54 lindauer Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -69,6 +69,7 @@ AC_DEFUN([AC_CONSTRUCTORS],
 AC_DEFUN([AC_INADDR_T], [AC_CACHE_CHECK([for in_addr_t typedef], ac_inaddr_t_defined,
 	AC_TRY_COMPILE(
 [
+#include <sys/types.h>
 #include <netinet/in.h>
 ], [ in_addr_t foo; ],
 [ ac_inaddr_t_defined=yes; ],[ ac_inaddr_t_defined=no;]))

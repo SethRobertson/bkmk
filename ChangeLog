@@ -1,3 +1,7 @@
+2002-10-18  Brian Lindauer  <lindauer@malkmus.sysdetect.com>
+
+	* aclocal.m4: Fix in_addr_t test to work on FreeBSD, too.
+
 2002-10-16  Matt Miller  <matt@sysdetect.com>
 
 	* Make.targets (nuke clean): remove $(BK_JAVA_HELP_{JAR,PDF}) when
