@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.bkvariables,v 1.33 2002/09/03 16:08:04 dupuy Exp $
+# $Id: Make.bkvariables,v 1.34 2002/09/03 17:32:55 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -26,6 +26,9 @@
 
 # Do the activities requiring subprograms once only for efficiency
 ifneq ($(BKMK_VAR_CORRECT),true)
+
+# Verify that $PWD points to the right place (stupid emacs)
+PWD:=$(shell $(BKMKDIR)/findvalidpwd)
 
 # Discover where true (non-BUILD directory) group and package locations are
 BK_REALTOP:=$(shell cd $(GROUPTOP)/$(PKGTOP) && pwd)

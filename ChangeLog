@@ -1,3 +1,8 @@
+2002-09-03  Seth Robertson  <seth@startide.sysdetect.com>
+
+	* Make.bkvariables (PWD): Ensure (once) that PWD really is PWD.
+	Stupid emacs.
+
 2002-09-03  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.bkvariables (BK_TTY): document the obscure aspects of this var

@@ -1,0 +1,17 @@
+#!/bin/sh
+#
+# Find a good value for $PWD
+#
+if [ -x /usr/bin/pawd ]; then
+   CWD=`pawd`
+else
+   CWD=`pwd`
+fi
+if [ "$PWD" -a "$PWD" != "$CWD" ]; then
+     set - `ls -id $PWD $CWD 2>/dev/null`
+     if [ "$1" = "$3" ]; then
+         echo $PWD
+         exit
+     fi
+fi
+echo $CWD
