@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.175 2003/10/27 20:52:07 dupuy Exp $
+# $Id: Make.variables,v 1.176 2003/10/27 22:26:34 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -210,7 +210,7 @@ ifneq ($(BK_INSTALLRDIR),$(BK_INSTALLRPATH))
 LIBTOOL_INSTALL_TEST=\
  case $(BK_INSTALLRDIR) in *$(BK_INSTALLRPATH)) echo OK;; esac
 ifneq ($(shell $(LIBTOOL_INSTALL_TEST)),OK)
-$(error BK_INSTALLRDIR must end with $(BK_INSTALLRPATH))
+$(error BK_INSTALLRDIR ($(BK_INSTALLRDIR)) must end with $(BK_INSTALLRPATH))
 endif
 endif
 
