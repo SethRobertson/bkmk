@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.bkvariables,v 1.20 2002/03/16 06:25:34 dupuy Exp $
+# $Id: Make.bkvariables,v 1.21 2002/03/16 06:36:21 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -81,7 +81,7 @@ endif # BKMK_VAR_CORRECT
 
 # Discover where true (non-BUILD directory) group and package locations are
 BK_REALTOP:=$(shell cd $(GROUPTOP)/$(PKGTOP) && pwd)
-BK_PKGNAME:=$(shell  basename $(BK_REALTOP) || echo "UNKNOWN-PKG")
+BK_PKGNAME:=$(shell basename $(BK_REALTOP) || echo "UNKNOWN-PKG")
 BK_BUILDTOP:=$(shell test -L $(GROUPTOP)/$(PKGTOP)/bkmk/Make.include && echo ../../ )
 BK_TRUEGROUPTOP=$(BK_BUILDTOP)$(GROUPTOP)
 BK_TRUEPKGTOP=$(TRUEGROUPTOP)/$(PKGTOP)

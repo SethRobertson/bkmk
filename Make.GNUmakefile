@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.GNUmakefile,v 1.1 2002/01/18 18:45:40 dupuy Exp $
+# $Id: Make.GNUmakefile,v 1.2 2002/03/16 06:36:21 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -46,3 +46,8 @@ distclean:
 
 .DEFAULT: $(CONFIGURED)
 	cd $(ARCH) && $(MAKE) $@
+
+# targets to avoid complaints about missing make includes
+$(BKMKDIR)/Make.$(BK_OSNAME)-pre:
+$(BKMKDIR)/Make.$(BK_OSNAME)-post:
+$(GROUPTOP)/$(PKGTOP)/.user-variables:
