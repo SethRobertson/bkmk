@@ -1,3 +1,8 @@
+2004-07-15  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.variables (LT_LDLIBS): explicit thread library dependency
+	needed to ensure that dlopen loaded modules don't get libc mutex funcs
+
 2004-07-13  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* aclocal.m4 (AC_PROCFS): better /proc autoconf

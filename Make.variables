@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.189 2004/07/09 20:11:57 dupuy Exp $
+# $Id: Make.variables,v 1.190 2004/07/16 00:24:15 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -583,6 +583,7 @@ endif
 LT_LDFLAGS += $(PTHREAD_CFLAGS)
 LT_M_LDFLAGS += $(PTHREAD_CFLAGS)
 
+LT_LDLIBS += $(PTHREAD_LIBS)
 else
 PTHREAD_LIBS=
 endif
