@@ -1,4 +1,4 @@
-# $Id: Make.targets,v 1.9 2001/09/06 05:03:43 seth Exp $
+# $Id: Make.targets,v 1.10 2001/09/07 19:54:31 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -94,6 +94,9 @@ endif # PKGSUBDIR
 #
 # Installation support
 #
+install::
+	$(BK_SUBDIRRULE)
+
 install:: $(BK_LARGE_LIB) $(BK_SIMPLE_PROGS) $(BK_LARGE_PROG) $(BK_PUBLIC_INC) $(BK_DATAFILES) $(BK_MAN)
 ifneq ($(strip $(BK_INSTALLPROGDIR)),)
 ifneq ($(strip $(BK_SIMPLE_PROGS)),)
@@ -142,7 +145,6 @@ ifneq ($(strip $(_BK_MAN8)),)
 	$(INSTALL) $(INSTALL_OTHERFLAGS) $(_BK_MAN8) $(BK_INSTALLMANDIR)/man8
 endif # _BK_MAN8
 endif # BK_INSTALLMANDIR
-	$(BK_SUBDIRRULE)
 
 
 #
