@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.bkvariables,v 1.48 2003/10/08 04:26:16 dupuy Exp $
+# $Id: Make.bkvariables,v 1.49 2003/10/13 16:22:32 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -104,14 +104,14 @@ BK_DUMMY:=$(shell							      \
      echo $$ECHO_N 'Making neat (Remember to "$(MAKE) depend")...'$$ECHO_C;   \
      $(MAKE) neat >/dev/null;						      \
      echo "done"; echo; }; ); )	2>&1					      \
-  | tee $(BK_TTY) )
+  | tee $(BK_TTY) 2>/dev/null )
 
 else
 
 export CONFIGURE_ARGS
 
 ifneq ($(BK_GOAL_IS_CLEAN),true)
-BK_DUMMY:=$(shell (cd $(BKMKDIR) && $(MAKE) -s config.status .timestamp) 2>&1 | tee $(BK_TTY))
+BK_DUMMY:=$(shell (cd $(BKMKDIR) && $(MAKE) -s config.status .timestamp) 2>&1 | tee $(BK_TTY) 2>/dev/null )
 endif
 
 endif # BK_CONFIG_OS_TYPE != BK_OSNAME
