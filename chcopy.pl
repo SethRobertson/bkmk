@@ -8,7 +8,7 @@ $YEAR = 1900 + (localtime time)[5];
 ######################################################################
 ## BAKA
 $BAKAHDR = <<EOF;
-#if !defined(lint) && !defined(__INSIGHT__)
+#if !defined(lint)
 static const char libbk__rcsid[] = "\$Id\$";
 static const char libbk__copyright[] = "Copyright (c) $YEAR";
 static const char libbk__contact[] = "<projectbaka\@baka.org>";
@@ -31,7 +31,7 @@ EOF
 ######################################################################
 ## System Detection
 $SYSDHDR = <<EOF;
-#if !defined(lint) && !defined(__INSIGHT__)
+#if !defined(lint)
 static const char sysd__rcsid[] = "\$Id\$";
 static const char sysd__copyright[] = "Copyright (c) $YEAR System Detection";
 static const char sysd__contact[] = "System Detection <support\@sysd.com>";
