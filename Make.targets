@@ -1,6 +1,6 @@
 # -*- makefile -*-
 # 
-# $Id: Make.targets,v 1.29 2001/12/14 19:46:17 seth Exp $
+# $Id: Make.targets,v 1.30 2001/12/19 18:26:18 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -218,20 +218,22 @@ endif # BK_WANT_JAVA
 #
 # Doxygen support
 #
+BK_SUBDOX=$(BK_SUBDIR)
+BK_DOXDIRS=$(foreach DIR, $(BK_SUBDOX), $(BK_REALTOP)/$(DIR))
 $(BK_INSTALLDOCDIR)/doxygen/Doxyfile:
 	@if [ "" = "$(BK_INSTALLDOCDIR)" ]; then \
 	  echo "\$$BK_INSTALLDOCDIR not set in Make.preinstall"; exit 1;\
 	fi
 	-@$(MKDIR) $(BK_INSTALLDOCDIR)/doxygen 2>/dev/null && \
 	 { cd $(BK_INSTALLDOCDIR)/doxygen; \
-	   $(DOXYGEN) -g;	 \
+	   $(DOXYGEN) -g > /dev/null;	 \
 	   $(MV) Doxyfile Doxyfile.orig && \
 	   $(SED) -e '/^PROJECT_NAME/s%=.*%= $(BK_PKGNAME)%' \
 		  -e '/^OUTPUT_DIR/s%=.*%= $(BK_INSTALLDOCDIR)/doxygen%' \
-		  -e '/^INPUT[ \t]/s%=.*%= $(BK_REALTOP)%' \
+		  -e '/^INPUT[ \t]/s%=.*%= $(BK_DOXDIRS)%' \
 		  -e '/^FILE_PATTERNS/s%=.*%= *.[chyls] *.java%' \
 		  -e '/^RECURSIVE[ \t]/s%=.*%= YES%' \
-		  -e '/^EXCLUDE[ \t]/s%=.*%= JAVA libclc glib libpcap%' \
+		  -e '/^EXCLUDE_PATTERNS/s%=.*%= *Test Test*%' \
 		  -e '/^EXTRACT_STATIC/s%=.*%= YES%' \
 		  -e '/^JAVADOC_AUTOBRIEF/s%=.*%= YES%' \
 		  -e '/^ALPHABETICAL_INDEX/s%=.*%= YES%' \
