@@ -1,3 +1,11 @@
+2002-11-14  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.FreeBSD-4.7-pre: it's not your father's 4.5 any more
+
+	* Make.variables: restore fixes undone by opx_rollup_3 [jtt's idea
+	of rollup is more like steamroller]; nuke BK_USING_DMALLOCTH support
+	for more automatic solution using {HAVE,WANT,USING}_{PTHREADS,DMALLOC}
+	
 2002-11-13  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.variables, Make.production: patsubst -> addprefix/addsuffix

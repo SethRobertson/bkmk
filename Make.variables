@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.121 2002/11/14 05:00:42 dupuy Exp $
+# $Id: Make.variables,v 1.122 2002/11/14 21:12:37 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -395,21 +395,33 @@ ifneq ($(NO_WERROR),true)
 COMPILER_DEBUG_ERROR=-Werror
 endif # NO_WERROR
 
+ifneq ($(findstring -falign,$(ALIGN_FUNCTIONS_SWITCH)),)
+GCCHWOPT=$(ALIGN_FUNCTIONS_SWITCH)
+else
+ifneq ($(findstring -,$(ALIGN_FUNCTIONS_SWITCH)),)
+GCCHWOPT=$(ALIGN_FUNCTIONS_SWITCH)=$(ALIGN_FUNCTIONS)
+endif
+endif
+
+# default for most platforms
+ALIGN_FUNCTIONS=4
+
 ifneq ($(findstring -i386,$(BK_ARCHNAME)),)
-GCCHWOPT= -mcpu=i686 -march=i686 -falign-functions=4
+GCCHWOPT+= -mcpu=i686 -march=i686
 endif
 ifneq ($(findstring -i686,$(BK_ARCHNAME)),)
-GCCHWOPT= -mcpu=i686 -march=i686 -falign-functions=4
+GCCHWOPT+= -mcpu=i686 -march=i686
 endif
 ifneq ($(findstring -sun4,$(BK_ARCHNAME)),)
 # reasonable settings for 32-bit mode
-GCCHWOPT= -m32 -mcpu=v8 -mtune=supersparc
+GCCHWOPT+= -m32 -mcpu=v8 -mtune=supersparc
 endif
 ifneq ($(findstring -sun4u,$(BK_ARCHNAME)),)
 # reasonable settings for 32-bit mode
-GCCHWOPT= -m32 -mcpu=v8 -mtune=ultrasparc
+GCCHWOPT+= -m32 -mcpu=v8 -mtune=ultrasparc
 # reasonable settings for 64-bit mode (gcc-3 required)
-#GCCHWOPT= -m64 -mcpu=ultrasparc
+#ALIGN_FUNCTIONS=32
+#GCCHWOPT+= -m64 -mcpu=ultrasparc
 endif
 
 ifneq ($(NO_OPT),true)
@@ -476,13 +488,12 @@ ifeq ($(BK_WANT_ORACLE), false)
 HAVE_ORACLE=false
 endif
 
-# Even if we want oracle, should the *platform* not support pthreads, then we can't oracle.
+# Even if we want oracle, a *platform* without pthreads can't do oracle
 ifeq ($(HAVE_ORACLE),true)
 ifeq ($(HAVE_PTHREADS),false)
 HAVE_ORACLE=false
 endif
 endif
-
 
 ifeq ($(HAVE_ORACLE), true)
 BK_DEFINES += -DHAVE_ORACLE
@@ -501,14 +512,13 @@ OS_LIBS += -lc_p
 endif # BK_USING_PROF
 
 ifeq ($(BK_USING_DMALLOC),true)
+ifeq ($(BK_USING_PTHREADS),true)
+BK_LIBS+= -ldmallocth
+else
 BK_LIBS+= -ldmalloc
+endif
 BK_DEFINES+=-DUSING_DMALLOC -DDMALLOC_FUNC_CHECK
 endif # BK_USING_DMALLOC
-
-ifeq ($(BK_USING_DMALLOCTH),true)
-BK_LIBS+= -ldmallocth
-BK_DEFINES+=-DUSING_DMALLOC -DDMALLOC_FUNC_CHECK
-endif # BK_USING_DMALLOCTH
 
 ifeq ($(BK_USING_INSURE),true)
 # it's not called insight any more; use auto-defined __INSURE__
