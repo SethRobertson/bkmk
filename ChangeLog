@@ -1,3 +1,15 @@
+2002-01-07  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* configure: regenerated using current autoconf
+
+	* Make.bkvariables: don't make clean in 3rd party packages
+	generated using GNUmakefile and $(ARCH) subdirectory
+
+2002-01-07  James Tanis  <jtt@sysdetect.com>
+
+	* configure, Make.bkvariables, Makefile, Make.include, Make.production:
+	Make clean when arch changes
+
 2002-01-04  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.bkvariables (BK_DUMMY): don't bother with this for GNUmakefile
@@ -16,7 +28,7 @@
 
 	* acaux/install-sh: implement -p option now that we depend on it
 
-2002-01-04  James Tanis  <jtt@stevedore.sysdetect.com>
+2002-01-04  James Tanis  <jtt@sysdetect.com>
 
 	* Make.bkvariables, Makefile, Make.targets: run configure when
 	things get out of date, not on all cvs udpates

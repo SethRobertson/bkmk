@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.bkvariables,v 1.11 2002/01/07 17:03:12 jtt Exp $
+# $Id: Make.bkvariables,v 1.12 2002/01/07 18:31:58 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -33,7 +33,8 @@ BK_OSNAME = $(shell uname -s | tr / - )-$(shell uname -r | sed 's/\(\.[^.]*\)\..
 
 BKMK_OSFILE=$(BKMKDIR)/.config_os_type
 
-#ifneq ($(BKMK_OSFILE),)
+# Avoid all this mess for 3rd party packages built via GNUmakefile
+ifeq ($(CONFIGURED),)
 ##################################################
 #
 # Make sure that we've configured using the correct architecture
@@ -60,7 +61,7 @@ endif # BK_CONFIG_OS_TYPE != BK_OSNAME
 
 #
 ##################################################
-#endif # BKMK_OSFILE
+endif # CONFIGURED
 
 
 endif # BKMK_VAR_CORRECT
