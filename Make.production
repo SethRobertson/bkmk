@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.production,v 1.60 2003/06/17 05:59:47 seth Exp $
+# $Id: Make.production,v 1.61 2003/07/24 22:50:18 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -271,19 +271,38 @@ $(BK_JAVADIR)/%: $(GROUPTOP)/%
 
 $(BK_JAVADIR)/%.MF: %.MF
 	@$(MKDIR) $(BK_JAVADIR)/$(BK_JAVA_PKG)
-	@$(LN_S) -f $(PWD)/$< $@
-	@test ! -L $@ && test ! $@ -ef $< 2>/dev/null && chmod -w $@ || true
+	@# <WARNING>These must be sorted for join to work</WARNING>
+	@{ CP='$(notdir $(subst :, ,$(BK_JAVA_CP)))';		 \
+	   case $$CP in *.*) echo "Class-Path: $$CP" ;; esac;	 \
+	   echo 'Implementation-Title: $(BK_JAVA_PKGDOT)';	 \
+	   echo 'Implementation-Vendor: System Detection, Inc.'; \
+	   echo "Implementation-Version: `date +%Y-%m-%dT%H`";	 \
+	   echo 'Specification-Vendor: System Detection, Inc.';	 \
+	   echo 'Specification-Version: 1.1';			 \
+	 } > $@T
+	@{ set -e; echo 'Manifest-Version: 1.0';		       \
+	   join -v1 -v2 -t: $@T $<;				       \
+	   join -o2.1,2.2 -t: $@T $<; }				       \
+	 | $(SED) '/^[^ ]/{x;p;g;s/:.*/: /;p;s/.*//;x;s/[^:]*: */ /;}' \
+	 | fmt -c | $(SED) -n /./p > $@
 
+# JARFLAGS=-cifm causes java.io.IOException: invalid header field
+# (so we run the indexing separately, after the file is created)
 $(BK_JAVA_JAR): $(BK_JAVADIR)/$(BK_JAVA_MF) \
 		$(BK_JAVA_PKG_SRC) $(BK_JAVA_PKG_CLASS) \
 		$(BK_JAVA_PKG_AUX) $(BK_JAVA_PKG_LOCALE) $(BK_JAVA_PKG_IMAGES)
 	@echo $(JAR) $(JARFLAGS) $@ $(BK_JAVA_MF) ...
-	@cd $(BK_JAVADIR) && \
+	@cd $(BK_JAVADIR) &&				       \
 	  $(JAR) $(JARFLAGS) $@ $(BK_JAVA_MF) $(BK_JAVA_CLASS) \
-	    $(BK_JAVA_ICLASS) \
-	    $(addprefix $(BK_JAVA_PKG)/,$(BK_JAVA_AUX)) \
+	    $(BK_JAVA_ICLASS)				       \
+	    $(addprefix $(BK_JAVA_PKG)/,$(BK_JAVA_AUX))	       \
 	    $(BK_JAVA_LOCALE) $(BK_JAVA_IMAGES)
-	$(MV) $(BK_JAVADIR)/$(BK_JAVA_JAR) $@
+	@echo $(JAR) -i $@
+	@-cd $(BK_JAVADIR) && {						  \
+	  for J in $(subst :, ,$(BK_JAVA_CP)); do $(LN_S) -f $$J .; done; \
+	  $(JAR) -i $@ 2>/dev/null;					  \
+	}
+	$(CP) $(BK_JAVADIR)/$(BK_JAVA_JAR) $@
 
 # Jtest productions
 

@@ -1,3 +1,8 @@
+2003-07-24  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.production ($(BK_JAVA_JAR)): generate index, if possible
+	($(BK_JAVADIR)/%.MF): generate manifest headers
+
 2003-07-01  James Tanis  <jtt@saint.sysdetect.com>
 
 	* Make.variables (BK_WANT_STATIC): Make static work.
