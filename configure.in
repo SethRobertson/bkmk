@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.110 2004/06/07 17:02:01 jtt Exp $
+dnl $Id: configure.in,v 1.111 2004/06/25 00:25:10 dupuy Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.110 $)dnl
+AC_REVISION($Revision: 1.111 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
@@ -121,7 +121,7 @@ AC_SYS_LARGEFILE
 AC_CHECK_HEADERS(paths.h ieeefp.h alloca.h)
 AC_CHECK_HEADERS(net/ethernet.h netinet/ether.h  netinet/if_ether.h)
 AC_CHECK_HEADERS(sys/capability.h sys/msg.h)
-AC_CHECK_HEADERS(pty.h util.h sys/ioctl.h sys/filio.h)
+AC_CHECK_HEADERS(sys/ioctl.h sys/filio.h)
 AC_CHECK_HEADERS(valgrind/memcheck.h)
 
 AC_SA_LEN
@@ -157,7 +157,12 @@ ACX_PTHREAD(
 AC_SUBST(HAVE_PTHREADS)
 
 dnl <TODO bugid="881">should use getaddressinfo function instead</TODO>>
-AC_SEARCH_LIBS([gethostbyname2],[resolv],AC_DEFINE(HAVE_GETHOSTBYNAME2))
+AC_SEARCH_LIBS([gethostbyname2],[resolv],[AC_DEFINE(HAVE_GETHOSTBYNAME2)])
+
+AC_SEARCH_LIBS([openpty],[c util],
+  [AC_DEFINE(HAVE_OPENPTY)
+   AC_CHECK_HEADERS(pty.h util.h libutil.h)]
+)
 
 AC_CHECK_FUNCS(isinf ntohll)
 AC_CHECK_FUNCS(memmem memrchr setenv strndup strnlen strverscmp strsignal)

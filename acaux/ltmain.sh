@@ -59,8 +59,8 @@ modename="$progname"
 PROGRAM=ltmain.sh
 PACKAGE=libtool
 VERSION=1.5
-TIMESTAMP=" (1.7 2003/08/13 14:55:23)"
-TIMESTAMP="$TIMESTAMP [$Revision: 1.20 $]"
+TIMESTAMP=" (1.9 2004/06/17 21:41:22)"
+TIMESTAMP="$TIMESTAMP [$Revision: 1.21 $]"
 
 default_mode=
 help="Try \`$progname --help' for more information."
@@ -1275,8 +1275,8 @@ EOF
 	    # These systems don't actually have a C library (as such)
 	    test "X$arg" = "X-lc" && continue
 	    ;;
-	  *-*-openbsd* | *-*-freebsd*)
-	    # Do not include libc due to us having libc/libc_r.
+	  *-*-openbsd* | *-*-freebsd[234]*)
+	    # Do not include libc as only one of libc/libc_r may be used.
 	    test "X$arg" = "X-lc" && continue
 	    ;;
 	  *-*-rhapsody* | *-*-darwin1.[012])
@@ -3176,9 +3176,9 @@ EOF
 	  *-*-netbsd*)
 	    # Don't link with libc until the a.out ld.so is fixed.
 	    ;;
-	  *-*-openbsd* | *-*-freebsd*)
-	    # Do not include libc due to us having libc/libc_r.
-	    # (we make an exception if -no-undefined)
+	  *-*-openbsd* | *-*-freebsd[234]*)
+	    # Do not include libc as only one of libc/libc_r may be used.
+	    # (we make an exception for threaded code if -no-undefined)
 	    if test "$build_libtool_need_lc" = "yes"; then
 	      if test -n "$shared_no_undefined_flag_spec"; then
 		if test "$pthread" = yes; then
@@ -3191,6 +3191,16 @@ EOF
 		  shared_no_undefined_flag_spec=
 		  # :BAD: deplibs="$deplibs -lc"
 		fi
+	      fi
+	    fi
+	    ;;
+	  *-*-freebsd5*)
+	    if test "$build_libtool_need_lc" = "yes"; then
+	      if test "$pthread" = yes; then
+	        # put a dependency on threaded libc first
+		deplibs="$deplibs -lc_r -lc"
+	      else
+		deplibs="$deplibs -lc"
 	      fi
 	    fi
 	    ;;
@@ -3742,20 +3752,6 @@ EOF
 	  $run eval '(cd $output_objdir && $rm ${realname}U && $mv $realname ${realname}U)' || exit $?
 	fi
 
-	# <KLUDGE>Remove all convenience libraries from $deplibs to avoid
-	# on MacOS X -- not clear if this is still needed.</KLUDGE>
-	#save_deplibs="$deplibs"
-	#if test "$build_libtool_libs" = "yes"; then
-	#  for conv in $convenience; do
-	#    tmp_deplibs=
-	#    for test_deplib in $deplibs; do
-	#      if test "$test_deplib" != "$conv"; then
-	#	tmp_deplibs="$tmp_deplibs $test_deplib"
-	#      fi
-	#    done
-	#    deplibs="$tmp_deplibs"
-	#  done
-	#fi
 	# Do each of the archive commands.
 	if test "$module" = yes && test -n "$module_cmds" ; then
 	  if test -n "$export_symbols" && test -n "$module_expsym_cmds"; then
@@ -3770,8 +3766,6 @@ EOF
 	  eval cmds=\"$archive_cmds\"
 	  fi
 	fi
-	# <KLUDGE>Restore convenience libraries to $deplibs.</KLUDGE>
-	#save_deplibs="$deplibs"
 
 	if test "X$skipped_export" != "X:" && len=`expr "X$cmds" : ".*"` &&
 	   test "$len" -le "$max_cmd_len" || test "$max_cmd_len" -le -1; then

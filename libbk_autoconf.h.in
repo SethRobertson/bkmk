@@ -1,5 +1,5 @@
 /*				-*- C -*-
- * $Id: libbk_autoconf.h.in,v 1.51 2004/06/07 17:02:01 jtt Exp $
+ * $Id: libbk_autoconf.h.in,v 1.52 2004/06/25 00:25:10 dupuy Exp $
  *
  * ++Copyright LIBBK++
  *
@@ -66,6 +66,7 @@
 #undef HAVE_SYS_MSG_H
 #undef HAVE_PTY_H
 #undef HAVE_UTIL_H
+#undef HAVE_LIBUTIL_H
 #undef HAVE_SYS_IOCTL_H
 #undef HAVE_SYS_FILIO_H
 #undef HAVE_VALGRIND_MEMCHECK_H
@@ -76,6 +77,8 @@
 #undef HAVE_SOCKADDR_SA_LEN
 #undef HAVE_SA_LEN_MACRO
 #undef HAVE_INET_PTON
+
+#undef HAVE_OPENPTY
 
 #undef HAVE_MEMMEM
 #undef HAVE_MEMRCHR

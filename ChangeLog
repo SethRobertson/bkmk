@@ -1,3 +1,9 @@
+2004-06-24  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* configure.in, libbk_autoconf.h.in, aclocal.m4: FreeBSD fixes
+
+	* acaux/ltmain.sh: FreeBSD 5 fixes from libtool
+
 2004-06-23  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.FreeBSD-5.1-pre, Make.FreeBSD-5.2-pre: FreeBSD 5 support

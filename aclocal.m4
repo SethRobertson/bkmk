@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.50 2004/01/05 17:39:21 seth Exp $
+# $Id: aclocal.m4,v 1.51 2004/06/25 00:25:10 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -368,7 +368,6 @@ AC_DEFUN([AC_TIME_MAX],
                [ac_cv_$1],
 [AC_RUN_IFELSE([AC_LANG_SOURCE(
 [#define _ISOC99_SOURCE
-#define  __STDC_VERSION__ 199901L
 
 #include <limits.h>
 #include <time.h>
