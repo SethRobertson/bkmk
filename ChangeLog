@@ -1,3 +1,9 @@
+2002-03-06  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* configure.in: look for str{n,}casecmp
+
+	* libbk_autoconf.h.in (HAVE_STRCASECMP): get availability of strcasecmp
+
 2002-03-05  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.variables (INSTALL_INCFLAGS) [CYGWIN]: don't use -p on r/o files
