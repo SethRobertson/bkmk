@@ -1,9 +1,9 @@
 
-# <KLUDGE bugid="2576">This really isn't a configuration option (unless you've
-# gone crazy and hacked the dynamic linker on your OS); it is simply the
-# easiest mechanism to get the platform definition to scripts like worker.sh
-# (and jump.pl/wump.pl and the installation scripts, if/when they are updated
-# to look at this).  The downside is that it makes the configuration file
-# platform-dependent.</KLUDGE>
+# <TRICKY bugid="2576">This really isn't a configuration option that should
+# ever be changed (unless someone has gone crazy and hacked the dynamic linker
+# on the OS); it is simply the easiest mechanism to get the platform definition
+# to scripts like worker.sh (and jump.pl/wump.pl and the installation scripts,
+# if/when they are updated to look at this).  The downside is that it makes the
+# configuration file platform-dependent.</TRICKY>
 
 SHLIBPATH_VAR = @shlibpath_var@
