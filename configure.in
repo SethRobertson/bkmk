@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.94 2003/06/25 15:32:38 brian Exp $
+dnl $Id: configure.in,v 1.95 2003/06/25 21:23:32 brian Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.94 $)dnl
+AC_REVISION($Revision: 1.95 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
@@ -54,6 +54,12 @@ then
   AC_DEFINE(HAVE_LIBCRYPT)
 fi
 AC_SUBST(HAVE_LIBCRYPT)
+AC_CHECK_LIB(crypto, crypt, HAVE_LIBCRYPTO=true, HAVE_LIBCRYPTO=false)
+if test "$HAVE_LIBCRYPT" "=" "true"
+then
+  AC_DEFINE(HAVE_LIBCRYPTO)
+fi
+AC_SUBST(HAVE_LIBCRYPTO)
 
 AC_C_ALIGN_FUNCTIONS
 

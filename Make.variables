@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.154 2003/06/25 15:32:38 brian Exp $
+# $Id: Make.variables,v 1.155 2003/06/25 21:23:32 brian Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -516,7 +516,11 @@ else
 ifeq ($(strip $(HAVE_LIBCRYPT)), true)
 BK_LIBCRYPT := -lcrypt
 else
+ifeq ($(strip $(HAVE_LIBCRYPTO)), true)
+BK_LIBCRYPT := -lcrypto
+else
 BK_LIBCRYPT := 
+endif # HAVE_LIBCRYPTO = true
 endif # HAVE_LIBCRYPT = true
 BK_LIBDL := -ldl
 endif # BK_USING_GPROF
