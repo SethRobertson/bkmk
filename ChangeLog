@@ -1,3 +1,7 @@
+2003-03-18  James Tanis  <jtt@saint.sysdetect.com>
+
+	* configure.in: Check sizes of int and long.
+
 2003-03-17  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* findvalidpwd: use rpcinfo to prevent pawd hang on Mac OS X

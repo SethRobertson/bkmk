@@ -1,5 +1,5 @@
 /*				-*- C -*-
- * $Id: libbk_autoconf.h.in,v 1.36 2003/03/13 21:38:39 dupuy Exp $
+ * $Id: libbk_autoconf.h.in,v 1.37 2003/03/19 00:10:33 jtt Exp $
  *
  * ++Copyright LIBBK++
  *
@@ -36,6 +36,12 @@
 #undef u_int16_t
 #undef u_int32_t
 #undef u_int64_t
+
+#undef SIZEOF_INT
+#undef SIZEOF_LONG
+#undef SIZEOF_LONG_LONG
+#undef SIZEOF_QUAD_T
+#undef SIZEOF_OFF_T
 
 #undef HAVE__FUNC__
 #undef HAVE__PRETTY_FUNCTION__
