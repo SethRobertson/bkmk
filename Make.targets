@@ -1,6 +1,6 @@
 # -*- makefile -*-
 # 
-# $Id: Make.targets,v 1.60 2002/08/26 20:22:11 seth Exp $
+# $Id: Make.targets,v 1.61 2002/08/26 20:25:58 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -47,6 +47,8 @@ ifneq ($(BK_WANT_DEFAULT),false)
 #
 # Default rule--standard target to compile everything
 #
+default install actual_install:: $(BK_REALTOP)/bkmk/.timestamp
+
 default:: 
 	$(BK_SUBDIRRULE)	
 
@@ -457,6 +459,11 @@ endif # BK_JAVA_HELP
 $(BKMKDIR)/Make.$(BK_OSNAME)-pre:
 $(BKMKDIR)/Make.$(BK_OSNAME)-post:
 $(GROUPTOP)/$(PKGTOP)/.user-variables:
+
+# Allow on-the-fly configure during a `make clean default`
+$(BK_REALTOP)/bkmk/.timestamp:
+	@(cd $(BK_REALTOP)/bkmk; make .timestamp)
+
 
 #
 # Prevent targets from being files

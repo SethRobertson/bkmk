@@ -1,3 +1,7 @@
+OSFILE=.config_os_type
+OSNAME = $(shell uname -s | tr / - | sed 's/_.*//')-$(shell uname -r | sed 's/\(\.[^.()-]*\)[-.].*/\1/')
+
+
 
 default:
 
@@ -20,7 +24,7 @@ endif
 ################################################################
 
 clean nuke:
-	rm -f .config_os_type confdefs.h config.cache config.status config.log libbk_autoconf.h
+	rm -f .config_os_type confdefs.h config.cache config.status config.log libbk_autoconf.h .timestamp
 
 %.status: ./%ure
 	./configure --disable-fast-install
