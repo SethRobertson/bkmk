@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.164 2003/07/08 20:22:49 seth Exp $
+# $Id: Make.variables,v 1.165 2003/07/08 20:24:42 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -442,7 +442,7 @@ else # !BK_VALGRIND_OPT
 ifeq ($(BK_DEBUG_OPT),true)
 COPTDEBUG+=-O2
 else # !BK_DEBUG_OPT
-COPTDEBUG+=-O3 -fforce-addr -funroll-loops -frerun-cse-after-loop -frerun-loop-opt
+COPTDEBUG+=-O3 -funroll-loops -frerun-cse-after-loop -frerun-loop-opt
 endif # !BK_DEBUG_OPT
 endif # !BK_VALGRIND_OPT
 # gcc doesn't support -Wuninitialized without -O. And if using insure++ you
