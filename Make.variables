@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.173 2003/10/08 21:06:22 jtt Exp $
+# $Id: Make.variables,v 1.174 2003/10/15 21:37:13 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -45,6 +45,9 @@ BK_INSTALLRDIR:=$(shell $(PERL) -e $(NORMALIZERDIR))
 
 NORMALIZEPATH="\$$_ = qq^$(PWD)/$(BK_INSTALLPROGDIR)^;"$(NORMALIZE)
 BK_INSTALLPATH=$(shell $(PERL) -e $(NORMALIZEPATH))
+
+NORMALIZEDIR="\$$_ = qq^$(PWD)/$(BK_SAVE_INSTALLBASE)^;"$(NORMALIZE)
+BK_INSTALLDIR:=$(shell $(PERL) -e $(NORMALIZEDIR))
 
 BKMKVAR_VAR_CORRECT=true
 export BK_INSTALLRDIR BK_INSTALLPATH BKMKVAR_VAR_CORRECT
