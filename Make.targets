@@ -1,6 +1,6 @@
 # -*- makefile -*-
 # 
-# $Id: Make.targets,v 1.31 2002/01/04 19:14:08 dupuy Exp $
+# $Id: Make.targets,v 1.32 2002/01/04 19:41:50 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -122,8 +122,10 @@ endif # BK_WANT_JAVA
 install:: $(BK_LARGE_LIB)
 ifneq ($(strip $(BK_INSTALLLIBDIR)),)
 ifneq ($(strip $(BK_LARGE_LIB)),)
-	if [ $^ != $(BK_INSTALLLIBDIR)/$(^F) ]; then \
+	@if [ $^ != $(BK_INSTALLLIBDIR)/$(^F) ]; then \
+	  echo $(MKDIR) $(BK_INSTALLLIBDIR); \
 	  $(MKDIR) $(BK_INSTALLLIBDIR); \
+	  echo $(INSTALL) $(INSTALL_LIBFLAGS) $^ $(BK_INSTALLLIBDIR); \
 	  $(INSTALL) $(INSTALL_LIBFLAGS) $^ $(BK_INSTALLLIBDIR); \
 	fi
 endif # BK_LARGE_LIB

@@ -1,12 +1,13 @@
 2002-01-04  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.targets (install): deal with VPATH of .a dependencies,
-	avoid extra ${RANLIB} of libraries
+	avoid extra ${RANLIB} of libraries; only echo commands being executed
 
 	* Make.variables (INSTALL_LIBFLAGS): preserve timestamps
 
 	* Make.production ($(BK_LARGE_INTERNALPROG)): don't try to build
 	this using ${AR}
+	($(BK_LARGE_LIB)): use $^ [all dependencies] if target doesn't exist
 
 2001-12-27  Alexander Dupuy  <dupuy@sysdetect.com>
 

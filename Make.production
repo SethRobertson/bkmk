@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.production,v 1.22 2002/01/04 19:14:08 dupuy Exp $
+# $Id: Make.production,v 1.23 2002/01/04 19:41:50 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -75,7 +75,11 @@ BK_LARGE_LIBOBJ:=$(patsubst %.y,%.tab.o,$(BK_LARGE_LIBOBJ))
 BK_LARGE_LIBOBJ:=$(patsubst %.l,%.o,$(BK_LARGE_LIBOBJ))
 
 $(BK_LARGE_LIB): $(BK_LARGE_LIBOBJ)
-	$(AR) $(ARFLAGS) $@ $?
+	if [ -f $@ ]; then \
+	  $(AR) $(ARFLAGS) $@ $?; \
+	else \
+	  $(AR) $(ARFLAGS) $@ $^; \
+	fi
 	$(RANLIB) $@
 
 #
