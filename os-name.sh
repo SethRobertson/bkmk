@@ -1,5 +1,5 @@
 #! /bin/sh
-# $Id: os-name.sh,v 1.5 2003/10/08 20:11:58 dupuy Exp $
+# $Id: os-name.sh,v 1.6 2004/02/26 07:58:53 seth Exp $
 #
 # ++Copyright SYSDETECT++
 #
@@ -45,6 +45,13 @@ do
      < $REL | grep Linux && exit
   fi
 done
+
+if [ -f /etc/gentoo-release ]
+ then
+  sed -e 's/^\(Gentoo\).*version \([0-9][0-9.]*\)/\1-\2/' /etc/gentoo-release
+  exit
+ fi
+
 
 echo Unknown`uname -s` `uname -r | sed -e 's/-.*//'` \
  | sed -e 's/ /-/' -e 's/ //g'
