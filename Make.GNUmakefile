@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.GNUmakefile,v 1.9 2002/09/04 23:20:56 seth Exp $
+# $Id: Make.GNUmakefile,v 1.10 2002/09/04 23:22:15 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -35,9 +35,7 @@ endif
 
 include $(PKGTOP)/Make.include
 
-install-first: install
-install-normal install
-actual_install install
+install-first install-normal actual_install: install
 
 install:: $(CONFIGURED)
 	-mkdir -p $(INSTBASE)
