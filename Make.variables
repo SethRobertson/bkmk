@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.150 2003/06/11 00:42:18 seth Exp $
+# $Id: Make.variables,v 1.151 2003/06/16 23:38:53 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -508,6 +508,7 @@ endif
 
 ifeq ($(BK_USING_GPROF),true)
 BK_LIBCRYPT := -lcrypt_p
+# <TODO>-ldl is a Linuxism; should be autoconf'ed</TODO>
 BK_LIBDL := -ldl_p
 CFLAGS += -pg
 OS_LIBS += -lc_p
