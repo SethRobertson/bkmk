@@ -1,4 +1,4 @@
-#!/bin/perl -i
+#!/usr/bin/perl -i
 #
 # Clean up nasty whitespace from files
 #
