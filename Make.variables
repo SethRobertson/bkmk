@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.133 2003/03/21 21:51:53 dupuy Exp $
+# $Id: Make.variables,v 1.134 2003/03/26 16:46:05 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -317,7 +317,13 @@ LIB44BSD=#-l44bsd
 # Libraries
 DBM_LIBS=-ldb
 TERMINAL_LIBS=-ltermcap
-MATH_LIBS=-lm
+
+ifeq ($(BK_USING_GPROF),true)
+BK_LIBM=-lm_p
+else
+BK_LIBM=-lm
+endif
+
 COMPRESS_LIBS=-lz
 
 # BK issues
@@ -325,7 +331,7 @@ ifneq ($(NO_STDBKCCSTUFF),true)
 BK_DEFINES+= $(RESOLVER_DEFINES)
 BK_INCS= $(RESOLVER_INCLUDES)
 BK_LDS= $(RESOLVER_LDS)
-BK_LIBS= -lbk -ldict -lfsma -lpqueue -lpopt $(LIBRESOLVER) $(MATH_LIBS) $(COMPRESS_LIBS)
+BK_LIBS= -lbk -ldict -lfsma -lpqueue -lpopt $(LIBRESOLVER) $(BK_LIBM) $(COMPRESS_LIBS)
 
 endif # NO_STDBKCCSTUFF
 
@@ -490,9 +496,13 @@ BK_DEFINES += -DNO_POSTGRES
 endif
 
 ifeq ($(BK_USING_GPROF),true)
+BK_LIBCRYPT := -lcrypt_p
+BK_LIBDL := -ldl_p
 CFLAGS += -pg
-# This isn't *strictly* an OS lib, but it's close enough
-OS_LIBS += -lc_p
+OS_LIBS += -lc_p 
+else
+BK_LIBCRYPT := -lcrypt
+BK_LIBDL := -ldl
 endif # BK_USING_GPROF
 
 ifeq ($(BK_USING_PROF),true)
@@ -500,6 +510,15 @@ CFLAGS += -p
 # This isn't *strictly* an OS lib, but it's close enough
 OS_LIBS += -lc_p
 endif # BK_USING_PROF
+
+ifeq ($(BK_USING_PTHREADS),true)
+ifeq ($(BK_USING_GPROF),true)
+PTHREAD_LIBS=-lpthread_p
+else
+PTHREAD_LIBS=-lpthread
+endif
+BK_DEFINES+=-DBK_USING_PTHREADS
+endif
 
 ifeq ($(BK_USING_DMALLOC),true)
 ifeq ($(BK_USING_PTHREADS),true)
@@ -528,7 +547,7 @@ BK_ALLDEFINES=$(LOCAL_DEFINES) $(GROUP_DEFINES) $(PKG_DEFINES) $(BK_DEFINES) $(O
 BK_ALLINCS=$(LOCAL_INCS) $(GROUP_INCS) $(PKG_INCS) $(BK_INCS) $(OS_INCS)
 BK_ALLLDS=$(LOCAL_LDS) $(GROUP_LDS) $(PKG_LDS) $(BK_LDS) $(OS_LDS)
 # The insure debug libs are alledgedly supposed to go last.
-BK_ALLLIBS=$(LOCAL_LIBS) $(GROUP_LIBS) $(PKG_LIBS) $(BK_LIBS) $(OS_LIBS) $(AC_LIBS) $(PTHREAD_LIBS) $(INSURE_DEBUG_LIBS)
+BK_ALLLIBS=$(LOCAL_LIBS) $(GROUP_LIBS) $(PKG_LIBS) $(BK_LIBS) $(PTHREAD_LIBS) $(OS_LIBS) $(AC_LIBS) $(INSURE_DEBUG_LIBS)
 BK_LIBDIR=$(OS_SEARCHPATH) $(patsubst -L%,%,$(filter -L%,$(BK_ALLLDS)))
 BK_RELINKLIBS=$(LOCAL_RELINK_LIBS) $(GROUP_RELINK_LIBS) $(PKG_RELINK_LIBS) $(BK_RELINK_LIBS) $(OS_RELINK_LIBS)
 

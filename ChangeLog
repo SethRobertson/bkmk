@@ -1,3 +1,8 @@
+2003-03-26  James Tanis  <jtt@saint.sysdetect.com>
+
+	* Make.include (BK_USING_GPROF): override libtool (false) and
+	static (true) when using gprof.
+
 2003-03-25  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* acaux/ltmain.sh: source getcwd.sh in libtool-generated scripts

@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.include,v 1.25 2003/02/20 23:30:22 dupuy Exp $
+# $Id: Make.include,v 1.26 2003/03/26 16:46:05 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -60,8 +60,6 @@ BK_USING_PTHREADS=false
 ifeq ($(HAVE_PTHREADS),true)
 ifneq ($(strip $(WANT_PTHREADS)),false)
 BK_USING_PTHREADS=true
-PTHREAD_LIBS=-lpthread
-BK_DEFINES+=-DBK_USING_PTHREADS
 endif
 endif
 
@@ -81,6 +79,8 @@ endif
 ifneq ($(findstring true,$(WANT_GPROF)$(USING_GPROF)),)
 BK_USING_GPROF=true
 override BK_USING_PROF=false
+override BK_WANT_LIBTOOL=false
+override BK_WANT_STATIC=false
 else
 ifneq ($(findstring true,$(WANT_PROF)$(USING_PROF)),)
 BK_USING_PROF=true
