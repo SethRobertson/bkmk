@@ -1,0 +1,23 @@
+AC_INIT(Make.bkvariables)
+
+echo 
+echo "CONFIGURING MAKEFILE VARIABLES"
+echo
+
+AC_PROG_CC
+
+if test "$CC" "!=" "gcc"; then
+   echo
+   echo "Attempting to compile BAKA distributsions without gcc may be painfull."
+   echo "You have been warned."
+   echo
+fi
+
+AC_PROG_CXX
+AC_PROG_LEX
+AC_PROG_YACC
+AC_PROG_RANLIB
+AC_PROG_CPP
+AC_PROG_CXXCPP
+AC_PROG_CC_C_O
+AC_OUTPUT(Make.config)

@@ -1,4 +1,4 @@
-# $Id: Make.variables,v 1.6 2001/06/18 22:21:06 seth Exp $
+# $Id: Make.variables,v 1.7 2001/06/19 00:30:54 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -15,6 +15,8 @@
 # Variables
 #
 
+# Include the autoconf'ed variables
+include $(GROUPTOP)/$(PKGTOP)/bkmk/Make.config
 
 #
 # Junk
@@ -50,7 +52,7 @@ RRM=rm -rf
 MKDEP=$(CPP) -M $(CPPFLAGS)
 MKDIR=mkdir -p
 AR=ar
-RANLIB=ranlib
+#RANLIB=ranlib
 
 # Install (GNU or BSD)
 INSTALL=install -c
@@ -59,12 +61,12 @@ INSTALL_OTHERFLAGS=-m 664
 
 
 # Yacc
-YACC=bison -y
+#YACC=bison -y
 YFLAGS=
-YACCLIBS=-ly
+#YACCLIBS=-ly
 
 # Lex
-LEX=flex
+#LEX=flex
 LOPTDEBUG= #-CF
 LFLAGS=$(LOPTDEBUG)
 LEXLIBS=-lfl
@@ -99,8 +101,8 @@ endif # NO_STDBKCCSTUFF
 # C
 CC_normal=gcc $(GCCOPTS)
 CC_strict=g++ $(GCCOPTS)
-CXX=g++
-CC=$(CC_normal)
+#CXX=g++
+#CC=$(CC_normal)
 COMPILER_DEBUG=-W -Wall -Wpointer-arith -Wno-unused -Wno-sign-compare $(COMPILER_DEBUG_ERROR)
 COMPILER_DEBUG_ERROR=-Werror
 COPTDEBUG=-g -O $(COMPILER_DEBUG)
