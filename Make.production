@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.production,v 1.33 2002/01/31 17:35:09 dupuy Exp $
+# $Id: Make.production,v 1.34 2002/02/01 20:48:15 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -44,7 +44,7 @@ Make%:
 # Standard compiling targets
 #
 %$(OBJEXT): %.c
-	$(LIBTOOL) $(COMPILE.c) $(OUTPUT_OPTION) $<
+	$(LTCC) $(COMPILE.c) $(LT_CFLAGS) $(OUTPUT_OPTION) $<
 
 %.i: %.c
 	$(CC) -E $(CPPFLAGS) -o $@ $<
@@ -62,10 +62,10 @@ ifeq ($(USING_INSURE),true)
 # Insure++ often generates exceedingly bogus errors when it compiles and links
 # in a single command, so make the dependency on the object file and link that.
 $(BK_SIMPLE_INTERNALPROGS) $(BK_SIMPLE_PROGS): %: %$(OBJEXT) $(filter -l%,$(BK_ALLLIBS))
-	$(LIBTOOL) $(LINK.c) -o $@ $@$(OBJEXT) $(LDLIBS)
+	$(LTLD) $(LINK.c) $(LT_LDFLAGS) -o $@ $@$(OBJEXT) $(LDLIBS)
 else
 $(BK_SIMPLE_INTERNALPROGS) $(BK_SIMPLE_PROGS): %: %.c $(filter -l%,$(BK_ALLLIBS))
-	$(LIBTOOL) $(LINK.c) -o $@ $@.c $(LDLIBS)
+	$(LTLD) $(LINK.c) $(LT_LDFLAGS) -o $@ $@.c $(LDLIBS)
 endif
 
 #
@@ -76,7 +76,7 @@ BK_LARGE_OBJ:=$(patsubst %.y,%.tab$(OBJEXT),$(BK_LARGE_OBJ))
 BK_LARGE_OBJ:=$(patsubst %.l,%$(OBJEXT),$(BK_LARGE_OBJ))
 
 $(BK_LARGE_INTERNALPROG) $(BK_LARGE_PROG): $(BK_LARGE_OBJ) $(filter -l%,$(BK_ALLLIBS))
-	$(LIBTOOL) $(LINK.c) -o $@ $(BK_LARGE_OBJ) $(LDLIBS)
+	$(LTLD) $(LINK.c) $(LT_LDFLAGS) -o $@ $(BK_LARGE_OBJ) $(LDLIBS)
 
 #
 # Large library production
@@ -101,12 +101,12 @@ $(filter %.a,$(BK_LARGE_LIB)): $(BK_LARGE_LIBOBJ)
 # don't use $(LDLIBS) in libtool links, as it may contain static/convenience
 # libs that will get included in the generated shared library.
 $(filter %.la,$(BK_LARGE_LIB)): $(BK_LARGE_LIBOBJ)
-	$(LIBTOOL) $(LINK.c) -o $@ $^ $(LTLDLIBS) \
-	 -avoid-version -rpath $(BK_INSTALLRPATH)
+	$(LIBTOOL_LINK) $(LINK.c) $(LT_LDFLAGS) -o $@ $^ $(LT_LDLIBS) \
+	 -rpath $(BK_INSTALLRPATH)
 
 $(BK_LARGE_MODULE): $(BK_LARGE_LIBOBJ)
-	$(LIBTOOL) $(LINK.c) -o $@ $^ $(LTLDLIBS) \
-	 -avoid-version -module -rpath $(BK_INSTALLRPATH)
+	$(LIBTOOL_LINK) $(LINK.c) $(LT_M_LDFLAGS) -o $@ $^ $(LT_LDLIBS) \
+	 -rpath $(BK_INSTALLRPATH)
 
 #
 # Java production

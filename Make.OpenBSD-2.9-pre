@@ -1,3 +1,7 @@
 OS_INCS=-I/usr/local/include
 OS_LDS=-L/usr/local/lib
 OS_LIBS=-lintl
+
+# -avoid-version causes OpenBSD ld to use archives instead of shared objects
+LT_LDFLAGS=--mode link
+# (we don't need to override LT_M_LDFLAGS since ld doesn't search for modules)

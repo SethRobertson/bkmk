@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.52 2002/01/31 22:13:17 ldog Exp $
+# $Id: Make.variables,v 1.53 2002/02/01 20:48:15 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -92,6 +92,14 @@ YACCLIBS=-ly
 LOPTDEBUG= #-CF
 LFLAGS=$(LOPTDEBUG)
 LEXLIBS=-lfl
+
+# Libtool
+LT_CFLAGS=
+LT_LDFLAGS=-avoid-version
+LT_M_LDFLAGS=-module -avoid-version
+
+LIBTOOL_COMPILE=$(LIBTOOL) --mode compile
+LIBTOOL_LINK=$(LIBTOOL) --mode link
 
 ######################################################################
 # Java stuff
@@ -196,7 +204,9 @@ CC_strict=$(CXX_CONFIG) $(CCXOPTS)
 #CC=$(CC_strict)
 CC=$(CC_normal)
 CXX=$(CXX_CONFIG) $(CXXOPTS)
+
 ifeq ($(CC_CONFIG),gcc)
+
 COMPILER_DEBUG+=-W -Wmissing-prototypes -Wstrict-prototypes -Wchar-subscripts -Wcomment -Wformat -Wimplicit -Wmain -Wmultichar -Wreturn-type -Wswitch -Wtrigraphs -Wno-unused -Wshadow -Wpointer-arith $(COMPILER_DEBUG_ERROR)
 COMPILER_DEBUG_ERROR=-Werror
 
@@ -232,9 +242,17 @@ endif
 # What are you using, and what do you want?
 
 ifeq ($(WANT_LIBTOOL),false)
-LIBTOOL:=
+LT=
+LTCC=
+LTLD=
+LIBTOOL=: no-libtool [WANT_LIBTOOL=false]
 LIBEXT=.a
+LT_CFLAGS=
+LT_LDFLAGS=
 else
+LT=$(LIBTOOL)
+LTCC=$(LIBTOOL_COMPILE)
+LTLD=$(LIBTOOL_LINK)
 LIBEXT=.la
 OBJEXT=.lo
 top_builddir=$(BKMKDIR)

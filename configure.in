@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.17 2002/01/31 17:35:09 dupuy Exp $
+dnl $Id: configure.in,v 1.18 2002/02/01 20:48:15 dupuy Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.17 $)dnl
+AC_REVISION($Revision: 1.18 $)dnl
 AC_INIT(Make.bkvariables)
 AC_CONFIG_AUX_DIR(acaux)
 
@@ -61,8 +61,8 @@ AC_PATH_PROG(PERL,perl, $FALSE)
 
 # note - don't use $PATH_SEPARATOR in this file; we always use Cygwin make
 
-AC_PATH_PROG(JAVAC,javac, $FALSE, $PATH:/usr/java/jdk1.3.1_01/bin)
-AC_PATH_PROG(JAR,jar, $FALSE, $PATH:/usr/java/jdk1.3.1_01/bin)
+AC_PATH_PROG(JAVAC,javac, $FALSE, $PATH:/usr/java/jdk/bin)
+AC_PATH_PROG(JAR,jar, $FALSE, $PATH:/usr/java/jdk/bin)
 
 AC_PATH_PROG(DOXYGEN,doxygen, $FALSE)
 AC_CHECK_PROG(HAVE_DOT,dot, YES, NO)

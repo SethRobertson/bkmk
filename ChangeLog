@@ -1,3 +1,17 @@
+2002-02-01  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* aclocal.m4 (AC_DEPLIBS_CHECK_METHOD): dependant -> dependent
+
+	* configure.in: look for java in /usr/java/jdk/bin
+
+	* Make.variables (LT, LTCC, LTLD, LT_CFLAGS, LT_LDFLAGS, LT_M_LDFLAGS):
+	improve WANT_LIBTOOL sophistication, work with insure, allow user
+	to control libtool options
+
+	* Make.production: use LT* variables
+
+	* Make.OpenBSD-2.9-pre (LT_LDFLAGS): can't avoid version on OpenBSD
+
 2002-01-31  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* configure.in: use autoconf m4 style comments 

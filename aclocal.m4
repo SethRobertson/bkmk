@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.2 2002/01/30 23:58:08 dupuy Exp $
+# $Id: aclocal.m4,v 1.3 2002/02/01 20:48:15 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -3388,7 +3388,7 @@ test -n "$reload_flag" && reload_flag=" $reload_flag"
 # AC_DEPLIBS_CHECK_METHOD - how to check for library dependencies
 #  -- PORTME fill in with the dynamic library characteristics
 AC_DEFUN([AC_DEPLIBS_CHECK_METHOD],
-[AC_CACHE_CHECK([how to recognise dependant libraries],
+[AC_CACHE_CHECK([how to recognise dependent libraries],
 lt_cv_deplibs_check_method,
 [lt_cv_file_magic_cmd='$MAGIC_CMD'
 lt_cv_file_magic_test_file=
