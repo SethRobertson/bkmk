@@ -59,6 +59,7 @@ GTAR=@GTAR@
 # Use $(TAR) when restricting your use to portable tar options (may expand to gtar anyway)
 TAR=@TAR@
 GZIP=@GZIP@
+CVS=@CVS@
 
 BK_SPECIAL_DEBUG=@BK_SPECIAL_DEBUG@
 HAVE_OVERZEALOUS_CHAR_SUBSCRIPT=@HAVE_OVERZEALOUS_CHAR_SUBSCRIPT@
