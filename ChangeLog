@@ -1,3 +1,9 @@
+2001-09-08  Seth Robertson  <seth@yeah.baka.org>
+
+	* Make.targets (subtags): Only tag if we have targets.
+
+	* Make.variables (ETAGS): Need tag commands
+
 2001-09-07  Seth Robertson  <seth@yeah.baka.org>
 
 	* Make.targets: Install need subdirrule in front of local targets

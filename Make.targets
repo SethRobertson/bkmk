@@ -1,4 +1,4 @@
-# $Id: Make.targets,v 1.10 2001/09/07 19:54:31 seth Exp $
+# $Id: Make.targets,v 1.11 2001/09/08 19:13:50 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -165,7 +165,7 @@ ctags:: nukectags
 tags:: etags
 
 subtags:: $(BK_SIMPLE_CSRC) $(BK_LARGE_CSRC) $(BK_LARGE_LIBCSRC) $(BK_LOCAL_CSRC) $(BK_LOCAL_OTHERTAGS)
-	$(TAGCMD) -a -o $(TAGOUT) $^
+	if [ "$^" ]; then $(TAGCMD) -a -o $(TAGOUT) $^; fi
 	$(BK_SUBDIRRULE)
 
 

@@ -1,4 +1,4 @@
-# $Id: Make.variables,v 1.17 2001/09/07 16:27:17 dupuy Exp $
+# $Id: Make.variables,v 1.18 2001/09/08 19:13:50 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -133,6 +133,12 @@ BK_ALLINCS=$(LOCAL_INCS) $(GROUP_INCS) $(PKG_INCS) $(BK_INCS) $(OS_INCS)
 BK_ALLLDS=$(LOCAL_LDS) $(GROUP_LDS) $(PKG_LDS) $(BK_LDS) $(OS_LDS)
 BK_ALLLIBS=$(LOCAL_LIBS) $(GROUP_LIBS) $(PKG_LIBS) $(BK_LIBS) $(OS_LIBS)
 BK_LIBDIR=$(OS_SEARCHPATH) $(patsubst -L%,%,$(filter -L%,$(BK_ALLLDS)))
+
+
+######################################################################
+# Tags
+CTAGS=ctags
+ETAGS=etags
 
 
 ######################################################################
