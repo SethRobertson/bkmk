@@ -4403,6 +4403,7 @@ relink_command=\"$relink_command\""
     if test -n "$current_libdirs"; then
       # Maybe just do a dry run.
       test -n "$run" && current_libdirs=" -n$current_libdirs"
+      test "$show" = ":" && current_libdirs=" --quiet$current_libdirs"
       exec_cmd='$SHELL $0 --finish$current_libdirs'
     else
       exit 0

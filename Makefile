@@ -29,3 +29,4 @@ clean nuke:
 .timestamp: *.in config.status
 	@./config.status && touch $@
 
+config.status: acaux/config.* acaux/ltmain.sh

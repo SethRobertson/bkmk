@@ -1,5 +1,13 @@
 2002-02-01  Alexander Dupuy  <dupuy@sysdetect.com>
 
+	* Makefile (config.status): rerun configure if acaux files change
+
+	* acaux/ltmain.sh: propagate --quiet into recursive finish
+
+	* Make.targets (install): use ${LIBTOOL_INSTALL}
+
+	* Make.variables (LIBTOOL_INSTALL): turn on quiet to shut up libtool
+
 	* aclocal.m4 (AC_DEPLIBS_CHECK_METHOD): dependant -> dependent
 
 	* configure.in: look for java in /usr/java/jdk/bin
