@@ -1,3 +1,21 @@
+2003-10-27  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.bkvariables (NORMALIZE): centralize all perl-based normalization
+
+	* Make.variables: NORMALIZE definition moved to Make.bkvariables
+
+2003-10-24  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.bkvariables (BK_DUMMY): prevent make clean/nuke failures
+
+	* Make.targets (BK_SUBDIRRULE): prevent unconfigured postgres failures
+
+2003-10-08  James Tanis  <jtt@pearl.StevesRUs.sysdetect.com>
+
+	* Make.targets: ${RM} includes -f in its definition
+
+	* Make.variables: add libbkxml to standard list
+
 2003-10-08  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* os-name.sh: handle pretty much all Linux releases, most other Unix

@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.targets,v 1.94 2003/10/09 21:48:19 zz Exp $
+# $Id: Make.targets,v 1.95 2003/10/27 20:52:07 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -36,7 +36,8 @@ BK_SUBDIRRULE= # No sub-directories
 else # BK_SUBDIR
 BK_SUBDIRRULE=@								     \
 	for d in $(BK_ALL_SUBDIR); do					     \
-	 if [ -f $$d/Makefile -o -f $$d/GNUmakefile ]; then		     \
+	 if [ -f $$d/GNUmakefile -o					     \
+	     \( -f $$d/Makefile -a ! -f $$d/GNUmakefile.in \) ]; then	     \
 	  PWD=$$PWD/$$d $(MAKE) -C $$d $@ ||				     \
 	   { ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; } \
 	 fi;								     \

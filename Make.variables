@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.174 2003/10/15 21:37:13 jtt Exp $
+# $Id: Make.variables,v 1.175 2003/10/27 20:52:07 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -16,22 +16,6 @@
 #
 # Variables
 #
-
-NORMALIZE='						\
-	s@^[^.]*//@/@g;					\
-	while						\
-	(						\
-		s@//+@/@ ||				\
-		s@/\.$$@@ ||				\
-		s@/(\./)+@/@ ||				\
-		s@/[^/]+/\.\.$$@/@ ||			\
-		s@/[^/]+/\.\./@/@ ||			\
-		s@/[^/]+/\.\./@/@ ||			\
-		s@/[^/]+/\.\./@/@ ||			\
-		s@^/n/[^/]*/@/@				\
-	){}						\
-	print;'
-
 
 # Protected code which runs only once per make tree build
 ifneq ($(BKMKVAR_VAR_CORRECT),true)
