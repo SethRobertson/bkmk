@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.bkvariables,v 1.53 2003/11/14 02:42:29 dupuy Exp $
+# $Id: Make.bkvariables,v 1.54 2003/12/30 05:41:58 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -172,7 +172,8 @@ ifeq ($(BK_INSTALLBASE),)
 BK_INSTALLBASE=$(GROUPTOP)/$(PKGTOP)/INSTALL
 endif
 
-BK_SAVE_INSTALLBASE:=$(BK_INSTALLBASE)
+# What the hell is this all about?  We do NOT want to save it cause dammit if it is overridden in .uservariables it damn well should be
+#BK_SAVE_INSTALLBASE:=$(BK_INSTALLBASE)
 
 ifeq ($(BK_INSTALLPROGDIR),)
 BK_INSTALLPROGDIR=$(BK_INSTALLBASE)/bin

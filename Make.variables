@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.182 2003/12/30 04:12:49 seth Exp $
+# $Id: Make.variables,v 1.183 2003/12/30 05:41:58 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -23,14 +23,16 @@ ifneq ($(BKMKVAR_VAR_CORRECT),true)
 NORMALIZEPWD='$$_ = q^$(PWD)^;'$(NORMALIZE)
 PWD:=$(shell $(PERL) -e $(NORMALIZEPWD))
 
-# this is the directory where libraries will actually be copied; cannot be path
+# this is the directory where libraries will actually be copied; can now be path to comply with documented interfaces
 NORMALIZERDIR='$$_ = q^$(PWD)/$(BK_INSTALLLIBDIR)^;'$(NORMALIZE)
 BK_INSTALLRDIR=$(shell $(PERL) -e $(NORMALIZERDIR))
 
 NORMALIZEPATH='$$_ = q^$(PWD)/$(BK_INSTALLPROGDIR)^;'$(NORMALIZE)
 BK_INSTALLPATH=$(shell $(PERL) -e $(NORMALIZEPATH))
 
-NORMALIZEDIR:='$$_ = q^$(PWD)/$(BK_SAVE_INSTALLBASE)^;'$(NORMALIZE)
+# What the hell is this all about?  We do NOT want to save it cause dammit if it is overridden in .uservariables it damn well should be.  You cannot debug fullrelease without it
+#NORMALIZEDIR:='$$_ = q^$(PWD)/$(BK_SAVE_INSTALLBASE)^;'$(NORMALIZE)
+NORMALIZEDIR:='$$_ = q^$(PWD)/$(BK_INSTALLBASE)^;'$(NORMALIZE)
 BK_INSTALLDIR=$(shell $(PERL) -e $(NORMALIZEDIR))
 
 BKMKVAR_VAR_CORRECT=true
@@ -681,6 +683,8 @@ vpath %.8 $(BK_TRUECWD)
 BK_VPATH_A:=$(shell $(PERL) -e '@F = split(/\s+/,"$(LDFLAGS)"); foreach $$n (@F) { next unless ($$n =~ s/-L//); print "$$n "; print "$$n/.libs "; }') $(GROUPTOP)/lib $(GROUPTOP)/lib/.libs $(BK_INSTALLRELLIBS) $(BK_LIBDIR)
 vpath %.a $(BK_VPATH_A)
 vpath %$(LIBEXT) $(BK_VPATH_A)
+# Why the fuck are we installing .la files?  It is breaking shit and needs to be special cased all over (e.g. here)
+vpath %.la $(BK_VPATH_A)
 
 # -l library extensions pattern rule to recognize libtool libraries
 .LIBPATTERNS=lib%$(LIBEXT) lib%.so lib%.a
