@@ -1,5 +1,5 @@
 /*				-*- C -*-
- * $Id: libbk_autoconf.h.in,v 1.4 2002/01/15 18:02:04 dupuy Exp $
+ * $Id: libbk_autoconf.h.in,v 1.5 2002/01/19 12:42:34 dupuy Exp $
  *
  * ++Copyright LIBBK++
  *
@@ -23,7 +23,10 @@
 
 #undef HAVE_NET_ETHERNET_H
 #undef HAVE_NETINET_IF_ETHER_H
-#undef HAVE_inet_pton
+#undef HAVE_INET_PTON
+#undef HAVE_STRPTIME
+#undef HAVE_GMTIME_R
+#undef HAVE_TIMEGM
 
 /// Search path separator for PATH in shell commands
 #define PATH_SEPARATOR ":"

@@ -1,3 +1,9 @@
+2002-01-19  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* configure.in: check for strptime, gmtime_r, timegm
+
+	* libbk_autoconf.h.in: add HAVE_XXX entries for various library funcs
+
 2002-01-18  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.GNUmakefile: common parts of bkmk GNUmakefile adaptors

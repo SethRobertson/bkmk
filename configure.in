@@ -1,5 +1,5 @@
 #
-# $Id: configure.in,v 1.13 2002/01/15 18:02:04 dupuy Exp $
+# $Id: configure.in,v 1.14 2002/01/19 12:42:34 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -15,7 +15,7 @@
 #
 # Production rules--convert "source" to "targets"
 #
-AC_REVISION($Revision: 1.13 $)dnl
+AC_REVISION($Revision: 1.14 $)dnl
 AC_INIT(Make.bkvariables)
 AC_CONFIG_AUX_DIR(acaux)
 
@@ -68,7 +68,7 @@ AC_PATH_PROGS(BROWSER,browser netscape konqueror mozilla iexplore.exe lynx,
 AC_PATH_PROG(AR,ar)
 
 AC_CHECK_HEADERS(net/ethernet.h netinet/if_ether.h)
-AC_CHECK_FUNCS(inet_pton)
+AC_CHECK_FUNCS(inet_pton strptime gmtime_r timegm)
 AC_DEFINE_UNQUOTED(PATH_SEPARATOR, "$PATH_SEPARATOR")
 
 AC_CONFIG_HEADER(libbk_autoconf.h)
