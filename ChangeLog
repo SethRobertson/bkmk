@@ -1,5 +1,8 @@
 2003-04-17  Alexander Dupuy  <dupuy@sysdetect.com>
 
+	* Make.targets (actual_install): only install out-of-date libraries/
+	modules [such a simple fix - why didn't I do it months ago?]
+	
 	* Make.variables (NORMALIZE): correctly subst /foo/././bar -> /foo/bar
 	[prevents libtool warnings about foo.la seems to be moved]
 	

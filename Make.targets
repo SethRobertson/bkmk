@@ -1,6 +1,6 @@
 # -*- makefile -*-
 # 
-# $Id: Make.targets,v 1.78 2003/03/25 08:55:14 dupuy Exp $
+# $Id: Make.targets,v 1.79 2003/04/17 21:40:08 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -261,7 +261,9 @@ endif # BK_WANT_C
 # dependency on $(BK_LARGE_LIB) may actually refer to the installed library (if
 # it is up to date w.r.t. the component .o files).</TRICKY>
 #
-actual_install:: $(BK_LARGE_LIB)
+actual_install:: $(BK_INSTALLRDIR)/$(notdir $(BK_LARGE_LIB))
+
+$(BK_INSTALLRDIR)/$(notdir $(BK_LARGE_LIB)): $(BK_LARGE_LIB)
 ifneq ($(strip $(BK_INSTALLLIBDIR)),)
 ifneq ($(strip $(BK_LARGE_LIB)),)
 ifneq ($(filter %.la,$(BK_LARGE_LIB)),)
@@ -283,7 +285,9 @@ endif
 endif # BK_LARGE_LIB
 endif # BK_INSTALLLIBDIR
 
-actual_install:: $(BK_LARGE_MODULE)
+actual_install:: $(BK_INSTALLRDIR)/$(notdir $(BK_LARGE_MODULE))
+
+$(BK_INSTALLRDIR)/$(notdir $(BK_LARGE_MODULE)): $(BK_LARGE_MODULE)
 ifneq ($(strip $(BK_INSTALLLIBDIR)),)
 ifneq ($(strip $(BK_LARGE_MODULE)),)
 	-@$(MKDIR) $(BK_INSTALLRDIR) >/dev/null 2>&1
