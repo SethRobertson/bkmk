@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.11 2002/10/09 21:39:25 jtt Exp $
+# $Id: aclocal.m4,v 1.12 2002/10/09 22:41:43 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -76,8 +76,7 @@ AC_DEFUN([AC_CONSTRUCTORS],
 # point some poor sucker will have to convert this test to use asynchronous
 # sockets. HA HA HA HA HA HA. <WARNING>
 #
-AC_DEFUN([AC_SECOND_CONNECT_TO_REFUSED_PORT], [AC_CACHE_CHECK(for errno
-value of second connect to refused port, ac_cv_second_connect_errno,
+AC_DEFUN([AC_SECOND_CONNECT_TO_REFUSED_PORT], [AC_CACHE_CHECK([errno value of second connect to refused port], ac_cv_second_connect_errno,
 	AC_TRY_RUN(
 [
 #include <stdio.h>
@@ -128,11 +127,11 @@ changequote([, ])dnl
     exit(5);
 
   	
-  snprintf(buf,sizeof(buf),"echo %d >/tmp/errno", errno);
+  snprintf(buf,sizeof(buf),"echo %d > .errno", errno);
   system(buf);
   exit(0);
 }],
-[ ac_cv_second_connect_errno=`cat /tmp/errno`; rm /tmp/errno ]))
+[ ac_cv_second_connect_errno=`cat .errno`; rm .errno ]))
 if test "X$ac_cv_second_connect_errno" != "X" 
 then
 	AC_DEFINE_UNQUOTED(BK_SECOND_CONNECT_ERRNO, $ac_cv_second_connect_errno)
