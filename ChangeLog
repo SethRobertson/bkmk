@@ -1,12 +1,12 @@
-2002-11-12  Brian Lindauer  <lindauer@malkmus.sysdetect.com>
+2002-11-13  Alexander Dupuy  <dupuy@sysdetect.com>
 
-	* configure.in (LIBS): Add check for flock.
-
-2002-11-12  Alexander Dupuy  <dupuy@sysdetect.com>
+	* Make.variables, Make.production: patsubst -> addprefix/addsuffix
 
 	* Make.production: fix for JAVA COMPILE FAILURE--NON-DEFAULT BK_JAVADIR
-	so that Seth can set BK_JAVADIR=$(GROUPTOP)/$(PKGTOP)/.install/.java
+	so that Seth can set BK_JAVADIR=${GROUPTOP}/${PKGTOP}/.install/.java
 	
+	* configure.in, aclocal.m4: restore fixes undone by opx_rollup_3
+
 2002-10-31  James Tanis  <jtt@hawking.sysdetect.com>
 
 	* Make.variables (EDIT_LT_LIBINSTALL): Quiet perl 5.8.0 unicode gripes

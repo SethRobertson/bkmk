@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.120 2002/11/11 22:53:56 jtt Exp $
+# $Id: Make.variables,v 1.121 2002/11/14 05:00:42 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -106,7 +106,7 @@ endif # BK_WANT_LIBTOOL
 #
 # C source filenames for standard production rules
 #
-BK_SIMPLE_CSRC:=$(patsubst %,%.c,$(BK_SIMPLE_PROGS) $(BK_SIMPLE_INTERNALPROGS))
+BK_SIMPLE_CSRC:=$(addsuffix .c,$(BK_SIMPLE_PROGS) $(BK_SIMPLE_INTERNALPROGS))
 BK_LARGE_CSRC:=$(patsubst %.y,%.tab.c,$(BK_LARGE_SRC))
 BK_LARGE_CSRC:=$(patsubst %.l,%.c,$(BK_LARGE_CSRC))
 BK_LARGE_LIBCSRC:=$(patsubst %.y,%.tab.c,$(BK_LARGE_LIBSRC))
@@ -279,14 +279,14 @@ BK_JAVA_JPGS:=$(foreach I,$(IMAGES),$(wildcard $(GROUPTOP)/$(I)/*.jpg))
 #BK_JAVA_GIFS:=$(foreach I,$(IMAGES),$(wildcard $(GROUPTOP)/$(I)/*.gif))
 BK_JAVA_IMAGES:=$(patsubst $(GROUPTOP)/%,%,$(BK_JAVA_PNGS) $(BK_JAVA_JPGS))
 
-BK_JAVA_PKG_CLASS:=$(patsubst %,$(BK_JAVADIR)/%,$(BK_JAVA_CLASS))
-BK_JAVA_PKG_TCLASS:=$(patsubst %,$(BK_JAVADIR)/%,$(BK_JAVA_TCLASS))
-BK_JAVA_PKG_SRC:=$(patsubst %,$(BK_JAVADIR)/$(BK_JAVA_PKG)/%,$(BK_JAVA_SRC))
-BK_JAVA_PKG_TEST:=$(patsubst %,$(BK_JAVADIR)/$(BK_JAVA_PKG)/%,$(BK_JAVA_TEST))
+BK_JAVA_PKG_CLASS:=$(addprefix $(BK_JAVADIR)/,$(BK_JAVA_CLASS))
+BK_JAVA_PKG_TCLASS:=$(addprefix $(BK_JAVADIR)/,$(BK_JAVA_TCLASS))
+BK_JAVA_PKG_SRC:=$(addprefix $(BK_JAVADIR)/$(BK_JAVA_PKG)/,$(BK_JAVA_SRC))
+BK_JAVA_PKG_TEST:=$(addprefix $(BK_JAVADIR)/$(BK_JAVA_PKG)/,$(BK_JAVA_TEST))
 # AUX is deprecated - use images instead
-BK_JAVA_PKG_AUX:=$(patsubst %,$(BK_JAVADIR)/$(BK_JAVA_PKG)/%,$(BK_JAVA_AUX))
-BK_JAVA_PKG_LOCALE:=$(patsubst %,$(BK_JAVADIR)/%,$(BK_JAVA_LOCALE))
-BK_JAVA_PKG_IMAGES:=$(patsubst %,$(BK_JAVADIR)/%,$(BK_JAVA_IMAGES))
+BK_JAVA_PKG_AUX:=$(addprefix $(BK_JAVADIR)/$(BK_JAVA_PKG)/,$(BK_JAVA_AUX))
+BK_JAVA_PKG_LOCALE:=$(addprefix $(BK_JAVADIR)/,$(BK_JAVA_LOCALE))
+BK_JAVA_PKG_IMAGES:=$(addprefix $(BK_JAVADIR)/,$(BK_JAVA_IMAGES))
 
 BK_JAVA_MF:=$(patsubst %.jar,%.MF,$(BK_JAVA_JAR))
 BK_JAVA_HELP_JAR:=$(patsubst %, $(BK_JAVA_HELP)_%.jar, $(BK_JAVA_HELP_LANG))
@@ -408,7 +408,7 @@ endif
 ifneq ($(findstring -sun4u,$(BK_ARCHNAME)),)
 # reasonable settings for 32-bit mode
 GCCHWOPT= -m32 -mcpu=v8 -mtune=ultrasparc
-# reasonable settings for 64-bit mode
+# reasonable settings for 64-bit mode (gcc-3 required)
 #GCCHWOPT= -m64 -mcpu=ultrasparc
 endif
 

@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.59 2002/11/12 23:23:58 lindauer Exp $
+dnl $Id: configure.in,v 1.60 2002/11/14 05:00:42 dupuy Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.59 $)dnl
+AC_REVISION($Revision: 1.60 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
@@ -36,6 +36,8 @@ AC_PROG_YACC
 AC_PROG_CPP
 AC_PROG_CXXCPP
 AC_PROG_CC_C_O
+
+AC_C_ALIGN_FUNCTIONS
 
 if test "$ac_cv_prog_ac_ct_CC" = "gcc"
 then
@@ -106,18 +108,17 @@ AC_SEARCH_LIBS([socket],[socket])
 AC_SEARCH_LIBS([gethostbyname],[resolv nsl])
 AC_SEARCH_LIBS([inet_aton],[resolv nsl])
 
-dnl Use the AC_SEARCH_LIBS() function, but don't update $LIBS if pthreads is found
-HOLD_LIBS=$LIBS
-AC_SEARCH_LIBS([pthread_create],[pthread], [HAVE_PTHREADS=true;AC_SUBST(HAVE_PTHREADS)], [HAVE_PTHREADS=false;AC_SUBST(HAVE_PTHREADS)])
+dnl Use AC_SEARCH_LIBS() function, but don't update $LIBS if pthreads is found
+saved_LIBS=$LIBS
+AC_CHECK_LIB([pthread],[pthread_create],[HAVE_PTHREADS=true],[HAVE_PTHREADS=false])
+AC_SUBST(HAVE_PTHREADS)
 LIBS=$HOLD_LIBS
 
 AC_SEARCH_LIBS([gethostbyname2],[resolv],AC_DEFINE(HAVE_GETHOSTBYNAME2))
 
-AC_CHECK_FUNCS(flock)
 AC_CHECK_FUNCS(isinf ntohll)
 AC_CHECK_FUNCS(memmem memrchr setenv strndup strnlen strverscmp)
 AC_CHECK_FUNCS(strptime gmtime_r timegm)
-AC_GMTIME_R_PROTOTYPE
 AC_FUNC_STRFTIME
 AC_FUNC_GETTEXT
 AC_STACKDIRECTION
@@ -127,7 +128,6 @@ AC_SECOND_CONNECT_TO_REFUSED_PORT(BK_SECOND_REFUSED_CONNECT_ERRNO)
 
 AC_PATH_PROG(RM, rm)
 AC_PATH_PROG(FALSE, false)
-AC_PATH_PROG(TRUE, true)
 AC_PATH_PROGS(MV, mv cp, $FALSE)
 AC_PATH_PROG(MKDIR, mkdir, $FALSE)
 AC_PATH_PROG(LS, ls, $FALSE)
