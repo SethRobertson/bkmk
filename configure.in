@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.33 2002/07/16 23:31:57 jtt Exp $
+dnl $Id: configure.in,v 1.34 2002/07/24 08:00:23 dupuy Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.33 $)dnl
+AC_REVISION($Revision: 1.34 $)dnl
 AC_INIT(Make.bkvariables)
 AC_CONFIG_AUX_DIR(acaux)
 
@@ -57,7 +57,7 @@ AC_FUNC_MKTIME
 if test $ac_cv_func_working_mktime = no; then
  AC_DEFINE(MKTIME_HAS_BUGS)
 fi
-AC_CHECK_FUNCS(ntohll memrchr strndup strnlen strverscmp)
+AC_CHECK_FUNCS(ntohll memmem memrchr strndup strnlen strverscmp)
 AC_CHECK_FUNCS(strptime gmtime_r timegm)
 AC_FUNC_STRFTIME
 AC_FUNC_GETTEXT

@@ -1,5 +1,5 @@
 /*				-*- C -*-
- * $Id: libbk_autoconf.h.in,v 1.14 2002/06/07 21:56:05 dupuy Exp $
+ * $Id: libbk_autoconf.h.in,v 1.15 2002/07/24 08:00:23 dupuy Exp $
  *
  * ++Copyright LIBBK++
  *
@@ -37,6 +37,7 @@
 #undef HAVE_SOCKADDR_SA_LEN
 #undef HAVE_SA_LEN_MACRO
 #undef HAVE_INET_PTON
+#undef HAVE_MEMMEM
 #undef HAVE_MEMRCHR
 #undef HAVE_STRNDUP
 #undef HAVE_STRNLEN

@@ -1,3 +1,7 @@
+2002-07-24    <dupuy@sysdetect.com>
+
+	* configure.in: look for memmem function
+
 2002-07-23  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.FreeBSD-4.5-pre: deal with FreeBSD gcc's -Wno-unused-parame
