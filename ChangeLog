@@ -1,3 +1,7 @@
+2003-05-14  Brian Lindauer  <lindauer@malkmus.sysdetect.com>
+
+	* configure.in: Configure location of javadoc program.
+
 2003-04-28  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* aclocal.m4 (AC_SOCKLEN_T): proper check that works on FreeBSD

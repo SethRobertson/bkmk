@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.78 2003/04/29 00:33:18 dupuy Exp $
+dnl $Id: configure.in,v 1.79 2003/05/14 19:01:48 lindauer Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.78 $)dnl
+AC_REVISION($Revision: 1.79 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
@@ -161,6 +161,7 @@ AC_PATH_PROG(INSURE, insure, $FALSE, $PATH:$PARASOFT/bin:/usr/local/parasoft/bin
 # default for new version testing, though...
 AC_PATH_PROG(JAVAC, javac, $FALSE, /usr/local/java/jdk/bin:$PATH:/usr/java/jdk/bin)
 AC_PATH_PROG(JAR, jar, $FALSE, /usr/local/java/jdk/bin:$PATH:/usr/java/jdk/bin)
+AC_PATH_PROG(JAVADOC, javadoc, $FALSE, /usr/local/java/jdk/bin:$PATH:/usr/java/jdk/bin)
 
 AC_PATH_PROG(JHINDEXER, jhindexer, $FALSE, /usr/local/java/bin:$PATH)
 
