@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.162 2003/07/08 17:47:42 jtt Exp $
+# $Id: Make.variables,v 1.163 2003/07/08 17:55:56 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -379,7 +379,7 @@ ifneq ($(BK_USING_INSURE),true)
 # gcc options common to both gcc and bgcc
 ifeq ($(COMPILER_NAME),gcc)
 
-GCC_VERSION:=$(shell gcc --version | head -1 | $(AWK) '{ print $3 }')
+GCC_VERSION:=$(shell gcc --version | $(HEAD) -1 | $(AWK) '{ print $3 }')
 
 ifneq ($(GCC_VERSION),3.3)
 GCC_INLINE_CHECK=-Winline
