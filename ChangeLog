@@ -1,7 +1,11 @@
+2003-03-17  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* findvalidpwd: use rpcinfo to prevent pawd hang on Mac OS X
+	use pawd to normalize $PWD even if not incorrect [shells reset this]
+
 2003-03-13  James Tanis  <jtt@saint.sysdetect.com>
 
-	* Make.targets: Sigh.. 3 phase build not required (too many header
-	dependencies). 
+	* Make.targets: always use 3 phase build [too many header dependencies]
 
 2003-03-13  Alexander Dupuy  <dupuy@sysdetect.com>
 
@@ -264,8 +268,8 @@
 	invocation instead of once per directory.  In this area, set
 	$(PWD) to be normalized so that self and all descendants get clean
 	path.  Obviously perform PWD->PWDPROG and CURDIR->PWD changes.
-	Set BK_INSTALLRDIR and BK_INSTALLPATH once for everyone (and have
-	them use $(PWD) instead of `$(PWDPROG)`)
+	Set BK_INSTALLRDIR and BK_INSTALLPATH once for everyone [and have
+	them use $(PWD) instead of `$(PWDPROG)`]
 
 	* Make.config.in (PWDPROG): Make by default uses $(PWD) to mean
 	same as shell does.  Thus, for better compatability we should
