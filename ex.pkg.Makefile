@@ -1,9 +1,9 @@
 ######################################################################
-# $Id: ex.pkg.Makefile,v 1.8 2003/06/17 05:10:29 seth Exp $
+# $Id: ex.pkg.Makefile,v 1.9 2003/06/17 05:59:48 seth Exp $
 #
 # ++Copyright LIBBK++
 #
-# Copyright (c) 2001 The Authors.  All rights reserved.
+# Copyright (c) 2003 The Authors. All rights reserved.
 #
 # This source code is licensed to you under the terms of the file
 # LICENSE.TXT in this release for further details.

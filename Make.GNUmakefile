@@ -1,10 +1,10 @@
 # -*- makefile -*-
 #
-# $Id: Make.GNUmakefile,v 1.13 2002/10/17 20:14:19 dupuy Exp $
+# $Id: Make.GNUmakefile,v 1.14 2003/06/17 05:59:47 seth Exp $
 #
 # ++Copyright LIBBK++
 #
-# Copyright (c) 2001,2002 The Authors.  All rights reserved.
+# Copyright (c) 2003 The Authors. All rights reserved.
 #
 # This source code is licensed to you under the terms of the file
 # LICENSE.TXT in this release for further details.

@@ -1,9 +1,9 @@
 dnl
-dnl $Id: configure.in,v 1.92 2003/06/17 05:10:29 seth Exp $
+dnl $Id: configure.in,v 1.93 2003/06/17 05:59:47 seth Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
-dnl Copyright (c) 2001-2003 The Authors.  All rights reserved.
+dnl Copyright (c) 2003 The Authors. All rights reserved.
 dnl
 dnl This source code is licensed to you under the terms of the file
 dnl LICENSE.TXT in this release for further details.
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.92 $)dnl
+AC_REVISION($Revision: 1.93 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)

@@ -1,9 +1,9 @@
 ######################################################################
-# $Id: ex.end.Makefile,v 1.5 2002/01/30 23:58:08 dupuy Exp $
+# $Id: ex.end.Makefile,v 1.6 2003/06/17 05:59:47 seth Exp $
 #
 # ++Copyright LIBBK++
 #
-# Copyright (c) 2001 The Authors.  All rights reserved.
+# Copyright (c) 2003 The Authors. All rights reserved.
 #
 # This source code is licensed to you under the terms of the file
 # LICENSE.TXT in this release for further details.

@@ -1,9 +1,9 @@
 #
-# $Id: aclocal.m4,v 1.44 2003/06/17 05:10:29 seth Exp $
+# $Id: aclocal.m4,v 1.45 2003/06/17 05:59:47 seth Exp $
 #
 # ++Copyright LIBBK++
 #
-# Copyright (c) 2002-2003 The Authors.  All rights reserved.
+# Copyright (c) 2003 The Authors. All rights reserved.
 #
 # This source code is licensed to you under the terms of the file
 # LICENSE.TXT in this release for further details.
