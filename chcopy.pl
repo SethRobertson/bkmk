@@ -1,4 +1,17 @@
 #! /usr/bin/perl -i.bak
+# $Id: chcopy.pl,v 1.13 2003/09/05 18:41:27 seth Exp $
+#
+# ++Copyright LIBBK++
+#
+# Copyright (c) 2003 The Authors. All rights reserved.
+#
+# This source code is licensed to you under the terms of the file
+# LICENSE.TXT in this release for further details.
+#
+# Mail <projectbaka@baka.org> for further information
+#
+# --Copyright LIBBK--
+#
 #
 # <TODO>This script should be enhanced to maintain existing copyright dates,
 # as well as choice of Baka vs. SysD copyright notices</TODO>
@@ -25,7 +38,7 @@ LICENSE.TXT in this release for further details.
 
 Mail <projectbaka\@baka.org> for further information
 
---Copyright LIBBK--
+- -Copyright LIBBK- -
 EOF
 
 ######################################################################
@@ -57,7 +70,7 @@ New York, NY 10011-4240
 +1 212 206 1900
 <support\@sysd.com>
 
---Copyright SYSDETECT--
+- -Copyright SYSDETECT- -
 EOF
 
 
@@ -110,7 +123,7 @@ while (<>)
     $PREFIX=$1;
     while (<>)
     {
-      if (/\-\-Copyright\ .*\-\-/)
+      if (/\-\s?\-Copyright\ .*\-\s?\-/)
       {
 	last;
       }

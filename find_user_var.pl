@@ -1,4 +1,18 @@
 #!/usr/bin/perl
+# $Id: find_user_var.pl,v 1.5 2003/09/05 18:41:27 seth Exp $
+#
+# ++Copyright LIBBK++
+#
+# Copyright (c) 2003 The Authors. All rights reserved.
+#
+# This source code is licensed to you under the terms of the file
+# LICENSE.TXT in this release for further details.
+#
+# Mail <projectbaka@baka.org> for further information
+#
+# --Copyright LIBBK--
+#
+#
 $topdir_inode=(stat("$ARGV[0]"))[1];
 $last_inode=0;
 $done=0;

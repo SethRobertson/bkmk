@@ -1,3 +1,17 @@
+# $Id: Makefile,v 1.24 2003/09/05 18:41:27 seth Exp $
+#
+# ++Copyright LIBBK++
+#
+# Copyright (c) 2003 The Authors. All rights reserved.
+#
+# This source code is licensed to you under the terms of the file
+# LICENSE.TXT in this release for further details.
+#
+# Mail <projectbaka@baka.org> for further information
+#
+# --Copyright LIBBK--
+#
+#
 OSFILE=.config_os_type
 OSNAME = $(shell uname -s | tr / - | sed 's/_.*//')-$(shell uname -r | sed 's/\(\.[^.()-]*\)[-.].*/\1/')
 
@@ -25,11 +39,11 @@ endif
 autoconf:
 	/usr/local/bin/autoconf -Wcross -Wsyntax
 
-clean nuke:
+clean nuke::
 	rm -f $(OSFILE) confdefs.h config.cache config.status config.log \
 	 $(filter-out Make%,$(GENFILES)) libtool .timestamp
 
-nuke:
+nuke::
 	rm -f $(GENFILES)
 
 %.status: ./%ure
