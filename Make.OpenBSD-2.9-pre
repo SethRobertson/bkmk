@@ -1,3 +1,22 @@
+# -*- makefile -*-
+#
+# $Id: Make.OpenBSD-2.9-pre,v 1.5 2002/02/21 21:43:15 dupuy Exp $
+#
+# ++Copyright LIBBK++
+#
+# Copyright (c) 2001,2002 The Authors.  All rights reserved.
+#
+# This source code is licensed to you under the terms of the file
+# LICENSE.TXT in this release for further details.
+#
+# Mail <projectbaka@baka.org> for further information
+#
+# --Copyright LIBBK--
+#
+#
+# OS-specific Variables
+#
+
 OS_INCS=-I/usr/local/include
 OS_LDS=-L/usr/local/lib
 OS_LIBS=-lintl
@@ -18,7 +37,9 @@ ifneq ($(WANT_LIBTOOL),false)
 ifneq ($(NO_OPT),true)
 ifneq ($(USING_INSURE),true)
 # this really should be controlled by several independent make variables
+ifneq ($(BK_DEBUG_OPT),true)
 override COPTDEBUG+=-O2 -mcpu=i686 -march=i686 -fforce-addr -funroll-loops -frerun-cse-after-loop -frerun-loop-opt -malign-functions=4 -g $(COMPILER_DEBUG)
+endif
 endif
 endif
 endif
