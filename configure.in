@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.39 2002/09/05 22:02:53 jtt Exp $
+dnl $Id: configure.in,v 1.40 2002/09/24 23:54:37 dupuy Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.39 $)dnl
+AC_REVISION($Revision: 1.40 $)dnl
 AC_INIT(Make.bkvariables)
 AC_CONFIG_AUX_DIR(acaux)
 
@@ -39,23 +39,6 @@ AC_PROG_CPP
 AC_PROG_CXXCPP
 AC_PROG_CC_C_O
 
-AC_PROG_INSTALL
-AC_PROG_LN_S
-AC_PATH_PROG(PWDPROG, pawd, pwd)
-
-# test for oracle
-echo $ECHO_N "checking for Oracle... $ECHO_C" >&6
-if test x${ORACLE_HOME} = x; then
-  export HAVE_ORACLE=false
-  echo "${ECHO_T}no" >&6
-else
-  AC_DEFINE(HAVE_ORACLE)
-  export HAVE_ORACLE=true
-  AC_SUBST(ORACLE_HOME)
-  echo "${ECHO_T}$ORACLE_HOME" >&6
-fi
-AC_SUBST(HAVE_ORACLE)
-
 
 echo $ECHO_N "checking for compiler warning flags... $ECHO_C" >&6
 SAVE_CFLAGS="$CFLAGS"
@@ -64,6 +47,27 @@ AC_TRY_COMPILE(,,BK_SPECIAL_DEBUG="$CFLAGS",BK_SPECIAL_DEBUG="-W")
 AC_SUBST(BK_SPECIAL_DEBUG)
 CFLAGS="$SAVE_CFLAGS"
 echo "${ECHO_T}$BK_SPECIAL_DEBUG" >&6
+
+AC_PROG_INSTALL
+AC_PROG_LN_S
+AC_PATH_PROG(PWDPROG, pawd, pwd)
+
+# test for oracle
+echo $ECHO_N "checking for Oracle... $ECHO_C" >&6
+if test x${ORACLE_HOME} = x; then
+  export ORACLE_HOME=/proj/oracle
+fi
+if test -x ${ORACLE_HOME}/bin/xml && ${ORACLE_HOME}/bin/xml -h >/dev/null 2>&1
+then
+  AC_DEFINE(HAVE_ORACLE)
+  export HAVE_ORACLE=true
+  AC_SUBST(ORACLE_HOME)
+  echo "${ECHO_T}$ORACLE_HOME" >&6
+else
+  export HAVE_ORACLE=false
+  echo "${ECHO_T}no" >&6
+fi
+AC_SUBST(HAVE_ORACLE)
 
 AC_LIBTOOL_WIN32_DLL
 AC_LIBTOOL_DLOPEN

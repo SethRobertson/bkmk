@@ -1,3 +1,7 @@
+2002-09-24  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* configure.in: guess at ORACLE_HOME if not set; verify correctness
+
 2002-09-13  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.production: remove dependencies on JAVA directories to avoid
