@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.37 2002/08/24 03:41:08 seth Exp $
+dnl $Id: configure.in,v 1.38 2002/09/04 08:11:02 dupuy Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.37 $)dnl
+AC_REVISION($Revision: 1.38 $)dnl
 AC_INIT(Make.bkvariables)
 AC_CONFIG_AUX_DIR(acaux)
 
@@ -101,7 +101,9 @@ AC_PATH_PROG(PERL, perl, $FALSE)
 
 AC_PATH_PROG(XML2CONFIG, xml2-config, $FALSE)
 
-AC_PATH_PROG(BGCC, bgcc, $FALSE)
+# not everybody puts /usr/local/gnu/bin in their PATH
+AC_PATH_PROG(BGCC, bgcc, $FALSE, $PATH:/usr/local/gnu/bin)
+
 AC_PATH_PROG(INSURE, insure, $FALSE, $PATH:$PARASOFT/bin:/usr/local/parasoft/bin)
 
 # note - don't use $PATH_SEPARATOR in this file; we always use Cygwin make

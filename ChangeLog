@@ -1,3 +1,7 @@
+2002-09-04  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* configure.in: look for bgcc in /usr/local/gnu/bin
+
 2002-09-03  Seth Robertson  <seth@startide.sysdetect.com>
 
 	* Make.bkvariables (PWD): Ensure (once) that PWD really is PWD.
