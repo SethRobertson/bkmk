@@ -1,3 +1,7 @@
+2003-04-28  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* aclocal.m4 (AC_SOCKLEN_T): proper check that works on FreeBSD
+
 2003-04-24  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.targets (install): propagate errors up through 3-pass install

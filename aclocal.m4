@@ -1,9 +1,9 @@
 #
-# $Id: aclocal.m4,v 1.39 2003/04/23 16:42:22 brian Exp $
+# $Id: aclocal.m4,v 1.40 2003/04/29 00:33:18 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
-# Copyright (c) 2002 The Authors.  All rights reserved.
+# Copyright (c) 2002-2003 The Authors.  All rights reserved.
 #
 # This source code is licensed to you under the terms of the file
 # LICENSE.TXT in this release for further details.
@@ -87,21 +87,6 @@ AC_DEFUN([AC_C_ALIGN_FUNCTIONS],
  AC_SUBST(ALIGN_FUNCTIONS_SWITCH)
  CFLAGS=$ac_saved_cflags
 ])# AC_C_ALIGN_FUNCTIONS
-
-
-# BK_SOCKLEN_T
-# ------------
-# Check whether system supports the socklen_t typedef in sys/socket.h
-#
-AC_DEFUN([BK_SOCKLEN_T],dnl
-[AC_CACHE_CHECK([if socklen_t is defined in sys/socket.h], bk_socklen_t,
-AC_TRY_COMPILE([#include <sys/socket.h>],[socklen_t len],[bk_socklen_t=true],[bk_socklen_t=false]))
-if test "$bk_socklen_t" = "true"
-then
-	HAVE_SOCKLEN_T=true
-	AC_DEFINE(HAVE_SOCKLEN_T)
-fi
-])
 
 
 # BK_C_SIG_BRAINDAMAGE
@@ -208,6 +193,25 @@ AC_DEFUN([AC_IN_ADDR_T], [AC_CACHE_CHECK([for in_addr_t typedef], ac_inaddr_t_de
   AC_DEFINE(HAVE_IN_ADDR_T)
  fi
 ])# AC_IN_ADDR_T
+
+
+# AC_SOCKLEN_T
+# ------------
+# This macro determines if socklen_t is defined or not.
+#
+AC_DEFUN([AC_SOCKLEN_T],dnl
+[AC_CACHE_CHECK([for socklen_t typedef], ac_cv_have_socklen_t,
+ [AC_TRY_COMPILE([
+   #include <sys/types.h>
+   #include <sys/socket.h>],[
+   socklen_t len;],
+	ac_cv_have_socklen_t=yes,
+	ac_cv_have_socklen_t=no)
+ ])
+ if test $ac_cv_have_socklen_t = yes; then
+  AC_DEFINE(HAVE_SOCKLEN_T)
+ fi
+])# AC_SOCKLEN_T
 
 
 # AC_FUNC_INET_PTON
