@@ -1,6 +1,7 @@
 .config_os_type
 .timestamp
 Make.config
+autom4te.cache
 confcache*
 confdef*
 config.*
