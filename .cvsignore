@@ -2,6 +2,7 @@
 .timestamp
 Make.config
 autom4te.cache
+bk.conf
 conf[0-9]*
 confcache*
 confdef*
