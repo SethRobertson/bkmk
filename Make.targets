@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.targets,v 1.99 2004/03/16 01:31:57 seth Exp $
+# $Id: Make.targets,v 1.100 2004/10/13 19:36:59 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -411,6 +411,9 @@ etags:: nukeetags
 ctags:: nukectags
 	$(MAKE) 'BK_SUBDIRSHORTCUT=true' 'TAGCMD=$(CTAGS)' "TAGOUT=`/bin/pwd`/tags" subtags
 
+# easy enough to confuse - *don't* use this target for cvs tagging
+tag: tags
+
 tags:: etags
 
 subtags:: $(BK_SIMPLE_CSRC) $(BK_LARGE_CSRC) $(BK_LARGE_LIBCSRC) $(BK_LOCAL_CSRC) $(BK_PUBLIC_INC) $(BK_JAVA_SRC) $(BK_LOCAL_OTHERTAGS)
@@ -551,5 +554,5 @@ $(BK_REALTOP)/bkmk/.timestamp:
 #
 .PHONY : DEFAULT all default nuke clean neat depend nukedepend dotdepend \
 	build install actual_install \
-	nukeetags nukectags etags ctags tags subtags preprocess \
+	nukeetags nukectags etags ctags tag tags subtags preprocess \
 	doxygen viewdox test help local_rule
