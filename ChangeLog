@@ -1,3 +1,23 @@
+2003-08-22  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.GNUmakefile (GUESS): find config.guess in config subdir
+	(distclean-generic, distclean-am): better cleanup support
+
+	* configure.in: path fixes for AC_PATH_PROG
+
+2003-08-21  James Tanis  <jtt@stevedore.sysdetect.com>
+
+	* Make.variables: make sure release compiles even if no installed
+	ssl on machine
+
+2003-08-20  James Tanis  <jtt@stevedore.sysdetect.com>
+
+	* Make.targets: Don't delete help on clean, just nuke
+
+2003-08-19  James Tanis  <jtt@stevedore.sysdetect.com>
+
+	* Make.targets: move report .tar.gz to INSTALL to consolidate stuff
+
 2003-08-13  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* acaux/ltmain.sh: prepend[=append] recursive deplibs/dlpreload - #1848

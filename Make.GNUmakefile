@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.GNUmakefile,v 1.15 2003/08/14 16:42:38 jtt Exp $
+# $Id: Make.GNUmakefile,v 1.16 2003/08/22 19:53:00 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -16,7 +16,11 @@
 # Common elements for use in GNUmakefile bkmk adaptors for software
 # built in $(ARCH) subdirectories using autoconf-generated configure scripts
 #
-ARCH:=$(shell if [ -f ./config.guess ]; then sh ./config.guess; else echo build; fi 2>/dev/null)
+GUESS=for D in . config;					\
+ do test -f $$D/config.guess && { sh $$D/config.guess; exit; };	\
+ done 2>/dev/null;						\
+ echo build
+ARCH:=$(shell $(GUESS))
 ifneq ($(strip $(WANT_SUBDIRBUILD)),false)
 CONFIGURED:=$(ARCH)/config.status
 else
@@ -59,14 +63,15 @@ subtags: tags
 neat: clean
 
 ifneq ($(strip $(WANT_SUBDIRBUILD)),false)
-nuke: distclean
+nuke: distclean distclean-generic
+	$(RM_CONFIG) -rf $(ARCH)
 
 clean::
 	@if test -f $(ARCH)/Makefile && cd $(ARCH); then $(MAKE) $@; fi
 
-distclean::
-	-@if test -f $(ARCH)/Makefile; then $(MAKE) -f $(ARCH)/Makefile $@; fi
-	$(RM_CONFIG) -rf $(ARCH)
+distclean distclean-generic distclean-am::
+	-@test -f $(ARCH)/Makefile && $(MAKE) -k -f $(ARCH)/Makefile $@ \
+	  || test -f Makefile && $(MAKE) -k -f Makefile $@
 else
 endif
 

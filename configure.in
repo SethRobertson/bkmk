@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.101 2003/08/14 16:42:39 jtt Exp $
+dnl $Id: configure.in,v 1.102 2003/08/22 19:53:00 dupuy Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.101 $)dnl
+AC_REVISION($Revision: 1.102 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
@@ -181,7 +181,8 @@ AC_PATH_PROG(CAT, cat, $FALSE)
 AC_PATH_PROG(BASENAME, basename, $FALSE)
 
 AC_PATH_PROG(SED, sed, $FALSE)
-AC_PATH_PROG(PERL, perl, $FALSE)
+# prefer perl in /usr/bin to /bin or other; export PERL=/bin/perl if you care
+AC_PATH_PROG(PERL, perl, $FALSE, /usr/bin:$PATH)
 AC_PATH_PROG(GREP, grep, $FALSE)
 AC_PATH_PROG(FIND, find, $FALSE)
 AC_PATH_PROG(SORT, sort, $FALSE)
@@ -193,7 +194,6 @@ AC_PATH_PROG(TEE, tee, $FALSE)
 AC_PATH_PROG(AR, ar)
 
 AC_PATH_PROG(XML2CONFIG, xml2-config, $FALSE)
-
 
 # not everybody puts /usr/local/gnu/bin in their PATH
 AC_PATH_PROG(BGCC, bgcc, $FALSE, $PATH:/usr/local/gnu/bin)
@@ -214,18 +214,17 @@ fi
 
 AC_SUBST(PARASOFT)
 AC_PATH_PROG(INSURE, insure, $FALSE, $PATH:$PARASOFT/bin:/usr/local/parasoft/bin)
-AC_PATH_PROG(JTEST, jtest, $FALSE, $PATH:$PARASOFT/bin:/usr/local/parasoft/bin:/home/rculling/jtest/bin)
+AC_PATH_PROG(JTEST, jtest, $FALSE, $PATH:$PARASOFT/bin:/usr/local/parasoft/bin)
 
 # note - don't use $PATH_SEPARATOR in this file; we always use Cygwin make
 
-# Note RedHat 9 has a non-Sun Java in /usr/bin, so /usr/local should
-# be prefixed.  This doesn't allow any way to override the system
-# default for new version testing, though...
-AC_PATH_PROG(JAVAC, javac, $FALSE, /usr/local/java/jdk/bin:$PATH:/usr/java/jdk/bin)
-AC_PATH_PROG(JAR, jar, $FALSE, /usr/local/java/jdk/bin:$PATH:/usr/java/jdk/bin)
-AC_PATH_PROG(JAVADOC, javadoc, $FALSE, /usr/local/java/jdk/bin:$PATH:/usr/java/jdk/bin)
+# Stock RedHat systems have Kaffe (not Sun Java) in /usr/bin, so prefix
+# $JAVA_HOME/bin:/usr/java/jdk/bin (hope no java* in /bin if JAVA_HOME unset!)
+AC_PATH_PROG(JAVAC, javac, $FALSE, $JAVA_HOME/bin:/usr/java/jdk/bin:$PATH)
+AC_PATH_PROG(JAR, jar, $FALSE, $JAVA_HOME/bin:/usr/java/jdk/bin:$PATH)
+AC_PATH_PROG(JAVADOC, javadoc, $FALSE, $JAVA_HOME/bin:/usr/java/jdk/bin:$PATH)
 
-AC_PATH_PROG(JHINDEXER, jhindexer, $FALSE, /usr/local/java/bin:$PATH)
+AC_PATH_PROG(JHINDEXER, jhindexer, $FALSE, $PATH:/usr/local/java/bin)
 
 AC_PATH_PROG(DOXYGEN, doxygen, $FALSE)
 AC_CHECK_PROG(HAVE_DOT, dot, YES, NO)
