@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.48 2002/10/18 18:12:15 dupuy Exp $
+dnl $Id: configure.in,v 1.49 2002/10/18 20:03:29 jtt Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.48 $)dnl
+AC_REVISION($Revision: 1.49 $)dnl
 AC_INIT(Make.bkvariables)
 AC_CONFIG_AUX_DIR(acaux)
 
@@ -52,8 +52,6 @@ AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PATH_PROG(PWDPROG, pawd, pwd)
 
-AC_CHECK_HEADERS(paths.h)
-
 # test for oracle
 echo $ECHO_N "checking for Oracle... $ECHO_C" >&6
 if test x${ORACLE_HOME} = x; then
@@ -80,7 +78,7 @@ AC_SUBST(link_static_flag)
 AC_C__FUNC__
 AC_CONSTRUCTORS
 AC_SYS_LARGEFILE
-AC_CHECK_HEADERS(net/ethernet.h netinet/if_ether.h paths.h)
+AC_CHECK_HEADERS(net/ethernet.h netinet/if_ether.h paths.h ieeefp.h)
 AC_SA_LEN
 AC_INADDR_T
 AC_FUNC_INET_PTON
@@ -93,10 +91,16 @@ AC_TIME_MAX(BK_TIME_MAX)
 
 AC_CHECK_FUNCS(ntohll memmem memrchr strndup strnlen strverscmp)
 AC_CHECK_FUNCS(strptime gmtime_r timegm)
+AC_GMTIME_R_PROTOTYPE
 AC_FUNC_STRFTIME
 AC_FUNC_GETTEXT
 AC_STACKDIRECTION
 AC_FUNC_ALLOCA
+
+AC_SEARCH_LIBS([socket],[socket])
+AC_SEARCH_LIBS([gethostbyname],[resolv nsl])
+AC_SEARCH_LIBS([inet_aton],[resolv nsl])
+AC_SEARCH_LIBS([gethostbyname2],[resolv],AC_DEFINE(HAVE_GETHOSTBYNAME2))
 
 AC_SECOND_CONNECT_TO_REFUSED_PORT(BK_SECOND_REFUSED_CONNECT_ERRNO)
 
@@ -134,7 +138,16 @@ AC_PATH_PROGS(BROWSER, browser netscape konqueror mozilla iexplore.exe lynx,
 
 AC_PATH_PROG(AR, ar)
 
+if test "$ac_cv_search_gethostbyname2" = "no"
+then
+	AC_MSG_WARN([you will only be able to resolve AF_INET names])
+fi
+
 AC_DEFINE_UNQUOTED(PATH_SEPARATOR, "$PATH_SEPARATOR")
+
+AC_U_INT_T_TYPEDEFS
+
+BK_FUNC_ISINF
 
 AC_CONFIG_HEADER(libbk_autoconf.h)
 AC_CONFIG_FILES(Make.config)

@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.18 2002/10/18 18:12:15 dupuy Exp $
+# $Id: aclocal.m4,v 1.19 2002/10/18 20:03:29 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -60,6 +60,60 @@ AC_DEFUN([AC_CONSTRUCTORS],
  fi
 ])# AC_CONSTRUCTORS
 
+
+# AC_U_INT_T_TYPEDEFS
+# -------------------
+# 
+# Check if architecture supports typedefs of the format u_int32_t
+#
+#
+AC_DEFUN([AC_U_INT_T_TYPEDEFS], [AC_CACHE_CHECK([for u_int32_t formatted typedefs], ac_cv_have_u_int32_t,
+ AC_TRY_COMPILE(
+[
+#include <sys/types.h>
+],[u_int32_t t],
+[ ac_cv_have_u_int32_t=yes; ],[ ac_cv_have_u_int32_t=no; ]))
+if test "$ac_cv_have_u_int32_t" = "yes"
+then
+	AC_DEFINE(HAVE_U_INT_T_TYPEDEFS)
+fi
+])
+
+# AC_GMTIME_R_PROTOTYPE
+# -------------------
+# 
+# Check if the platform has a gmtime_r() prototype.
+#
+#
+AC_DEFUN([AC_GMTIME_R_PROTOTYPE], [AC_CACHE_CHECK([for prototype for gmtime_r], ac_cv_have_gmtime_r_prototype,
+ AC_TRY_COMPILE(
+[
+#include <time.h>
+],[struct tm *t = gmtime_r(0)],
+[ ac_cv_have_gmtime_r_prototype=no; ],[ ac_cv_have_gmtime_r_prototype=yes; ]))
+if test "$ac_cv_have_gmtime_r_prototype" = "yes"
+then
+	AC_DEFINE(HAVE_GMTIME_R_PROTOTYPE)
+fi
+])
+
+# BK_ISINF
+# --------
+# 
+# Check if the platform supports the isinf function
+#
+#
+AC_DEFUN([BK_FUNC_ISINF], [AC_CACHE_CHECK([for isinf], bk_func_isinf,
+ AC_TRY_LINK(
+[
+#include <math.h>
+],[double t=isinf(0.0)],
+[ bk_func_isinf=yes; ],[ bk_func_isinf=no; ]))
+if test "$bk_func_isinf" = "yes"
+then
+	AC_DEFINE(HAVE_ISINF)
+fi
+])
 
 #
 # C 99 has an implicit local variable __func__ (a constant string) and several

@@ -1,6 +1,6 @@
 # -*- makefile -*-
 # 
-# $Id: Make.targets,v 1.69 2002/10/16 15:18:36 matt Exp $
+# $Id: Make.targets,v 1.70 2002/10/18 20:03:28 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -482,3 +482,5 @@ $(BK_REALTOP)/bkmk/.timestamp:
 	build install actual_install \
 	nukeetags nukectags etags ctags tags subtags preprocess \
 	doxygen viewdox test help
+os-name:
+	@echo $(BK_OSNAME)
