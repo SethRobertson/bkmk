@@ -1,5 +1,10 @@
 2002-02-22  Alexander Dupuy  <dupuy@sysdetect.com>
 
+	* Make.OpenBSD-2.9-pre: (LT_LDFLAGS, COPTDEBUG): moved to -post
+
+	* Make.OpenBSD-2.9-post (LT_LDFLAGS, COPTDEBUG, COMPILER_DEBUG):
+	these can be defined here without recourse to override
+
 	* configure.in: use AC_C__FUNC__
 
 	* libbk_autoconf.h.in (HAVE__FUNC__): get availability of __func__ etc.
