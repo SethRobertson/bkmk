@@ -1,3 +1,7 @@
+2003-12-29  Seth Robertson  <seth@buscemi.sysdetect.com>
+
+	* Make.variables (BK_LIBS+): Additional library requirements from libbk
+
 2003-12-29  James Tanis  <jtt@buscemi.sysdetect.com>
 
 	* ex.pkg.Make.include (PKG_LDS): Looking in install directory is
@@ -6,7 +10,6 @@
 	* Make.variables (NORMALIZERDIR): Delay expansion of some
 	variables. Export BK_INSTALLDIR [probably the most important
 	change].
-	
 
 2003-12-25  Seth Robertson  <seth@now.baka.org>
 
