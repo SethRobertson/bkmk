@@ -60,7 +60,7 @@ PROGRAM=ltmain.sh
 PACKAGE=libtool
 VERSION=1.5
 TIMESTAMP=" (1.4 2003/05/31 07:06:25)"
-TIMESTAMP="$TIMESTAMP [$Revision: 1.14 $]"
+TIMESTAMP="$TIMESTAMP [$Revision: 1.15 $]"
 
 default_mode=
 help="Try \`$progname --help' for more information."
@@ -5473,6 +5473,10 @@ relink_command=\"$relink_command\""
 
 	  $echo "$modename: warning: relinking \`$file'" 1>&2
 	  $show "$relink_command"
+	  # pass --quiet recursively if set in this libtool invocation
+	  if test "$show" = ":"; then
+	    relink_command=`$echo "$relink_command" | $SED "s% --mode=relink % --quiet --mode=relink %"`
+	  fi
 	  if $run eval "$relink_command"; then :
 	  else
 	    $echo "$modename: error: relink \`$file' with the above command before installing it" 1>&2
