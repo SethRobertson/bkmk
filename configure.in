@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.29 2002/05/20 18:26:29 dupuy Exp $
+dnl $Id: configure.in,v 1.30 2002/05/24 20:52:59 brian Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.29 $)dnl
+AC_REVISION($Revision: 1.30 $)dnl
 AC_INIT(Make.bkvariables)
 AC_CONFIG_AUX_DIR(acaux)
 
@@ -76,6 +76,8 @@ AC_PATH_PROG(TEST,test, $FALSE)
 
 AC_PATH_PROG(PERL,perl, $FALSE)
 
+AC_PATH_PROG(XML2CONFIG,xml2-config, $FALSE)
+
 # note - don't use $PATH_SEPARATOR in this file; we always use Cygwin make
 
 AC_PATH_PROG(JAVAC,javac, $FALSE, $PATH:/usr/java/jdk/bin:/usr/local/java/jdk/bin)
@@ -95,3 +97,7 @@ AC_DEFINE_UNQUOTED(PATH_SEPARATOR, "$PATH_SEPARATOR")
 AC_CONFIG_HEADER(libbk_autoconf.h)
 
 AC_OUTPUT(Make.config)
+
+
+
+
