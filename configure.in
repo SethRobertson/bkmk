@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.73 2003/03/26 16:46:05 jtt Exp $
+dnl $Id: configure.in,v 1.74 2003/04/03 19:46:59 seth Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.73 $)dnl
+AC_REVISION($Revision: 1.74 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
@@ -158,10 +158,13 @@ AC_PATH_PROG(INSURE, insure, $FALSE, $PATH:$PARASOFT/bin:/usr/local/parasoft/bin
 
 # note - don't use $PATH_SEPARATOR in this file; we always use Cygwin make
 
-AC_PATH_PROG(JAVAC, javac, $FALSE, $PATH:/usr/java/jdk/bin:/usr/local/java/jdk/bin)
-AC_PATH_PROG(JAR, jar, $FALSE, $PATH:/usr/java/jdk/bin:/usr/local/java/jdk/bin)
+# Note RedHat 9 has a non-Sun Java in /usr/bin, so /usr/local should
+# be prefixed.  This doesn't allow any way to override the system
+# default for new version testing, though...
+AC_PATH_PROG(JAVAC, javac, $FALSE, /usr/local/java/jdk/bin:$PATH:/usr/java/jdk/bin)
+AC_PATH_PROG(JAR, jar, $FALSE, /usr/local/java/jdk/bin:$PATH:/usr/java/jdk/bin)
 
-AC_PATH_PROG(JHINDEXER, jhindexer, $FALSE, $PATH:/usr/local/java/bin)
+AC_PATH_PROG(JHINDEXER, jhindexer, $FALSE, /usr/local/java/bin:$PATH)
 
 AC_PATH_PROG(DOXYGEN, doxygen, $FALSE)
 AC_CHECK_PROG(HAVE_DOT, dot, YES, NO)

@@ -1,3 +1,9 @@
+2003-04-03  Seth Robertson  <seth@winwood.sysdetect.com>
+
+	* configure.in (JAVA): Reorder java search path to prefer
+	/usr/local/java over $PATH, since RedHat9 has /usr/bin/java that
+	doesn't work.
+
 2003-03-26  James Tanis  <jtt@saint.sysdetect.com>
 
 	* Make.include (BK_USING_GPROF): override libtool (false) and
