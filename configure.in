@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.88 2003/06/03 05:47:15 dupuy Exp $
+dnl $Id: configure.in,v 1.89 2003/06/03 17:47:36 lindauer Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.88 $)dnl
+AC_REVISION($Revision: 1.89 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
@@ -37,6 +37,13 @@ AC_PROG_CPP
 AC_PROG_CXXCPP
 AC_PROG_CC_C_O
 AC_PROG_AWK
+
+AC_CHECK_LIB(ssl, SSL_CTX_new, HAVE_LIBSSL=true, HAVE_LIBSSL=false)
+if test "$HAVE_LIBSSL" "=" "true"
+then
+  AC_DEFINE(HAVE_LIBSSL)
+fi
+AC_SUBST(HAVE_LIBSSL)
 
 AC_C_ALIGN_FUNCTIONS
 

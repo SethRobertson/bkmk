@@ -27,6 +27,10 @@
 	* acaux/ltmain.sh, aclocal.m4: merged from devtools/libtool 1.5 merge
 	[this version was broken for libpcap at least, probably for everything]
 
+2003-05-24  Brian Lindauer  <lindauer@malkmus.sysdetect.com>
+
+	* configure.in: Check for libssl (OpenSSL).
+
 2003-05-23  Seth Robertson  <seth@startide.sysdetect.com>
 
 	* Make.targets (subtags): Make tags use correct [${PWD}] absolute

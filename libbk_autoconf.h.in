@@ -1,5 +1,5 @@
 /*				-*- C -*-
- * $Id: libbk_autoconf.h.in,v 1.42 2003/05/16 05:11:23 dupuy Exp $
+ * $Id: libbk_autoconf.h.in,v 1.43 2003/06/03 17:47:36 lindauer Exp $
  *
  * ++Copyright LIBBK++
  *
@@ -61,6 +61,8 @@
 #undef HAVE_NET_ETHERNET_H
 #undef HAVE_NETINET_ETHER_H
 #undef HAVE_SYS_CAPABILITY_H
+
+#undef HAVE_LIBSSL
 
 #undef HAVE_IN_ADDR_T
 #undef HAVE_SOCKADDR_SA_LEN
