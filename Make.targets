@@ -1,6 +1,6 @@
 # -*- makefile -*-
 # 
-# $Id: Make.targets,v 1.39 2002/02/06 15:05:00 jtt Exp $
+# $Id: Make.targets,v 1.40 2002/02/06 17:32:37 ldog Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -39,7 +39,9 @@ ifeq ($(BK_WANT_DEFAULT),true)
 default:: 
 	$(BK_SUBDIRRULE)	
 
+ifneq ($(strip $(BK_WANT_C)),false)
 default:: $(BK_LOCALTARGETS) $(BK_GROUPTARGETS) $(BK_PACKAGETARGETS) $(BK_LARGE_LIB) $(BK_LARGE_INTERNALLIB) $(BK_SIMPLE_PROGS) $(BK_LARGE_PROG) $(BK_SIMPLE_INTERNALPROGS) $(BK_LARGE_INTERNALPROG)
+endif # BK_WANT_C
 
 ifneq ($(strip $(BK_WANT_JAVA)),false)
 default:: $(BK_JAVA_JAR)
@@ -90,12 +92,13 @@ preprocess:: $(patsubst %.c,%.i,$(BK_SIMPLE_CSRC) $(BK_LARGE_CSRC) $(BK_LARGE_LI
 nukedepend::
 	> .depend
 
+ifneq ($(strip $(BK_WANT_C)),false)
 ifneq ($(strip $(BK_SIMPLE_CSRC) $(BK_LARGE_CSRC) $(BK_LARGE_LIBCSRC) $(BK_LOCAL_CSRC) $(BK_LOCAL_OTHERDEPS)),)
 depend:: nukedepend
 depend:: $(BK_SIMPLE_CSRC) $(BK_LARGE_CSRC) $(BK_LARGE_LIBCSRC) $(BK_LOCAL_CSRC) $(BK_LOCAL_OTHERDEPS)
 	$(MKDEP) $^ >> .depend
 endif # We Have Source
-
+endif # BK_WANT_C
 depend::
 	$(BK_SUBDIRRULE)
 
@@ -135,6 +138,15 @@ BK_JAVA_JAR=
 BK_JAVA_HELP_JAR=
 endif # BK_WANT_JAVA
 
+ifeq ($(strip $(BK_WANT_C)),false)
+BK_LARGE_LIB=
+BK_LARGE_MODULE=
+BK_SIMPLE_PROGS=
+BK_LARGE_PROG=
+BK_PUBLIC_INC=
+BK_DATAFILES=
+BK_MAN=
+endif # BK_WANT_C
 
 #
 # This takes a bit more care than others: due to vpath %$(LIBEXT) $(BK_LIBDIR)

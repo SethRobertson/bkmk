@@ -1,5 +1,7 @@
 2002-02-06  larry ogrodnek  <ldog@sysdetect.com>
 
+	* Make.targets: BK_WANT_C=false will disable all C targets.
+
 	* configure.in: look for jhindexer (used by the help target).
 
 2002-02-06  James Tanis  <jtt@winwood.sysdetect.com>
