@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.GNUmakefile,v 1.33 2005/02/07 18:45:06 seth Exp $
+# $Id: Make.GNUmakefile,v 1.34 2005/02/07 18:50:42 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -79,14 +79,14 @@ subtags: tags
 neat: clean
 
 ifneq ($(strip $(WANT_SUBDIRBUILD)),false)
-clean nuke: distclean distclean-generic
+clean nuke:: distclean distclean-generic
 	$(RM_CONFIG) -rf $(ARCH)
 
 clean::
 	@if test -f $(ARCH)/Makefile && cd $(ARCH); then $(MAKE) $@; fi
 
 else
-clean nuke: distclean
+clean nuke:: distclean
 endif
 
 distclean distclean-generic distclean-am::
