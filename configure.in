@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.89 2003/06/03 17:47:36 lindauer Exp $
+dnl $Id: configure.in,v 1.90 2003/06/04 16:25:01 jtt Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.89 $)dnl
+AC_REVISION($Revision: 1.90 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
@@ -169,7 +169,7 @@ AC_PATH_PROG(BGCC, bgcc, $FALSE, $PATH:/usr/local/gnu/bin)
 # Look for PARASOFT directory if $PARASOFT is not found
 if test "X$PARASOFT" '=' "X"
 then	
-	if test -d /usr/local/parasoft
+	if test -d "/usr/local/parasoft"
 	then
 		export PARASOFT="/usr/local/parasoft"
 	fi
