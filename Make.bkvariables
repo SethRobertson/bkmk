@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.bkvariables,v 1.18 2002/02/06 15:05:00 jtt Exp $
+# $Id: Make.bkvariables,v 1.19 2002/03/08 11:34:44 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -25,7 +25,6 @@
 
 # Do the activities requiring subprograms once only for efficiency
 ifneq ($(BKMK_VAR_CORRECT),true)
-
 
 BKMK_VAR_CORRECT = true
 BK_ARCHNAME = $(shell uname -s | tr / - )-$(shell uname -r | sed 's/ .*//')-$(shell uname -m | tr / - )
