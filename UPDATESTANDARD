@@ -6,7 +6,9 @@ sub BEGIN
 {
   $FIRST="## BEGIN BKSTANDARD MAKEFILE";
   $MIDDLE=<<'EOF';
+-include ./Make.preinclude
 -include $(GROUPTOP)/Make.preinclude
+-include $(GROUPTOP)/$(PKGTOP)/Make.preinclude
 include $(GROUPTOP)/$(PKGTOP)/bkmk/Make.include
 -include $(GROUPTOP)/$(PKGTOP)/Make.include
 -include $(GROUPTOP)/Make.include

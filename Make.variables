@@ -1,4 +1,4 @@
-# $Id: Make.variables,v 1.4 2001/06/18 21:02:32 seth Exp $
+# $Id: Make.variables,v 1.5 2001/06/18 21:59:42 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -45,6 +45,8 @@ RM=rm -f
 RRM=rm -rf
 MKDEP=$(CPP) -M $(CPPFLAGS)
 MKDIR=mkdir -p
+AR=ar
+RANLIB=ranlib
 
 # Install (GNU or BSD)
 INSTALL=install -c
@@ -94,12 +96,14 @@ endif # NO_STDBKCCSTUFF
 CC_normal=gcc $(GCCOPTS)
 CC_strict=g++ $(GCCOPTS)
 CXX=g++
+CC=$(CC_normal)
 COMPILER_DEBUG=-W -Wall -Wpointer-arith -Wno-unused -Wno-sign-compare $(COMPILER_DEBUG_ERROR)
 COMPILER_DEBUG_ERROR=-Werror
 COPTDEBUG=-g -O $(COMPILER_DEBUG)
 CFLAGS=$(COPTDEBUG)
 CPPFLAGS=$(BK_ALLINCS) $(BK_ALLDEFINES)
-LDFLAGS=$(BK_ALLLDS) $(BK_LIBS)
+LDFLAGS=$(BK_ALLLDS)
+LDLIBS=$(BK_ALLLIBS)
 
 ######################################################################
 # What are you using, and what do you want?

@@ -1,4 +1,4 @@
-# $Id: Make.targets,v 1.4 2001/06/18 21:02:32 seth Exp $
+# $Id: Make.targets,v 1.5 2001/06/18 21:59:42 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -83,13 +83,13 @@ ifneq ($(strip $(PKGSUBDIR)),)
 build::
 	-d=BUILD/$(BK_ARCHNAME); (ls ./Make*; find $(BK_SUBDIR) -name Make\* -print) | while read f; do mkdir -p $$d/`dirname $$f`; ln -s `pwd`/$$f $$d/$$f; done
 	@echo "To compile: cd BUILD/$(BK_ARCHNAME) and type make"
-endif
+endif # PKGSUBDIR
 
 
 #
 # Installation support
 #
-install:: $(BK_SIMPLE_PROGS) $(BK_LARGE_PROG) $(BK_LARGE_LIB) $(BK_PUBLIC_INC) $(BK_DATAFILES) $(BK_MAN)
+install:: $(BK_LARGE_LIB) $(BK_SIMPLE_PROGS) $(BK_LARGE_PROG) $(BK_PUBLIC_INC) $(BK_DATAFILES) $(BK_MAN)
 ifneq ($(strip $(BK_INSTALLPROGDIR)),)
 ifneq ($(strip $(BK_SIMPLE_PROGS)),)
 	$(MKDIR) $(BK_INSTALLPROGDIR)
@@ -121,10 +121,10 @@ endif # BK_DATAFILES
 endif # BK_INSTALLDATADIR
 ifneq ($(strip $(BK_INSTALLMANDIR)),)
 ifneq ($(strip $(BK_MAN)),)
-_BK_MAN1:=$(filter %.1,$(BK_MAN))
-_BK_MAN3:=$(filter %.3,$(BK_MAN))
-_BK_MAN5:=$(filter %.5,$(BK_MAN))
-_BK_MAN8:=$(filter %.8,$(BK_MAN))
+_BK_MAN1=$(filter %.1,$(BK_MAN))
+_BK_MAN3=$(filter %.3,$(BK_MAN))
+_BK_MAN5=$(filter %.5,$(BK_MAN))
+_BK_MAN8=$(filter %.8,$(BK_MAN))
 ifneq ($(strip $(_BK_MAN1)),)
 	$(MKDIR) $(BK_INSTALLMANDIR)/man1
 	$(INSTALL) $(INSTALL_OTHERFLAGS) $(_BK_MAN1) $(BK_INSTALLMANDIR)/man1

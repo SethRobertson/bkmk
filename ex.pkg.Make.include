@@ -1,5 +1,5 @@
 ######################################################################
-# $Id: ex.pkg.Make.include,v 1.4 2001/06/18 20:09:51 seth Exp $
+# $Id: ex.pkg.Make.include,v 1.5 2001/06/18 21:59:43 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -17,9 +17,3 @@
 PKG_DEFINES=-DFOOHACKS
 PKG_INCS=-I$(BK_INSTALLINCDIR)
 PKG_LDS=-L$(BK_INSTALLLIBDIR)
-
-BK_INSTALLPROGDIR=$(GROUPTOP)/$(PKGTOP)/.install/bin
-BK_INSTALLLIBDIR=$(GROUPTOP)/$(PKGTOP)/.install/lib
-BK_INSTALLINCDIR=$(GROUPTOP)/$(PKGTOP)/.install/include
-BK_INSTALLDATADIR=$(GROUPTOP)/$(PKGTOP)/.install/etc
-BK_INSTALLMANDIR=$(GROUPTOP)/$(PKGTOP)/.install/man
