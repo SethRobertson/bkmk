@@ -1,3 +1,19 @@
+2003-11-10  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.variables (NORMALIZE*): use q^^, not qq^^, for literal quoting
+
+	* Make.GNUmakefile (NORMALIZEBASE): use q^^, not qq^^
+
+2003-11-10  Brian Larkins  <brian@sysdetect.com>
+
+	* configure.in, libbk_autoconf.h.in, configure: added autoconf
+	support for better rounding, truncation routines...
+
+2003-11-06  Brian Larkins  <brian@sysdetect.com>
+
+	* Make.include: add support for WANT_SHIT_FROM_LDOG_AND_ALEX=false
+	[i.e. set WANT_HELP=false if javahelp not properly installed]
+	
 2003-10-29  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.bkvariables (BK_CMDGOALS): set this automatically if not already

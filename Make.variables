@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.177 2003/10/27 23:46:46 dupuy Exp $
+# $Id: Make.variables,v 1.178 2003/11/11 00:05:36 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -20,17 +20,17 @@
 # Protected code which runs only once per make tree build
 ifneq ($(BKMKVAR_VAR_CORRECT),true)
 # Correct make's PWD so that it uses nice paths
-NORMALIZEPWD='$$_ = qq^$(PWD)^;'$(NORMALIZE)
+NORMALIZEPWD='$$_ = q^$(PWD)^;'$(NORMALIZE)
 PWD:=$(shell $(PERL) -e $(NORMALIZEPWD))
 
 # this is the directory where libraries will actually be copied; cannot be path
-NORMALIZERDIR='$$_ = qq^$(PWD)/$(BK_INSTALLLIBDIR)^;'$(NORMALIZE)
+NORMALIZERDIR='$$_ = q^$(PWD)/$(BK_INSTALLLIBDIR)^;'$(NORMALIZE)
 BK_INSTALLRDIR:=$(shell $(PERL) -e $(NORMALIZERDIR))
 
-NORMALIZEPATH='$$_ = qq^$(PWD)/$(BK_INSTALLPROGDIR)^;'$(NORMALIZE)
+NORMALIZEPATH='$$_ = q^$(PWD)/$(BK_INSTALLPROGDIR)^;'$(NORMALIZE)
 BK_INSTALLPATH=$(shell $(PERL) -e $(NORMALIZEPATH))
 
-NORMALIZEDIR='$$_ = qq^$(PWD)/$(BK_SAVE_INSTALLBASE)^;'$(NORMALIZE)
+NORMALIZEDIR='$$_ = q^$(PWD)/$(BK_SAVE_INSTALLBASE)^;'$(NORMALIZE)
 BK_INSTALLDIR:=$(shell $(PERL) -e $(NORMALIZEDIR))
 
 BKMKVAR_VAR_CORRECT=true
