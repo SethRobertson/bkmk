@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.122 2002/11/14 21:12:37 dupuy Exp $
+# $Id: Make.variables,v 1.123 2002/11/20 17:19:20 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -25,12 +25,6 @@ NORMALIZE='			\
 	s@/[^/.]+/\.\./@/@g;	\
 	s@^/n/[^/]*/@/@;	\
 	print;'
-
-ifeq ($(findstring install-sh,$(AC_INSTALL)),install-sh)
-INSTALL=$(PKGTOP)/$(GROUPTOP)/bkmk/$(AC_INSTALL)
-else
-INSTALL=$(AC_INSTALL)
-endif
 
 ifeq ($(strip $(HAVE_PTHREADS)),true)
 ifneq ($(strip $(WANT_PTHREADS)),false)
