@@ -54,7 +54,7 @@ System Detection
 5 West 19th Street Floor 2K
 New York, NY 10011-4240
 
-+1 212 206-1900
++1 212 206 1900
 <support\@sysd.com>
 
 --Copyright SYSDETECT--
