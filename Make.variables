@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.192 2004/10/14 19:19:49 seth Exp $
+# $Id: Make.variables,v 1.193 2004/12/27 19:27:00 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -389,7 +389,7 @@ GCC_VERSION:=$(shell $(CC_CONFIG) --version | $(AWK) ' NR==1 { print $$3 }')
 # don't eliminate inline warnings
 # make them work, remove them, or tweak the inliner settings (SEE
 # COMPILER_INLINER LIMIT)
-GCC_INLINE_CHECK=-Winline
+GCC_INLINE_CHECK=-Winline --param large-function-insns=10000
 
 COMPILER_DEBUG+=-Wmissing-prototypes -Wcomment -Wformat -Wimplicit -Wmain -Wmultichar -Wswitch -Wshadow -Wtrigraphs $(GCC_INLINE_CHECK) $(COMPILER_DEBUG_ERROR)
 
