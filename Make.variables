@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.132 2003/02/08 01:57:04 dupuy Exp $
+# $Id: Make.variables,v 1.133 2003/03/21 21:51:53 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -483,6 +483,10 @@ endif # !BK_WANT_LIBTOOL
 # Even if we want oracle, a *platform* without pthreads can't do oracle
 ifeq ($(BK_USING_ORACLE), true)
 BK_DEFINES += -DUSING_ORACLE
+endif
+
+ifeq ($(BK_WANT_POSTGRES), false)
+BK_DEFINES += -DNO_POSTGRES
 endif
 
 ifeq ($(BK_USING_GPROF),true)
