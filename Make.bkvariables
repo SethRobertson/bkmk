@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.bkvariables,v 1.25 2002/04/26 20:15:00 dupuy Exp $
+# $Id: Make.bkvariables,v 1.26 2002/05/11 01:09:36 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -52,7 +52,7 @@ ifneq ($(BK_CONFIG_OS_TYPE),$(BK_OSNAME))
 BK_DUMMY:=$(shell							      \
   (if [ -f $(BKMK_OSFILE) ]; then					      \
      NEAT=true;								      \
-     echo -e "\n\tDETECTED ARCHITECTURE CHANGE";			      \
+     echo; echo "	DETECTED ARCHITECTURE CHANGE"; echo;		      \
    else									      \
      NEAT=false;							      \
    fi;									      \
@@ -61,14 +61,14 @@ BK_DUMMY:=$(shell							      \
      rm -f config.cache config.status;					      \
      $(MAKE) -s config.status OSNAME=$(BK_OSNAME) OSFILE=$(BK_OSFILE); }; );  \
    ($$NEAT && cd $(GROUPTOP)/$(PKGTOP) && {				      \
-     echo -n 'Making neat (Remember to "$(MAKE) depend" afterwards)....';     \
+     echo -n 'Making neat (Remember to "$(MAKE) depend" afterwards)...';      \
      $(MAKE) neat >/dev/null;						      \
-     echo "done"; }; ); )						      \
-  2>/dev/null >/dev/tty)
+     echo "done"; echo; }; ); )	2>&1					      \
+  | tee /dev/tty )
 
 else
 
-BK_DUMMY:=$(shell (cd $(BKMKDIR) && $(MAKE) -s .timestamp) 2>/dev/null >/dev/tty)
+BK_DUMMY:=$(shell (cd $(BKMKDIR) && $(MAKE) -s .timestamp) 2>&1 | tee /dev/tty)
 
 endif # BK_CONFIG_OS_TYPE != BK_OSNAME
 

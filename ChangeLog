@@ -1,3 +1,7 @@
+2002-05-10  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.bkvariables (BK_DUMMY): use tee to make this work on FreeBSD
+
 2002-04-24  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Makefile (install): Need etc in tarball for log4j properties
