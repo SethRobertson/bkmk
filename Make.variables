@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.183 2003/12/30 05:41:58 seth Exp $
+# $Id: Make.variables,v 1.184 2004/03/05 21:10:36 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -381,7 +381,9 @@ ifeq ($(COMPILER_NAME),gcc)
 GCC_VERSION:=$(shell $(CC_CONFIG) --version | $(AWK) ' NR==1 { print $$3 }')
 
 ifneq ($(GCC_VERSION),3.3)
+ifneq ($(GCC_VERSION),3.3.2)
 GCC_INLINE_CHECK=-Winline
+endif
 endif
 
 COMPILER_DEBUG+=-Wmissing-prototypes -Wcomment -Wformat -Wimplicit -Wmain -Wmultichar -Wswitch -Wshadow -Wtrigraphs $(GCC_INLINE_CHECK) $(COMPILER_DEBUG_ERROR)
