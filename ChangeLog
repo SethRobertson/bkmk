@@ -1,8 +1,5 @@
 2002-09-13  Alexander Dupuy  <dupuy@sysdetect.com>
 
-	* Make.variables (JARFLAGS): add -i to do indexing, kaffe be damned
-	[maybe this will reduce startup loading time]
-	
 	* Make.production: remove dependencies on JAVA directories to avoid
 	unnecessary JAR regeneration
 	(.SUFFIXES): avoid stupid recursion on images dependencies

@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.103 2002/09/13 19:31:42 dupuy Exp $
+# $Id: Make.variables,v 1.104 2002/09/13 20:48:59 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -223,7 +223,14 @@ endif # BK_INSTALLRDIR==BK_INSTALLRPATH
 ######################################################################
 # Java stuff
 JAVACFLAGS=$(USER_JAVAC_FLAGS) -g
-JARFLAGS=-cifm
+JARFLAGS=-cfm
+#JARFLAGS=-cifm causes the following Java exception
+#java.io.IOException: invalid header field
+#	at java.util.jar.Attributes.read(Attributes.java:351)
+#	at java.util.jar.Manifest.read(Manifest.java:162)
+#	at java.util.jar.Manifest.<init>(Manifest.java:52)
+#	at sun.tools.jar.Main.run(Main.java:124)
+#	at sun.tools.jar.Main.main(Main.java:904)
 
 BK_JAVA_CPATH=$(subst :,$(PATH_SEPARATOR),$(BK_JAVADIR):$(BK_JAVA_CP))
 BK_JAVA_TESTCP=$(BK_JAVA_CPATH)$(PATH_SEPARATOR)/usr/local/java/lib/junit.jar
