@@ -1,5 +1,5 @@
 #! /bin/sh
-# $Id: os-name.sh,v 1.3 2003/10/08 19:58:01 dupuy Exp $
+# $Id: os-name.sh,v 1.4 2003/10/08 20:07:21 dupuy Exp $
 #
 # ++Copyright SYSDETECT++
 #
@@ -22,6 +22,13 @@
 # --Copyright SYSDETECT--
 #
 
+case `uname -s` in
+  *Linux*) : ;;
+  *)
+    echo `uname -s` `uname -r | sed -e 's/-.*//'` | sed -e 's/ /-/' -e 's/ //g'
+    ;;
+esac
+
 if [ -f /etc/debian_version ]; then
   sed -e 's/^/DebianLinux-/' /etc/debian_version
   exit
@@ -38,4 +45,5 @@ do
   fi
 done
 
-echo `uname -s` `uname -r | sed -e 's/-.*//'` | sed -e 's/ /-/' -e 's/ //g'
+echo Unknown`uname -s` `uname -r | sed -e 's/-.*//'` \
+ | sed -e 's/ /-/' -e 's/ //g'
