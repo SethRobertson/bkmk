@@ -1,3 +1,34 @@
+2002-08-25  Seth Robertson  <seth@winwood.sysdetect.com>
+
+        * Make.*: Many many performance changes (make overhead now cut to
+	4/5ths of previous level) and normalization to normal make
+	standards where they was a bizarre reassignment (PWD/CURDIR).
+
+	* Make.include: Exerpt BK_USER_VARIABLE discovery to
+	Make.bkvariables.  Move inclusion of file until after it
+	is defined.
+
+	* Make.production: CURDIR->PWD changes.
+
+	* Make.variables: Add protected area which only runs one per make
+	invocation instead of once per directory.  In this area, set
+	$(PWD) to be normalized so that self and all descendants get clean
+	path.  Obviously perform PWD->PWDPROG and CURDIR->PWD changes.
+	Set BK_INSTALLRDIR and BK_INSTALLPATH once for everyone (and have
+	them use $(PWD) instead of `$(PWDPROG)`)
+
+	* Make.config.in (PWDPROG): Make by default uses $(PWD) to mean
+	same as shell does.  Thus, for better compatability we should
+	rename path-to-pwd-program to $(PWDPROG).  Not that I see any
+	reason why you need to use it, given $(PWD).
+
+	* Make.targets: Implement PWD->PWDPROG and CURDIR->PWD changes as
+	described elsewhere.
+
+	* Make.bkvariables (BK_USER_VARIABLES): Performance: search for
+	.user-variables only once.  Afterwards, as we decend, check to see
+	if CWD has file.  If it does, set and use for self and descendants.
+
 2002-08-23  Seth Robertson  <seth@winwood.sysdetect.com>
 
 	* Make.bkvariables: Improve make overhead by way over 50% (cut

@@ -1,6 +1,6 @@
 # -*- makefile -*-
 # 
-# $Id: Make.targets,v 1.58 2002/08/24 04:20:17 seth Exp $
+# $Id: Make.targets,v 1.59 2002/08/25 20:19:53 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -154,7 +154,7 @@ depend::
 #
 ifneq ($(strip $(PKGSUBDIR)),)
 build::
-	-d=BUILD/$(BK_ARCHNAME); (ls ./Make*; find $(BK_ALL_SUBDIR) -name Make\* -print) | while read f; do mkdir -p $$d/`dirname $$f`; ln -s `$(PWD)`/$$f $$d/$$f; done
+	-d=BUILD/$(BK_ARCHNAME); (ls ./Make*; find $(BK_ALL_SUBDIR) -name Make\* -print) | while read f; do mkdir -p $$d/`dirname $$f`; ln -s `$(PWDPROG)`/$$f $$d/$$f; done
 	@echo "To compile: cd BUILD/$(BK_ARCHNAME) and type make"
 endif # PKGSUBDIR
 
@@ -349,10 +349,10 @@ nukectags::
 	> tags
 
 etags:: nukeetags
-	$(MAKE) TAGCMD=$(ETAGS) TAGOUT=$(CURDIR)/TAGS subtags
+	$(MAKE) TAGCMD=$(ETAGS) TAGOUT=$(PWD)/TAGS subtags
 
 ctags:: nukectags
-	$(MAKE) TAGCMD=$(CTAGS) TAGOUT=$(CURDIR)/tags subtags
+	$(MAKE) TAGCMD=$(CTAGS) TAGOUT=$(PWD)/tags subtags
 
 tags:: etags
 
@@ -394,7 +394,7 @@ $(BK_INSTALLDOCDIR)/doxygen/Doxyfile:
 	fi
 	-@$(MKDIR) $(BK_INSTALLDOCDIR)/doxygen 2>/dev/null && \
 	$(MKDIR) $(BK_INSTALLMANDIR)/man3 2>/dev/null && \
-	 { THIS_TOPDIR=`$(PWD)`; cd $(BK_INSTALLDOCDIR)/doxygen; \
+	 { THIS_TOPDIR=`$(PWDPROG)`; cd $(BK_INSTALLDOCDIR)/doxygen; \
 	   $(DOXYGEN) -g > /dev/null;	 \
 	   $(MV) Doxyfile Doxyfile.orig && \
 	   $(SED) -e '/^PROJECT_NAME/s%=.*%= $(BK_PKGNAME)%' \
@@ -431,10 +431,10 @@ viewdox: doxygen
 	  URL="$(BK_INSTALLDOCDIR)/doxygen/html/index.html"; \
 	  case "$(BROWSER)$$DISPLAY" in \
 	    *netscape*:*) \
-	       $(BROWSER) -remote "OpenURL(file:$(CURDIR)/$$URL,new-window)" \
+	       $(BROWSER) -remote "OpenURL(file:$(PWD)/$$URL,new-window)" \
 	        && exit 0 ;; \
 	  esac; \
-	  $(BROWSER) file:$(CURDIR)/$$URL
+	  $(BROWSER) file:$(PWD)/$$URL
 
 
 #
