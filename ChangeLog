@@ -1,3 +1,8 @@
+2002-03-07  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.OpenBSD-2.9-post (COMPILER_DEBUG): needs to be set before
+	COPT_DEBUG gets := assigned
+
 2002-03-06  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* configure.in: look for str{n,}casecmp

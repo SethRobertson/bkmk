@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.OpenBSD-2.9-post,v 1.1 2002/02/23 00:46:06 dupuy Exp $
+# $Id: Make.OpenBSD-2.9-post,v 1.2 2002/03/07 07:49:42 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -21,6 +21,12 @@
 LT_LDFLAGS=
 # (we don't need to override LT_M_LDFLAGS since ld doesn't search for modules)
 
+
+# OpenBSD gcc gripes no previous prototype for `_GLOBAL_$I$pcap_event.cSC6Ipc'
+# when BK_INIT_FUN is used.  So we disable that warning (error).
+COMPILER_DEBUG+= -Wno-missing-prototypes
+
+
 # the following works around a gcc bug at 2.95.3 where using both -O3 and -fPIC
 # creates debugging references to local symbols that have been optimized away
 # which causes the assembler to barf
@@ -38,7 +44,3 @@ endif
 endif
 endif
 endif
-
-# OpenBSD gcc gripes no previous prototype for `_GLOBAL_$I$pcap_event.cSC6Ipc'
-# when BK_INIT_FUN is used.  So we disable that warning (error).
-COMPILER_DEBUG+= -Wno-missing-prototypes
