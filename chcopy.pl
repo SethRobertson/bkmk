@@ -137,7 +137,7 @@ sub pprint($$)
   my ($output);
 
   @lines = split(/\n/,$string);
-  $output = sprint $prefix.join("\n$prefix",@lines)."\n";
+  $output = sprintf("%s",$prefix.join("\n$prefix",@lines)."\n");
   $output =~ s/\s+$//mg;
   print $output;
 }
