@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.109 2002/10/04 19:15:37 jtt Exp $
+# $Id: Make.variables,v 1.110 2002/10/04 21:55:58 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -375,15 +375,33 @@ ifneq ($(NO_WERROR),true)
 COMPILER_DEBUG_ERROR=-Werror
 endif # NO_WERROR
 
+ifneq ($(findstring -i386,$(BK_ARCHNAME)),)
+GCCHWOPT= -mcpu=i686 -march=i686 -malign-functions=4
+endif
+ifneq ($(findstring -i686,$(BK_ARCHNAME)),)
+GCCHWOPT= -mcpu=i686 -march=i686 -malign-functions=4
+endif
+ifneq ($(findstring -sun4,$(BK_ARCHNAME)),)
+# reasonable settings for 32-bit mode
+GCCHWOPT= -m32 -mcpu=v8 -mtune=supersparc
+endif
+ifneq ($(findstring -sun4u,$(BK_ARCHNAME)),)
+# reasonable settings for 32-bit mode
+GCCHWOPT= -m32 -mcpu=v8 -mtune=ultrasparc
+# reasonable settings for 64-bit mode
+#GCCHWOPT= -m64 -mcpu=ultrasparc
+endif
+
 ifneq ($(NO_OPT),true)
 ifeq ($(BK_DEBUG_OPT),true)
 COPTDEBUG+=-O2
 else # BK_DEBUG_OPT
-COPTDEBUG+=-O3 -mcpu=i686 -march=i686 -fforce-addr -funroll-loops -frerun-cse-after-loop -frerun-loop-opt -malign-functions=4
+COPTDEBUG+=-O3 -fforce-addr -funroll-loops -frerun-cse-after-loop -frerun-loop-opt
 endif # BK_DEBUG_OPT
 # gcc doesn't support -Wuninitialized without -O. And if using insure++ you
 # get it anyway.
 COMPILER_DEBUG+=-Wuninitialized 
+COPTDEBUG+=$(GCCHWOPT)
 endif # NO_OPT
 
 ifneq ($(NO_DEBUG),true)

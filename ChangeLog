@@ -1,3 +1,7 @@
+2002-10-04  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.variables (GCCHWOPT): break out machine-dependent options
+
 2002-10-04  James Tanis  <jtt@hawking.sysdetect.com>
 
 	* Make.variables (INSTALL): Use correct path for default install.
