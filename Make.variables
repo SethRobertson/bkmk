@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.94 2002/08/23 03:02:30 dupuy Exp $
+# $Id: Make.variables,v 1.95 2002/08/24 03:41:08 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -337,17 +337,7 @@ ifeq ($(CC_CONFIG),gcc)
 COMPILER_DEBUG+=-Wreturn-type -Wpointer-arith 
 endif
 
-# -W and -Wunused turns on unused parameter checking, which is, uh, unusable
-# only 2.96 and later have -Wno-unused-parameter, so omit both for earlier vers
-# (ab)use sort to do ordered compare, append .0 to avoid duplicate elimination
-GCC_VERSION:=$(shell $(CC_CONFIG) --version)
-ifeq ($(sort $(GCC_VERSION).0 2.96),2.96 $(GCC_VERSION).0)
-COMPILER_DEBUG+=-W -Wunused -Wno-unused-parameter
-else
-# choose your poison - one or the other of the following; not both
-#COMPILER_DEBUG+=-Wunused
-COMPILER_DEBUG+=-W
-endif
+COMPILER_DEBUG+=$(BK_SPECIAL_DEBUG)
 
 ifneq ($(NO_WERROR),true)
 COMPILER_DEBUG_ERROR=-Werror

@@ -1,3 +1,16 @@
+2002-08-23  Seth Robertson  <seth@winwood.sysdetect.com>
+
+	* Make.include: Remove 'postconfig' hack, since you can generally
+	accomplish the same thing by simply putting the stuff *after* the
+	bkmk includes (and generally when you cannot trivially do so,
+	there is a fairly simple workaround).
+
+	* configure.in (CFLAGS): Autoconfig gcc warning variables
+	instead of test which runs for EVERY SUBDIRECTORY!.
+
+	* Make.targets (install-normal): Allow subdirs and targets to be
+	in same directory
+
 2002-08-23  Brian Lindauer  <lindauer@malkmus.sysdetect.com>
 
 	* Make.include: Add optional Make.postconfig
