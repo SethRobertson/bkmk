@@ -1,5 +1,5 @@
 ######################################################################
-# $Id: ex.grp.Makefile,v 1.4 2001/06/18 22:41:46 seth Exp $
+# $Id: ex.grp.Makefile,v 1.5 2003/06/17 05:10:29 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -12,7 +12,7 @@
 #
 # --Copyright LIBBK--
 #
-# Foo group Makefile 
+# Foo group Makefile
 #
 BK_SUBDIR=lib src include
 

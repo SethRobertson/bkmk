@@ -1,16 +1,16 @@
 # -*- makefile -*-
 #
-# $Id: Make.production,v 1.58 2003/06/09 21:14:29 lindauer Exp $
+# $Id: Make.production,v 1.59 2003/06/17 05:10:29 seth Exp $
 #
 # ++Copyright LIBBK++
-# 
+#
 # Copyright (c) 2001-2003 The Authors. All rights reserved.
-# 
+#
 # This source code is licensed to you under the terms of the file
 # LICENSE.TXT in this release for further details.
-# 
+#
 # Mail <projectbaka@baka.org> for further information
-# 
+#
 # --Copyright LIBBK--
 #
 #
@@ -20,7 +20,7 @@
 #
 # Prevent make from being stupid about building makefile pieces
 # (this is just a performance hack, but it helps)
-Make%: 
+Make%:
 .depen%:
 .user-variable%:
 

@@ -1,17 +1,17 @@
 #! /bin/bash --norc
 #! /bin/ksh -p
 ######################################################################
-# $Id: gethome.sh,v 1.1 2003/03/25 08:55:14 dupuy Exp $
+# $Id: gethome.sh,v 1.2 2003/06/17 05:10:29 seth Exp $
 #
 # ++Copyright LIBBK++
-# 
+#
 # Copyright (c) 2003 The Authors. All rights reserved.
-# 
+#
 # This source code is licensed to you under the terms of the file
 # LICENSE.TXT in this release for further details.
-# 
+#
 # Mail <projectbaka@baka.org> for further information
-# 
+#
 # --Copyright LIBBK--
 #
 # Get installation home directory using $0; for use by other programs, this

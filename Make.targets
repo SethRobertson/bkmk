@@ -1,6 +1,6 @@
 # -*- makefile -*-
-# 
-# $Id: Make.targets,v 1.85 2003/06/13 20:52:43 lindauer Exp $
+#
+# $Id: Make.targets,v 1.86 2003/06/17 05:10:29 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -49,8 +49,8 @@ ifneq ($(BK_WANT_DEFAULT),false)
 #
 default install actual_install:: $(BK_REALTOP)/bkmk/.timestamp
 
-default:: 
-	$(BK_SUBDIRRULE)	
+default::
+	$(BK_SUBDIRRULE)
 
 ifneq ($(strip $(BK_WANT_C)),false)
 default:: $(BK_LOCALTARGETS) $(BK_GROUPTARGETS) $(BK_PACKAGETARGETS) $(BK_LARGE_LIB) $(BK_LARGE_MODULE) $(BK_LARGE_INTERNALLIB) $(BK_SIMPLE_PROGS) $(BK_LARGE_PROG) $(BK_SIMPLE_INTERNALPROGS) $(BK_LARGE_INTERNALPROG)
@@ -75,7 +75,7 @@ endif # BK_WANT_DEFAULT
 #
 nuke::
 	$(RRM) -- $(BK_NUKESTUFF)
-	$(BK_SUBDIRRULE)	
+	$(BK_SUBDIRRULE)
 
 
 #
@@ -83,7 +83,7 @@ nuke::
 #
 clean::
 	$(RRM) -- $(BK_CLEANSTUFF)
-	$(BK_SUBDIRRULE)	
+	$(BK_SUBDIRRULE)
 
 
 #
@@ -91,7 +91,7 @@ clean::
 #
 neat::
 	$(RRM) -- $(BK_NEATSTUFF)
-	$(BK_SUBDIRRULE)	
+	$(BK_SUBDIRRULE)
 
 
 #
@@ -205,7 +205,7 @@ install-first:
 	  fi;								      \
 	done; exit $$ERR
 
-install-normal:							
+install-normal:						
 	@for d in $(BK_SUBDIR) strict_sh_fodder;			      \
 	do								      \
 	  if [ $$d = "strict_sh_fodder" ]; then				      \
@@ -479,7 +479,7 @@ $(BK_INSTALLDOCDIR)/doxygen/Doxyfile:
 # the user to type "make doxygen" from time to time in order to update his
 # database.
 doxygen: $(BK_INSTALLDOCDIR)/doxygen/Doxyfile
-	-@$(ECHO) "Rebuilding doxygen database in $(BK_INSTALLDOCDIR)/doxygen" 
+	-@$(ECHO) "Rebuilding doxygen database in $(BK_INSTALLDOCDIR)/doxygen"
 	$(RM) -rf $(BK_INSTALLDOCDIR)/doxygen/[a-z]*
 	$(DOXYGEN) $(BK_INSTALLDOCDIR)/doxygen/Doxyfile \
 	 > $(BK_INSTALLDOCDIR)/doxygen/.lastbuild 2>&1

@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.43 2003/06/03 03:28:13 dupuy Exp $
+# $Id: aclocal.m4,v 1.44 2003/06/17 05:10:29 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -95,7 +95,7 @@ AC_DEFUN([AC_C_ALIGN_FUNCTIONS],
 #
 AC_DEFUN([BK_C_SIG_BRAINDAMAGE],dnl
 [
-if test $ac_cv_prog_ac_ct_CC = gcc; then 
+if test $ac_cv_prog_ac_ct_CC = gcc; then
 
 CFLAGS_HOLD=$CFLAGS
 CFLAGS="-Werror -Wstrict-prototypes $CFLAGS"
@@ -286,7 +286,7 @@ AC_DEFUN([AC_SA_LEN],
 # AC_IN6_MULTICAST
 # ---------
 # The BSD and Solaris versions of IN6_IS_ADDR_MULTICAST take a pointer to
-# a struct in6_addr.  The Linux version takes the s6_addr from the 
+# a struct in6_addr.  The Linux version takes the s6_addr from the
 # struct in6_addr.  Figure out which version we have.
 #
 AC_DEFUN([AC_IN6_MULTICAST],
@@ -483,7 +483,7 @@ main(int argc, char **argv)
   sin.sin_addr.s_addr = INADDR_ANY;
 
   // Locate an available, unbound port
-  do	
+  do
   {
     port++;
     sin.sin_port = htons(port);
@@ -495,7 +495,7 @@ main(int argc, char **argv)
     }
 
     ret = bind(s, (struct sockaddr *)(&sin), sizeof(sin));
-    
+   
     close(s);
 
     if ((port == 0xffff) && (ret == -1))
@@ -1631,7 +1631,7 @@ else
     lt_cv_dlopen_self=yes
     ])
    ;;
-    
+   
   *)
     AC_CHECK_FUNC([shl_load],
 	  [lt_cv_dlopen="shl_load"],
@@ -1868,7 +1868,7 @@ fi
    *)
   AC_MSG_RESULT([no])
     ;;
-  esac  
+  esac 
 fi
 ])# AC_LIBTOOL_SYS_LIB_STRIP
 
@@ -2070,7 +2070,7 @@ darwin* | rhapsody*)
   shlibpath_var=DYLD_LIBRARY_PATH
   shrext='$(test .$module = .yes && echo .so || echo .dylib)'
   # Apple's gcc prints 'gcc -print-search-dirs' doesn't operate the same.
-  if $CC -v 2>&1 | grep 'Apple' >/dev/null ; then 
+  if $CC -v 2>&1 | grep 'Apple' >/dev/null ; then
   sys_lib_search_path_spec=`$CC -print-search-dirs | tr "\n" "$PATH_SEPARATOR" | sed -e 's/libraries:/@libraries:/' | tr "@" "\n" | grep "^libraries:" | sed -e "s/^libraries://" -e "s,=/,/,g" -e "s,$PATH_SEPARATOR, ,g" -e "s,.*,& /lib /usr/lib /usr/local/lib,g"`
   fi
   sys_lib_dlsearch_path_spec='/usr/local/lib /lib /usr/lib'
@@ -3444,7 +3444,7 @@ aix4*)
   fi
   ;;
   darwin* | rhapsody*)
-  if $CC -v 2>&1 | grep 'Apple' >/dev/null ; then 
+  if $CC -v 2>&1 | grep 'Apple' >/dev/null ; then
     _LT_AC_TAGVAR(archive_cmds_need_lc, $1)=no
     case "$host_os" in
     rhapsody* | darwin1.[[012]])
@@ -3470,7 +3470,7 @@ aix4*)
     _LT_AC_TAGVAR(whole_archive_flag_spec, $1)='-all_load $convenience'
     _LT_AC_TAGVAR(link_all_deplibs, $1)=yes
     fi
-    ;;  
+    ;; 
 esac
 AC_MSG_RESULT([$enable_shared])
 
@@ -3791,7 +3791,7 @@ case $host_os in
   ;;
 
   darwin* | rhapsody*)
-   if $CC -v 2>&1 | grep 'Apple' >/dev/null ; then 
+   if $CC -v 2>&1 | grep 'Apple' >/dev/null ; then
     _LT_AC_TAGVAR(archive_cmds_need_lc, $1)=no
     case "$host_os" in
     rhapsody* | darwin1.[[012]])
@@ -3825,7 +3825,7 @@ case $host_os in
     _LT_AC_TAGVAR(hardcode_shlibpath_var, $1)=unsupported
     _LT_AC_TAGVAR(whole_archive_flag_spec, $1)='-all_load $convenience'
     _LT_AC_TAGVAR(link_all_deplibs, $1)=yes
-   fi 
+   fi
     ;;
 
   dgux*)
@@ -4731,7 +4731,7 @@ if test -f "$ltmain"; then
   # without removal of \ escapes.
   if test -n "${ZSH_VERSION+set}" ; then
     setopt NO_GLOB_SUBST
-  fi  
+  fi 
   # Now quote all the things that may contain metacharacters while being
   # careful not to overquote the AC_SUBSTed values.  We take copies of the
   # variables and quote the copies for generation of the libtool script.
@@ -5559,7 +5559,7 @@ AC_MSG_CHECKING([for $compiler option to produce PIC])
 	    _LT_AC_TAGVAR(lt_prog_compiler_wl, $1)='-Wl,'
 	    _LT_AC_TAGVAR(lt_prog_compiler_pic, $1)='-KPIC'
 	    _LT_AC_TAGVAR(lt_prog_compiler_static, $1)='-static'
-	    ;; 
+	    ;;
 	  cxx)
 	    # Compaq C++
 	    # Make sure the PIC flag is empty.  It appears that all Alpha
@@ -5919,7 +5919,7 @@ ifelse([$1],[CXX],[
   _LT_AC_TAGVAR(link_all_deplibs, $1)=unknown
   _LT_AC_TAGVAR(hardcode_automatic, $1)=no
   _LT_AC_TAGVAR(module_cmds, $1)=
-  _LT_AC_TAGVAR(module_expsym_cmds, $1)=  
+  _LT_AC_TAGVAR(module_expsym_cmds, $1)= 
   _LT_AC_TAGVAR(always_export_symbols, $1)=no
   _LT_AC_TAGVAR(export_symbols_cmds, $1)='$NM $libobjs $convenience | $global_symbol_pipe | $SED '\''s/.* //'\'' | sort | uniq > $export_symbols'
   # include_expsyms should be a list of space-separated symbols to be *always*
@@ -6251,7 +6251,7 @@ EOF
       ;;
 
     darwin* | rhapsody*)
-    if $CC -v 2>&1 | grep 'Apple' >/dev/null ; then 
+    if $CC -v 2>&1 | grep 'Apple' >/dev/null ; then
       _LT_AC_TAGVAR(archive_cmds_need_lc, $1)=no
       case "$host_os" in
       rhapsody* | darwin1.[[012]])
@@ -6288,7 +6288,7 @@ EOF
       _LT_AC_TAGVAR(hardcode_shlibpath_var, $1)=unsupported
       _LT_AC_TAGVAR(whole_archive_flag_spec, $1)='-all_load $convenience'
       _LT_AC_TAGVAR(link_all_deplibs, $1)=yes
-    fi  
+    fi 
       ;;
 
     dgux*)
@@ -6638,7 +6638,7 @@ x|xyes)
       AC_MSG_CHECKING([whether -lc should be explicitly linked in])
       $rm conftest*
       printf "$lt_simple_compile_test_code" > conftest.$ac_ext
-  
+ 
       if AC_TRY_EVAL(ac_compile) 2>conftest.err; then
         soname=conftest
         lib=conftest

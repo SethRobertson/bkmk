@@ -1,5 +1,5 @@
 ######################################################################
-# $Id: ex.pkg.Makefile,v 1.7 2002/07/16 19:37:29 dupuy Exp $
+# $Id: ex.pkg.Makefile,v 1.8 2003/06/17 05:10:29 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -12,7 +12,7 @@
 #
 # --Copyright LIBBK--
 #
-# Foo package meta Makefile 
+# Foo package meta Makefile
 #
 BK_SUBDIR=libclc glib libbk bkmk
 

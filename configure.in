@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.91 2003/06/06 21:26:35 jtt Exp $
+dnl $Id: configure.in,v 1.92 2003/06/17 05:10:29 seth Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,12 +15,12 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.91 $)dnl
+AC_REVISION($Revision: 1.92 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
 
-echo 
+echo
 echo  "		CONFIGURING BAKA ENVIRONMENT"
 echo
 
@@ -168,7 +168,7 @@ AC_PATH_PROG(BGCC, bgcc, $FALSE, $PATH:/usr/local/gnu/bin)
 
 # Look for PARASOFT directory if $PARASOFT is not found
 if test "X$PARASOFT" '=' "X"
-then	
+then
 	if test -d "/usr/local/parasoft"
 	then
 		export PARASOFT="/usr/local/parasoft"
