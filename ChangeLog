@@ -1,3 +1,7 @@
+2002-09-08  Seth Robertson  <seth@yeah.baka.org>
+
+	* Make.bkvariables (PWD): Some versions of make appear to actively NUKE PWD.
+
 2002-09-25  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.include (BK_WANT_ORACLE): set false if you hate Oracle
