@@ -1,6 +1,6 @@
 # -*- makefile -*-
 # 
-# $Id: Make.targets,v 1.71 2002/10/21 11:08:29 jtt Exp $
+# $Id: Make.targets,v 1.72 2003/02/10 20:32:59 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -34,12 +34,12 @@ endif
 ifeq ($(strip $(BK_ALL_SUBDIR)),)
 BK_SUBDIRRULE= # No sub-directories
 else # BK_SUBDIR
-BK_SUBDIRRULE=@ \
-	for d in $(BK_ALL_SUBDIR); do \
-	 if [ -d $$d ]; then \
-	  (cd $$d && $(MAKE) $@) || \
+BK_SUBDIRRULE=@								     \
+	for d in $(BK_ALL_SUBDIR); do					     \
+	 if [ -d $$d -a -f $$d/Makefile ]; then				     \
+	  (cd $$d && $(MAKE) $@) ||					     \
 	   { ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; } \
-	 fi; \
+	 fi;								     \
 	done; exit $$ERR
 endif # BK_SUBDIR
 
@@ -189,7 +189,7 @@ install-first:
 	  if [ $$d = "strict_sh_fodder" ]; then				      \
 		continue;						      \
 	  fi;								      \
-	  if [ -d $$d ]; then						      \
+	  if [ -d $$d -a -f $$d/Makefile ]; then			      \
 	    ( cd $$d && $(MAKE) actual_install ) ||			      \
 	    { ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; } \
 	  fi;								      \
@@ -199,7 +199,7 @@ install-first:
 	  if [ $$d = "strict_sh_fodder" ]; then				      \
 		continue;						      \
 	  fi;								      \
-	  if [ -d $$d ]; then						      \
+	  if [ -d $$d -a -f $$d/Makefile ]; then			      \
 	    ( cd $$d && $(MAKE) $@) ||					      \
 	    { ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; } \
 	  fi;								      \
@@ -211,7 +211,7 @@ install-normal:
 	  if [ $$d = "strict_sh_fodder" ]; then				      \
 		continue;						      \
 	  fi;								      \
-	  if [ -d $$d ]; then						      \
+	  if [ -d $$d -a -f $$d/Makefile ]; then			      \
 	    ( cd $$d && $(MAKE) $@ ) ||					      \
 	    { ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; } \
 	    fi;								      \
@@ -224,7 +224,7 @@ install-last:
 	  if [ $$d = "strict_sh_fodder" ]; then				      \
 		continue;						      \
 	  fi;								      \
-	  if [ -d $$d ]; then						      \
+	  if [ -d $$d -a -f $$d/Makefile ]; then			      \
 	    ( cd $$d && $(MAKE) actual_install ) ||			      \
 	    { ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; } \
 	  fi;								      \
@@ -234,7 +234,7 @@ install-last:
 	  if [ $$d = "strict_sh_fodder" ]; then				      \
 		continue;						      \
 	  fi;								      \
-	  if [ -d $$d ]; then						      \
+	  if [ -d $$d -a -f $$d/Makefile ]; then			      \
 	    ( cd $$d && $(MAKE) $@ ) ||					      \
 	    { ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; } \
 	  fi;								      \
