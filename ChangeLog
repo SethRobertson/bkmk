@@ -4,15 +4,28 @@
 	to not fail if the subdirectories fail.  Of course, deferred
 	failure would be best, but I am not greedy here.
 
+2004-02-16  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* configure.in, libbk_autoconf.h.in: check for valgrind/memcheck.h
+
 2004-02-02  James Tanis  <jtt@buscemi.sysdetect.com>
 
 	* Make.override (BK_USING_GPROF): For some reason gprof isn't
 	playing nice with pthreads.
 
+	* Make.GNUmakefile, Make.include, Make.override: Allow even those using
+	Make.GNUmakefile to compute overridden user-conf values the same way
+
+2004-01-12  James Tanis  <jtt@sysdetect.com>
+
+	* Make.variables: Make snort compile with our libpcap
+
 2004-01-05  Seth Robertson  <seth@not.baka.org>
 
-	* configure (ac_cv_c_stack_direction): When calling time() don't forget the NULL.
-	* aclocal.m4 (LIBS): When calling time() don't forget the NULL.
+	* configure.in, libbk_autoconf.h.in: Check for pty, util, ioctl, filio
+	and if_ether header files
+	
+	* aclocal.m4 (RANDOM_INT_10): When calling time() don't forget the NULL
 
 2003-12-30  Alexander Dupuy  <dupuy@sysdetect.com>
 

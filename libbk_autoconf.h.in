@@ -1,5 +1,5 @@
 /*				-*- C -*-
- * $Id: libbk_autoconf.h.in,v 1.49 2004/01/05 19:24:58 seth Exp $
+ * $Id: libbk_autoconf.h.in,v 1.50 2004/03/20 12:34:46 dupuy Exp $
  *
  * ++Copyright LIBBK++
  *
@@ -60,13 +60,14 @@
 #undef HAVE_ALLOCA_H
 #undef HAVE_NET_ETHERNET_H
 #undef HAVE_NETINET_ETHER_H
+#undef HAVE_NETINET_IF_ETHER_H
 #undef HAVE_SYS_CAPABILITY_H
 #undef HAVE_SYS_MSG_H
 #undef HAVE_PTY_H
 #undef HAVE_UTIL_H
 #undef HAVE_SYS_IOCTL_H
 #undef HAVE_SYS_FILIO_H
-#undef HAVE_NETINET_IF_ETHER_H
+#undef HAVE_VALGRIND_MEMCHECK_H
 
 #undef HAVE_LIBSSL
 
