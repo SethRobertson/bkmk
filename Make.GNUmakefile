@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.GNUmakefile,v 1.35 2005/02/09 01:32:25 seth Exp $
+# $Id: Make.GNUmakefile,v 1.36 2005/02/09 22:37:39 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -51,9 +51,9 @@ export INSTBASE
 DEFAULT: $(CONFIGURED)
 ifneq ($(strip $(BK_WANT_C)),false)
 ifneq ($(strip $(WANT_SUBDIRBUILD)),false)
-	cd $(ARCH) && $(MAKE)
+	cd $(ARCH) && $(MAKE) $(STUPIDSUBMAKEOPTS)
 else
-	$(MAKE) -f Makefile
+	$(MAKE) -f Makefile $(STUPIDSUBMAKEOPTS)
 endif
 else
 	@:
@@ -77,9 +77,9 @@ install:: $(CONFIGURED)
 	-$(MKDIR_CONFIG) -p $(INSTBASE)
 ifneq ($(strip $(BK_WANT_C)),false)
 ifneq ($(strip $(WANT_SUBDIRBUILD)),false)
-	cd $(ARCH) && $(MAKE) && $(MAKE) $@
+	cd $(ARCH) && $(MAKE) $(STUPIDSUBMAKEOPTS) && $(MAKE) $(STUPIDSUBMAKEOPTS) $@
 else
-	$(MAKE) -f Makefile $@
+	$(MAKE) -f Makefile $(STUPIDSUBMAKEOPTS) $@
 endif
 endif
 
@@ -91,15 +91,15 @@ clean nuke:: distclean distclean-generic
 	$(RM_CONFIG) -rf $(ARCH)
 
 clean::
-	@if test -f $(ARCH)/Makefile && cd $(ARCH); then $(MAKE) $@; fi
+	@if test -f $(ARCH)/Makefile && cd $(ARCH); then $(MAKE) $(STUPIDSUBMAKEOPTS) $@; fi
 
 else
 clean nuke:: distclean
 endif
 
 distclean distclean-generic distclean-am::
-	-@test -f $(ARCH)/Makefile && $(MAKE) -k -f $(ARCH)/Makefile $@ \
-	  || test -f Makefile && $(MAKE) -k -f Makefile $@
+	-@test -f $(ARCH)/Makefile && $(MAKE) -k -f $(ARCH)/Makefile $(STUPIDSUBMAKEOPTS) $@ \
+	  || test -f Makefile && $(MAKE) -k -f Makefile  $(STUPIDSUBMAKEOPTS) $@
 
 ifneq ($(strip $(WANT_SUBDIRBUILD)),false)
 CONFIGCMD=cd $(ARCH) && ../configure --prefix=$$INSTBASE $(CACHE_FILE) $(CONFIGOPTS) 
@@ -141,15 +141,15 @@ endif
 	   | $(TEE) -a `$(FIND) . -name Makefile -print` >/dev/null;	      \
 	fi
 ifneq ($(strip $(WANT_SUBDIRBUILD)),false)
-	-@$(MAKE) -f $(ARCH)/Makefile clean 2>/dev/null
+	-@$(MAKE) -f $(ARCH)/Makefile $(STUPIDSUBMAKEOPTS) clean 2>/dev/null
 endif
 
 .DEFAULT: $(CONFIGURED)
 ifneq ($(strip $(BK_WANT_C)),false)
 ifneq ($(strip $(WANT_SUBDIRBUILD)),false)
-	$(MAKE) -C $(ARCH) $@
+	$(MAKE) -C $(ARCH) $(STUPIDSUBMAKEOPTS) $@
 else
-	$(MAKE) -f Makefile $@
+	$(MAKE) -f Makefile $(STUPIDSUBMAKEOPTS) $@
 endif
 else
 	@:
