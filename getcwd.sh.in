@@ -2,7 +2,7 @@
 #! /bin/bash --norc
 #! /bin/ksh -p
 ######################################################################
-# $Id: getcwd.sh.in,v 1.3 2003/06/17 05:10:29 seth Exp $
+# $Id: getcwd.sh.in,v 1.4 2003/09/05 23:38:56 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -85,7 +85,7 @@ getcwd() {
 
 # only do anything if this script is run rather than sourced
 case "$0" in
-  $name|$name.sh|*/$name|*/$name.sh) $name ;;
+  $name|$name.sh|$name.sh.in|*/$name|*/$name.sh|*/$name.sh.in) $name ;;
 esac
 
 unset name
