@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.34 2002/07/24 08:00:23 dupuy Exp $
+dnl $Id: configure.in,v 1.35 2002/07/26 07:32:13 dupuy Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.34 $)dnl
+AC_REVISION($Revision: 1.35 $)dnl
 AC_INIT(Make.bkvariables)
 AC_CONFIG_AUX_DIR(acaux)
 
@@ -41,6 +41,7 @@ AC_PROG_CC_C_O
 
 AC_PROG_INSTALL
 AC_PROG_LN_S
+AC_PATH_PROG(PWDPROG, pawd, pwd)
 
 AC_LIBTOOL_WIN32_DLL
 AC_LIBTOOL_DLOPEN
@@ -64,37 +65,36 @@ AC_FUNC_GETTEXT
 AC_STACKDIRECTION
 AC_FUNC_ALLOCA
 
-AC_PATH_PROG(RM,rm)
-AC_PATH_PROG(FALSE,false)
-AC_PATH_PROGS(MV,mv cp, $FALSE)
-AC_PATH_PROG(MKDIR,mkdir,$FALSE)
-AC_PATH_PROGS(PWDPROG,pwd cwd, $FALSE)
+AC_PATH_PROG(RM, rm)
+AC_PATH_PROG(FALSE, false)
+AC_PATH_PROGS(MV, mv cp, $FALSE)
+AC_PATH_PROG(MKDIR, mkdir, $FALSE)
 
-AC_PATH_PROG(CAT,cat, $FALSE)
-AC_PATH_PROG(BASENAME,basename, $FALSE)
-AC_PATH_PROG(SED,sed, $FALSE)
-AC_PATH_PROG(TEST,test, $FALSE)
+AC_PATH_PROG(CAT, cat, $FALSE)
+AC_PATH_PROG(BASENAME, basename, $FALSE)
+AC_PATH_PROG(SED, sed, $FALSE)
+AC_PATH_PROG(TEST, test, $FALSE)
 
-AC_PATH_PROG(PERL,perl, $FALSE)
+AC_PATH_PROG(PERL, perl, $FALSE)
 
-AC_PATH_PROG(XML2CONFIG,xml2-config, $FALSE)
+AC_PATH_PROG(XML2CONFIG, xml2-config, $FALSE)
 
 AC_PATH_PROG(BGCC, bgcc, $FALSE)
 AC_PATH_PROG(INSURE, insure, $FALSE, $PATH:$PARASOFT/bin:/usr/local/parasoft/bin)
 
 # note - don't use $PATH_SEPARATOR in this file; we always use Cygwin make
 
-AC_PATH_PROG(JAVAC,javac, $FALSE, $PATH:/usr/java/jdk/bin:/usr/local/java/jdk/bin)
-AC_PATH_PROG(JAR,jar, $FALSE, $PATH:/usr/java/jdk/bin:/usr/local/java/jdk/bin)
+AC_PATH_PROG(JAVAC, javac, $FALSE, $PATH:/usr/java/jdk/bin:/usr/local/java/jdk/bin)
+AC_PATH_PROG(JAR, jar, $FALSE, $PATH:/usr/java/jdk/bin:/usr/local/java/jdk/bin)
 
-AC_PATH_PROG(JHINDEXER,jhindexer, $FALSE, $PATH:/usr/local/java/bin)
+AC_PATH_PROG(JHINDEXER, jhindexer, $FALSE, $PATH:/usr/local/java/bin)
 
-AC_PATH_PROG(DOXYGEN,doxygen, $FALSE)
-AC_CHECK_PROG(HAVE_DOT,dot, YES, NO)
-AC_PATH_PROGS(BROWSER,browser netscape konqueror mozilla iexplore.exe lynx,
+AC_PATH_PROG(DOXYGEN, doxygen, $FALSE)
+AC_CHECK_PROG(HAVE_DOT, dot, YES, NO)
+AC_PATH_PROGS(BROWSER, browser netscape konqueror mozilla iexplore.exe lynx,
 	      $FALSE, $PATH:/cygdrive/c/progra~1/intern~1)
 
-AC_PATH_PROG(AR,ar)
+AC_PATH_PROG(AR, ar)
 
 AC_DEFINE_UNQUOTED(PATH_SEPARATOR, "$PATH_SEPARATOR")
 AC_CONFIG_HEADER(libbk_autoconf.h)

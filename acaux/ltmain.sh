@@ -756,7 +756,7 @@ compiler."
     compiler_flags=
     linker_flags=
     dllsearchpath=
-    lib_search_path=`pwd`
+    lib_search_path=`$pwd`
 
     avoid_version=no
     dlfiles=
@@ -1006,7 +1006,7 @@ compiler."
 	case $dir in
 	[\\/]* | [A-Za-z]:[\\/]*) ;;
 	*)
-	  absdir=`cd "$dir" && pwd`
+	  absdir=`cd "$dir" && $pwd`
 	  if test -z "$absdir"; then
 	    $echo "$modename: cannot determine absolute directory name of \`$dir'" 1>&2
 	    exit 1
@@ -1597,7 +1597,7 @@ compiler."
 	case $ladir in
 	[\\/]* | [A-Za-z]:[\\/]*) abs_ladir="$ladir" ;;
 	*)
-	  abs_ladir=`cd "$ladir" && pwd`
+	  abs_ladir=`cd "$ladir" && $pwd`
 	  if test -z "$abs_ladir"; then
 	    $echo "$modename: warning: cannot determine absolute directory name of \`$ladir'" 1>&2
 	    $echo "$modename: passing it literally to the linker, although it might fail" 1>&2
@@ -1999,7 +1999,7 @@ compiler."
 		case $dir in
 		[\\/]* | [A-Za-z]:[\\/]*) absdir="$dir" ;;
 		*)
-		  absdir=`cd "$dir" && pwd`
+		  absdir=`cd "$dir" && $pwd`
 		  if test -z "$absdir"; then
 		    $echo "$modename: warning: cannot determine absolute directory name of \`$dir'" 1>&2
 		    absdir="$dir"
@@ -2859,7 +2859,7 @@ EOF
 	      # Extract the objects.
 	      case $xlib in
 	      [\\/]* | [A-Za-z]:[\\/]*) xabs="$xlib" ;;
-	      *) xabs=`pwd`"/$xlib" ;;
+	      *) xabs=`$pwd`"/$xlib" ;;
 	      esac
 	      xlib=`$echo "X$xlib" | $Xsed -e 's%^.*/%%'`
 	      xdir="$gentop/$xlib"
@@ -2998,7 +2998,7 @@ EOF
 	    # Extract the objects.
 	    case $xlib in
 	    [\\/]* | [A-Za-z]:[\\/]*) xabs="$xlib" ;;
-	    *) xabs=`pwd`"/$xlib" ;;
+	    *) xabs=`$pwd`"/$xlib" ;;
 	    esac
 	    xlib=`$echo "X$xlib" | $Xsed -e 's%^.*/%%'`
 	    xdir="$gentop/$xlib"
@@ -3528,7 +3528,7 @@ static const void *lt_preloaded_setup() {
 	    relink_command="$var=\"$var_value\"; export $var; $relink_command"
 	  fi
 	done
-	relink_command="cd `pwd`; $relink_command"
+	relink_command="cd `$pwd`; $relink_command"
 	relink_command=`$echo "X$relink_command" | $Xsed -e "$sed_quote_subst"`
       fi
 
@@ -3536,7 +3536,7 @@ static const void *lt_preloaded_setup() {
       if test "X$echo" = "X$SHELL $0 --fallback-echo"; then
 	case $0 in
 	[\\/]* | [A-Za-z]:[\\/]*) qecho="$SHELL $0 --fallback-echo";;
-	*) qecho="$SHELL `pwd`/$0 --fallback-echo";;
+	*) qecho="$SHELL `$pwd`/$0 --fallback-echo";;
 	esac
 	qecho=`$echo "X$qecho" | $Xsed -e "$sed_quote_subst"`
       else
@@ -3627,7 +3627,7 @@ else
   done
 
   # Try to get the absolute directory name.
-  absdir=\`cd \"\$thisdir\" && pwd\`
+  absdir=\`cd \"\$thisdir\" && $pwd\`
   test -n \"\$absdir\" && thisdir=\"\$absdir\"
 "
 
@@ -3781,7 +3781,7 @@ fi\
 	  # Extract the objects.
 	  case $xlib in
 	  [\\/]* | [A-Za-z]:[\\/]*) xabs="$xlib" ;;
-	  *) xabs=`pwd`"/$xlib" ;;
+	  *) xabs=`$pwd`"/$xlib" ;;
 	  esac
 	  xlib=`$echo "X$xlib" | $Xsed -e 's%^.*/%%'`
 	  xdir="$gentop/$xlib"
@@ -3858,7 +3858,7 @@ fi\
 	fi
       done
       # Quote the link command for shipping.
-      relink_command="cd `pwd`; $SHELL $0 --mode=relink $libtool_args"
+      relink_command="cd `$pwd`; $SHELL $0 --mode=relink $libtool_args"
       relink_command=`$echo "X$relink_command" | $Xsed -e "$sed_quote_subst"`
 
       # Only create the output if not a dry run.
@@ -4556,7 +4556,7 @@ relink_command=\"$relink_command\""
       esac
 
       # Get the absolute pathname.
-      absdir=`cd "$dir" && pwd`
+      absdir=`cd "$dir" && $pwd`
       test -n "$absdir" && dir="$absdir"
 
       # Now add the directory to shlibpath_var.

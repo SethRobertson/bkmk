@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.production,v 1.41 2002/07/25 07:42:31 dupuy Exp $
+# $Id: Make.production,v 1.42 2002/07/26 07:32:13 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -56,16 +56,49 @@ Make%:
 	$(YACC) $(YFLAGS) $<
 
 #
+# <WARNING>The parts where $(BK_INSTALLRDIR) != $(BK_INSTALLRPATH) are quite
+# hairy.  When doing a "production" install, with embedded rpath different from
+# the install directory, libtool --mode install gets fussy and needs to find
+# libraries that are dependencies of other libraries in the embedded runpath
+# (where they may not yet, or ever, be installed).  Furthermore, when
+# "installing" programs, libtool is unable to find the libraries in the
+# embedded runpath, and installs the script wrappers instead of relinking.
+#
+# To prevent this, after running libtool -mode link on programs, we edit the
+# wrapper scripts to prevent libtool from (a) complaining that libtool
+# libraries that are dependencies of the program are not installed in the
+# embedded runpath directory, and (b) appending the install directory into the
+# native executable runpath.  Note that we need to do this in two places: for
+# link of BK_SIMPLE_*PROGS and BK_LARGE_*PROGS.  On some platforms we might
+# need to do these hacks for library/module linking as well, but that can wait
+# until we discover it is necessary.
+#
+# Note that problem (b) is caused by the editing of the libtool library scripts
+# we do in Make.targets; see the WARNING there for more details.</WARNING>
+#
+
+EDIT_LT_PROGLINK=\
+	if [ $(BK_INSTALLRDIR) != $(BK_INSTALLRPATH) ]; then \
+	  $(PERL) -pi -e " \
+	    s|\S*(/[^/\s]*\.la)|$(BK_INSTALLRDIR)\1|g \
+	      if (/notinst_deplibs=/); \
+	    s|([,])$(BK_INSTALLRDIR)|\1$(BK_INSTALLRPATH)|g \
+	      if (/^relink_command=/);"  $@; \
+	fi
+
+#
 # Simple program production
 #
 ifeq ($(BK_USING_INSURE),true)
 # Insure++ often generates exceedingly bogus errors when it compiles and links
 # in a single command, so make the dependency on the object file and link that.
 $(BK_SIMPLE_INTERNALPROGS) $(BK_SIMPLE_PROGS): %: %$(OBJEXT) $(filter -l%,$(BK_ALLLIBS))
-	$(LTLD) $(LINK.c) $(LT_LDFLAGS) -o $@ $@$(OBJEXT) $(LDLIBS)
+# [may not need rpath for insure-linked programs; let's see if it helps]
+	$(LTLD) $(LINK.c) $(LT_LDFLAGS) -o $@ $@$(OBJEXT) $(LDLIBS) -rpath $(BK_INSTALLRPATH)
 else
 $(BK_SIMPLE_INTERNALPROGS) $(BK_SIMPLE_PROGS): %: %.c $(filter -l%,$(BK_ALLLIBS))
 	$(LTLD) $(LINK.c) $(LT_LDFLAGS) -o $@ $@.c $(LDLIBS) -rpath $(BK_INSTALLRPATH)
+	@$(EDIT_LT_PROGLINK)
 endif
 
 #
@@ -76,7 +109,8 @@ BK_LARGE_OBJ:=$(patsubst %.y,%.tab$(OBJEXT),$(BK_LARGE_OBJ))
 BK_LARGE_OBJ:=$(patsubst %.l,%$(OBJEXT),$(BK_LARGE_OBJ))
 
 $(BK_LARGE_INTERNALPROG) $(BK_LARGE_PROG): $(BK_LARGE_OBJ) $(filter -l%,$(BK_ALLLIBS))
-	$(LTLD) $(LINK.c) $(LT_LDFLAGS) -o $@ $(BK_LARGE_OBJ) $(LDLIBS)
+	$(LTLD) $(LINK.c) $(LT_LDFLAGS) -o $@ $(BK_LARGE_OBJ) $(LDLIBS) -rpath $(BK_INSTALLRPATH)
+	@$(EDIT_LT_PROGLINK)
 
 #
 # Large library production

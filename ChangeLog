@@ -1,3 +1,17 @@
+2002-07-26  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.production: use perl to edit libtool wrapper script so that
+	[correct] rpath is embedded, but not used to resolve anything at relink
+	
+	* Make.targets: use perl to edit libtool library script so that rpath
+	is embedded, but not used to resolve anything at relink
+	
+	* configure.in: configure PWDPROG before building libtool
+
+	* aclocal.m4: set libtool $pwd to PWDPROG
+
+	* acaux/ltmain.sh: use $pwd to get pwd program or builtin
+
 2002-07-25  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.variables (BK_INSTALLRDIR): This is now the absolute path
