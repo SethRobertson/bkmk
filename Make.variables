@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.157 2003/06/26 16:05:38 jtt Exp $
+# $Id: Make.variables,v 1.158 2003/07/02 00:10:19 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -66,6 +66,10 @@ endif # !BK_WANT_LIBTOOL
 
 ifeq ($(BK_WANT_LIBTOOL),)
 BK_WANT_LIBTOOL=true
+endif # !BK_WANT_LIBTOOL
+
+ifeq ($(WANT_STATIC),true)
+BK_WANT_STATIC=true
 endif # !BK_WANT_LIBTOOL
 
 # SSL Stuff

@@ -1,3 +1,7 @@
+2003-07-01  James Tanis  <jtt@saint.sysdetect.com>
+
+	* Make.variables (BK_WANT_STATIC): Make static work.
+
 2003-06-27  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.bkvariables (BK_TTY): make this visible in top-level Makefile
