@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.116 2002/10/31 18:43:03 salex Exp $
+# $Id: Make.variables,v 1.117 2002/10/31 22:01:41 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -203,7 +203,7 @@ EDIT_LT_MODINSTALL=:
 else # BK_INSTALLRDIR==BK_INSTALLRPATH
 LINKMODE=prelink
 EDIT_LT_PROGLINK=\
-	$(PERL) -pi -e " \
+	$(PERL) -pi -e " binmode ARGV; \
 	  s|\S*(/[^/\s]*\.la)|$(BK_INSTALLRDIR)\1|g \
 	    if (/notinst_deplibs=/); \
 	  s|([,])(/n/[^/]+)?$(BK_INSTALLRDIR)|\1$(BK_INSTALLRPATH)|g \
@@ -216,13 +216,13 @@ EDIT_LT_PROGLINK=\
 # enhance the perl scripts to verify that the .la exists in INSTALLRDIR before
 # rewriting the dependency_libs line, but that's a lot more work.</TODO>
 EDIT_LT_LIBINSTALL=\
-	$(PERL) -pi -e " \
+	$(PERL) -pi -e " binmode ARGV; \
 	  s|$(BK_INSTALLRPATH)(/[^ ]*\.la)|$(BK_INSTALLRDIR)\1|g \
 	    if (/^dependency_libs=/); \
 	  s|libdir='$(BK_INSTALLRPATH)'|libdir='$(BK_INSTALLRDIR)'| \
 	    if (/^libdir=/);" $(BK_INSTALLRDIR)/$(^F)
 EDIT_LT_MODINSTALL=\
-	$(PERL) -pi -e " \
+	$(PERL) -pi -e " binmode ARGV; \
 	  s|$(BK_INSTALLRPATH)(/[^ ]*\.la)|$(BK_INSTALLRDIR)\1|g \
 	    if (/^dependency_libs=/);" $(BK_INSTALLRDIR)/$(^F)
 endif # BK_INSTALLRDIR==BK_INSTALLRPATH

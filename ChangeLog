@@ -1,3 +1,8 @@
+2002-10-31  James Tanis  <jtt@hawking.sysdetect.com>
+
+	* Make.variables (EDIT_LT_LIBINSTALL): Quiet perl 5.8.0 unicode gripes
+	when processing binary files.
+
 2002-10-28  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* aclocal.m4: BK_FUNC_ISINF can be replaced with AC_CHECK_FUNCS(isinf)
