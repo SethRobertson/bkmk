@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.86 2002/08/03 23:21:53 dupuy Exp $
+# $Id: Make.variables,v 1.87 2002/08/12 15:04:45 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -323,7 +323,9 @@ CXX=$(CXX_CONFIG) $(CXXOPTS)
 
 # gcc options common to both gcc and bgcc
 ifeq ($(COMPILER_NAME),gcc)
-COMPILER_DEBUG+=-Wmissing-prototypes -Wstrict-prototypes -Wchar-subscripts -Wcomment -Wformat -Wimplicit -Wmain -Wmultichar -Wswitch -Wshadow -Wtrigraphs -Wunused $(COMPILER_DEBUG_ERROR)
+# Allow unused functions
+GCC_UNUSED_OPTS=-Wunused-label -Wunused-parameter -Wunused-variable -Wunused-value
+COMPILER_DEBUG+=-Wmissing-prototypes -Wstrict-prototypes -Wchar-subscripts -Wcomment -Wformat -Wimplicit -Wmain -Wmultichar -Wswitch -Wshadow -Wtrigraphs $(GCC_UNUSED_OPTS) $(COMPILER_DEBUG_ERROR)
 
 # options for gcc only 
 ifeq ($(CC_CONFIG),gcc)

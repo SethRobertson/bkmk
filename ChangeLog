@@ -1,3 +1,8 @@
+2002-08-09  James Tanis  <jtt@saint.sysdetect.com>
+
+	* Make.variables (GCC_UNUSED_OPTS): Allow usused functions -- they
+	are just to common.
+
 2002-08-02  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.variables (EDIT_LT_PROGLINK, EDIT_LT_{LIB|MOD}INSTALL):
