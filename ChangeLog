@@ -1,3 +1,11 @@
+2002-01-24  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* libbk_autoconf.h.in: add new #defines from updated configure
+
+	* configure.in: use new macros from aclocal.m4
+
+	* aclocal.m4: m4 macros for load-time init, sa_len, inet_pton
+
 2002-01-23  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.production ($(subst .class,.cl%ss,$(BK_JAVA_PKG_CLASS))):
