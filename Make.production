@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.production,v 1.38 2002/05/13 23:21:28 jtt Exp $
+# $Id: Make.production,v 1.39 2002/07/13 04:40:51 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -100,6 +100,7 @@ $(filter %.a,$(BK_LARGE_LIB)): $(BK_LARGE_LIBOBJ)
 
 # don't use $(LDLIBS) in libtool links, as it may contain static/convenience
 # libs that will get included in the generated shared library.
+ifeq ($(BK_WANT_LIBTOOL),true)
 $(filter %.la,$(BK_LARGE_LIB)): $(BK_LARGE_LIBOBJ)
 	-@$(MKDIR) $(BK_INSTALLRPATH) >/dev/null 2>&1
 	$(LIBTOOL_LINK) $(LINK.c) $(LT_LDFLAGS) -o $@ $^ $(LT_LDLIBS) \
@@ -109,6 +110,18 @@ $(BK_LARGE_MODULE): $(BK_LARGE_LIBOBJ)
 	-@$(MKDIR) $(BK_INSTALLRPATH) >/dev/null 2>&1
 	$(LIBTOOL_LINK) $(LINK.c) $(LT_M_LDFLAGS) -o $@ $^ $(LT_LDLIBS) \
 	 -rpath $(BK_INSTALLRPATH)
+
+else
+$(BK_LARGE_MODULE): $(BK_LARGE_LIBOBJ)
+	@if [ -f $@ ]; then \
+	  echo $(AR) $(ARFLAGS) $@ $?; \
+	  $(AR) $(ARFLAGS) $@ $?; \
+	else \
+	  echo $(AR) $(ARFLAGS) $@ $^; \
+	  $(AR) $(ARFLAGS) $@ $^; \
+	fi
+	$(RANLIB) $@
+endif
 
 #
 # Java production

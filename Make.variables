@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.74 2002/07/03 19:30:30 jtt Exp $
+# $Id: Make.variables,v 1.75 2002/07/13 04:40:51 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -34,6 +34,13 @@ BK_INSTALLRPATH=$(shell $(PERL) -e $(NORMALIZERPATH))
 NORMALIZEPATH="\$$_ = qq^`$(PWD)`/$(BK_INSTALLPROGDIR)^;"$(NORMALIZE)
 BK_INSTALLPATH=$(shell $(PERL) -e $(NORMALIZEPATH))
 
+ifndef ($(BK_WANT_LIBTOOL))
+BK_WANT_LIBTOOL=true
+endif
+
+ifeq ($(BK_WANT_LIBTOOL),)
+BK_WANT_LIBTOOL=true
+endif
 
 #
 # Junk
@@ -45,6 +52,18 @@ BK_BKJUNK=$(BK_SIMPLE_PROGS) $(BK_LARGE_PROG) $(BK_LARGE_LIB) $(BK_SIMPLE_INTERN
 BK_STDJUNK=*.o *.obj *.lo *.a *.la core tca.log tca.map .libs .inslog* _1001.out a.out mon.out *.core *.class *.err *.htm
 BK_BKCLEANJUNK=.depend tags TAGS *.rpt
 BK_BKNUKEJUNK=.\\\#* \\\#* *.rej *.orig *~
+
+BK_ALL_FIRST_DIRS=$(BK_INCLUDE_DIRS) $(BK_FIRST_DIRS)
+BK_ALL_LAST_DIRS=$(BK_EXECUTABLE_DIRS) $(BK_LAST_DIRS)
+BK_ALL_SUBDIR=$(BK_ALL_FIRST_DIRS) $(BK_SUBDIR) $(BK_ALL_LAST_DIRS)
+
+ifeq ($(BK_WANT_STATIC), true)
+BK_WANT_LIBTOOL=false
+endif
+
+ifeq ($(BK_WANT_LIBTOOL), false)
+BK_NO_USER_SHARED_LIBS=true
+endif
 
 
 #
@@ -98,10 +117,15 @@ LT_CFLAGS=
 LT_LDFLAGS=-avoid-version
 LT_M_LDFLAGS=-module -avoid-version
 
+ifeq ($(BK_WANT_LIBTOOL), true)
 LIBTOOL_COMPILE=$(LIBTOOL) --mode compile
 LIBTOOL_LINK=$(LIBTOOL) --mode link
 LIBTOOL_INSTALL=$(LIBTOOL) --mode install --quiet
-
+else
+LIBTOOL_COMPILE=
+LIBTOOL_LINK=
+LIBTOOL_INSTALL=
+endif
 ######################################################################
 # Java stuff
 JAVACFLAGS=$(USER_JAVAC_FLAGS) -g
@@ -244,6 +268,10 @@ ifneq ($(NO_DEBUG),true)
 COPTDEBUG+=-g $(COMPILER_DEBUG)
 else
 COPTDEBUG+=-fomit-frame-pointer
+endif
+
+ifeq ($(BK_WANT_STATIC),true)
+COPTDEBUG+=-static
 endif
 
 endif # CC is gcc
