@@ -1,5 +1,8 @@
 2002-08-22  Seth Robertson  <seth@startide.sysdetect.com>
 
+	* Make.targets (default): Place BK_LARGE_MODULE in default target
+	so you can `make` in plugin directories.
+
 	* Make.production (BK_RELINK_LIBSRC): Production rules to allow
 	relinking between compiliation and librarification.
 
