@@ -1,3 +1,8 @@
+2002-06-28  James Tanis  <jtt@saint.sysdetect.com>
+
+	* Make.variables (BK_DEFINES+): Force __INSIGHT__ into the compile
+	as per the old days.
+
 2002-06-07  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* aclocal.m4 (AC_FUNC_GETTEXT): see if -lintl is needed for gettext

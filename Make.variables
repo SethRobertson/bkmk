@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.72 2002/06/07 21:56:05 dupuy Exp $
+# $Id: Make.variables,v 1.73 2002/06/28 21:45:45 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -280,6 +280,7 @@ BK_DEFINES+=-DUSING_DMALLOC -DDMALLOC_FUNC_CHECK
 endif
 
 ifeq ($(BK_USING_INSURE),true)
+BK_DEFINES+=-D__INSIGHT__
 CC=/usr/local/parasoft/bin/insure
 endif
 
