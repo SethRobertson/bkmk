@@ -719,8 +719,8 @@ compiler."
     exit 0
     ;;
 
-  # libtool link mode
-  link | relink)
+  # libtool link mode (<KLUDGE>prelink is a hack; see below.</KLUDGE>)
+  link | relink | prelink)
     modename="$modename: link"
     case $host in
     *-*-cygwin* | *-*-mingw* | *-*-pw32* | *-*-os2*)
@@ -1341,6 +1341,14 @@ compiler."
     need_relink=no # whether we're linking any uninstalled libtool libraries
     notinst_deplibs= # not-installed libtool libraries
     notinst_path= # paths that contain not-installed libtool libraries
+    # <KLUDGE>Force relinking to occur at install time; needed for production
+    # builds with RPATH different from that used for install.</KLUDGE>
+    case $mode in
+    prelink)
+	mode=link
+	test $linkmode = lib && need_relink=yes
+	;;
+    esac
     case $linkmode in
     lib)
 	passes="conv link"
@@ -2723,7 +2731,9 @@ EOF
 	  # Hardcode the library paths
 	  hardcode_libdirs=
 	  dep_rpath=
-	  rpath="$finalize_rpath"
+	  # <KLUDGE>use cmdline rpath, not dependencies, for lib relink; this
+	  # is needed for building with production rpath.</KLUDGE>
+	  test "$linkmode,$mode" != "lib,relink" && rpath="$finalize_rpath"
 	  test "$mode" != relink && rpath="$compile_rpath$rpath"
 	  for libdir in $rpath; do
 	    if test -n "$hardcode_libdir_flag_spec"; then

@@ -1,3 +1,11 @@
+2002-08-02  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.variables (EDIT_LT_PROGLINK, EDIT_LT_{LIB|MOD}INSTALL):
+	consolidate all perl scripts for editing libtool library/wrapper
+	scripts into these variables; enhance them to use prelink hack
+
+	* acaux/ltmain.sh: add prelink and relink hacks for production builds
+
 2002-07-26  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.production: use perl to edit libtool wrapper script so that

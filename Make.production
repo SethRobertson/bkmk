@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.production,v 1.43 2002/07/29 18:58:38 jtt Exp $
+# $Id: Make.production,v 1.44 2002/08/02 21:36:12 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -54,41 +54,6 @@ Make%:
 
 %.tab.c %.tab.h: %.y
 	$(YACC) $(YFLAGS) $<
-
-#
-# <WARNING>The parts where $(BK_INSTALLRDIR) != $(BK_INSTALLRPATH) are quite
-# hairy.  When doing a "production" install, with embedded rpath different from
-# the install directory, libtool --mode install gets fussy and needs to find
-# libraries that are dependencies of other libraries in the embedded runpath
-# (where they may not yet, or ever, be installed).  Furthermore, when
-# "installing" programs, libtool is unable to find the libraries in the
-# embedded runpath, and installs the script wrappers instead of relinking.
-#
-# To prevent this, after running libtool -mode link on programs, we edit the
-# wrapper scripts to prevent libtool from (a) complaining that libtool
-# libraries that are dependencies of the program are not installed in the
-# embedded runpath directory, and (b) appending the install directory into the
-# native executable runpath.  Note that we need to do this in two places: for
-# link of BK_SIMPLE_*PROGS and BK_LARGE_*PROGS.  On some platforms we might
-# need to do these hacks for library/module linking as well, but that can wait
-# until we discover it is necessary.
-#
-# Note that problem (b) is caused by the editing of the libtool library scripts
-# we do in Make.targets; see the WARNING there for more details.</WARNING>
-#
-
-ifeq ($(BK_WANT_LIBTOOL),true)
-EDIT_LT_PROGLINK=\
-	if [ $(BK_INSTALLRDIR) != $(BK_INSTALLRPATH) ]; then \
-	  $(PERL) -pi -e " \
-	    s|\S*(/[^/\s]*\.la)|$(BK_INSTALLRDIR)\1|g \
-	      if (/notinst_deplibs=/); \
-	    s|([,])$(BK_INSTALLRDIR)|\1$(BK_INSTALLRPATH)|g \
-	      if (/^relink_command=/);"  $@; \
-	fi
-else
-EDIT_LT_PROGLINK=
-endif
 
 #
 # Simple program production
