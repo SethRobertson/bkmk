@@ -20,13 +20,6 @@
 
 	* Make.bkvariables (BK_TTY): document the obscure aspects of this var
 
-2002-09-03  James Tanis  <jtt@saint.sysdetect.com>
-
-	* Make.variables (EDIT_LT_PROGLINK): Use .LTB (libtool backup)
-	instead of .BAK to make it more clear that this is a libtool
-	backup file (although one *we're* creating *not* one which libtool
-	normally creates).
-
 2002-08-27  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.variables (COMPILER_DEBUG): don't bother setting this if using
