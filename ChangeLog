@@ -1,3 +1,13 @@
+2001-12-04  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.production: use BK_JAVA_CPATH and CURDIR in Java rules
+
+	* Make.variables (BK_JAVA_CPATH): BK_JAVA_CP after prefixing JAVA
+	and conversion to appropriate system-specific PATH_SEPARATOR
+	(CURDIR): normalized version of make's PWD
+
+	* Make.config.in (PATH_SEPARATOR): get this from autoconf
+
 2001-12-01  Zhi-Da Zhong  <zz@sysdetect.com>
 
 	* Make.production (Repository): added BK_JAVA_CP to classpath

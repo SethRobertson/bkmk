@@ -1,5 +1,5 @@
 #
-# $Id: configure.in,v 1.5 2001/11/09 22:45:16 dupuy Exp $
+# $Id: configure.in,v 1.6 2001/12/04 21:41:47 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -54,6 +54,8 @@ AC_PATH_PROG(SED,sed, $FALSE)
 AC_PATH_PROG(TEST,test, $FALSE)
 
 AC_PATH_PROG(PERL,perl, $FALSE)
+
+# note - don't use $PATH_SEPARATOR in this file; we always use Cygwin make
 
 AC_PATH_PROG(JAVAC,javac, $FALSE, $PATH:/usr/java/jdk1.3.1_01/bin)
 AC_PATH_PROG(JAR,jar, $FALSE, $PATH:/usr/java/jdk1.3.1_01/bin)

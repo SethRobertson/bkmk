@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.32 2001/11/30 07:49:10 dupuy Exp $
+# $Id: Make.variables,v 1.33 2001/12/04 21:41:47 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -16,6 +16,14 @@
 #
 # Variables
 #
+
+NORMALIZEPWD="			\
+	\$$_ = qq^`$(PWD)`^;	\
+	s@/\\./@/@g;		\
+	s@/[^/]+/\\.\\./@/@g;	\
+	s@^/n/[^/]*/@/@;	\
+	print;"
+CURDIR=$(shell $(PERL) -e $(NORMALIZEPWD))
 
 #
 # Junk
@@ -75,6 +83,8 @@ MFLAGS=
 # Java stuff
 JAVACFLAGS=
 JARFLAGS=-cfm
+
+BK_JAVA_CPATH=$(subst :,$(PATH_SEPARATOR),$(BK_JAVADIR):$(BK_JAVA_CP))
 
 # file list variables for Java production rules
 

@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.production,v 1.14 2001/12/01 07:30:31 zz Exp $
+# $Id: Make.production,v 1.15 2001/12/04 21:41:47 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -83,23 +83,23 @@ $(BK_LARGE_INTERNALPROG) $(BK_LARGE_LIB): $(BK_LARGE_LIBOBJ)
 
 $(subst .class,.cl%ss,$(BK_JAVA_PKG_CLASS)): \
 		$(subst .java,.j%va,$(BK_JAVA_PKG_SRC))
-	$(JAVAC) $(JAVACFLAGS) -classpath $(BK_JAVADIR):$(BK_JAVA_CP) $?
+	$(JAVAC) $(JAVACFLAGS) -classpath "$(BK_JAVA_CPATH)" $?
 
 $(subst .class,.cl%ss,$(BK_JAVA_PKG_TCLASS)): \
 		$(subst .java,.j%va,$(BK_JAVA_PKG_TEST))
-	$(JAVAC) $(JAVACFLAGS) -classpath $(BK_JAVADIR):$(BK_JAVA_CP) $?
+	$(JAVAC) $(JAVACFLAGS) -classpath "$(BK_JAVA_CPATH)" $?
 
 $(BK_JAVADIR)/$(BK_JAVA_PKG)/%: %
-	$(LN_S) -f `$(PWD)`/$< $@
-	@-test ! -L $@ && test ! $@ -ef $< 2>/dev/null && chmod -w $@
+	$(LN_S) -f $(CURDIR)/$< $@
+	@test ! -L $@ && test ! $@ -ef $< 2>/dev/null && chmod -w $@ || true
 
 $(BK_JAVADIR)/%: $(GROUPTOP)/$(LOCALE)/%
-	$(LN_S) -f `$(PWD)`/$< $@
-	@-test ! -L $@ && test ! $@ -ef $< 2>/dev/null && chmod -w $@
+	$(LN_S) -f $(CURDIR)/$< $@
+	@test ! -L $@ && test ! $@ -ef $< 2>/dev/null && chmod -w $@ || true
 
 $(BK_JAVADIR)/%.MF: %.MF
-	$(LN_S) -f `$(PWD)`/$< $@
-	@-test ! -L $@ && test ! $@ -ef $< 2>/dev/null && chmod -w $@
+	$(LN_S) -f $(CURDIR)/$< $@
+	@test ! -L $@ && test ! $@ -ef $< 2>/dev/null && chmod -w $@ || true
 
 # BK_JAVA_ICLASS doesn't see newly created files, sigh
 $(BK_JAVA_JAR): $(BK_JAVADIR)/$(BK_JAVA_PKG) $(BK_JAVADIR)/$(BK_JAVA_MF) \
