@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.Linux-2.6-pre,v 1.5 2005/02/05 03:17:12 seth Exp $
+# $Id: Make.Linux-2.6-pre,v 1.6 2005/02/06 23:35:42 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -17,7 +17,7 @@
 # OS-specific Variables
 #
 
-ifeq ($(shell if ( grep -q "Fedora Core release 3" /etc/fedora-release 2>/dev/null || grep -q "Gentoo Base System" /etc/gentoo-release 2>/dev/null ) && [ -f /usr/lib/libssl.so ]; then echo OK; fi), OK)
+ifeq ($(shell if ( grep -q "Fedora Core release 3" /etc/fedora-release 2>/dev/null || grep -q "Gentoo Base System" /etc/gentoo-release 2>/dev/null ) && [ -f /usr/lib/libssl.so -o -f /usr/lib64/libssl.so ]; then echo OK; fi), OK)
 OPERATING_SYSTEM_OPENSSL_OK=true
 endif
 
