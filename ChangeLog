@@ -1,3 +1,8 @@
+2004-07-02  Seth Robertson  <seth@cheviot.sysdetect.com>
+
+	* Make.variables (MAKEFLAGS): Profile auto-make-parallelization
+	computation.
+
 2004-06-24  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* configure.in, libbk_autoconf.h.in, aclocal.m4: FreeBSD fixes
