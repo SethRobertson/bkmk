@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.90 2003/06/04 16:25:01 jtt Exp $
+dnl $Id: configure.in,v 1.91 2003/06/06 21:26:35 jtt Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.90 $)dnl
+AC_REVISION($Revision: 1.91 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
@@ -84,7 +84,7 @@ AC_LIBTOOL_DLOPEN
 AC_ENABLE_PATHENV(first)
 AC_PROG_LIBTOOL
 
-AC_SUBST(link_static_flag)
+AC_SUBST(lt_prog_compiler_static)
 
 AC_C__FUNC__
 AC_CONSTRUCTORS
