@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.165 2003/07/08 20:24:42 seth Exp $
+# $Id: Make.variables,v 1.166 2003/07/10 03:19:42 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -350,7 +350,7 @@ LT_LDLIBS+= $(AC_LIBS)
 endif # NO_STDBKCCSTUFF
 
 ifeq ($(BK_USING_BOUNDS_CHECKING),true)
-ifeq ($(CC_CONFIG),gcc)
+ifeq ($(shell basename $(CC_CONFIG)),gcc)
 CC_CONFIG=$(BGCC)
 BK_SPECIAL_DEBUG=
 CCOPTS+=-fbounds-checking
@@ -364,7 +364,7 @@ COMPILER_NAME=gcc
 endif # CXX_CONFIG=g++
 endif # BK_USING_BOUNDS_CHECKING
 
-ifeq ($(CC_CONFIG),gcc)
+ifeq ($(shell basename $(CC_CONFIG)),gcc)
 COMPILER_NAME=gcc
 endif # CC_CONFIG=gcc
 
