@@ -60,7 +60,7 @@ PROGRAM=ltmain.sh
 PACKAGE=libtool
 VERSION=1.5
 TIMESTAMP=" (1.7 2003/08/13 14:55:23)"
-TIMESTAMP="$TIMESTAMP [$Revision: 1.18 $]"
+TIMESTAMP="$TIMESTAMP [$Revision: 1.19 $]"
 
 default_mode=
 help="Try \`$progname --help' for more information."
@@ -1234,6 +1234,10 @@ EOF
 	case $dir in
 	[\\/]* | [A-Za-z]:[\\/]*) ;;
 	*)
+	  if test ! -d $dir; then
+	    $echo "$modename: warning: ignoring missing directory \`$dir'" 1>&2
+	    continue
+	  fi
 	  absdir=`cd "$dir" && getcwd`
 	  if test -z "$absdir"; then
 	    $echo "$modename: cannot determine absolute directory name of \`$dir'" 1>&2

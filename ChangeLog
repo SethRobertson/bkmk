@@ -1,3 +1,7 @@
+2003-12-30  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* acaux/ltmain.sh: #2711: ignore missing relative directories; gcc does
+
 2003-12-29  Seth Robertson  <seth@buscemi.sysdetect.com>
 
 	* Make.variables (BK_LIBS+): Additional library requirements from libbk
