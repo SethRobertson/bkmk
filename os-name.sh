@@ -1,5 +1,5 @@
 #! /bin/sh
-# $Id: os-name.sh,v 1.9 2004/11/29 20:25:24 dupuy Exp $
+# $Id: os-name.sh,v 1.10 2005/02/07 21:48:35 seth Exp $
 #
 # ++Copyright SYSDETECT++
 #
@@ -50,7 +50,7 @@ do
   esac
   if [ -f "$REL" ]; then
     sed -e 's/release//' -e 's/ \([0-9][0-9.]*\).*/-\1/' -e 's/ //g' -e '3q' \
-     $E < $REL | grep Linux && exit
+     $E -e "s/$/-`uname -m`/" < $REL | grep Linux && exit
   fi
 done
 
