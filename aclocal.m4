@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.22 2002/10/20 05:17:52 jtt Exp $
+# $Id: aclocal.m4,v 1.23 2002/10/21 16:02:25 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -97,42 +97,6 @@ then
 fi
 ])
 
-# BK_TYPE_LONG_LONG
-# --------
-# 
-# Check if the platform supports long long
-#
-#
-AC_DEFUN([BK_TYPE_LONG_LONG], [AC_CACHE_CHECK([for long long], bk_type_long_long,
- AC_TRY_LINK(
-[
-#include <sys/types.h>
-],[long long t],
-[ bk_type_long_long=yes; ],[ bk_type_long_long=no; ]))
-if test "$bk_type_long_long" = "yes"
-then
-	AC_DEFINE(HAVE_LONG_LONG)
-fi
-])
-
-# BK_TYPE_QUAD_INT
-# --------
-# 
-# Check if the platform supports quad_t as an integer type
-#
-#
-AC_DEFUN([BK_TYPE_QUAD_INT], [AC_CACHE_CHECK([for quad_t as in integer type], bk_type_quad_int,
- AC_TRY_LINK(
-[
-#include <sys/types.h>
-],[quad_t t=0],
-[ bk_type_quad_int=yes; ],[ bk_type_quad_int=no; ]))
-if test "$bk_type_quad_int" = "yes"
-then
-	AC_DEFINE(HAVE_QUAD_INT)
-fi
-])
-
 # BK_C_OVERZEALOUS_CHAR_SUBSCRIPTS
 # --------------------------------
 # 
@@ -150,7 +114,7 @@ if test "$bk_c_overzealous_char_subscripts" = "yes"
 then
 	HAVE_OVERZEALOUS_CHAR_SUBSCRIPT=true
 	AC_SUBST(HAVE_OVERZEALOUS_CHAR_SUBSCRIPT)
-	AC_WARN([Will not be using -fchar-subscripts. Some annoying errors might be missed])
+	AC_MSG_WARN([Will not be using -fchar-subscripts. Some annoying errors might be missed])
 fi
 ])
 

@@ -1,5 +1,5 @@
 /*				-*- C -*-
- * $Id: libbk_autoconf.h.in,v 1.27 2002/10/20 05:17:53 jtt Exp $
+ * $Id: libbk_autoconf.h.in,v 1.28 2002/10/21 16:02:25 jtt Exp $
  *
  * ++Copyright LIBBK++
  *
@@ -33,7 +33,6 @@
 #undef u_int16_t
 #undef u_int32_t
 #undef u_int64_t
-#undef BK_QUAD_TYPE
 
 #undef HAVE__FUNC__
 #undef HAVE__PRETTY_FUNCTION__
