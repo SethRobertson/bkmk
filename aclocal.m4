@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.12 2002/10/09 22:41:43 jtt Exp $
+# $Id: aclocal.m4,v 1.13 2002/10/09 23:39:08 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -79,7 +79,6 @@ AC_DEFUN([AC_CONSTRUCTORS],
 AC_DEFUN([AC_SECOND_CONNECT_TO_REFUSED_PORT], [AC_CACHE_CHECK([errno value of second connect to refused port], ac_cv_second_connect_errno,
 	AC_TRY_RUN(
 [
-#include <stdio.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <errno.h>
@@ -97,7 +96,7 @@ changequote(, )dnl
 changequote([, ])dnl
 
   if ((s = socket(PF_INET, SOCK_STREAM, 0)) < 0)
-    exit(6);
+    exit(0);
   
   port = 40000;
   sin.sin_family = AF_INET;
@@ -111,30 +110,27 @@ changequote([, ])dnl
       break;
 
     if (port == 0xffff)
-      exit(2);
+      exit(0);
   }
 
   close(s);
 
   // Located an available, unbound port
   if ((s = socket(PF_INET, SOCK_STREAM, 0)) < 0)
-    exit(3);
+    exit(0);
 
   if (connect(s, (struct sockaddr *)(&sin), sizeof(sin)) == 0)
-    exit(4);
+    exit(0);
 
   if (connect(s, (struct sockaddr *)(&sin), sizeof(sin)) == 0)
-    exit(5);
+    exit(0);
 
-  	
-  snprintf(buf,sizeof(buf),"echo %d > .errno", errno);
-  system(buf);
-  exit(0);
-}],
-[ ac_cv_second_connect_errno=`cat .errno`; rm .errno ]))
+  exit(errno);
+}],,
+[ ac_cv_second_connect_errno=$ac_status]))
 if test "X$ac_cv_second_connect_errno" != "X" 
 then
-	AC_DEFINE_UNQUOTED(BK_SECOND_CONNECT_ERRNO, $ac_cv_second_connect_errno)
+	AC_DEFINE_UNQUOTED(BK_SECOND_REFUSED_CONNECT_ERRNO, $ac_cv_second_connect_errno)
 fi
 ])
 
