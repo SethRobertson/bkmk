@@ -1,6 +1,6 @@
 # -*- makefile -*-
 # 
-# $Id: Make.targets,v 1.47 2002/05/13 15:57:26 dupuy Exp $
+# $Id: Make.targets,v 1.48 2002/05/15 21:00:04 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -250,6 +250,14 @@ ifneq ($(strip $(BK_DATAFILES)),)
 	$(MKDIR) $(BK_INSTALLDATADIR)
 	$(INSTALL) $(INSTALL_OTHERFLAGS) $(BK_DATAFILES) $(BK_INSTALLDATADIR)
 endif # BK_DATAFILES
+ifneq ($(strip $(BK_FSETFILES)),)
+	$(MKDIR) $(BK_INSTALLDATADIR)/fset
+	$(INSTALL) $(INSTALL_INCFLAGS) $(BK_FSETFILES) $(BK_INSTALLDATADIR)/fset
+endif # BK_FSETFILES
+ifneq ($(strip $(BK_MODELFILES)),)
+	$(MKDIR) $(BK_INSTALLDATADIR)/model
+	$(INSTALL) $(INSTALL_INCFLAGS) $(BK_MODELFILES) $(BK_INSTALLDATADIR)/model
+endif # BK_MODELFILES
 endif # BK_INSTALLDATADIR
 ifneq ($(strip $(BK_INSTALLCONFIGDIR)),)
 ifneq ($(strip $(BK_CONFIGFILES)),)
