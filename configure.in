@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.87 2003/06/03 03:28:13 dupuy Exp $
+dnl $Id: configure.in,v 1.88 2003/06/03 05:47:15 dupuy Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.87 $)dnl
+AC_REVISION($Revision: 1.88 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
@@ -109,7 +109,9 @@ AC_SEARCH_LIBS([inet_aton],[resolv nsl])
 
 ACX_PTHREAD(
   [HAVE_PTHREADS=true
-    AC_CHECK_HEADERS(pthread_np.h)
+    AC_CHECK_HEADERS(pthread_np.h, [], [], [
+     #include <pthread.h>
+    ])
     AC_CHECK_FUNCS(pthread_kill_other_threads_np)
     AC_CHECK_FUNCS(pthread_set_name_np)],
   [HAVE_PTHREADS=false])
