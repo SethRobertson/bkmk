@@ -73,6 +73,9 @@ override BK_WANT_LIBTOOL=false
 override BK_USING_DMALLOC=false
 override BK_USING_BOUNDS_CHECKING=false
 BK_USING_INSURE=true
+ifeq ($(WANT_NO_MALLOC_WRAP),true)
+BK_NO_MALLOC_WRAP=true
+endif
 ifneq ($(findstring true,$(WANT_INSURE_DEBUG)),)
 BK_USING_INSURE_DEBUG=true
 endif

@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.185 2004/05/04 14:30:31 brian Exp $
+# $Id: Make.variables,v 1.186 2004/05/22 00:11:39 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -591,6 +591,9 @@ ifeq ($(BK_USING_INSURE),true)
 # It's not called Insight any more; use auto-defined __INSURE__
 # (Except that it is *not* defined, James has no idea why.)
 BK_DEFINES+=-D__INSURE__
+ifeq ($(BK_NO_MALLOC_WRAP),true)
+BK_DEFINES+=-DBK_NO_MALLOC_WRAP
+endif
 CC=$(INSURE)
 endif # BK_USING_INSURE
 
