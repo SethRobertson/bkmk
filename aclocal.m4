@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.19 2002/10/18 20:03:29 jtt Exp $
+# $Id: aclocal.m4,v 1.20 2002/10/18 21:18:29 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -60,24 +60,6 @@ AC_DEFUN([AC_CONSTRUCTORS],
  fi
 ])# AC_CONSTRUCTORS
 
-
-# AC_U_INT_T_TYPEDEFS
-# -------------------
-# 
-# Check if architecture supports typedefs of the format u_int32_t
-#
-#
-AC_DEFUN([AC_U_INT_T_TYPEDEFS], [AC_CACHE_CHECK([for u_int32_t formatted typedefs], ac_cv_have_u_int32_t,
- AC_TRY_COMPILE(
-[
-#include <sys/types.h>
-],[u_int32_t t],
-[ ac_cv_have_u_int32_t=yes; ],[ ac_cv_have_u_int32_t=no; ]))
-if test "$ac_cv_have_u_int32_t" = "yes"
-then
-	AC_DEFINE(HAVE_U_INT_T_TYPEDEFS)
-fi
-])
 
 # AC_GMTIME_R_PROTOTYPE
 # -------------------

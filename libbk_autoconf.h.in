@@ -1,5 +1,5 @@
 /*				-*- C -*-
- * $Id: libbk_autoconf.h.in,v 1.24 2002/10/18 20:03:29 jtt Exp $
+ * $Id: libbk_autoconf.h.in,v 1.25 2002/10/18 21:18:29 jtt Exp $
  *
  * ++Copyright LIBBK++
  *
@@ -26,6 +26,11 @@
  * #defined constants be present in this file, as #undef (*not* #define) and
  * with *no* comments on the same line as the definition.</TRICKY>
  */
+
+#undef u_int8_t
+#undef u_int16_t
+#undef u_int32_t
+#undef u_int64_t
 
 #undef HAVE__FUNC__
 #undef HAVE__PRETTY_FUNCTION__
@@ -60,7 +65,6 @@
 #undef MKTIME_HAS_BUGS
 #undef HAVE_ALLOCA
 #undef HAVE_ORACLE
-#undef HAVE_U_INT_T_TYPEDEFS
 #undef HAVE_ISINF
 
 #undef STACK_DIRECTION
