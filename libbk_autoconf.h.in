@@ -1,5 +1,5 @@
 /*				-*- C -*-
- * $Id: libbk_autoconf.h.in,v 1.41 2003/04/23 16:42:22 brian Exp $
+ * $Id: libbk_autoconf.h.in,v 1.42 2003/05/16 05:11:23 dupuy Exp $
  *
  * ++Copyright LIBBK++
  *
@@ -84,7 +84,6 @@
 #undef HAVE_SETENV
 #undef HAVE_GETHOSTBYNAME2
 #undef HAVE_SOCKLEN_T
-#undef MISSING_PTHREAD_RWLOCK_INIT
 
 #undef IN6_MULTICAST_TAKES_IN6_ADDR
 #undef IN6_MULTICAST_TAKES_S6_ADDR
@@ -110,6 +109,13 @@
 
 /// nonstandard PTHREAD_CREATE_JOINABLE name determined by ACX_PTHREAD autoconf
 #undef PTHREAD_CREATE_JOINABLE
+/// PTHREAD_RWLOCK_INIT absence determined by ACX_PTHREAD autoconf
+#undef MISSING_PTHREAD_RWLOCK_INIT
+// Other non-portable (non-POSIX) pthread header file support
+#undef HAVE_PTHREAD_NP_H
+// Other non-portable (non-POSIX) pthread function support
+#undef HAVE_PTHREAD_KILL_OTHER_THREADS_NP
+#undef HAVE_PTHREAD_SET_NAME_NP
 
 /// Search path separator for PATH in shell commands
 #define PATH_SEPARATOR ":"
