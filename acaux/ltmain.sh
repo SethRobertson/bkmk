@@ -59,8 +59,8 @@ modename="$progname"
 PROGRAM=ltmain.sh
 PACKAGE=libtool
 VERSION=1.5
-TIMESTAMP=" (1.4 2003/05/31 07:06:25)"
-TIMESTAMP="$TIMESTAMP [$Revision: 1.16 $]"
+TIMESTAMP=" (1.7 2003/08/13 14:55:23)"
+TIMESTAMP="$TIMESTAMP [$Revision: 1.17 $]"
 
 default_mode=
 help="Try \`$progname --help' for more information."
@@ -144,7 +144,7 @@ win32_libid () {
       fi
     fi
     ;;
-  *DLL*)
+  *DLL*) 
     win32_libid_type="x86 DLL"
     ;;
   *executable*) # but shell scripts are "executable" too...
@@ -2639,22 +2639,23 @@ EOF
 		       eval depdepl="$tmp/lib$tmp_libs.dylib"
 		       break
 		     fi 
-         done
-         path=""
+         	   done
+		  path=""
 		  ;;
 		*) continue ;;
 		esac  		 
 		;;
 	      *) continue ;;
 	      esac
-	      case " $deplibs " in
-	      *" $depdepl "*) ;;
-	      *) deplibs="$deplibs $depdepl" ;;
-	      esac	     
-	      case " $deplibs " in
-	      *" $path "*) ;;
-	      *) deplibs="$deplibs $path" ;;
-	      esac
+ 	      # *pre*pend, since deplibs is processed in reverse order below
+ 	      case " $deplibs " in
+ 	      *" $depdepl "*) ;;
+ 	      *) deplibs="$depdepl $deplibs" ;;
+ 	      esac	      
+ 	      case " $deplibs " in
+ 	      *" $path "*) ;;
+ 	      *) deplibs="$path $deplibs" ;;
+  	      esac
 	    done
 	  fi # link_all_deplibs != no
 	fi # linkmode = lib
@@ -2662,8 +2663,9 @@ EOF
       dependency_libs="$newdependency_libs"
       if test "$pass" = dlpreopen; then
 	# Link the dlpreopened libraries before other libraries
+	# since deplibs is processed in reverse order below, we append here
 	for deplib in $save_deplibs; do
-	  deplibs="$deplib $deplibs"
+	  deplibs="$deplibs $deplib"
 	done
       fi
       if test "$pass" != dlopen; then

@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.100 2003/07/31 20:17:27 jtt Exp $
+dnl $Id: configure.in,v 1.101 2003/08/14 16:42:39 jtt Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.100 $)dnl
+AC_REVISION($Revision: 1.101 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
@@ -183,6 +183,12 @@ AC_PATH_PROG(BASENAME, basename, $FALSE)
 AC_PATH_PROG(SED, sed, $FALSE)
 AC_PATH_PROG(PERL, perl, $FALSE)
 AC_PATH_PROG(GREP, grep, $FALSE)
+AC_PATH_PROG(FIND, find, $FALSE)
+AC_PATH_PROG(SORT, sort, $FALSE)
+AC_PATH_PROG(UNIQ, uniq, $FALSE)
+AC_PATH_PROG(XARGS, xargs, $FALSE)
+AC_PATH_PROG(EGREP, egrep, $FALSE)
+AC_PATH_PROG(TEE, tee, $FALSE)
 
 AC_PATH_PROG(AR, ar)
 

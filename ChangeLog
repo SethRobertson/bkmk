@@ -1,3 +1,17 @@
+2003-08-13  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* acaux/ltmain.sh: prepend[=append] recursive deplibs/dlpreload - #1848
+
+2003-08-13  Seth Robertson  <seth@cheviot.sysdetect.com>
+
+	* Make.GNUmakefile (distclean): Support for packages which do not
+	support subdir builds
+
+2003-08-12  Seth Robertson  <seth@cheviot.sysdetect.com>
+
+	* Make.targets (clean): Clean local junk after subdirectories.
+	Stupid perlmods.
+
 2003-07-30  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.production: omit Java productions if BK_JAVADIR undefined: #1810

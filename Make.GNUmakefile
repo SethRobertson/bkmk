@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.GNUmakefile,v 1.14 2003/06/17 05:59:47 seth Exp $
+# $Id: Make.GNUmakefile,v 1.15 2003/08/14 16:42:38 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -17,7 +17,11 @@
 # built in $(ARCH) subdirectories using autoconf-generated configure scripts
 #
 ARCH:=$(shell if [ -f ./config.guess ]; then sh ./config.guess; else echo build; fi 2>/dev/null)
+ifneq ($(strip $(WANT_SUBDIRBUILD)),false)
 CONFIGURED:=$(ARCH)/config.status
+else
+CONFIGURED:=config.status
+endif
 
 -include $(GROUPTOP)/$(PKGTOP)/.user-variables
 
@@ -28,7 +32,11 @@ include $(BKMKDIR)/Make.config
 
 DEFAULT: $(CONFIGURED)
 ifneq ($(strip $(BK_WANT_C)),false)
+ifneq ($(strip $(WANT_SUBDIRBUILD)),false)
 	cd $(ARCH) && $(MAKE)
+else
+	$(MAKE) -f Makefile
+endif
 else
 	@:
 endif
@@ -40,11 +48,17 @@ install-first install-normal actual_install install-last:: install
 install:: $(CONFIGURED)
 	-mkdir -p $(INSTBASE)
 ifneq ($(strip $(BK_WANT_C)),false)
+ifneq ($(strip $(WANT_SUBDIRBUILD)),false)
 	cd $(ARCH) && $(MAKE) && $(MAKE) $@
+else
+	$(MAKE) -f Makefile $@
+endif
 endif
 
 subtags: tags
 neat: clean
+
+ifneq ($(strip $(WANT_SUBDIRBUILD)),false)
 nuke: distclean
 
 clean::
@@ -53,10 +67,16 @@ clean::
 distclean::
 	-@if test -f $(ARCH)/Makefile; then $(MAKE) -f $(ARCH)/Makefile $@; fi
 	$(RM_CONFIG) -rf $(ARCH)
+else
+endif
 
 .DEFAULT: $(CONFIGURED)
 ifneq ($(strip $(BK_WANT_C)),false)
+ifneq ($(strip $(WANT_SUBDIRBUILD)),false)
 	cd $(ARCH) && $(MAKE) $@
+else
+	$(MAKE) -f Makefile $@
+endif
 else
 	@:
 endif
@@ -65,4 +85,3 @@ endif
 $(BKMKDIR)/Make.$(BK_OSNAME)-pre:
 $(BKMKDIR)/Make.$(BK_OSNAME)-post:
 $(GROUPTOP)/$(PKGTOP)/.user-variables:
-

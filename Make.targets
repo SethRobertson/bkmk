@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.targets,v 1.87 2003/06/17 05:59:47 seth Exp $
+# $Id: Make.targets,v 1.88 2003/08/14 16:42:38 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -74,24 +74,24 @@ endif # BK_WANT_DEFAULT
 # Get rid of stuff including stuff that might be valuable (e.g. autosave files, etc)
 #
 nuke::
-	$(RRM) -- $(BK_NUKESTUFF)
 	$(BK_SUBDIRRULE)
+	$(RRM) -- $(BK_NUKESTUFF)
 
 
 #
 # Get rid of stuff that can be regenerated or is just stupid, including .depend files
 #
 clean::
-	$(RRM) -- $(BK_CLEANSTUFF)
 	$(BK_SUBDIRRULE)
+	$(RRM) -- $(BK_CLEANSTUFF)
 
 
 #
 # Get rid of stuff that can be regenerated or is just stupid, excluding .depend files
 #
 neat::
-	$(RRM) -- $(BK_NEATSTUFF)
 	$(BK_SUBDIRRULE)
+	$(RRM) -- $(BK_NEATSTUFF)
 
 
 #
