@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.3 2002/02/01 20:48:15 dupuy Exp $
+# $Id: aclocal.m4,v 1.4 2002/02/22 06:12:21 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -59,6 +59,43 @@ AC_DEFUN([AC_CONSTRUCTORS],
   fi
  fi
 ])# AC_CONSTRUCTORS
+
+
+#
+# C 99 has an implicit local variable __func__ (a constant string) and several
+# C 89 compilers (notably GCC) have __FUNCTION__ and/or __PRETTY_FUNCTION__
+# names that work in similar ways (PRETTY does C++ name demangling).
+#
+# AC_C__FUNC__
+# ----------
+AC_DEFUN([AC_C__FUNC__],
+[AC_CACHE_CHECK(for __func__ support, ac_cv_have__func__,
+ [AC_TRY_COMPILE([],[char *f =  __func__;],
+	ac_cv_have__func__=yes,
+	ac_cv_have__func__=no)
+ ])
+ if test $ac_cv_have__func__ = yes; then
+  AC_DEFINE(HAVE__FUNC__)
+ else
+  AC_CACHE_CHECK(for __PRETTY_FUNCTION__ support, ac_cv_have__pretty_function__,
+  [AC_TRY_COMPILE([],[char *f =  __PRETTY_FUNCTION__;],
+	ac_cv_have__pretty_function__=yes,
+	ac_cv_have__pretty_function__=no)
+  ])
+  if test $ac_cv_have__pretty_function__ = yes; then
+   AC_DEFINE(HAVE__PRETTY_FUNCTION__)
+  else
+   AC_CACHE_CHECK(for __FUNCTION__ support, ac_cv_have__function__,
+   [AC_TRY_COMPILE([],[char *f =  __FUNCTION__;],
+	ac_cv_have__function__=yes,
+	ac_cv_have__function__=no)
+   ])
+   if test $ac_cv_have__function__ = yes; then
+    AC_DEFINE(HAVE__FUNCTION__)
+   fi
+  fi
+ fi
+])# AC_C__FUNC__
 
 
 # AC_FUNC_INET_PTON

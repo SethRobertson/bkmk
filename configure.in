@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.20 2002/02/06 17:05:58 ldog Exp $
+dnl $Id: configure.in,v 1.21 2002/02/22 06:12:21 dupuy Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.20 $)dnl
+AC_REVISION($Revision: 1.21 $)dnl
 AC_INIT(Make.bkvariables)
 AC_CONFIG_AUX_DIR(acaux)
 
@@ -46,6 +46,19 @@ AC_LIBTOOL_WIN32_DLL
 AC_LIBTOOL_DLOPEN
 AC_PROG_LIBTOOL
 
+AC_C__FUNC__
+AC_CONSTRUCTORS
+AC_CHECK_HEADERS(net/ethernet.h netinet/if_ether.h)
+AC_SA_LEN
+AC_FUNC_INET_PTON
+
+AC_FUNC_MKTIME
+if test $ac_cv_func_working_mktime = no; then
+ AC_DEFINE(MKTIME_HAS_BUGS)
+fi
+AC_CHECK_FUNCS(ntohll strptime gmtime_r timegm)
+AC_FUNC_STRFTIME
+
 AC_PATH_PROG(RM,rm)
 AC_PATH_PROG(FALSE,false)
 AC_PATH_PROGS(MV,mv cp, $FALSE)
@@ -72,18 +85,6 @@ AC_PATH_PROGS(BROWSER,browser netscape konqueror mozilla iexplore.exe lynx,
 	      $FALSE, $PATH:/cygdrive/c/progra~1/intern~1)
 
 AC_PATH_PROG(AR,ar)
-
-AC_CONSTRUCTORS
-AC_CHECK_HEADERS(net/ethernet.h netinet/if_ether.h)
-AC_SA_LEN
-AC_FUNC_INET_PTON
-
-AC_FUNC_MKTIME
-if test $ac_cv_func_working_mktime = no; then
- AC_DEFINE(MKTIME_HAS_BUGS)
-fi
-AC_CHECK_FUNCS(ntohll strptime gmtime_r timegm)
-AC_FUNC_STRFTIME
 
 AC_DEFINE_UNQUOTED(PATH_SEPARATOR, "$PATH_SEPARATOR")
 
