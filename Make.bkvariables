@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.bkvariables,v 1.27 2002/05/11 01:18:48 dupuy Exp $
+# $Id: Make.bkvariables,v 1.28 2002/07/03 19:30:30 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -109,10 +109,18 @@ endif
 ifneq ($(findstring true,$(WANT_INSURE)$(USING_INSURE)$(USING_INSIGHT)),)
 BK_USING_INSURE=true
 override BK_USING_DMALLOC=false
+override BK_USING_BOUNDS_CHECKING=false
 else
 ifneq ($(findstring true,$(WANT_DMALLOC)$(USING_DMALLOC)),)
 BK_USING_DMALLOC=true
 override BK_USING_INSURE=false
+override BK_USING_BOUNDS_CHECKING=false
+else 
+ifneq ($(findstring true,$(WANT_BOUNDS_CHECKING)$(USING_BOUNDS_CHECKING)),)
+BK_USING_BOUNDS_CHECKING=true
+override BK_USING_INSURE=false
+override BK_USING_DMALLOC=false
+endif
 endif
 endif
 

@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.73 2002/06/28 21:45:45 jtt Exp $
+# $Id: Make.variables,v 1.74 2002/07/03 19:30:30 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -201,9 +201,20 @@ BK_LDS= $(RESOLVER_LDS)
 BK_LIBS= -lbk -ldict -lfsma -lpq -lpopt $(ACLIBS) $(LIBRESOLVER) $(MATH_LIBS) $(COMPRESS_LIBS)
 endif # NO_STDBKCCSTUFF
 
+ifeq ($(BK_USING_BOUNDS_CHECKING),true)
+ifeq ($(CC_CONFIG),gcc)
+CC_CONFIG=$(BGCC)
+CCOPTS+=-fbounds-checking
+endif
+# NB: At SYSD, this does not yet work
+ifeq ($(CXX_CONFIG),g++)
+CXXOPTS+=-fbounds-checking
+endif
+endif
+
 # C
 CC_normal=$(CC_CONFIG) $(CCOPTS)
-CC_strict=$(CXX_CONFIG) $(CCXOPTS)
+CC_strict=$(CXX_CONFIG) $(CXXOPTS)
 #CC=$(CC_strict)
 CC=$(CC_normal)
 CXX=$(CXX_CONFIG) $(CXXOPTS)
@@ -211,7 +222,10 @@ CXX=$(CXX_CONFIG) $(CXXOPTS)
 ifeq ($(CC_CONFIG),gcc)
 
 COMPILER_DEBUG+=-W -Wmissing-prototypes -Wstrict-prototypes -Wchar-subscripts -Wcomment -Wformat -Wimplicit -Wmain -Wmultichar -Wreturn-type -Wswitch -Wtrigraphs -Wno-unused -Wshadow -Wpointer-arith $(COMPILER_DEBUG_ERROR)
+
+ifneq ($(NO_WERROR),true)
 COMPILER_DEBUG_ERROR=-Werror
+endif
 
 ifneq ($(NO_OPT),true)
 ifneq ($(BK_USING_INSURE),true)
@@ -281,7 +295,7 @@ endif
 
 ifeq ($(BK_USING_INSURE),true)
 BK_DEFINES+=-D__INSIGHT__
-CC=/usr/local/parasoft/bin/insure
+CC=$(INSURE)
 endif
 
 OS_SEARCHPATH=/usr/local/lib /usr/lib /usr/local/gnu/lib
