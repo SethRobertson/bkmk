@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.production,v 1.17 2001/12/06 07:10:56 dupuy Exp $
+# $Id: Make.production,v 1.18 2001/12/06 18:16:41 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -135,7 +135,7 @@ $(BK_JAVA_JAR): $(BK_JAVADIR)/$(BK_JAVA_PKG)/. $(BK_JAVADIR)/$(BK_JAVA_MF) \
 %.ctp: $(BK_JAVADIR)/$(BK_JAVA_PKG)/%.class
 	@if [ -f $@ ]; then touch $@; else \
 	$(JTEST) -nogui -gtp $(GROUPTOP)/$(PKGSUBDIR).gtp -ctp_new $@ \
-	  -class_name $(BK_JAVA_PKGDOT).$* -cp $(BK_JAVADIR) \
+	  -class_name $(BK_JAVA_PKGDOT).$* -cp "$(BK_JAVA_CPATH)" \
 	  -silent -run_only static_DBC > /dev/null 2>&1 \
 	; fi
 

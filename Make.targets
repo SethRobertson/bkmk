@@ -1,6 +1,6 @@
 # -*- makefile -*-
 # 
-# $Id: Make.targets,v 1.24 2001/12/06 01:01:50 dupuy Exp $
+# $Id: Make.targets,v 1.25 2001/12/06 18:16:41 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -23,10 +23,13 @@
 ifeq ($(strip $(BK_SUBDIR)),)
 BK_SUBDIRRULE= # No sub-directories
 else # BK_SUBDIR
-BK_SUBDIRRULE=@BK_SUBDIR="${BK_SUBDIR}"; if [ -n "$$BK_SUBDIR" ]; then \
-	for d in $$BK_SUBDIR; do \
-	if [ -d $$d ] ; then (cd $$d && $(MAKE) $(MFLAGS) $@) || [ "$(PKGTOP)" = . ] || exit $$?; fi \
-	done; fi
+BK_SUBDIRRULE=@ \
+	for d in $(BK_SUBDIR); do \
+	 if [ -d $$d ]; then \
+	  (cd $$d && $(MAKE) $@) || \
+	   { ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; } \
+	 fi; \
+	done; exit $$ERR
 endif # BK_SUBDIR
 
 
@@ -168,10 +171,10 @@ nukectags::
 	> tags
 
 etags:: nukeetags
-	$(MAKE) $(MFLAGS) TAGCMD=$(ETAGS) TAGOUT=$(CURDIR)/TAGS subtags
+	$(MAKE) TAGCMD=$(ETAGS) TAGOUT=$(CURDIR)/TAGS subtags
 
 ctags:: nukectags
-	$(MAKE) $(MFLAGS) TAGCMD=$(CTAGS) TAGOUT=$(CURDIR)/tags subtags
+	$(MAKE) TAGCMD=$(CTAGS) TAGOUT=$(CURDIR)/tags subtags
 
 tags:: etags
 

@@ -1,6 +1,10 @@
 2001-12-06  Alexander Dupuy  <dupuy@sysdetect.com>
 
+	* Make.targets (BK_SUBDIRRULE): keep going through subdirectories
+	even after failure if -k specified
+
 	* Make.production (%.rpt): use JTESTERR for -nogui error extraction
+	(%.ctp): use BK_JAVA_CPATH for -cp
 
 	* Make.variables (.PRECIOUS): add % to make %.ctp precious if
 	jtest gui is used
