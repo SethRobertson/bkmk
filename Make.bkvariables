@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.bkvariables,v 1.58 2005/01/31 22:47:41 dupuy Exp $
+# $Id: Make.bkvariables,v 1.59 2005/02/09 22:38:43 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -98,6 +98,8 @@ BK_DUMMY:=$(shell							      \
      NEAT=false;							      \
    fi;									      \
    rm -f $(BKMK_OSFILE);						      \
+   export MAKEFLAGS=$(MAKEFLAGS);					      \
+   export MAKELEVEL=`expr $(MAKELEVEL) + 1`;				      \
    (cd $(BKMKDIR) && { [ $$NEAT = "true" -o $(BK_CLEANING) = "false" ] &&     \
      rm -f config.cache config.status;					      \
      $(MAKE) -s config.status 'OSNAME=$(BK_ARCHNAME)' 'OSFILE=$(BK_OSFILE)';  \
@@ -114,7 +116,11 @@ else
 export CONFIGURE_ARGS
 
 # must configure even on a clean target; else we get errors for Make.config
-BK_DUMMY:=$(shell (cd $(BKMKDIR) && $(MAKE) -s config.status .timestamp) 2>&1 | tee $(BK_TTY) 2>/dev/null )
+BK_DUMMY:=$(shell (							      \
+   export MAKEFLAGS=$(MAKEFLAGS);					      \
+   export MAKELEVEL=`expr $(MAKELEVEL) + 1`;				      \
+   cd $(BKMKDIR) &&						              \
+   $(MAKE) -s config.status .timestamp) 2>&1 | tee $(BK_TTY) 2>/dev/null )
 
 endif # BK_CONFIG_OS_TYPE != BK_OSNAME
 
