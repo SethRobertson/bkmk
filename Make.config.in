@@ -54,7 +54,10 @@ PTHREAD_CC=@PTHREAD_CC@
 XREF=@XREF@
 LIBM=@LIBM@
 HEAD=@HEAD@
+# Use $(GTAR) when using GNU extensions
 GTAR=@GTAR@
+# Use $(TAR) when restricting your use to portable tar options (may expand to gtar anyway)
+TAR=@TAR@
 GZIP=@GZIP@
 
 BK_SPECIAL_DEBUG=@BK_SPECIAL_DEBUG@
