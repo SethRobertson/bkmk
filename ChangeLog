@@ -1,13 +1,12 @@
-2002-07-24  Seth Robertson  <seth@winwood.sysdetect.com>
+2002-07-25  Alexander Dupuy  <dupuy@sysdetect.com>
 
-	* Make.variables (BK_INSTALLRPATH): Create four subversions of
-	this variable for each aspect of libtool rpath use.  Note that
-	currently it has not been discovered which combination of rpaths
-	might prevent BK_INSTALLLIBDIR from being hardcoded in binary, but
-	at least the ability to configure each type of usage is now
-	possible.
+	* Make.variables (BK_INSTALLRDIR): This is now the absolute path
+	of the directory where shared libraries get installed, but is *not*
+	the directory that [maybe] gets recorded in RPATH/RUNPATH of
+	libraries and executables -- that is still BK_INSTALLRPATH, which
+	can be overridden in .user-variables for "production" builds.
 	
-2002-07-24    <dupuy@sysdetect.com>
+2002-07-24  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* configure.in: look for memmem function
 

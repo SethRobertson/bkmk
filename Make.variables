@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.83 2002/07/24 21:16:09 seth Exp $
+# $Id: Make.variables,v 1.84 2002/07/25 07:42:31 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -28,12 +28,12 @@ NORMALIZE='			\
 NORMALIZEPWD="\$$_ = qq^`$(PWD)`^;"$(NORMALIZE)
 CURDIR=$(shell $(PERL) -e $(NORMALIZEPWD))
 
-NORMALIZERPATH="\$$_ = qq^`$(PWD)`/$(BK_INSTALLLIBDIR)^;"$(NORMALIZE)
-BK_INSTALLRPATH:=$(shell $(PERL) -e $(NORMALIZERPATH))
-BK_INSTALLRPATH_MKDIR=$(BK_INSTALLRPATH)
-BK_INSTALLRPATH_INSTALL=$(BK_INSTALLRPATH)
-BK_INSTALLRPATH_LINKLIB=$(BK_INSTALLRPATH)
-BK_INSTALLRPATH_LINKPROG=$(BK_INSTALLRPATH)
+# this is the directory where libraries will actually be copied; cannot be path
+NORMALIZERDIR="\$$_ = qq^`$(PWD)`/$(BK_INSTALLLIBDIR)^;"$(NORMALIZE)
+BK_INSTALLRDIR:=$(shell $(PERL) -e $(NORMALIZERDIR))
+
+# this can (and should) be overridden by .user-variables for production builds
+BK_INSTALLRPATH=$(BK_INSTALLRDIR)
 
 NORMALIZEPATH="\$$_ = qq^`$(PWD)`/$(BK_INSTALLPROGDIR)^;"$(NORMALIZE)
 BK_INSTALLPATH=$(shell $(PERL) -e $(NORMALIZEPATH))
