@@ -1,6 +1,6 @@
 # -*- makefile -*-
 # 
-# $Id: Make.targets,v 1.75 2003/02/11 02:58:49 seth Exp $
+# $Id: Make.targets,v 1.76 2003/03/04 06:53:16 matt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -382,6 +382,26 @@ tags:: etags
 subtags:: $(BK_SIMPLE_CSRC) $(BK_LARGE_CSRC) $(BK_LARGE_LIBCSRC) $(BK_LOCAL_CSRC) $(BK_PUBLIC_INC) $(BK_JAVA_SRC) $(BK_LOCAL_OTHERTAGS)
 	if [ "$^" ]; then $(TAGCMD) -a -o $(TAGOUT) $^; fi
 	$(BK_SUBDIRRULE)
+
+#
+# Xref support
+#
+USERXREFRC=$(HOME)/.xrefrc
+TMPXREFRC=/tmp/$(shell basename $(USERXREFRC)).$USER.bkmk-tmp
+xref::
+	@echo "Regenerating $(USERXREFRC) for $(PWD)";
+	@$(PERL) -ne '/BEGIN\sBK\-GEN\:\s$$ENV{PWD}/ && ($$cut=1); print unless ($$cut == 1); /END\sBK\-GEN\:\s$$ENV{PWD}/ && ($$cut=0);' $(USERXREFRC) > $(TMPXREFRC) && cat $(TMPXREFRC) > $(USERXREFRC) && rm $(TMPXREFRC)
+	@echo "// BEGIN BK-GEN: $(PWD)" >> $(USERXREFRC); \
+	echo "[$(PWD):`$(PWDPROG)`]" >> $(USERXREFRC); \
+	echo "// dynamic listing of files to include" >> $(USERXREFRC); \
+	echo "\`find $(PWD)/ -type f \( -name \*.[chyls] -o -name \*.java \) -not \( -path \*$(BK_JAVADIR)\* -o -path \*$$(basename $(BK_INSTALLBASE))\* \)\`" >> $(USERXREFRC); \
+	echo "-refs $(PWD)/.xrefs" >> $(USERXREFRC); \
+	echo "-refnum=100" >> $(USERXREFRC); \
+	echo "// automatically generated include directories" >> $(USERXREFRC); \
+	echo `( for f in $$(find $(PWD)/ -type f -name \*.h -not -path \*$$(basename $(BK_INSTALLBASE))\*); do echo "-I $$(dirname $$f)"; done ) | sort -u` >> $(USERXREFRC); \
+	echo "// END BK-GEN: $(PWD)" >> $(USERXREFRC);
+	@echo "$(XREF) -p $(PWD)";
+	@$(XREF) -p $(PWD) > /dev/null 2>&1
 
 #
 # Test support

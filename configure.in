@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.68 2003/02/08 01:57:04 dupuy Exp $
+dnl $Id: configure.in,v 1.69 2003/03/04 06:53:17 matt Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.68 $)dnl
+AC_REVISION($Revision: 1.69 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
@@ -171,6 +171,8 @@ AC_PATH_PROG(DOXYGEN, doxygen, $FALSE)
 AC_CHECK_PROG(HAVE_DOT, dot, YES, NO)
 AC_PATH_PROGS(BROWSER, browser netscape konqueror mozilla iexplore.exe lynx,
 	      $FALSE, $PATH:/cygdrive/c/progra~1/intern~1)
+
+AC_PATH_PROG(XREF, xref, $FALSE)
 
 AC_PATH_PROG(AR, ar)
 
