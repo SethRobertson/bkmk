@@ -1,3 +1,7 @@
+2002-04-08  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Makefile (install): OpenBSD libraries are *.so.0.0, not *.so
+
 2002-04-05  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* configure.in: check for some GNU extension string functions
