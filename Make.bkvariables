@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.bkvariables,v 1.15 2002/01/09 06:26:37 dupuy Exp $
+# $Id: Make.bkvariables,v 1.16 2002/01/10 00:45:40 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -31,7 +31,8 @@ BKMK_VAR_CORRECT = true
 BK_ARCHNAME = $(shell uname -s | tr / - )-$(shell uname -r | sed 's/ .*//')-$(shell uname -m | tr / - )
 BK_OSNAME = $(shell uname -s | tr / - )-$(shell uname -r | sed 's/\(\.[^.]*\)\..*/\1/')
 
-BKMK_OSFILE=$(BKMKDIR)/.config_os_type
+BK_OSFILE=.config_os_type
+BKMK_OSFILE=$(BKMKDIR)/$(BK_OSFILE)
 
 # Avoid all this mess for 3rd party packages built via GNUmakefile
 ifeq ($(CONFIGURED),)
@@ -50,14 +51,18 @@ ifneq ($(BK_CONFIG_OS_TYPE),$(BK_OSNAME))
 # this could technically fail, but it's pretty unlikely.
 
 BK_DUMMY:=$(shell							      \
-  (test -f $(BKMK_OSFILE) && NEAT=true || NEAT=false;			      \
+  (if [ -f $(BKMK_OSFILE) ]; then					      \
+     NEAT=true;								      \
+     echo -e "\n\tDETECTED ARCHITECTURE CHANGE";			      \
+   else									      \
+     NEAT=false;							      \
+   fi;									      \
    rm -f $(BKMK_OSFILE);						      \
-   echo -e "\n\tDETECTED ARCHITECTURE CHANGE";				      \
    (cd $(BKMKDIR) && {							      \
      rm -f config.cache config.status;					      \
-     $(MAKE) -s .timestamp OSNAME=$(BK_OSNAME) OSFILE=$(BKMK_OSFILE); }; );   \
+     $(MAKE) -s config.status OSNAME=$(BK_OSNAME) OSFILE=$(BK_OSFILE); }; );  \
    ($$NEAT && cd $(GROUPTOP)/$(PKGTOP) && {				      \
-     echo -n "Making neat (Don't forget to run $(MAKE) depend aftwards)...."; \
+     echo -n 'Making neat (Remember to "$(MAKE) depend" afterwards)....';     \
      $(MAKE) neat >/dev/null;						      \
      echo "done"; }; ); )						      \
   2>/dev/null >/dev/tty)

@@ -1,5 +1,13 @@
 2002-01-09  Alexander Dupuy  <dupuy@sysdetect.com>
 
+	* Make.variables (BK_BKJUNK): remove generated .jar files for clean
+
+	* Makefile (%.status): always make OSFILE in bkmk, touch .timestamp
+
+	* Make.bkvariables (BK_OSFILE): filename w/o path to pass to Makefile
+	(BK_DUMMY): avoid running config.status after configure, only note
+	ARCHITECTURE CHANGE if file exists with different contents
+
 	* Make.production ($(BK_SIMPLE_INTERNALPROGS) $(BK_SIMPLE_PROGS)):
 	build simple programs in separate compile and link steps for Insure++
 

@@ -24,7 +24,7 @@ clean nuke:
 
 %.status: ./%ure
 	./configure
-	echo "$(OSNAME)" > ../$(OSFILE)
+	@echo "$(OSNAME)" > $(OSFILE) && touch .timestamp
 
 .timestamp: *.in config.status
 	@./config.status && touch $@
