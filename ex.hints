@@ -1,3 +1,4 @@
+$Id: ex.hints,v 1.2 2001/06/18 19:29:32 seth Exp $
 
 Package is the meta construct, like "metaplex" or proconsul
 Group is the seperate unit, like libbk or libclc
