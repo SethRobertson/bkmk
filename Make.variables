@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.118 2002/11/05 07:36:34 dupuy Exp $
+# $Id: Make.variables,v 1.119 2002/11/05 08:48:28 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -385,7 +385,7 @@ ifneq ($(NO_WERROR),true)
 COMPILER_DEBUG_ERROR=-Werror
 endif # NO_WERROR
 
-ifneq ($(findstring -f,$(ALIGN_FUNCTIONS_SWITCH)),)
+ifneq ($(findstring -falign,$(ALIGN_FUNCTIONS_SWITCH)),)
 GCCHWOPT=$(ALIGN_FUNCTIONS_SWITCH)
 else
 ifneq ($(findstring -,$(ALIGN_FUNCTIONS_SWITCH)),)
