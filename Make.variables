@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.78 2002/07/16 22:03:42 jtt Exp $
+# $Id: Make.variables,v 1.79 2002/07/16 23:31:57 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -58,13 +58,14 @@ BK_ALL_LAST_DIRS=$(BK_EXECUTABLE_DIRS) $(BK_LAST_DIRS)
 BK_ALL_SUBDIR=$(BK_ALL_FIRST_DIRS) $(BK_SUBDIR) $(BK_ALL_LAST_DIRS)
 
 ifeq ($(BK_WANT_STATIC), true)
+# Sigh.. libtool *claims* to support both a -static and a --all-static link mode argument,
+# but it does not (or at least ours does not).
 BK_WANT_LIBTOOL=false
 endif
 
 ifeq ($(BK_WANT_LIBTOOL), false)
 BK_NO_USER_SHARED_LIBS=true
 endif
-
 
 #
 # C source filenames for standard production rules
@@ -118,9 +119,9 @@ LT_LDFLAGS=-avoid-version
 LT_M_LDFLAGS=-module -avoid-version
 
 ifeq ($(BK_WANT_LIBTOOL), true)
-LIBTOOL_COMPILE=$(LIBTOOL) --mode compile
-LIBTOOL_LINK=$(LIBTOOL) --mode link
-LIBTOOL_INSTALL=$(LIBTOOL) --mode install --quiet
+LIBTOOL_COMPILE=$(LIBTOOL) --mode=compile
+LIBTOOL_LINK=$(LIBTOOL) --mode=link
+LIBTOOL_INSTALL=$(LIBTOOL) --mode=install --quiet
 else
 LIBTOOL_COMPILE=
 LIBTOOL_LINK=
@@ -284,19 +285,14 @@ COPTDEBUG+=-fomit-frame-pointer
 endif
 
 ifeq ($(BK_WANT_STATIC),true)
-ifeq ($(COMPILER_NAME),gcc)
-COPTDEBUG+=-static
-endif
-ifeq ($(COMPILER_NAME),CC)
-COPTDEBUG+=-Bstatic
-endif
+LDFLAGS+=$(LINK_STATIC_FLAG)
 endif
 
 endif # CC is gcc
 
 CFLAGS=$(COPTDEBUG)
 CPPFLAGS=$(BK_ALLINCS) $(BK_ALLDEFINES)
-LDFLAGS=$(BK_ALLLDS)
+LDFLAGS+=$(BK_ALLLDS)
 LDLIBS=$(BK_ALLLIBS)
 
 OBJEXT=.$(OBJEXT_CONFIG)

@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.32 2002/07/03 19:30:31 jtt Exp $
+dnl $Id: configure.in,v 1.33 2002/07/16 23:31:57 jtt Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.32 $)dnl
+AC_REVISION($Revision: 1.33 $)dnl
 AC_INIT(Make.bkvariables)
 AC_CONFIG_AUX_DIR(acaux)
 
@@ -97,8 +97,9 @@ AC_PATH_PROGS(BROWSER,browser netscape konqueror mozilla iexplore.exe lynx,
 AC_PATH_PROG(AR,ar)
 
 AC_DEFINE_UNQUOTED(PATH_SEPARATOR, "$PATH_SEPARATOR")
-
 AC_CONFIG_HEADER(libbk_autoconf.h)
+
+AC_SUBST(link_static_flag)
 
 AC_OUTPUT(Make.config)
 
