@@ -1,0 +1,2 @@
+The "acaux" directory contains any auxiliary programs needed by autoconf.
+They are placed here to avoid cluttering up the main bkmk directory.
