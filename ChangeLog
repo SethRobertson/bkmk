@@ -2,6 +2,7 @@
 
 	* Make.targets (nuke clean): remove $(BK_JAVA_HELP_{JAR,PDF}) when
 	cleaning or nuking.
+	add dependencies for $(BK_JAVA_HELP_PDF).
 
 2002-10-16  Seth Robertson  <seth@yeah.baka.org>
 
