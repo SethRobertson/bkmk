@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.GNUmakefile,v 1.17 2003/09/05 23:38:56 dupuy Exp $
+# $Id: Make.GNUmakefile,v 1.18 2003/09/08 23:41:42 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -39,12 +39,12 @@ include $(BKMKDIR)/Make.config
 
 # make INSTBASE normalized absolute path
 BK_GETCWD= . $(BKMKDIR)/getcwd.sh 2>/dev/null || . $(BKMKDIR)/getcwd.sh.in
-NORMALIZEBASE='				\
-	$$_ = qq^$(PWD)$(INSTALLBASE)^;	\
-	s@.*//@/@g;			\
-	s@/\\./@/@g;			\
-	s@/[^/]+/\\.\\./@/@g;		\
-	s@^/n/[^/]*/@/@;		\
+NORMALIZEBASE='					\
+	$$_ = qq^$(PWD)/$(INSTALLBASE)^;	\
+	s@.*//@/@g;				\
+	s@/\\./@/@g;				\
+	s@/[^/]+/\\.\\./@/@g;			\
+	s@^/n/[^/]*/@/@;			\
 	print;'
 INSTALLBASE:=$(shell $(BK_GETCWD); pawd $(BK_INSTALLBASE))
 INSTBASE:=$(shell $(PERL) -e $(NORMALIZEBASE))

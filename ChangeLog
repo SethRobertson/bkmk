@@ -1,3 +1,28 @@
+2003-09-08  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.GNUmakefile (NORMALIZEBASE): correctly handle $PWD prefixing
+
+	* Make.production: avoid dependency on GNU fmt
+
+2003-09-05  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.GNUmakefile, Make.bkvariables, getcwd.sh.in:
+	devtools build update, simplified GNUmakefiles
+
+2003-09-05  Seth Robertson  <seth@prefontaine.sysdetect.com>
+
+	* chcopy.pl, UPDATESTANDARD: Insert copyrights
+
+	* Makefile: Remove all files on make nuke
+
+2003-08-27  James Tanis  <jtt@prefontaine.sysdetect.com>
+
+	* Make.bkvariables: Don't reconfigure if cleaning.
+
+2003-08-25  James Tanis  <jtt@prefontaine.sysdetect.com>
+
+	* cleanwhite.pl: perl is /usr/bin/perl not /bin/perl
+
 2003-08-22  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.GNUmakefile (GUESS): find config.guess in config subdir

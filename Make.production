@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.production,v 1.63 2003/07/30 21:25:12 dupuy Exp $
+# $Id: Make.production,v 1.64 2003/09/08 23:41:42 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -271,6 +271,15 @@ $(BK_JAVADIR)/%: $(GROUPTOP)/%
 	@$(LN_S) -f $(PWD)/$< $@
 	@test ! -L $@ && test ! $@ -ef $< 2>/dev/null && chmod -w $@ || true
 
+# <TRICKY>This merges specific per-jar manifest header lines with generic
+# defaults, then formats them to line width 72 with continuations, per spec
+# <http://java.sun.com/j2se/1.4.2/docs/guide/jar/jar.html#JAR%20Manifest>
+# Traditional fmt uses -p, GNU fmt rejects that as a bad prefix argument and
+# uses -t for tagged paragraphs, so we figure out which we are getting.
+# The insane sed line there reformats each header on a line by itself, with all
+# values associated with it on continuation lines, and a closing empty line.
+# (I did this to get GNU fmt crown-margin to work, it may not be necessary for
+# tagged-paragraph, but I left it in for now).<TRICKY>
 $(BK_JAVADIR)/%.MF: %.MF
 	@$(MKDIR) $(BK_JAVADIR)/$(BK_JAVA_PKG)
 	@# <WARNING>These must be sorted for join to work</WARNING>
@@ -282,11 +291,12 @@ $(BK_JAVADIR)/%.MF: %.MF
 	   echo 'Specification-Vendor: System Detection, Inc.';	 \
 	   echo 'Specification-Version: 1.1';			 \
 	 } > $@T
-	@{ set -e; echo 'Manifest-Version: 1.0';		       \
+	@if fmt -p </dev/null 2>/dev/null; then C=p; else C=t; fi;     \
+	 { set -e; echo 'Manifest-Version: 1.0';		       \
 	   join -v1 -v2 -t: $@T $<;				       \
 	   join -o2.1,2.2 -t: $@T $<; }				       \
 	 | $(SED) '/^[^ ]/{x;p;g;s/:.*/: /;p;s/.*//;x;s/[^:]*: */ /;}' \
-	 | fmt -c | $(SED) -n /./p > $@
+	 | fmt -$$C -w 72 | $(SED) -n /./p > $@
 
 # JARFLAGS=-cifm causes java.io.IOException: invalid header field
 # (so we run the indexing separately, after the file is created)
