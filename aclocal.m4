@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.49 2003/12/02 19:28:13 jtt Exp $
+# $Id: aclocal.m4,v 1.50 2004/01/05 17:39:21 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -464,7 +464,7 @@ AC_DEFUN([AC_SECOND_CONNECT_TO_REFUSED_PORT],
 #include <arpa/inet.h>
 
 // Idea stolen from perl of course.
-#define RANDOM_INT_10 (sleep((unsigned int)(((unsigned int)getpid() | (unsigned int)time()) % 10)))
+#define RANDOM_INT_10 (sleep((unsigned int)(((unsigned int)getpid() | (unsigned int)time(NULL)) % 10)))
 
 int
 main(int argc, char **argv)

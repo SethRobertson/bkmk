@@ -25898,7 +25898,7 @@ cat >>conftest.$ac_ext <<_ACEOF
 #include <arpa/inet.h>
 
 // Idea stolen from perl of course.
-#define RANDOM_INT_10 (sleep((unsigned int)(((unsigned int)getpid() | (unsigned int)time()) % 10)))
+#define RANDOM_INT_10 (sleep((unsigned int)(((unsigned int)getpid() | (unsigned int)time(NULL)) % 10)))
 
 int
 main(int argc, char **argv)

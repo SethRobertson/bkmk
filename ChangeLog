@@ -1,3 +1,8 @@
+2004-01-05  Seth Robertson  <seth@not.baka.org>
+
+	* configure (ac_cv_c_stack_direction): When calling time() don't forget the NULL.
+	* aclocal.m4 (LIBS): When calling time() don't forget the NULL.
+
 2003-12-30  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* acaux/ltmain.sh: #2711: ignore missing relative directories; gcc does
