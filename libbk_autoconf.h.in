@@ -1,5 +1,5 @@
 /*				-*- C -*-
- * $Id: libbk_autoconf.h.in,v 1.47 2003/11/10 20:17:42 brian Exp $
+ * $Id: libbk_autoconf.h.in,v 1.48 2003/11/25 02:51:15 dupuy Exp $
  *
  * ++Copyright LIBBK++
  *
@@ -105,6 +105,9 @@
 #undef HAVE_DEV_FD
 
 #undef HAVE_ORACLE
+
+// name of shared library path environment variable (e.g. LD_LIBRARY_PATH)
+#undef SHLIBPATH_VAR
 
 #ifndef _FILE_OFFSET_BITS
 // value of _FILE_OFFSET_BITS needed for large files

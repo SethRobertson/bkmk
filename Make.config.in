@@ -1,4 +1,4 @@
-# $Id: Make.config.in,v 1.53 2003/10/13 16:22:32 jtt Exp $
+# $Id: Make.config.in,v 1.54 2003/11/25 02:51:14 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -55,6 +55,7 @@ INSURE=@INSURE@
 PARASOFT=@PARASOFT@
 AC_LIBS=@LIBS@
 LINK_STATIC_FLAG=@lt_prog_compiler_static@
+SHLIBPATH_VAR=@shlibpath_var@
 ALIGN_FUNCTIONS_SWITCH=@ALIGN_FUNCTIONS_SWITCH@
 HAVE_ORACLE=@HAVE_ORACLE@
 ORACLE_HOME=@ORACLE_HOME@

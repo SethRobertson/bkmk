@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.47 2003/09/22 16:29:56 jtt Exp $
+# $Id: aclocal.m4,v 1.48 2003/11/25 02:51:14 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -1904,6 +1904,41 @@ if test "$GCC" = yes; then
 else
   sys_lib_search_path_spec="/lib /usr/lib /usr/local/lib"
 fi
+
+# <WARNING>SysD local - ought to be in a separate autoconf macro, but this is
+# at least better than being in configure.in, where it used to be.  Also used
+# by AC_LIBTOOL_POSTDEP_PREDEP.</WARNING>
+
+# Shell function to minimize a search path with components separated by spaces.
+#
+# It minimizes in 3 ways:
+# 1) eliminates components referring to non-existent directories
+# 2) determines the canonical path name for each component
+# 3) eliminates duplicate or "alias" components
+#
+function minimize_path
+{
+  unset min_path
+  for dir in [$][@]
+  do
+    prefix=
+    case $dir in
+      -L*)
+	dir=`echo $dir | $SED -e 's/^-L//'`
+	prefix="-L"
+	;;
+    esac
+    dir=`cd $dir 2>/dev/null && getcwd`
+    if test -n "$dir"; then
+      case $min_path in
+	*\ $dir\ *|$dir\ |*\ $dir|*\ -L$dir\ *|-L$dir\ |*\ -L$dir) : ;;
+	*) min_path=${min_path+$min_path}\ $prefix$dir ;;
+      esac
+    fi
+  done
+  echo "$min_path"
+}
+
 sys_lib_search_path_spec=`minimize_path $sys_lib_search_path_spec`
 need_lib_prefix=unknown
 hardcode_into_libs=no

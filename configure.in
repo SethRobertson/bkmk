@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.106 2003/11/10 20:17:42 brian Exp $
+dnl $Id: configure.in,v 1.107 2003/11/25 02:51:15 dupuy Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.106 $)dnl
+AC_REVISION($Revision: 1.107 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
@@ -23,56 +23,6 @@ AC_CONFIG_AUX_DIR(acaux)
 echo
 echo  "		CONFIGURING BAKA ENVIRONMENT"
 echo
-
-# Function to minimize a search path with components already separated by
-# spaces.
-#
-# It minimizes in 3 ways:
-# 1) It eliminates components referring to non-existent directories.
-# 2) It determines the shortest path name to the directory named by the
-#    each component
-# 3) It eliminates duplicate or "alias" components.
-#
-function minimize_path
-{
-MIN_PATH=""
-
-for entry in [$][@]
-do
-	dir=`echo $entry | sed -e 's/-L//'`
-	if test "$dir" != "$entry"
-	then
-		prefix="-L"
-	else
-		prefix=""
-	fi
-	cd $dir 2>/dev/null &&
-	{
-		min_dir=`pwd`
-		found=false
-		for path_dir in $MIN_PATH
-		do
-			if test "$path_dir" = "$min_dir"
-			then
-				found=true
-				break
-			fi
-		done
-		if test "$found" = "false"
-		then
-			if test -z "$MIN_PATH"
-			then
-				MIN_PATH="${prefix}${min_dir}"
-			else
-				MIN_PATH="$MIN_PATH ${prefix}${min_dir}"
-			fi
-		fi
-
-	}
-done
-echo "$MIN_PATH"
-}
-export minmize_path
 
 AC_PROG_CC
 
@@ -158,6 +108,9 @@ AC_DISABLE_STATIC
 AC_LIBTOOL_WIN32_DLL
 AC_LIBTOOL_DLOPEN
 AC_PROG_LIBTOOL
+
+AC_DEFINE_UNQUOTED(SHLIBPATH_VAR, "$shlibpath_var")
+AC_SUBST(shlibpath_var)
 
 AC_SUBST(lt_prog_compiler_static)
 
@@ -326,11 +279,5 @@ AC_SUBST(HAVE_ORACLE)
 # the name (not counting the .in).</TRICKY>
 
 AC_CONFIG_HEADER(libbk_autoconf.h)
-AC_CONFIG_FILES(Make.config getcwd.sh)
+AC_CONFIG_FILES(Make.config getcwd.sh bk.conf)
 AC_OUTPUT
-
-
-
-
-
-

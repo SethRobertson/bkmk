@@ -1,7 +1,25 @@
+2003-11-24  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* bk.conf.in (SHLIBPATH_VAR): #2576: added for worker.sh use
+
+	* Make.config.in (SHLIBPATH_VAR): #2576: set from libtool autoconf
+
+	* libbk_autoconf.h.in (SHLIBPATH_VAR): defined for worker/main.c
+
+	* configure.in: get SHLIBPATH_VAR #define, subst config for bk.conf;
+	move minimize_path shell function into aclocal.m4
+	
+	* aclocal.m4 (AC_LIBTOOL_SYS_DYNAMIC_LINKER): minimize_path moved here
+	from configure.in; simplified and reduced for loops to case switches
+	
 2003-11-21  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.targets (etags, ctags): '-quotes deferred `-quotes; use "-quotes
 	[immediate eval of `/bin/pwd` for awb/TAGS, not TAGS in every dir]
+
+2003-11-20  Brian Larkins  <brian@sysdetect.com>
+
+	* Make.FreeBSD-4.9-pre: be modern.
 
 2003-11-13  Alexander Dupuy  <dupuy@sysdetect.com>
 
@@ -36,12 +54,35 @@
 
 	* Make.variables: NORMALIZE definition moved to Make.bkvariables
 	(NORMALIZE*): use ' quoting for paranoia/safety against `/$
+	[why would anybody ever want to have a directory name like awb-1.0.1?]
+	
+2003-10-27  James Tanis  <jtt@sysdetect.com>
+
+	* Make.bkvariables, Make.variables: Proposed fixes for making
+	"release" and "fullrelease" play nicely with each other.
 
 2003-10-24  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.bkvariables (BK_DUMMY): prevent make clean/nuke failures
 
 	* Make.targets (BK_SUBDIRRULE): prevent unconfigured postgres failures
+
+	* Makefile (.gdbinit): also set BK_ENV_CONF_APP, ANTURA_OLD_LD_PRELOAD
+	just like worker.sh [avoids annoying error messages]
+	(BK_CMDGOALS): now set automatically by Make.bkvariables
+
+2003-10-15  James Tanis  <jtt@sysdetect.com>
+
+	* Make.bkvariables, Make.variables: If you're going to throw away
+	someone else's perfectly working code; you could at least replace
+	it with something that works.
+
+2003-10-10  James Tanis  <jtt@sysdetect.com>
+
+	* Make.bkvariables, Makefile, Make.include, Make.production: Alex
+	warns us; we overlook warning; we over-autoconfiscate bkmk; we die
+
+	* os-name.sh: we need this desparately
 
 2003-10-08  James Tanis  <jtt@sysdetect.com>
 
@@ -72,6 +113,11 @@
 	SSL is on.
 
 	* Make.GNUmakefile: Include Make.config before anything else.
+
+2003-09-22  James Tanis  <jtt@.sysdetect.com>
+
+	* configure.in, aclocal.m4: minimize_path shell function to minimize
+	search paths in order to fix final set of 'seems to be moved' warnings
 
 2003-09-17  Alexander Dupuy  <dupuy@sysdetect.com>
 
@@ -119,16 +165,16 @@
 
 	* configure.in: path fixes for AC_PATH_PROG
 
-2003-08-21  James Tanis  <jtt@stevedore.sysdetect.com>
+2003-08-21  James Tanis  <jtt@sysdetect.com>
 
 	* Make.variables: make sure release compiles even if no installed
 	ssl on machine
 
-2003-08-20  James Tanis  <jtt@stevedore.sysdetect.com>
+2003-08-20  James Tanis  <jtt@sysdetect.com>
 
 	* Make.targets: Don't delete help on clean, just nuke
 
-2003-08-19  James Tanis  <jtt@stevedore.sysdetect.com>
+2003-08-19  James Tanis  <jtt@sysdetect.com>
 
 	* Make.targets: move report .tar.gz to INSTALL to consolidate stuff
 
