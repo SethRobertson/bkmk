@@ -1,3 +1,11 @@
+2003-05-16  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* configure.in: get more detailed information on non-portable
+	pthreads extensions
+
+	* aclocal.m4 (ACX_PTHREAD): leave LIBS/CFLAGS set up for threads when
+	executing $acx_pthread_ok = yes case
+	
 2003-05-15  James Tanis  <jtt@saint.sysdetect.com>
 
 	* configure.in: Check for $PARASOFT in ENV and /usr/local/parasoft
@@ -8,8 +16,8 @@
 
 	* Make.include (BK_USING_INSURE_DEBUG): Only set INSURE if
 	$PARASOFT has been autconf'ed. 
-	(BK_USING_INSURE_DEBUG): Turn of libtool when compiling with
-	INSURE (ARGHH!! This was *working*).
+	(BK_USING_INSURE_DEBUG): Turn off libtool when compiling with
+	INSURE [ARGHH!! This was *working*].
 
 2003-05-14  Brian Lindauer  <lindauer@malkmus.sysdetect.com>
 
@@ -26,6 +34,10 @@
 2003-04-23  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.targets (actual_install): BK_ONE_PASS_INSTALL support
+
+2003-04-23  Brian Larkins  <brian@sysdetect.com>
+
+	* aclocal.m4 (ACX_PTHREAD): check for pthread rwlock initialization
 
 2003-04-18  James Tanis  <jtt@waimea.tanis.org>
 

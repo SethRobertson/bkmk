@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.40 2003/04/29 00:33:18 dupuy Exp $
+# $Id: aclocal.m4,v 1.41 2003/05/16 04:40:28 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -704,13 +704,14 @@ for flag in $acx_pthread_flags; do
                      pthread_create(0,0,0,0); pthread_cleanup_pop(0); ],
                     [acx_pthread_ok=yes])
 
-        LIBS="$save_LIBS"
-        CFLAGS="$save_CFLAGS"
-
         AC_MSG_RESULT($acx_pthread_ok)
         if test "x$acx_pthread_ok" = xyes; then
+                # don't restore LIBS on success; wait until very end
                 break;
         fi
+
+        LIBS="$save_LIBS"
+        CFLAGS="$save_CFLAGS"
 
         PTHREAD_LIBS=""
         PTHREAD_CFLAGS=""
@@ -719,11 +720,6 @@ fi
 
 # Various other checks:
 if test "x$acx_pthread_ok" = xyes; then
-        save_LIBS="$LIBS"
-        LIBS="$PTHREAD_LIBS $LIBS"
-        save_CFLAGS="$CFLAGS"
-        CFLAGS="$CFLAGS $PTHREAD_CFLAGS"
-
         # Detect AIX lossage: threads are created detached by default
         # and the JOINABLE attribute has a nonstandard name (UNDETACHED).
         AC_MSG_CHECKING([for joinable pthread attribute])
@@ -756,9 +752,6 @@ if test "x$acx_pthread_ok" = xyes; then
                 PTHREAD_CFLAGS="$flag $PTHREAD_CFLAGS"
         fi
 
-        LIBS="$save_LIBS"
-        CFLAGS="$save_CFLAGS"
-
         # More AIX lossage: must compile with cc_r
         AC_CHECK_PROG(PTHREAD_CC, cc_r, cc_r, ${CC})
 else
@@ -772,7 +765,8 @@ AC_SUBST(PTHREAD_CC)
 # Finally, execute ACTION-IF-FOUND/ACTION-IF-NOT-FOUND:
 if test x"$acx_pthread_ok" = xyes; then
         ifelse([$1],,AC_DEFINE(HAVE_PTHREAD,1,[Define if you have POSIX threads libraries and header files.]),[$1])
-        :
+        LIBS="$save_LIBS"
+        CFLAGS="$save_CFLAGS"
 else
         acx_pthread_ok=no
         $2
