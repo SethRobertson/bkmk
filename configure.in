@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.69 2003/03/04 06:53:17 matt Exp $
+dnl $Id: configure.in,v 1.70 2003/03/13 21:38:39 dupuy Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.69 $)dnl
+AC_REVISION($Revision: 1.70 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
@@ -126,7 +126,7 @@ dnl <TODO bugid="881">should use getaddressinfo function instead</TODO>>
 AC_SEARCH_LIBS([gethostbyname2],[resolv],AC_DEFINE(HAVE_GETHOSTBYNAME2))
 
 AC_CHECK_FUNCS(isinf ntohll)
-AC_CHECK_FUNCS(memmem memrchr setenv strndup strnlen strverscmp)
+AC_CHECK_FUNCS(memmem memrchr setenv strndup strnlen strverscmp strsignal)
 AC_CHECK_FUNCS(strptime gmtime_r timegm)
 AC_FUNC_STRFTIME
 AC_FUNC_GETTEXT

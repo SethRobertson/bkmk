@@ -1,5 +1,5 @@
 /*				-*- C -*-
- * $Id: libbk_autoconf.h.in,v 1.35 2003/01/23 21:47:49 dupuy Exp $
+ * $Id: libbk_autoconf.h.in,v 1.36 2003/03/13 21:38:39 dupuy Exp $
  *
  * ++Copyright LIBBK++
  *
@@ -66,6 +66,7 @@
 #undef HAVE_STRNDUP
 #undef HAVE_STRNLEN
 #undef HAVE_STRVERSCMP
+#undef HAVE_STRSIGNAL
 #undef HAVE_STRPTIME
 #undef HAVE_GMTIME_R
 #undef HAVE_TIMEGM

@@ -1,3 +1,42 @@
+2003-03-13  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* configure: autoconf strsignal
+
+2003-03-07  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* chcopy.pl: update for 2003, and 2004, and 2005, ... etc.
+
+2003-03-04  Matt Miller  <matt@hawking.StevesRUs.sysdetect.com>
+
+	* configure.in, configure, Make.config.in, Make.targets:
+	Xref support.  I *think* I got the autoconf stuff right. :)
+
+2003-02-20  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.include: Just say no to libxml namespace pollution where it
+	is not necessary
+
+2003-02-11  Seth Robertson  <seth@hawking.StevesRUs.sysdetect.com>
+
+	* Make.targets: Run tags over include files as well
+
+2003-02-11  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.targets: Ticket #1028: get correct relative paths, run tags
+	on Java, run tags correctly for libpcap
+
+	* Make.targets: Ticket #1018: of course, libpcap has only
+	Makefile.in and GNUmakefile....
+
+2003-02-10  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.targets: Ticket #1018: don't run make in a subdirectory
+	without a makefile
+
+2003-02-03  James Tanis  <jtt@hawking.StevesRUs.sysdetect.com>
+
+	* Make.include, Make.variables: Rationalize .user-variables stuff
+
 2003-01-31  James Tanis  <jtt@saint.sysdetect.com>
 
 	* Make.variables (BK_DEFINES+): Compiler token indicating that
