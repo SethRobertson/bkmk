@@ -80,51 +80,51 @@ while (<>)
   # Header stuff
   # (Only try header stuff if first line)
   if ($. < 5 && /^$q1/)
+  {
+    while (<>)
     {
-      while (<>)
-	{
-	  if (/^$q2$/)
-	    {
-	      last;
-	    }
-	}
-      if ($prod)
-	{
-	  print $SYSDHDR;
-	}
-      else
-	{
-	  print $BAKAHDR;
-	}
-      next;
+      if (/^$q2$/)
+      {
+	last;
+      }
     }
+    if ($prod)
+    {
+      print $SYSDHDR;
+    }
+    else
+    {
+      print $BAKAHDR;
+    }
+    next;
+  }
 
   if (eof)
-    {
-      close(ARGV);
-    }
+  {
+    close(ARGV);
+  }
 
   # Copyright
   if (/(.*)\+\+Copyright\ .*\+\+/)
+  {
+    $PREFIX=$1;
+    while (<>)
     {
-      $PREFIX=$1;
-      while (<>)
-	{
-	  if (/ \-\-Copyright\ .*\-\-/)
-	    {
-	      last;
-	    }
-	}
-      if ($prod)
-	{
-	  pprint($PREFIX,$SYSDPROD);
-	}
-      else
-	{
-	  pprint($PREFIX,$BAKAPROD);
-	}
-      next;
+      if (/\-\-Copyright\ .*\-\-/)
+      {
+	last;
+      }
     }
+    if ($prod)
+    {
+      pprint($PREFIX,$SYSDPROD);
+    }
+    else
+    {
+      pprint($PREFIX,$BAKAPROD);
+    }
+    next;
+  }
   print;
 }
 
@@ -138,6 +138,6 @@ sub pprint($$)
 
   @lines = split(/\n/,$string);
   $output = sprintf("%s",$prefix.join("\n$prefix",@lines)."\n");
-  $output =~ s/\s+$//mg;
+  $output =~ s/[ \t]+$//mg;
   print $output;
 }
