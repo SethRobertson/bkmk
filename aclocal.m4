@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.45 2003/06/17 05:59:47 seth Exp $
+# $Id: aclocal.m4,v 1.46 2003/06/25 15:32:38 brian Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -661,7 +661,7 @@ case "${host_cpu}-${host_os}" in
 	*darwin*)
 	# darwin doesn't have a define for PTHREAD_RWLOCK_INITIALIZER
 	AC_DEFINE(MISSING_PTHREAD_RWLOCK_INIT)
-	acx_pthread_flags="pthread -pthread $acx_pthread_flags"
+	acx_pthread_flags="none $acx_pthread_flags"
 	;;
 esac
 

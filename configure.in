@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.93 2003/06/17 05:59:47 seth Exp $
+dnl $Id: configure.in,v 1.94 2003/06/25 15:32:38 brian Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.93 $)dnl
+AC_REVISION($Revision: 1.94 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
@@ -38,12 +38,22 @@ AC_PROG_CXXCPP
 AC_PROG_CC_C_O
 AC_PROG_AWK
 
+AC_CHECK_LIBM
+AC_SUBST(LIBM)
+
 AC_CHECK_LIB(ssl, SSL_CTX_new, HAVE_LIBSSL=true, HAVE_LIBSSL=false)
 if test "$HAVE_LIBSSL" "=" "true"
 then
   AC_DEFINE(HAVE_LIBSSL)
 fi
 AC_SUBST(HAVE_LIBSSL)
+
+AC_CHECK_LIB(crypt, crypt, HAVE_LIBCRYPT=true, HAVE_LIBCRYPT=false)
+if test "$HAVE_LIBCRYPT" "=" "true"
+then
+  AC_DEFINE(HAVE_LIBCRYPT)
+fi
+AC_SUBST(HAVE_LIBCRYPT)
 
 AC_C_ALIGN_FUNCTIONS
 
@@ -91,7 +101,8 @@ AC_CONSTRUCTORS
 AC_SYS_LARGEFILE
 AC_CHECK_HEADERS(paths.h ieeefp.h alloca.h)
 AC_CHECK_HEADERS(net/ethernet.h netinet/ether.h)
-AC_CHECK_HEADERS(sys/capability.h)
+AC_CHECK_HEADERS(sys/capability.h sys/msg.h)
+
 AC_SA_LEN
 AC_SOCKLEN_T
 AC_IN_ADDR_T
@@ -130,6 +141,7 @@ AC_SEARCH_LIBS([gethostbyname2],[resolv],AC_DEFINE(HAVE_GETHOSTBYNAME2))
 AC_CHECK_FUNCS(isinf ntohll)
 AC_CHECK_FUNCS(memmem memrchr setenv strndup strnlen strverscmp strsignal)
 AC_CHECK_FUNCS(strptime gmtime_r timegm)
+AC_CHECK_FUNCS(log2)
 AC_FUNC_STRFTIME
 AC_FUNC_GETTEXT
 AC_STACKDIRECTION
@@ -233,3 +245,9 @@ AC_SUBST(HAVE_ORACLE)
 AC_CONFIG_HEADER(libbk_autoconf.h)
 AC_CONFIG_FILES(Make.config getcwd.sh)
 AC_OUTPUT
+
+
+
+
+
+

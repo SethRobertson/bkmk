@@ -1,5 +1,5 @@
 /*				-*- C -*-
- * $Id: libbk_autoconf.h.in,v 1.44 2003/06/17 05:59:48 seth Exp $
+ * $Id: libbk_autoconf.h.in,v 1.45 2003/06/25 15:32:38 brian Exp $
  *
  * ++Copyright LIBBK++
  *
@@ -61,6 +61,7 @@
 #undef HAVE_NET_ETHERNET_H
 #undef HAVE_NETINET_ETHER_H
 #undef HAVE_SYS_CAPABILITY_H
+#undef HAVE_SYS_MSG_H
 
 #undef HAVE_LIBSSL
 
@@ -86,6 +87,7 @@
 #undef HAVE_SETENV
 #undef HAVE_GETHOSTBYNAME2
 #undef HAVE_SOCKLEN_T
+#undef HAVE_LOG2
 
 #undef IN6_MULTICAST_TAKES_IN6_ADDR
 #undef IN6_MULTICAST_TAKES_S6_ADDR

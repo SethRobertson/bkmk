@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.153 2003/06/19 20:02:36 seth Exp $
+# $Id: Make.variables,v 1.154 2003/06/25 15:32:38 brian Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -163,8 +163,8 @@ LEXLIBS=-lfl
 
 # Libtool
 LT_CFLAGS=
-LT_LDFLAGS=-avoid-version
-LT_M_LDFLAGS=-module -avoid-version
+LT_LDFLAGS+=-avoid-version
+LT_M_LDFLAGS+=-module -avoid-version
 
 ifeq ($(BK_WANT_LIBTOOL), true)
 LIBTOOL_COMPILE=$(LIBTOOL) --mode=compile
@@ -324,7 +324,7 @@ TERMINAL_LIBS=-ltermcap
 ifeq ($(BK_USING_GPROF),true)
 BK_LIBM=-lm_p
 else
-BK_LIBM=-lm
+BK_LIBM=$(LIBM)
 endif
 
 COMPRESS_LIBS=-lz
@@ -513,7 +513,11 @@ BK_LIBDL := -ldl_p
 CFLAGS += -pg
 OS_LIBS += -lc_p
 else
+ifeq ($(strip $(HAVE_LIBCRYPT)), true)
 BK_LIBCRYPT := -lcrypt
+else
+BK_LIBCRYPT := 
+endif # HAVE_LIBCRYPT = true
 BK_LIBDL := -ldl
 endif # BK_USING_GPROF
 
@@ -547,6 +551,7 @@ LT_M_LDFLAGS += $(PTHREAD_CFLAGS)
 else
 PTHREAD_LIBS=
 endif
+
 
 ifeq ($(BK_USING_DMALLOC),true)
 ifeq ($(BK_USING_PTHREADS),true)
