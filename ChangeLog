@@ -1,3 +1,9 @@
+2001-11-28  James Tanis  <jtt@winwood.sysdetect.com>
+
+	* Make.variables (COPTDEBUG+): Turn off optimization when INSIGHT
+	on to "suppress" message indicating that INSIGHT is dropping
+	optimizations :-)
+
 2001-11-28  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* ex.pkg.Make.preinclude (BK_INSTALLBASE): use this consistently

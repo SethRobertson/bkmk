@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.30 2001/11/28 18:24:09 seth Exp $
+# $Id: Make.variables,v 1.31 2001/11/29 17:39:56 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -111,7 +111,9 @@ COMPILER_DEBUG+=-W -Wmissing-prototypes -Wstrict-prototypes -Wchar-subscripts -W
 COMPILER_DEBUG_ERROR=-Werror
 
 ifneq ($(NO_OPT),true)
+ifneq ($(USING_INSIGHT),true)
 COPTDEBUG+=-O
+endif
 COMPILER_DEBUG+=-Wuninitialized 
 endif
 
