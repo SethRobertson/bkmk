@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.96 2002/08/25 20:19:53 seth Exp $
+# $Id: Make.variables,v 1.97 2002/08/26 21:23:34 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -43,9 +43,15 @@ BKMKVAR_VAR_CORRECT=true
 export BK_INSTALLRDIR BK_INSTALLPATH BKMKVAR_VAR_CORRECT
 endif
 
-# this can (and should) be overridden by .user-variables for production builds
+# Provide safe default so that LD_LIBRARY_PATH will be used
+# If BK_INSTALLRPATH is "installdir" use the default install directory
+# If BK_INSTALLRPATH is some other value, use that
 ifndef BK_INSTALLRPATH
+BK_INSTALLRPATH=/Use/LD_LIBRARY_PATH/Instead/Of/Hardcoded/Paths/Silly/Linux/Libtool/Grr/Grr/Grr
+else
+ifeq ($(BK_INSTALLRPATH),installdir)
 BK_INSTALLRPATH=$(BK_INSTALLRDIR)
+endif
 endif
 
 ifndef BK_WANT_LIBTOOL

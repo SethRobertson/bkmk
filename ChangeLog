@@ -1,5 +1,11 @@
 2002-08-26  Seth Robertson  <seth@winwood.sysdetect.com>
 
+	* Make.variables (BK_INSTALLRPATH): BK_INSTALLRPATH is hardcoded in
+	programs and libraries and will override runtime specification of
+	library search path.  This is bad.  Provide a safe default and allow
+	people to specify other behavior (including the old default behavior
+	with the use of "installdir" as BK_INSTALLRPATH).
+
 	* Make.targets ($(BK_REALTOP)/bkmk/.timestamp): Target to rebuild
 	bkmk configuration if missing.
 	
