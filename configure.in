@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.113 2004/07/08 21:41:40 dupuy Exp $
+dnl $Id: configure.in,v 1.114 2004/07/12 17:23:37 jtt Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.113 $)dnl
+AC_REVISION($Revision: 1.114 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
@@ -275,6 +275,8 @@ AC_PATH_PROGS(BROWSER, browser netscape konqueror mozilla iexplore.exe lynx,
 
 AC_PATH_PROG(XREF, xref, $FALSE)
 AC_PATH_PROG(HEAD, head, $FALSE)
+
+AC_CHECK_FILES(/proc/net/route)
 
 if test "$ac_cv_search_gethostbyname2" = "no"
 then
