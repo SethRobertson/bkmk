@@ -1,5 +1,5 @@
 #! /bin/sh
-# $Id: os-name.sh,v 1.7 2004/02/26 19:32:23 dupuy Exp $
+# $Id: os-name.sh,v 1.8 2004/09/29 17:58:24 dupuy Exp $
 #
 # ++Copyright SYSDETECT++
 #
@@ -27,6 +27,7 @@ case `uname -s` in
   '') echo UNKNOWN; exit ;;
   *)
     echo `uname -s` `uname -r | sed -e 's/-.*//'` | sed -e 's/ /-/' -e 's/ //g'
+    exit
     ;;
 esac
 

@@ -1,3 +1,7 @@
+2004-09-29  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* os-name.sh: don't echo uname output twice for non-Linux
+
 2004-09-22  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* aclocal.m4 (AC_SECOND_CONNECT_TO_REFUSED_PORT): don't leak fd if
