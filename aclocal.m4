@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.6 2002/06/07 21:56:05 dupuy Exp $
+# $Id: aclocal.m4,v 1.7 2002/06/07 22:34:52 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -109,17 +109,17 @@ LIBS="-lnsl $LIBS"])])dnl
 ])# AC_FUNC_INET_PTON
 
 
-# This works well for now; in the future if we need to get this from a strange
-# location, we might want to use AC_SEARCH_LIB instead of AC_CHECK_LIB
 #
 # AC_FUNC_GETTEXT
 # ----------------
 AC_DEFUN([AC_FUNC_GETTEXT],
 [AC_CHECK_FUNCS(gettext, [],
 [# gettext is in -lintl on BSD, Solaris, other systems
+ac_gettext_LIBS=$LIBS
+LIBS="-L/usr/local/lib $LIBS"
 AC_CHECK_LIB(intl, gettext,
              [AC_DEFINE(HAVE_GETTEXT)
-LIBS="-lintl $LIBS"])])dnl
+LIBS="$LIBS -lintl"], LIBS=$ac_gettext_LIBS)])dnl
 ])# AC_FUNC_GETTEXT
 
 

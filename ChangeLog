@@ -1,6 +1,7 @@
 2002-06-07  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* aclocal.m4 (AC_FUNC_GETTEXT): see if -lintl is needed for gettext
+	look in /usr/local/lib for -lintl if gettext not in -lc
 
 	* configure.in: use AC_FUNC_GETTEXT
 
