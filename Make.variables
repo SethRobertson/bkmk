@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.115 2002/10/22 21:06:24 jtt Exp $
+# $Id: Make.variables,v 1.116 2002/10/31 18:43:03 salex Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -386,10 +386,10 @@ COMPILER_DEBUG_ERROR=-Werror
 endif # NO_WERROR
 
 ifneq ($(findstring -i386,$(BK_ARCHNAME)),)
-GCCHWOPT= -mcpu=i686 -march=i686 -malign-functions=4
+GCCHWOPT= -mcpu=i686 -march=i686 -falign-functions=4
 endif
 ifneq ($(findstring -i686,$(BK_ARCHNAME)),)
-GCCHWOPT= -mcpu=i686 -march=i686 -malign-functions=4
+GCCHWOPT= -mcpu=i686 -march=i686 -falign-functions=4
 endif
 ifneq ($(findstring -sun4,$(BK_ARCHNAME)),)
 # reasonable settings for 32-bit mode
