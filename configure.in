@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.43 2002/09/30 21:59:09 dupuy Exp $
+dnl $Id: configure.in,v 1.44 2002/10/04 17:00:29 jtt Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.43 $)dnl
+AC_REVISION($Revision: 1.44 $)dnl
 AC_INIT(Make.bkvariables)
 AC_CONFIG_AUX_DIR(acaux)
 
@@ -55,16 +55,16 @@ AC_PATH_PROG(PWDPROG, pawd, pwd)
 # test for oracle
 echo $ECHO_N "checking for Oracle... $ECHO_C" >&6
 if test x${ORACLE_HOME} = x; then
-  export ORACLE_HOME=/proj/oracle
+  ORACLE_HOME=/proj/oracle; export ORACLE_HOME
 fi
 if test -x ${ORACLE_HOME}/bin/xml && ${ORACLE_HOME}/bin/xml -h >/dev/null 2>&1
 then
   AC_DEFINE(HAVE_ORACLE)
-  export HAVE_ORACLE=true
+  HAVE_ORACLE=true; export HAVE_ORACLE
   AC_SUBST(ORACLE_HOME)
   echo "${ECHO_T}$ORACLE_HOME" >&6
 else
-  export HAVE_ORACLE=false
+  HAVE_ORACLE=false; export HAVE_ORACLE
   echo "${ECHO_T}no" >&6
 fi
 AC_SUBST(HAVE_ORACLE)
