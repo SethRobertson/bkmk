@@ -1,4 +1,4 @@
-# $Id: Make.config.in,v 1.55 2004/07/30 19:32:30 jtt Exp $
+# $Id: Make.config.in,v 1.56 2004/12/27 23:55:02 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -81,6 +81,7 @@ UNIQ=@UNIQ@
 XARGS=@XARGS@
 EGREP=@EGREP@
 TEE=@TEE@
+EXPR=@EXPR@
 UNAME=@UNAME@
 CHMOD=@CHMOD@
 JOIN=@JOIN@
