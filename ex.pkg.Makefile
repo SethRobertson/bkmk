@@ -1,5 +1,5 @@
 ######################################################################
-# $Id: ex.pkg.Makefile,v 1.4 2001/06/18 22:41:46 seth Exp $
+# $Id: ex.pkg.Makefile,v 1.5 2001/11/28 18:13:06 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -34,4 +34,4 @@ include $(GROUPTOP)/$(PKGTOP)/bkmk/Make.include
 ## END BKSTANDARD MAKEFILE
 ##################################################
 
-BK_LOCALCLEANJUNK=.install BUILD
+BK_LOCALCLEANJUNK=.install BUILD JAVA

@@ -1,3 +1,10 @@
+2001-11-28  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.production: do better at linking files into JAVA directory
+	tree on systems where symbolic links aren't fully supported
+
+	* ex.pkg.Makefile (BK_LOCALCLEANJUNK): add JAVA directory
+
 2001-11-27  Matt Miller  <matt@sysdetect.com>
 
 	* Make.{variables,targets}: force makefile-mode in emacs.
