@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.52 2002/10/20 05:17:53 jtt Exp $
+dnl $Id: configure.in,v 1.53 2002/10/21 15:41:59 jtt Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,8 +15,9 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.52 $)dnl
-AC_INIT(Make.bkvariables)
+AC_REVISION($Revision: 1.53 $)dnl
+AC_INIT
+AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
 
 echo 
@@ -116,7 +117,7 @@ then
    AC_DEFINE_UNQUOTED([BK_QUAD_TYPE],[LONG_LONG])
 else     
    AC_DEFINE_UNQUOTED([BK_QUAD_TYPE],[LONG])
-   AC_WARN([must treat quads as longs])
+   AC_MSG_WARN([must treat quads as longs])
 fi
 
 AC_CHECK_TYPE(u_int8_t, uint8_t)
