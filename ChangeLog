@@ -1,3 +1,9 @@
+2002-07-16  James Tanis  <jtt@saint.sysdetect.com>
+
+	* aclocal.m4 (LIBS): Check for libiconv on machines which need libintl.
+
+	* Make.variables (COMPILER_NAME): Bounds checking support
+
 2002-07-15  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.targets (install): subdirs must build first for Java

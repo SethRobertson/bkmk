@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.GNUmakefile,v 1.5 2002/07/13 04:40:51 jtt Exp $
+# $Id: Make.GNUmakefile,v 1.6 2002/07/16 22:03:42 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -48,10 +48,10 @@ subtags: tags
 neat: clean
 nuke: distclean
 
-clean:
+clean::
 	@if test -f $(ARCH)/Makefile && cd $(ARCH); then $(MAKE) $@; fi
 
-distclean:
+distclean::
 	-@if test -f $(ARCH)/Makefile; then $(MAKE) -f $(ARCH)/Makefile $@; fi
 	$(RM_CONFIG) -rf $(ARCH)
 

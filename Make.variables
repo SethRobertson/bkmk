@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.77 2002/07/15 18:04:21 jtt Exp $
+# $Id: Make.variables,v 1.78 2002/07/16 22:03:42 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -230,6 +230,7 @@ ifeq ($(CC_CONFIG),gcc)
 CC_CONFIG=$(BGCC)
 CCOPTS+=-fbounds-checking
 COMPILER_NAME=gcc
+BK_DEFINES+=-DBGCC_BOUNDS_CHECKING
 endif
 # NB: At SYSD, this does not yet work
 ifeq ($(CXX_CONFIG),g++)

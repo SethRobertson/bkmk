@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.7 2002/06/07 22:34:52 dupuy Exp $
+# $Id: aclocal.m4,v 1.8 2002/07/16 22:03:42 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -119,7 +119,8 @@ ac_gettext_LIBS=$LIBS
 LIBS="-L/usr/local/lib $LIBS"
 AC_CHECK_LIB(intl, gettext,
              [AC_DEFINE(HAVE_GETTEXT)
-LIBS="$LIBS -lintl"], LIBS=$ac_gettext_LIBS)])dnl
+LIBS="$LIBS -lintl"
+AC_HAVE_LIBRARY(iconv,LIBS="$LIBS -liconv")], LIBS=$ac_gettext_LIBS)])dnl
 ])# AC_FUNC_GETTEXT
 
 
