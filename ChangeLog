@@ -1,3 +1,8 @@
+2003-05-16  Seth Robertson  <seth@hawking.sysdetect.com>
+
+	* Make.variables (BK_STDJUNK): pchdir directory created by latest
+	insight for no apparent reason except to annoy developers
+
 2003-05-16  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* configure.in: get more detailed information on non-portable
