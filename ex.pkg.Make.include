@@ -1,5 +1,5 @@
 ######################################################################
-# $Id: ex.pkg.Make.include,v 1.7 2003/06/17 05:59:48 seth Exp $
+# $Id: ex.pkg.Make.include,v 1.8 2003/12/29 20:02:16 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -15,6 +15,6 @@
 # Foo package meta Make.include
 #
 PKG_DEFINES=#-DFOOHACKS
-PKG_INCS=-I$(BK_INSTALLINCDIR)
-PKG_LDS=-L$(BK_INSTALLLIBDIR)
+PKG_INCS=
+PKG_LDS=
 PKG_LIBS=

@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.180 2003/12/29 19:42:53 seth Exp $
+# $Id: Make.variables,v 1.181 2003/12/29 20:02:16 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -25,16 +25,16 @@ PWD:=$(shell $(PERL) -e $(NORMALIZEPWD))
 
 # this is the directory where libraries will actually be copied; cannot be path
 NORMALIZERDIR='$$_ = q^$(PWD)/$(BK_INSTALLLIBDIR)^;'$(NORMALIZE)
-BK_INSTALLRDIR:=$(shell $(PERL) -e $(NORMALIZERDIR))
+BK_INSTALLRDIR=$(shell $(PERL) -e $(NORMALIZERDIR))
 
 NORMALIZEPATH='$$_ = q^$(PWD)/$(BK_INSTALLPROGDIR)^;'$(NORMALIZE)
 BK_INSTALLPATH=$(shell $(PERL) -e $(NORMALIZEPATH))
 
-NORMALIZEDIR='$$_ = q^$(PWD)/$(BK_SAVE_INSTALLBASE)^;'$(NORMALIZE)
-BK_INSTALLDIR:=$(shell $(PERL) -e $(NORMALIZEDIR))
+NORMALIZEDIR:='$$_ = q^$(PWD)/$(BK_SAVE_INSTALLBASE)^;'$(NORMALIZE)
+BK_INSTALLDIR=$(shell $(PERL) -e $(NORMALIZEDIR))
 
 BKMKVAR_VAR_CORRECT=true
-export BK_INSTALLRDIR BK_INSTALLPATH BKMKVAR_VAR_CORRECT
+export BK_INSTALLRDIR BK_INSTALLPATH BKMKVAR_VAR_CORRECT BK_INSTALLDIR
 endif # BKMKVAR_VAR_CORRECT
 
 # If BK_INSTALLRPATH is "installdir" or unset use the default directory
@@ -591,38 +591,6 @@ endif
 
 OS_SEARCHPATH=/usr/local/lib /usr/lib /usr/local/gnu/lib
 
-BK_ALLDEFINES=$(USER_DEFINES) $(LOCAL_DEFINES) $(GROUP_DEFINES) $(PKG_DEFINES) $(BK_DEFINES) $(OS_DEFINES)
-BK_ALLINCS=$(LOCAL_INCS) $(GROUP_INCS) $(PKG_INCS) $(BK_INCS) $(OS_INCS)
-BK_ALLLDS=$(LOCAL_LDS) $(GROUP_LDS) $(PKG_LDS) $(BK_LDS) $(OS_LDS) $(INSURE_LDS)
-# The insure debug libs are allegedly supposed to go last.
-BK_ALLLIBS=$(LOCAL_LIBS) $(GROUP_LIBS) $(PKG_LIBS) $(BK_LIBS) $(PTHREAD_LIBS) $(OS_LIBS) $(AC_LIBS) $(INSURE_DEBUG_LIBS) $(INSURE_LIBS)
-BK_LIBDIR=$(OS_SEARCHPATH) $(patsubst -L%,%,$(filter -L%,$(BK_ALLLDS)))
-BK_RELINKLIBS=$(LOCAL_RELINK_LIBS) $(GROUP_RELINK_LIBS) $(PKG_RELINK_LIBS) $(BK_RELINK_LIBS) $(OS_RELINK_LIBS)
-
-
-######################################################################
-# Tags
-CTAGS=ctags
-ETAGS=etags
-
-
-######################################################################
-# These are built in to the shell, so you don't need to use them, but
-# they are defined for the use of the excessively paranoid.
-CD=cd
-ECHO=echo
-
-######################################################################
-# BUILD directory independence
-vpath %.h $(BK_TRUECWD)
-vpath %.c $(BK_TRUECWD)
-vpath %.l $(BK_TRUECWD)
-vpath %.y $(BK_TRUECWD)
-vpath %.3 $(BK_TRUECWD)
-vpath %.5 $(BK_TRUECWD)
-vpath %.1 $(BK_TRUECWD)
-vpath %.8 $(BK_TRUECWD)
-
 # <KLUDGE>If you use absolute paths for BK_INSTALLLIBDIR (BK_INSTALLBASE) you
 # will get errors like the following as a result of the vpath declarations:
 #
@@ -655,7 +623,53 @@ RELATIVIZE='								   \
 	}								   \
 	print join("/", @there) . "\n";'
 
-BK_INSTALLRELLIBS:=$(shell $(PERL) -e $(RELATIVIZE) $(PWD) $(BK_INSTALLLIBDIR))
+BK_INSTALLRELDIR=$(shell $(PERL) -e $(RELATIVIZE) $(PWD) $(BK_INSTALLDIR))
+BK_INSTALLRELLIBS=$(BK_INSTALLRELDIR)/lib
+
+ifneq ($(strip $(BK_INSTALLRELDIR)),)
+INSTALL_LDS=-L$(BK_INSTALLRELDIR)/lib
+INSTALL_INCS=-I$(BK_INSTALLRELDIR)/include
+else
+ifneq ($(strip $(BK_INSTALLDIR)),)
+INSTALL_LDS=-L$(BK_INSTALLDIR)/lib
+INSTALL_INCS=-I$(BK_INSTALLDIR)/include
+endif
+endif
+
+
+
+BK_ALLDEFINES=$(USER_DEFINES) $(LOCAL_DEFINES) $(GROUP_DEFINES) $(PKG_DEFINES) $(BK_DEFINES) $(OS_DEFINES)
+BK_ALLINCS=$(LOCAL_INCS) $(GROUP_INCS) $(PKG_INCS) $(BK_INCS) $(INSTALL_INCS) $(OS_INCS)
+
+BK_ALLLDS=$(LOCAL_LDS) $(GROUP_LDS) $(PKG_LDS) $(BK_LDS) $(INSTALL_LDS) $(OS_LDS) $(INSURE_LDS)
+# The insure debug libs are allegedly supposed to go last.
+BK_ALLLIBS=$(LOCAL_LIBS) $(GROUP_LIBS) $(PKG_LIBS) $(BK_LIBS) $(PTHREAD_LIBS) $(OS_LIBS) $(AC_LIBS) $(INSURE_DEBUG_LIBS) $(INSURE_LIBS)
+BK_LIBDIR=$(OS_SEARCHPATH) $(patsubst -L%,%,$(filter -L%,$(BK_ALLLDS)))
+BK_RELINKLIBS=$(LOCAL_RELINK_LIBS) $(GROUP_RELINK_LIBS) $(PKG_RELINK_LIBS) $(BK_RELINK_LIBS) $(OS_RELINK_LIBS)
+
+
+######################################################################
+# Tags
+CTAGS=ctags
+ETAGS=etags
+
+
+######################################################################
+# These are built in to the shell, so you don't need to use them, but
+# they are defined for the use of the excessively paranoid.
+CD=cd
+ECHO=echo
+
+######################################################################
+# BUILD directory independence
+vpath %.h $(BK_TRUECWD)
+vpath %.c $(BK_TRUECWD)
+vpath %.l $(BK_TRUECWD)
+vpath %.y $(BK_TRUECWD)
+vpath %.3 $(BK_TRUECWD)
+vpath %.5 $(BK_TRUECWD)
+vpath %.1 $(BK_TRUECWD)
+vpath %.8 $(BK_TRUECWD)
 
 ######################################################################
 # This works almost perfectly, except that this is evaluated

@@ -1,3 +1,13 @@
+2003-12-29  James Tanis  <jtt@buscemi.sysdetect.com>
+
+	* ex.pkg.Make.include (PKG_LDS): Looking in install directory is
+	now part of bkmk.
+
+	* Make.variables (NORMALIZERDIR): Delay expansion of some
+	variables. Export BK_INSTALLDIR [probably the most important
+	change].
+	
+
 2003-12-25  Seth Robertson  <seth@now.baka.org>
 
 	* Make.variables (BK_VPATH_A): Set up an automatic vpath %.a

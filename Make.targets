@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.targets,v 1.97 2003/11/21 22:28:56 dupuy Exp $
+# $Id: Make.targets,v 1.98 2003/12/29 20:02:16 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -78,6 +78,15 @@ nuke::
 	$(BK_SUBDIRRULE)
 	$(RRM) -- $(BK_NUKESTUFF)
 
+
+# This "user discretion" rule allows you to put a local_rule:: rule in any
+# subdirectory, type make local_rule at the top and have the rule expand in
+# the local directory. At the very least this is very useful for
+# discovering variables which expand to one value if make is invoked in the
+# directory in which the variables is used but to a different value if make
+# is invoked at the top.
+local_rule::
+	$(BK_SUBDIRRULE)
 
 #
 # Get rid of stuff that can be regenerated or is just stupid, including .depend files
@@ -540,4 +549,4 @@ $(BK_REALTOP)/bkmk/.timestamp:
 .PHONY : DEFAULT all default nuke clean neat depend nukedepend dotdepend \
 	build install actual_install \
 	nukeetags nukectags etags ctags tags subtags preprocess \
-	doxygen viewdox test help
+	doxygen viewdox test help local_rule
