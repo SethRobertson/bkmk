@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.109 2004/03/20 12:34:46 dupuy Exp $
+dnl $Id: configure.in,v 1.110 2004/06/07 17:02:01 jtt Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.109 $)dnl
+AC_REVISION($Revision: 1.110 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
@@ -71,6 +71,7 @@ AC_C_ALIGN_FUNCTIONS
 AC_CHECK_SIZEOF(int)
 AC_CHECK_SIZEOF(long)
 AC_CHECK_SIZEOF(long long)
+AC_CHECK_SIZEOF(void *)
 
 if test "$ac_cv_prog_ac_ct_CC" = "gcc"
 then
