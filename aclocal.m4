@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.24 2002/10/22 21:06:24 jtt Exp $
+# $Id: aclocal.m4,v 1.25 2002/10/29 01:00:15 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -78,25 +78,6 @@ then
 	AC_DEFINE(HAVE_GMTIME_R_PROTOTYPE)
 fi
 ])
-
-# BK_FUNC_ISINF
-# --------
-# 
-# Check if the platform supports the isinf function
-#
-#
-AC_DEFUN([BK_FUNC_ISINF], [AC_CACHE_CHECK([for isinf], bk_func_isinf,
- AC_TRY_LINK(
-[
-#include <math.h>
-],[double t=isinf(0.0)],
-[ bk_func_isinf=yes; ],[ bk_func_isinf=no; ]))
-if test "$bk_func_isinf" = "yes"
-then
-	AC_DEFINE(HAVE_ISINF)
-fi
-])
-
 
 # BK_C_SIG_BRAINDAMAGE
 # --------

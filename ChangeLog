@@ -1,3 +1,7 @@
+2002-10-28  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* aclocal.m4: BK_FUNC_ISINF can be replaced with AC_CHECK_FUNCS(isinf)
+
 2002-10-18  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* chcopy.pl: Insure doesn't mind unused static const char arrays;

@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.55 2002/10/22 21:06:25 jtt Exp $
+dnl $Id: configure.in,v 1.56 2002/10/29 01:00:15 dupuy Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.55 $)dnl
+AC_REVISION($Revision: 1.56 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
@@ -27,10 +27,7 @@ echo
 AC_PROG_CC
 
 if test "$CC" "!=" "gcc"; then
-   echo
-   echo "WARNING: Attempting to compile without gcc may be painful."
-   echo "You have been warned."
-   echo
+  AC_MSG_WARN([Attempting to compile without gcc may be painful])
 fi
 
 AC_PROG_CXX
@@ -42,10 +39,10 @@ AC_PROG_CC_C_O
 
 if test "$ac_cv_prog_ac_ct_CC" = "gcc"
 then
-	CFLAGS_OLD="$CFLAGS"
-	CFLAGS="$CFLAGS -Werror -Wchar-subscripts"
-	BK_C_OVERZEALOUS_CHAR_SUBSCRIPTS
-	CFLAGS="$CFLAGS_OLD"
+  CFLAGS_OLD="$CFLAGS"
+  CFLAGS="$CFLAGS -Werror -Wchar-subscripts"
+  BK_C_OVERZEALOUS_CHAR_SUBSCRIPTS
+  CFLAGS="$CFLAGS_OLD"
 fi
 
 echo $ECHO_N "checking for compiler warning flags... $ECHO_C" >&6
@@ -64,10 +61,10 @@ AC_PATH_PROG(PWDPROG, pawd, pwd)
 
 # test for oracle
 echo $ECHO_N "checking for Oracle... $ECHO_C" >&6
-if test x${ORACLE_HOME} = x; then
+if test "" = "${ORACLE_HOME}"; then
   ORACLE_HOME=/proj/oracle; export ORACLE_HOME
 fi
-if test -x ${ORACLE_HOME}/bin/xml && ${ORACLE_HOME}/bin/xml -h >/dev/null 2>&1
+if test -x ${ORACLE_HOME}/bin/xml && ${ORACLE_HOME}/bin/xml -h>/dev/null 2>&1
 then
   AC_DEFINE(HAVE_ORACLE)
   HAVE_ORACLE=true; export HAVE_ORACLE
@@ -95,7 +92,7 @@ AC_FUNC_INET_PTON
 
 AC_FUNC_MKTIME
 if test $ac_cv_func_working_mktime = no; then
- AC_DEFINE(MKTIME_HAS_BUGS)
+  AC_DEFINE(MKTIME_HAS_BUGS)
 fi
 AC_TIME_MAX(BK_TIME_MAX)
 
@@ -110,7 +107,8 @@ AC_SEARCH_LIBS([gethostbyname],[resolv nsl])
 AC_SEARCH_LIBS([inet_aton],[resolv nsl])
 AC_SEARCH_LIBS([gethostbyname2],[resolv],AC_DEFINE(HAVE_GETHOSTBYNAME2))
 
-AC_CHECK_FUNCS(ntohll memmem memrchr setenv strndup strnlen strverscmp)
+AC_CHECK_FUNCS(isinf ntohll)
+AC_CHECK_FUNCS(memmem memrchr setenv strndup strnlen strverscmp)
 AC_CHECK_FUNCS(strptime gmtime_r timegm)
 AC_GMTIME_R_PROTOTYPE
 AC_FUNC_STRFTIME
@@ -156,12 +154,10 @@ AC_PATH_PROG(AR, ar)
 
 if test "$ac_cv_search_gethostbyname2" = "no"
 then
-	AC_MSG_WARN([you will only be able to resolve AF_INET names])
+  AC_MSG_WARN([you will only be able to resolve AF_INET names])
 fi
 
 AC_DEFINE_UNQUOTED(PATH_SEPARATOR, "$PATH_SEPARATOR")
-
-BK_FUNC_ISINF
 
 AC_CONFIG_HEADER(libbk_autoconf.h)
 AC_CONFIG_FILES(Make.config)
