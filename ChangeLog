@@ -1,3 +1,7 @@
+2003-10-08  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* os-name.sh: handle pretty much all Linux releases, most other Unix
+
 2003-10-07  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.GNUmakefile: normalize out /./ and /../ correctly;

@@ -1,5 +1,5 @@
 #! /bin/sh
-# $Id: os-name.sh,v 1.2 2003/10/08 18:08:02 dupuy Exp $
+# $Id: os-name.sh,v 1.3 2003/10/08 19:58:01 dupuy Exp $
 #
 # ++Copyright SYSDETECT++
 #
@@ -21,8 +21,21 @@
 #
 # --Copyright SYSDETECT--
 #
-if [ -f /etc/redhat-release ]; then
-    sed -e 's/release \([0-9.]*\).*/-\1/' -e 's/ //g' /etc/redhat-release
-else
-    echo UNKNOWN
+
+if [ -f /etc/debian_version ]; then
+  sed -e 's/^/DebianLinux-/' /etc/debian_version
+  exit
+elif [ -f /etc/slackware-version ]; then
+  sed -e 's/^\([0-9]*.[0-9]*\).*/SlackwareLinux-\1/' /etc/slackware-version
+  exit
 fi
+
+for REL in /etc/*-release /etc/issue
+do
+  if [ -f "$REL" ]; then
+    sed -e 's/release//' -e 's/ \([0-9][0-9.]*\).*/-\1/' -e 's/ //g' -e '3q' \
+     < $REL | grep Linux && exit
+  fi
+done
+
+echo `uname -s` `uname -r | sed -e 's/-.*//'` | sed -e 's/ /-/' -e 's/ //g'
