@@ -1,5 +1,5 @@
 /*				-*- C -*-
- * $Id: libbk_autoconf.h.in,v 1.39 2003/04/16 14:43:25 dupuy Exp $
+ * $Id: libbk_autoconf.h.in,v 1.40 2003/04/18 11:31:37 jtt Exp $
  *
  * ++Copyright LIBBK++
  *
@@ -83,6 +83,7 @@
 #undef HAVE_ISINF
 #undef HAVE_SETENV
 #undef HAVE_GETHOSTBYNAME2
+#undef HAVE_SOCKLEN_T
 
 #undef IN6_MULTICAST_TAKES_IN6_ADDR
 #undef IN6_MULTICAST_TAKES_S6_ADDR

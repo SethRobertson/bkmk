@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.76 2003/04/16 14:43:25 dupuy Exp $
+dnl $Id: configure.in,v 1.77 2003/04/18 11:31:37 jtt Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.76 $)dnl
+AC_REVISION($Revision: 1.77 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
@@ -39,6 +39,7 @@ AC_PROG_CC_C_O
 AC_PROG_AWK
 
 AC_C_ALIGN_FUNCTIONS
+BK_SOCKLEN_T
 
 AC_CHECK_SIZEOF(int)
 AC_CHECK_SIZEOF(long)
