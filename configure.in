@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.74 2003/04/03 19:46:59 seth Exp $
+dnl $Id: configure.in,v 1.75 2003/04/16 11:28:18 dupuy Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.74 $)dnl
+AC_REVISION($Revision: 1.75 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
@@ -106,11 +106,8 @@ AC_SEARCH_LIBS([socket],[socket])
 AC_SEARCH_LIBS([gethostbyname],[resolv nsl])
 AC_SEARCH_LIBS([inet_aton],[resolv nsl])
 
-dnl Use AC_SEARCH_LIBS() function, but don't update $LIBS if pthreads is found
-saved_LIBS=$LIBS
-AC_CHECK_LIB([pthread],[pthread_create],[HAVE_PTHREADS=true],[HAVE_PTHREADS=false])
+ACX_PTHREAD([HAVE_PTHREADS=true],[HAVE_PTHREADS=false])
 AC_SUBST(HAVE_PTHREADS)
-LIBS=$saved_LIBS
 
 dnl <TODO bugid="881">should use getaddressinfo function instead</TODO>>
 AC_SEARCH_LIBS([gethostbyname2],[resolv],AC_DEFINE(HAVE_GETHOSTBYNAME2))

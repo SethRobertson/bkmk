@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.135 2003/04/16 09:34:16 dupuy Exp $
+# $Id: Make.variables,v 1.136 2003/04/16 11:28:17 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -513,13 +513,19 @@ CFLAGS += -p
 OS_LIBS += -lc_p
 endif # BK_USING_PROF
 
+#
+# Uses PTHREAD_LIBS, PTHREAD_CFLAGS, PTHREAD_CC defined by ACX_PTHREAD autoconf
+#
 ifeq ($(BK_USING_PTHREADS),true)
-ifeq ($(BK_USING_GPROF),true)
-PTHREAD_LIBS=-lpthread_p
-else
-PTHREAD_LIBS=-lpthread
-endif
 BK_DEFINES+=-DBK_USING_PTHREADS
+CFLAGS += $(PTHREAD_CFLAGS)
+CC_CONFIG= $(PTHREAD_CC)
+
+ifeq ($(BK_USING_GPROF),true)
+ifeq ($(PTHREAD_LIBS),-lpthread)
+PTHREAD_LIBS=-lpthread_p
+endif
+endif
 endif
 
 ifeq ($(BK_USING_DMALLOC),true)

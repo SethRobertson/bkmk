@@ -1,3 +1,18 @@
+2003-04-16  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* configure.in: use ACX_PTHREAD
+
+	* Make.variables (BK_DEFINES, CFLAGS, CC_CONFIG): get pthreads settings
+
+	* Make.config.in (PTHREAD_LIBS, PTHREAD_CFLAGS, PTHREAD_CC): autoconf
+
+	* libbk_autoconf.h.in: get PTHREAD_CREATE_JOINABLE, if defined
+
+	* aclocal.m4 (ACX_PTHREAD): BSD- [and other OS-] compatible test
+	for pthread library and interfaces.
+
+	* acaux/ltmain.sh: -lc_r treatment for FreeBSD as well as OpenBSD
+
 2003-04-15  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.production ($(BK_LARGE_MODULE)): use -no-undefined to get
