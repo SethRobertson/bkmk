@@ -1,4 +1,4 @@
-# $Id: Make.variables,v 1.23 2001/11/06 22:15:50 jtt Exp $
+# $Id: Make.variables,v 1.24 2001/11/08 09:26:44 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -68,6 +68,10 @@ LEXLIBS=-lfl
 # Must be gnu make
 MAKE=make
 MFLAGS=
+
+######################################################################
+# Java stuff
+JARFLAGS=-cfvm
 
 ######################################################################
 # C stuff

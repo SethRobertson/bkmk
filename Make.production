@@ -1,4 +1,4 @@
-# $Id: Make.production,v 1.4 2001/08/27 03:10:21 seth Exp $
+# $Id: Make.production,v 1.5 2001/11/08 09:26:44 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -30,6 +30,8 @@
 %.tab.c %.tab.h: %.y
 	$(YACC) $(YFLAGS) $<
 
+%.class: %.java
+	$(JAVAC) $<
 
 #
 # Simple program production
@@ -57,3 +59,24 @@ BK_LARGE_LIBOBJ:=$(patsubst %.l,%.o,$(BK_LARGE_LIBOBJ))
 $(BK_LARGE_INTERNALPROG) $(BK_LARGE_LIB): $(BK_LARGE_LIBOBJ)
 	$(AR) $(ARFLAGS) $@ $?
 	$(RANLIB) $@
+
+#
+# Java production
+#
+BK_JAVA_CLASS:=$(patsubst %.java,$(BK_JAVA_PKG)/%.class,$(BK_JAVA_SRC))
+
+BK_JAVA_PKG_CLASS:=$(patsubst %,$(BK_JAVADIR)/%,$(BK_JAVA_CLASS))
+BK_JAVA_PKG_SRC:=$(patsubst %,$(BK_JAVADIR)/$(BK_JAVA_PKG)/%,$(BK_JAVA_SRC))
+
+BK_JAVA_MF:=$(patsubst %.jar,%.MF,$(BK_JAVA_JAR))
+
+$(BK_JAVADIR)/$(BK_JAVA_PKG)/%.java: %.java
+	$(LN_S) `$(PWD)`/$< $@
+
+$(BK_JAVA_JAR): $(BK_JAVADIR)/$(BK_JAVA_PKG) $(BK_JAVA_PKG_SRC) $(BK_JAVA_PKG_CLASS)
+	$(LN_S) `$(PWD)`/$(BK_JAVA_MF) $(BK_JAVADIR)/$(BK_JAVA_MF) 
+	cd $(BK_JAVADIR) && $(JAR) $(JARFLAGS) $@ $(BK_JAVA_MF) -C $(BK_JAVA_CLASS)
+	$(MV) $(BK_JAVADIR)/$(BK_JAVA_JAR) .
+
+$(BK_JAVADIR)/$(BK_JAVA_PKG):
+	$(MKDIR) $(BK_JAVADIR)/$(BK_JAVA_PKG)

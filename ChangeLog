@@ -1,3 +1,28 @@
+2001-11-08  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* configure (LN_S): regenerated with newer autoconf 2.52; configure
+	tweaked to avoid use of ln -s on cygwin [non-cygwin progs ignore .lnk]
+
+	* configure.in: find java compiler and archiver, check for symbolic
+	link support, avoid confusion between $PWD envar and pwd program,
+	find IE browser on Windows platforms correctly
+
+	* Make.config.in (JAVAC,JAR,LN_S,PWD): add java compiler and archiver,
+	check for symbolic link support, avoid confusion between $PWD envar and
+	pwd program
+
+	* Make.production (BK_JAVA_*): add java build rules
+
+	* Make.targets (install): add Java jar install target
+
+	* Make.variables (JARFLAGS): default flags for jar'ing java classes
+
+	* Make.bkvariables: spelling fixes, avoid BK_PKGNAME with space
+
+	* ex.hints: spelling fixes
+	
+	* ex.pkg.Make.preinclude: renamed from ex.pkg.Make.preinstall
+
 2001-11-06  James Tanis  <jtt@winwood.sysdetect.com>
 
 	* Make.targets ($(BK_INSTALLDOCDIR)/doxygen/Doxyfile): Extract
