@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.91 2002/08/21 21:52:09 seth Exp $
+# $Id: Make.variables,v 1.92 2002/08/22 23:53:21 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -422,6 +422,7 @@ BK_ALLINCS=$(LOCAL_INCS) $(GROUP_INCS) $(PKG_INCS) $(BK_INCS) $(OS_INCS)
 BK_ALLLDS=$(LOCAL_LDS) $(GROUP_LDS) $(PKG_LDS) $(BK_LDS) $(OS_LDS)
 BK_ALLLIBS=$(LOCAL_LIBS) $(GROUP_LIBS) $(PKG_LIBS) $(BK_LIBS) $(OS_LIBS)
 BK_LIBDIR=$(OS_SEARCHPATH) $(patsubst -L%,%,$(filter -L%,$(BK_ALLLDS)))
+BK_RELINKLIBS=$(LOCAL_RELINK_LIBS) $(GROUP_RELINK_LIBS) $(PKG_RELINK_LIBS) $(BK_RELINK_LIBS) $(OS_RELINK_LIBS)
 
 
 ######################################################################
