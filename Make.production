@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.production,v 1.29 2002/01/11 10:19:27 dupuy Exp $
+# $Id: Make.production,v 1.30 2002/01/23 17:44:23 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -121,11 +121,13 @@ $(BK_LARGE_LIB): $(BK_LARGE_LIBOBJ)
 
 $(subst .class,.cl%ss,$(BK_JAVA_PKG_CLASS)): \
 		$(subst .java,.j%va,$(BK_JAVA_PKG_SRC))
-	$(JAVAC) $(JAVACFLAGS) -classpath "$(BK_JAVA_CPATH)" $^
+	@echo $(JAVAC) $(JAVACFLAGS) -cp "$(BK_JAVA_CPATH)" $(BK_JAVA_SRC)
+	@$(JAVAC) $(JAVACFLAGS) -classpath "$(BK_JAVA_CPATH)" $^
 
 $(subst .class,.cl%ss,$(BK_JAVA_PKG_TCLASS)): \
 		$(subst .java,.j%va,$(BK_JAVA_PKG_TEST))
-	$(JAVAC) $(JAVACFLAGS) -classpath "$(BK_JAVA_TESTCP)" $^
+	@echo $(JAVAC) $(JAVACFLAGS) -cp "$(BK_JAVA_CPATH)" $(BK_JAVA_TEST)
+	@$(JAVAC) $(JAVACFLAGS) -classpath "$(BK_JAVA_TESTCP)" $^
 
 $(BK_JAVADIR)/$(BK_JAVA_PKG)/%: % $(BK_JAVADIR)/$(BK_JAVA_PKG)/.
 	@$(LN_S) -f $(CURDIR)/$< $@
