@@ -1,3 +1,8 @@
+2002-07-23  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.FreeBSD-4.5-pre: deal with FreeBSD gcc's -Wno-unused-parame
+	problems
+	
 2002-07-18  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.variables (COMPILER_DEBUG): turn on -Wunused

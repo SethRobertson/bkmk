@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.FreeBSD-4.5-pre,v 1.1 2002/04/03 01:21:58 seth Exp $
+# $Id: Make.FreeBSD-4.5-pre,v 1.2 2002/07/23 16:18:22 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -20,3 +20,7 @@
 OS_INCS=-I/usr/local/include
 OS_LDS=-L/usr/local/lib
 OS_LIBS=
+
+# until gcc on FreeBSD supports -Wno-unused-parameter
+
+override COMPILER_DEBUG:=-Wmissing-prototypes -Wstrict-prototypes -Wchar-subscripts -Wcomment -Wformat -Wimplicit -Wmain -Wmultichar -Wswitch -Wshadow -Wtrigraphs -Wunused $(COMPILER_DEBUG_ERROR)
