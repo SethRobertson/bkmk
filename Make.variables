@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.62 2002/03/16 07:59:34 dupuy Exp $
+# $Id: Make.variables,v 1.63 2002/03/18 23:39:29 ldog Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -138,7 +138,8 @@ BK_JAVA_LOCALE:=$(patsubst $(GROUPTOP)/$(LOCALE)/%,%,$(BK_JAVA_PROPS))
 
 BK_JAVA_PNGS:=$(foreach I,$(IMAGES),$(wildcard $(GROUPTOP)/$(I)/*.png))
 BK_JAVA_JPGS:=$(foreach I,$(IMAGES),$(wildcard $(GROUPTOP)/$(I)/*.jpg))
-BK_JAVA_IMAGES:=$(patsubst $(GROUPTOP)/%,%,$(BK_JAVA_PNGS) $(BK_JAVA_JPGS))
+BK_JAVA_GIFS:=$(foreach I,$(IMAGES),$(wildcard $(GROUPTOP)/$(I)/*.gif))
+BK_JAVA_IMAGES:=$(patsubst $(GROUPTOP)/%,%,$(BK_JAVA_PNGS) $(BK_JAVA_JPGS) $(BK_JAVA_GIFS))
 
 BK_JAVA_PKG_CLASS:=$(patsubst %,$(BK_JAVADIR)/%,$(BK_JAVA_CLASS))
 BK_JAVA_PKG_TCLASS:=$(patsubst %,$(BK_JAVADIR)/%,$(BK_JAVA_TCLASS))
