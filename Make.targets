@@ -1,6 +1,6 @@
 # -*- makefile -*-
 # 
-# $Id: Make.targets,v 1.74 2003/02/11 02:50:18 dupuy Exp $
+# $Id: Make.targets,v 1.75 2003/02/11 02:58:49 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -379,7 +379,7 @@ ctags:: nukectags
 
 tags:: etags
 
-subtags:: $(BK_SIMPLE_CSRC) $(BK_LARGE_CSRC) $(BK_LARGE_LIBCSRC) $(BK_LOCAL_CSRC) $(BK_JAVA_SRC) $(BK_LOCAL_OTHERTAGS)
+subtags:: $(BK_SIMPLE_CSRC) $(BK_LARGE_CSRC) $(BK_LARGE_LIBCSRC) $(BK_LOCAL_CSRC) $(BK_PUBLIC_INC) $(BK_JAVA_SRC) $(BK_LOCAL_OTHERTAGS)
 	if [ "$^" ]; then $(TAGCMD) -a -o $(TAGOUT) $^; fi
 	$(BK_SUBDIRRULE)
 
