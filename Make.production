@@ -1,4 +1,4 @@
-# $Id: Make.production,v 1.7 2001/11/12 22:49:37 dupuy Exp $
+# $Id: Make.production,v 1.8 2001/11/14 00:12:54 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -31,7 +31,7 @@
 	$(YACC) $(YFLAGS) $<
 
 %.class: %.java
-	$(JAVAC) $<
+	$(JAVAC) -classpath $(BK_JAVADIR) $<
 
 #
 # Simple program production

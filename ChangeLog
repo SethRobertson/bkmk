@@ -1,3 +1,7 @@
+2001-11-13  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.production: add -classpath $(BK_JAVADIR) to javac rule
+
 2001-11-12  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.production (BK_JAVA_PKG_LOCALE): locale resource bundle support
