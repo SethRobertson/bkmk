@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.63 2002/11/19 22:27:40 lindauer Exp $
+dnl $Id: configure.in,v 1.64 2002/11/20 19:08:20 lindauer Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.63 $)dnl
+AC_REVISION($Revision: 1.64 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
@@ -162,6 +162,8 @@ AC_PATH_PROGS(BROWSER, browser netscape konqueror mozilla iexplore.exe lynx,
 	      $FALSE, $PATH:/cygdrive/c/progra~1/intern~1)
 
 AC_PATH_PROG(AR, ar)
+
+AC_CHECK_FILE(/dev/fd/0, AC_DEFINE(HAVE_DEVFD))
 
 if test "$ac_cv_search_gethostbyname2" = "no"
 then
