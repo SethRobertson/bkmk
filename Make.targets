@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.targets,v 1.100 2004/10/13 19:36:59 dupuy Exp $
+# $Id: Make.targets,v 1.101 2005/01/07 20:25:03 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -392,6 +392,11 @@ ifneq ($(strip $(_BK_MAN8)),)
 	$(INSTALL) $(INSTALL_OTHERFLAGS) $(_BK_MAN8) $(BK_INSTALLMANDIR)/man8
 endif # _BK_MAN8
 endif # BK_INSTALLMANDIR
+ifneq ($(strip $(BK_REPLICATE)),)
+	$(MKDIR) $(BK_REPLICATEDIR)
+	$(TAR) cf - $(BK_REPLICATE) | (cd $(BK_REPLICATEDIR); tar xf -)
+	$(RM) $(BK_REPLICATEDIR)/Make{file,.include,.preinclude}
+endif # BK_REPLICATE
 
 #
 # Tags support

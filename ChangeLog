@@ -1,3 +1,9 @@
+2005-01-07  James Tanis  <jtt@blue.sysdetect.com>
+
+	* Make.targets: New "target variable" $(BK_REPLICATE) which causes
+	the specified subtree (generally `.') to be installed in INSTALL
+	verbatim. Only toplevel Makefile needed.
+
 2004-12-30  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.bkvariables (NORMALIZE): protect against trailing slash

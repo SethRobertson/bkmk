@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.bkvariables,v 1.56 2004/12/30 21:26:39 dupuy Exp $
+# $Id: Make.bkvariables,v 1.57 2005/01/07 20:25:03 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -208,4 +208,7 @@ BK_INSTALLJAVADIR=$(BK_INSTALLBASE)/java
 endif
 ifeq ($(BK_INSTALLPERLDIR),)
 BK_INSTALLPERLDIR=$(BK_INSTALLBASE)/perl
+endif
+ifeq ($(strip $(BK_REPLICATEDIR)),)
+BK_REPLICATEDIR=$(BK_INSTALLBASE)/$(shell $(BASENAME) $(PWD))
 endif
