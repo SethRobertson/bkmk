@@ -1,4 +1,4 @@
-#!/bin/perl -i.bak
+#! /usr/bin/perl -i.bak
 #
 # <TODO>This script should be enhanced to maintain existing copyright dates,
 # as well as choice of Baka vs. SysD copyright notices</TODO>
