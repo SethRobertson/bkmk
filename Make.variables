@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.148 2003/06/09 13:08:25 seth Exp $
+# $Id: Make.variables,v 1.149 2003/06/09 21:14:30 lindauer Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -65,9 +65,15 @@ BK_WANT_LIBTOOL=true
 endif # !BK_WANT_LIBTOOL
 
 # SSL Stuff
+BK_USING_SSL = true
+
 ifeq ($(strip $(WANT_SSL)), false)
-HAVE_LIBSSL = false
+BK_USING_SSL = false
 endif # WANT_SSL == false
+
+ifneq ($(strip $(HAVE_LIBSSL)), true)
+BK_USING_SSL = false
+endif # HAVE_LIBSSL != true
 
 ifdef SSL_INC_PATH
 BK_SSL_INC_PATH=$(SSL_INC_PATH)

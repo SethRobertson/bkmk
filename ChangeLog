@@ -1,3 +1,8 @@
+2003-06-09  Brian Lindauer  <lindauer@malkmus.sysdetect.com>
+
+	* Make.production ($(filter %.la,$(BK_LARGE_LIB))): Added external
+	rpath hook.
+
 2003-06-09  Seth Robertson  <seth@startide.sysdetect.com>
 
 	* Make.variables (BK_ALLDEFINES): Include USER_DEFINES to allow

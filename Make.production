@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.production,v 1.57 2003/06/09 19:14:06 dupuy Exp $
+# $Id: Make.production,v 1.58 2003/06/09 21:14:29 lindauer Exp $
 #
 # ++Copyright LIBBK++
 # 
@@ -185,9 +185,9 @@ ifeq ($(BK_WANT_LIBTOOL),true)
 $(filter %.la,$(BK_LARGE_LIB)): $(BK_LARGE_LIBOBJ)
 	-@$(MKDIR) $(BK_INSTALLRDIR) >/dev/null 2>&1
 	$(LIBTOOL_LINK) $(LINK.c) $(LT_LDFLAGS) -o $@ $^ $(LT_LDLIBS)	\
-	 -rpath $(BK_INSTALLRPATH) -no-undefined ||			\
+	 -rpath $(BK_INSTALLRPATH) -no-undefined $(BK_EXTERNAL_RPATH) || \
 	  $(LIBTOOL_LINK) $(LINK.c) $(LT_LDFLAGS) -o $@ $^ $(LT_LDLIBS)	\
-	   -rpath $(BK_INSTALLRPATH)
+	   -rpath $(BK_INSTALLRPATH) $(BK_EXTERNAL_RPATH)
 
 $(BK_LARGE_MODULE): $(BK_LARGE_LIBOBJ)
 	-@$(MKDIR) $(BK_INSTALLRDIR) >/dev/null 2>&1
