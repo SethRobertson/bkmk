@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.60 2002/03/06 00:39:39 dupuy Exp $
+# $Id: Make.variables,v 1.61 2002/03/16 06:25:34 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -313,4 +313,7 @@ vpath %.3 $(BK_TRUECWD)
 vpath %.5 $(BK_TRUECWD)
 vpath %.1 $(BK_TRUECWD)
 vpath %.8 $(BK_TRUECWD)
-vpath %$(LIBEXT) $(BK_LIBDIR)
+
+# -l library search path
+vpath %.a $(GROUPTOP)/lib $(BK_INSTALLLIBDIR) $(BK_LIBDIR)
+vpath %$(LIBEXT) $(GROUPTOP)/lib $(BK_INSTALLLIBDIR) $(BK_LIBDIR)

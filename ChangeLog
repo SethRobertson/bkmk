@@ -1,3 +1,13 @@
+2002-03-16  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.bkvariables, Make.targets, Make.variables: clean up
+	makefile structure, vpaths
+
+2002-03-12  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* ChangeLog, Makefile:
+	* Makefile (%.status): disable fast install, don't generate lt-worker
+
 2002-03-12  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Makefile (%.status): disable fast install, don't generate lt-worker

@@ -1,5 +1,5 @@
 ######################################################################
-# $Id: ex.pkg.Make.preinclude,v 1.2 2001/11/29 04:46:19 dupuy Exp $
+# $Id: ex.pkg.Make.preinclude,v 1.3 2002/03/16 06:25:34 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -25,3 +25,5 @@ BK_INSTALLDATADIR=$(BK_INSTALLBASE)/etc
 BK_INSTALLMANDIR=$(BK_INSTALLBASE)/man
 BK_INSTALLDOCDIR=$(BK_INSTALLBASE)/doc
 BK_INSTALLJAVADIR=$(BK_INSTALLBASE)/java
+
+-include $(GROUPTOP)/$(PKGTOP)/.user-variables

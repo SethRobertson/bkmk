@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.bkvariables,v 1.19 2002/03/08 11:34:44 dupuy Exp $
+# $Id: Make.bkvariables,v 1.20 2002/03/16 06:25:34 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -86,7 +86,3 @@ BK_BUILDTOP:=$(shell test -L $(GROUPTOP)/$(PKGTOP)/bkmk/Make.include && echo ../
 BK_TRUEGROUPTOP=$(BK_BUILDTOP)$(GROUPTOP)
 BK_TRUEPKGTOP=$(TRUEGROUPTOP)/$(PKGTOP)
 BK_TRUECWD=$(TRUEPKGTOP)/$(PKGSUBDIR)/$(GROUPSUBDIR)
-
-ifneq ($(BK_WANT_DEFAULT),false)
-BK_WANT_DEFAULT=true
-endif

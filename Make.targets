@@ -1,6 +1,6 @@
 # -*- makefile -*-
 # 
-# $Id: Make.targets,v 1.42 2002/03/05 22:24:08 dupuy Exp $
+# $Id: Make.targets,v 1.43 2002/03/16 06:25:34 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -18,6 +18,17 @@
 #
 
 #
+# Top-level (meta-package) makefiles get an install target as their default
+#
+ifeq ($(PKGTOP),.)
+ifneq ($(BK_WANT_DEFAULT),false)
+default: all
+all: install
+BK_WANT_DEFAULT=false
+endif
+endif
+
+#
 # Sub-directory rule
 #
 ifeq ($(strip $(BK_SUBDIR)),)
@@ -32,7 +43,7 @@ BK_SUBDIRRULE=@ \
 	done; exit $$ERR
 endif # BK_SUBDIR
 
-ifeq ($(BK_WANT_DEFAULT),true)
+ifneq ($(BK_WANT_DEFAULT),false)
 #
 # Default rule--standard target to compile everything
 #
@@ -368,6 +379,10 @@ endif # BK_WANT_JAVA
 endif # BK_JAVA_LANG
 endif # BK_JAVA_HELP
 
+# targets to avoid complaints about missing make includes
+$(BKMKDIR)/Make.$(BK_OSNAME)-pre:
+$(BKMKDIR)/Make.$(BK_OSNAME)-post:
+$(GROUPTOP)/$(PKGTOP)/.user-variables:
 
 #
 # Prevent targets from being files

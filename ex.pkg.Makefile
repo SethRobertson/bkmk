@@ -1,5 +1,5 @@
 ######################################################################
-# $Id: ex.pkg.Makefile,v 1.5 2001/11/28 18:13:06 dupuy Exp $
+# $Id: ex.pkg.Makefile,v 1.6 2002/03/16 06:25:34 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -14,9 +14,7 @@
 #
 # Foo package meta Makefile 
 #
-BK_SUBDIR=libclc libbk
-
-all: install
+BK_SUBDIR=libclc glib libbk bkmk
 
 GROUPTOP=.
 GROUPSUBDIR=.
