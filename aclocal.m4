@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.46 2003/06/25 15:32:38 brian Exp $
+# $Id: aclocal.m4,v 1.47 2003/09/22 16:29:56 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -14,7 +14,6 @@
 #
 # autoconf m4 macros
 #
-
 
 # AC_CONSTRUCTORS
 # ---------------
@@ -1905,6 +1904,7 @@ if test "$GCC" = yes; then
 else
   sys_lib_search_path_spec="/lib /usr/lib /usr/local/lib"
 fi
+sys_lib_search_path_spec=`minimize_path $sys_lib_search_path_spec`
 need_lib_prefix=unknown
 hardcode_into_libs=no
 
@@ -4464,9 +4464,9 @@ if AC_TRY_EVAL(ac_compile); then
 	   # provided the user.  The postdeps already come after the
 	   # user supplied libs so there is no need to process them.
 	   if test -z "$_LT_AC_TAGVAR(compiler_lib_search_path, $1)"; then
-	     _LT_AC_TAGVAR(compiler_lib_search_path, $1)="${prev}${p}"
+	     _LT_AC_TAGVAR(compiler_lib_search_path, $1)=`minimize_path "${prev}${p}"`
 	   else
-	     _LT_AC_TAGVAR(compiler_lib_search_path, $1)="${_LT_AC_TAGVAR(compiler_lib_search_path, $1)} ${prev}${p}"
+	     _LT_AC_TAGVAR(compiler_lib_search_path, $1)=`minimize_path "${_LT_AC_TAGVAR(compiler_lib_search_path, $1)} ${prev}${p}"`
 	   fi
 	   ;;
 	 # The "-l" case would never come before the object being

@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.103 2003/09/19 16:42:23 dupuy Exp $
+dnl $Id: configure.in,v 1.104 2003/09/22 16:30:00 jtt Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.103 $)dnl
+AC_REVISION($Revision: 1.104 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
@@ -23,6 +23,56 @@ AC_CONFIG_AUX_DIR(acaux)
 echo
 echo  "		CONFIGURING BAKA ENVIRONMENT"
 echo
+
+# Function to minimize a search path with components already separated by
+# spaces.
+#
+# It minimizes in 3 ways:
+# 1) It eliminates components referring to non-existent directories.
+# 2) It determines the shortest path name to the directory named by the
+#    each component
+# 3) It eliminates duplicate or "alias" components.
+#
+function minimize_path
+{
+MIN_PATH=""
+
+for entry in [$][@]
+do
+	dir=`echo $entry | sed -e 's/-L//'`
+	if test "$dir" != "$entry"
+	then
+		prefix="-L"
+	else
+		prefix=""
+	fi
+	cd $dir 2>/dev/null &&
+	{
+		min_dir=`pwd`
+		found=false
+		for path_dir in $MIN_PATH
+		do
+			if test "$path_dir" = "$min_dir"
+			then
+				found=true
+				break
+			fi
+		done
+		if test "$found" = "false"
+		then
+			if test -z "$MIN_PATH"
+			then
+				MIN_PATH="${prefix}${min_dir}"
+			else
+				MIN_PATH="$MIN_PATH ${prefix}${min_dir}"
+			fi
+		fi
+
+	}
+done
+echo "$MIN_PATH"
+}
+export minmize_path
 
 AC_PROG_CC
 
