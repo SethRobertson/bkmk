@@ -1,3 +1,10 @@
+2002-08-26  Seth Robertson  <seth@winwood.sysdetect.com>
+
+	* Make.targets (install): For unification between shared and
+	non-shared library builds, always build targets via actual_install
+	instead of mostly via actual_install (even for shared library
+	builds)
+
 2002-08-25  Seth Robertson  <seth@winwood.sysdetect.com>
 
         * Make.*: Many many performance changes (make overhead now cut to

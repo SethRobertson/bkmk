@@ -1,6 +1,6 @@
 # -*- makefile -*-
 # 
-# $Id: Make.targets,v 1.59 2002/08/25 20:19:53 seth Exp $
+# $Id: Make.targets,v 1.60 2002/08/26 20:22:11 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -164,10 +164,10 @@ endif # PKGSUBDIR
 #
 ifneq ($(BK_NO_USER_SHARED_LIBS),true)
 
-install::
-	$(BK_SUBDIRRULE)
+install: actual_install
 
-install:: actual_install
+actual_install::
+	$(BK_SUBDIRRULE)
 
 else
 
