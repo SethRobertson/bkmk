@@ -1,6 +1,6 @@
 # -*- makefile -*-
 # 
-# $Id: Make.targets,v 1.80 2003/04/23 22:37:54 dupuy Exp $
+# $Id: Make.targets,v 1.81 2003/04/24 17:45:53 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -203,7 +203,7 @@ install-first:
 	    ( cd $$d && $(MAKE) $@) ||					      \
 	    { ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; } \
 	  fi;								      \
-	done
+	done; exit $$ERR
 
 install-normal:							
 	@for d in $(BK_SUBDIR) strict_sh_fodder;			      \
@@ -216,7 +216,7 @@ install-normal:
 	    { ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; } \
 	    fi;								      \
 	  done;								      \
-	$(MAKE) actual_install
+	$(MAKE) actual_install && exit $$ERR
 
 install-last:
 	@for d in $(BK_ALL_LAST_DIRS) strict_sh_fodder;			      \
@@ -238,7 +238,7 @@ install-last:
 	    ( cd $$d && $(MAKE) $@ ) ||					      \
 	    { ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; } \
 	  fi;								      \
-	done
+	done; exit $$ERR
 endif
 
 ifeq ($(strip $(BK_WANT_JAVA)),false)

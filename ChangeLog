@@ -1,3 +1,7 @@
+2003-04-24  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.targets (install): propagate errors up through 3-pass install
+
 2003-04-23  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.targets (actual_install): BK_ONE_PASS_INSTALL support
