@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.96 2003/07/08 17:55:57 jtt Exp $
+dnl $Id: configure.in,v 1.97 2003/07/28 17:27:02 dupuy Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.96 $)dnl
+AC_REVISION($Revision: 1.97 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
@@ -95,9 +95,13 @@ AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PATH_PROG(PAWD, pawd, '')
 
+# give precedence to LD_LIBRARY_PATH where possible
+AC_ENABLE_PATHENV(first)
+# libtool static build doesn't work the baka way anyhow
+AC_DISABLE_STATIC
+
 AC_LIBTOOL_WIN32_DLL
 AC_LIBTOOL_DLOPEN
-AC_ENABLE_PATHENV(first)
 AC_PROG_LIBTOOL
 
 AC_SUBST(lt_prog_compiler_static)
