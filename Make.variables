@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.196 2005/01/12 00:16:15 dupuy Exp $
+# $Id: Make.variables,v 1.197 2005/01/31 22:47:41 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -445,16 +445,22 @@ endif
 ifneq ($(findstring -i686,$(BK_ARCHNAME)),)
 GCCHWOPT+= -mcpu=i686 -march=i686
 endif
+ifneq ($(findstring -x86_64,$(BK_ARCHNAME)),)
+# settings for 32-bit compatibility
+#GCCHWOPT+= -m32 -mcpu=i686 -march=i686
+# settings for EMT64
+#GCCHWOPT+= -mcpu=nocona -march=nocona
+# settings for AMD64
+GCCHWOPT+= -mcpu=opteron -march=opteron
+endif
 ifneq ($(findstring -sun4,$(BK_ARCHNAME)),)
 # reasonable settings for 32-bit mode
 GCCHWOPT+= -m32 -mcpu=v8 -mtune=supersparc
 endif
 ifneq ($(findstring -sun4u,$(BK_ARCHNAME)),)
-# reasonable settings for 32-bit mode
-GCCHWOPT+= -m32 -mcpu=v8 -mtune=ultrasparc
-# reasonable settings for 64-bit mode (gcc-3 required)
-#ALIGN_FUNCTIONS=32
-#GCCHWOPT+= -m64 -mcpu=ultrasparc
+# reasonable settings for 64-bit mode
+ALIGN_FUNCTIONS=32
+GCCHWOPT+= -m64 -mcpu=ultrasparc
 endif
 
 ifneq ($(BK_NO_OPT),true)

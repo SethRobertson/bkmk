@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.29 2003/12/07 01:47:49 dupuy Exp $
+# $Id: Makefile,v 1.30 2005/01/31 22:47:41 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -13,7 +13,7 @@
 #
 #
 OSFILE=.config_os_type
-OSNAME = $(shell uname -s | tr / - | sed 's/_.*//')-$(shell uname -r | sed 's/\(\.[^.()-]*\)[-.].*/\1/')
+OSNAME = $(shell uname -s | tr / - | sed 's/_.*//')-$(shell uname -r | sed 's/\(\.[^.()-]*\)[-.].*/\1/')-$(shell uname -m | tr / - )
 
 SRCFILES:=$(subst configure.in,,$(wildcard *.in))
 GENFILES=$(subst .in,,$(SRCFILES))

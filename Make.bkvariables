@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.bkvariables,v 1.57 2005/01/07 20:25:03 jtt Exp $
+# $Id: Make.bkvariables,v 1.58 2005/01/31 22:47:41 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -36,7 +36,7 @@ BK_BUILDTOP:=$(shell test -L $(GROUPTOP)/$(PKGTOP)/bkmk/Make.include && echo ../
 BK_TOP_USER_VARIABLES:=$(shell $(BKMKDIR)/find_user_var.pl "$(GROUPTOP)/$(PKGTOP)")
 
 override BKMK_VAR_CORRECT = true
-BK_ARCHNAME = $(shell uname -s | tr / - )-$(shell uname -r | sed 's/ .*//')-$(shell uname -m | tr / - )
+BK_ARCHNAME = $(shell uname -s | tr / - | sed 's/_.*//')-$(shell uname -r | sed 's/\(\.[^.()-]*\)[-.].*/\1/')-$(shell uname -m | tr / - )
 BK_OSNAME = $(shell uname -s | tr / - | sed 's/_.*//')-$(shell uname -r | sed 's/\(\.[^.()-]*\)[-.].*/\1/')
 
 BK_OSFILE=.config_os_type
@@ -76,7 +76,7 @@ endif
 endif
 endif
 
-ifneq ($(BK_CONFIG_OS_TYPE),$(BK_OSNAME))
+ifneq ($(BK_CONFIG_OS_TYPE),$(BK_ARCHNAME))
 
 # Oh boy. What a bloody hack. Assign to a variable (using := so that it gets
 # evaluated right now), so that the line complies with makefile syntax, but all
@@ -93,13 +93,14 @@ BK_DUMMY:=$(shell							      \
   (if [ -f $(BKMK_OSFILE) ]; then					      \
      NEAT=true;								      \
      echo; echo "	DETECTED ARCHITECTURE CHANGE"; echo;		      \
+     echo; echo "$(BK_CONFIG_OS_TYPE) != $(BK_ARCHNAME)"; echo;		      \
    else									      \
      NEAT=false;							      \
    fi;									      \
    rm -f $(BKMK_OSFILE);						      \
    (cd $(BKMKDIR) && { [ $$NEAT = "true" -o $(BK_CLEANING) = "false" ] &&     \
      rm -f config.cache config.status;					      \
-     $(MAKE) -s config.status 'OSNAME=$(BK_OSNAME)' 'OSFILE=$(BK_OSFILE)';    \
+     $(MAKE) -s config.status 'OSNAME=$(BK_ARCHNAME)' 'OSFILE=$(BK_OSFILE)';  \
     }; );								      \
    ($$NEAT && cd $(GROUPTOP)/$(PKGTOP) && {				      \
      eval `sed -n -e "s/=/='/" -e "/^ECHO_/s/.*/&'/p" < bkmk/Make.config` &&  \
