@@ -1,0 +1,13 @@
+######################################################################
+#
+# Foo package meta Make.include
+#
+PKG_DEFINES=-DFOOHACKS
+PKG_INCS=-I$(BK_INSTALLINCDIR)
+PKG_LDS=-L$(BK_INSTALLLIBDIR)
+
+BK_INSTALLPROGDIR=$(GROUPTOP)/$(PKGTOP)/.install/bin
+BK_INSTALLLIBDIR=$(GROUPTOP)/$(PKGTOP)/.install/lib
+BK_INSTALLINCDIR=$(GROUPTOP)/$(PKGTOP)/.install/include
+BK_INSTALLDATADIR=$(GROUPTOP)/$(PKGTOP)/.install/etc
+BK_INSTALLMAnDIR=$(GROUPTOP)/$(PKGTOP)/.install/man

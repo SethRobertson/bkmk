@@ -1,0 +1,15 @@
+
+Package is the meta construct, like "metaplex" or proconsul
+Group is the seperate unit, like libbk or libclc
+Local is the local directory
+
+PKGTOP - How to get from grouptop to packagetop
+	Typically defined in $GROUPTOP/Make.preinclude
+
+PKGSUBDIR = How to get to grouptop from packagetop
+
+GROUPTOP - How to get from the local directory to grouptop
+	Note that if you are in the meta (package) top, that is also the group top
+	Typically defined in each Makefile -- varies depending on depth in group
+
+GROUPSUBDIR - How to get to the current directory from grouptop

@@ -1,0 +1,132 @@
+#
+# ++Copyright LIBBK++
+#
+# Copyright (c) 2001 The Authors.  All rights reserved.
+#
+# This source code is licensed to you under the terms of the file
+# LICENSE.TXT in this release for further details.
+#
+# Mail <projectbaka@baka.org> for further information
+#
+# --Copyright LIBBK--
+#
+#
+# Variables
+#
+
+
+#
+# Junk
+#
+BK_NEATSTUFF=$(BK_LOCALJUNK) $(BK_GROUPJUNK) $(BK_PACKAGEJUNK) $(BK_BKJUNK) $(BK_STDJUNK)
+BK_CLEANSTUFF=$(BK_NEATSTUFF) $(BK_LOCALCLEANJUNK) $(BK_GROUPCLEANJUNK) $(BK_PACKAGECLEANJUNK) $(BK_BKCLEANJUNK)
+BK_NUKESTUFF=$(BK_CLEANSTUFF) $(BK_NUKEJUNK) $(BK_LOCALNUKEJUNK) $(BK_GROUPNUKEJUNK) $(BK_PACKAGENUKEJUNK) $(BK_BKNUKEJUNK)
+BK_BKJUNK=$(BK_SIMPLE_PROGS) $(BK_LARGE_PROG) $(BK_LARGE_LIB)
+BK_STDJUNK=*.o *.a core tca.log tca.map .inslog _1001.out a.out mon.out gmon.core *.core
+BK_BKCLEANJUNK=.depend tags TAGS
+BK_BKNUKEJUNK=.#* #* *.rej *.orig *~
+
+
+#
+# C source filenames for standard production rules
+#
+BK_SIMPLE_CSRC:=$(patsubst %,%.c,$(BK_SIMPLE_PROGS))
+BK_LARGE_CSRC:=$(patsubst %.y,%.tab.c,$(BK_LARGE_SRC))
+BK_LARGE_CSRC:=$(patsubst %.l,%.c,$(BK_LARGE_CSRC))
+BK_LARGE_LIBCSRC:=$(patsubst %.y,%.tab.c,$(BK_LARGE_LIBSRC))
+BK_LARGE_LIBCSRC:=$(patsubst %.l,%.c,$(BK_LARGE_LIBCSRC))
+
+
+#
+# Standard commands
+#
+RM=rm -f
+RRM=rm -rf
+MKDEP=$(CPP) -M $(CPPFLAGS)
+
+# Install (GNU or BSD)
+INSTALL=install -c
+INSTALL_BINFLAGS=-m 775
+INSTALL_OTHERFLAGS=-m 664
+
+
+# Yacc
+YACC=bison -y
+YFLAGS=
+YACCLIBS=-ly
+
+# Lex
+LEX=flex
+LOPTDEBUG= #-CF
+LFLAGS=$(LOPTDEBUG)
+LEXLIBS=-lfl
+
+# Must be gnu make
+MAKE=make
+MAKEFLAGS=
+
+######################################################################
+# C stuff
+
+# Traditional resolver
+RESOLVER_DEFINES=-DRESOLVER=RESOLV
+RESOLVER_INCLUDES=
+RESOLVER_LDS=
+LIBRESOLVER=-lresolv $(LIB44BSD)
+LIB44BSD=-l44bsd
+
+# Libraries
+DBM_LIBS=-ldb
+TERMINAL_LIBS=-ltermcap
+MATH_LIBS=-lm
+
+# BK issues
+BK_DEFINES= $(RESOLVER_DEFINES)
+BK_INCS= $(RESOLVER_INCLUDES)
+BK_LDS= $(RESOLVER_LDS)
+BK_LIBS= -lbk -ldict -lfsma -lpq $(LIBRESOLVER)
+
+# C
+CC_normal=gcc $(GCCOPTS)
+CC_strict=g++ $(GCCOPTS)
+CXX=g++
+COMPILER_DEBUG=-W -Wall -Wpointer-arith -Wno-unused -Wno-sign-compare $(COMPILER_DEBUG_ERROR)
+COMPILER_DEBUG_ERROR=-Werror
+COPTDEBUG=-g -O $(COMPILER_DEBUG)
+CFLAGS=$(COPTDEBUG)
+CPPFLAGS=$(BK_ALLINCS) $(BK_ALLDEFINES)
+LDFLAGS=$(BK_ALLLDS) $(BK_LIBS)
+
+######################################################################
+# What are you using, and what do you want?
+
+ifeq ($(WANT_GPROF),true)
+CFLAGS += -pg
+endif
+
+ifeq ($(WANT_PROF),true)
+CFLAGS += -p
+endif
+
+ifeq ($(USING_DMALLOC),true)
+BK_LIBS+= -ldmalloc
+BK_DEFINES+=-DUSING_DMALLOC -DDMALLOC_FUNC_CHECK
+endif
+
+
+BK_ALLDEFINES=$(LOCAL_DEFINES) $(GROUP_DEFINES) $(PKG_DEFINES) $(BK_DEFINES) $(OS_DEFINES)
+BK_ALLINCS=$(LOCAL_INCS) $(GROUP_INCS) $(PKG_INCS) $(BK_INCS) $(OS_INCS)
+BK_ALLLDS=$(LOCAL_LDS) $(GROUP_LDS) $(PKG_LDS) $(BK_LDS) $(OS_LDS)
+BK_ALLLIBS=$(LOCAL_LIBS) $(GROUP_LIBS) $(PKG_LIBS) $(BK_LIBS) $(OS_LIBS)
+
+
+######################################################################
+# BUILD directory independence
+vpath %.h $(BK_TRUECWD)
+vpath %.c $(BK_TRUECWD)
+vpath %.l $(BK_TRUECWD)
+vpath %.y $(BK_TRUECWD)
+vpath %.3 $(BK_TRUECWD)
+vpath %.5 $(BK_TRUECWD)
+vpath %.1 $(BK_TRUECWD)
+vpath %.8 $(BK_TRUECWD)

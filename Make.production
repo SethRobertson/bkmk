@@ -1,0 +1,58 @@
+#
+# ++Copyright LIBBK++
+#
+# Copyright (c) 2001 The Authors.  All rights reserved.
+#
+# This source code is licensed to you under the terms of the file
+# LICENSE.TXT in this release for further details.
+#
+# Mail <projectbaka@baka.org> for further information
+#
+# --Copyright LIBBK--
+#
+#
+# Production rules--convert "source" to "targets"
+#
+
+#
+# Standard compiling targets
+#
+%.o: %.c
+	$(COMPILE.c) $(OUTPUT_OPTION) $<
+
+%.i: %.c
+	$(CC) -E $(CPPFLAGS) -o $@ $<
+
+%.c: %.l
+	$(LEX) $(LFLAGS) -t $< > $@
+
+%.tab.c %.tab.h: %.y
+	$(YACC) $(YFLAGS) $<
+
+
+#
+# Simple program production
+#
+$(BK_SIMPLE_PROGS): %: %.c $(BK_LOCALLIBS) $(BK_GROUPLIBS) $(BK_PACKAGELIBS) $(BK_BKLIBS) $(BK_OSLIBS)
+	$(LINK.c) -o $@ $@.c $(LDLIBS)
+
+#
+# Larger program production
+#
+BK_LARGE_OBJ:=$(patsubst %.c,%.o,$(BK_LARGE_SRC))
+BK_LARGE_OBJ:=$(patsubst %.y,%.tab.o,$(BK_LARGE_OBJ))
+BK_LARGE_OBJ:=$(patsubst %.l,%.o,$(BK_LARGE_OBJ))
+
+$(BK_LARGE_PROG): $(BK_LARGE_OBJ) $(BK_LOCALLIBS) $(BK_GROUPLIBS) $(BK_PACKAGELIBS) $(BK_BKLIBS) $(BK_OSLIBS)
+	$(LINK.c) -o $@ $(BK_LARGE_OBJ) $(LDLIBS)
+
+#
+# Large library production
+#
+BK_LARGE_LIBOBJ:=$(patsubst %.c,%.o,$(BK_LARGE_LIBSRC))
+BK_LARGE_LIBOBJ:=$(patsubst %.y,%.tab.o,$(BK_LARGE_LIBOBJ))
+BK_LARGE_LIBOBJ:=$(patsubst %.l,%.o,$(BK_LARGE_LIBOBJ))
+
+$(BK_LARGE_LIB): $(BK_LARGE_LIBOBJ)
+	$(AR) $(ARFLAGS) $@ $?
+	$(RANLIB) $@

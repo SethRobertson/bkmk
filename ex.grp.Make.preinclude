@@ -1,0 +1,6 @@
+######################################################################
+#
+# Foo group Make preinclude for PKG definitions
+#
+PKGTOP=..
+PKGSUBDIR=libbk

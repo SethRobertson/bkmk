@@ -1,0 +1,32 @@
+#
+# ++Copyright LIBBK++
+#
+# Copyright (c) 2001 The Authors.  All rights reserved.
+#
+# This source code is licensed to you under the terms of the file
+# LICENSE.TXT in this release for further details.
+#
+# Mail <projectbaka@baka.org> for further information
+#
+# --Copyright LIBBK--
+#
+#
+# Baka specific master variables
+#
+
+# Do the activities requiring subprograms once only for efficiency
+ifneq ($(BKMK_VAR_CORRECT),true)
+
+BKMK_VAR_CORRECT = true
+BK_ARCHNAME = $(shell uname -s | tr / - )-$(shell uname -r | sed 's/ .*//')-$(shell uname -m | tr / - )
+BK_OSNAME = $(shell uname -s | tr / - )-$(shell uname -r | sed 's/\(\.[^.]*\)\..*/\1/')
+
+endif # BKMK_VAR_CORRECT
+
+# Discover where the true (e.g. non-BUILD indirectory) group and package locations are
+BK_BUILDTOP:=$(shell test -L $(GROUPTOP)/$(PKGTOP)/bkmk/Make.include && echo ../../ )
+BK_TRUEGROUPTOP=$(BK_BUILDTOP)$(GROUPTOP)
+BK_TRUEPKGTOP=$(TRUEGROUPTOP)/$(PKGTOP)
+BK_TRUECWD=$(TRUEPKGTOP)/$(PKGSUBDIR)/$(GROUPSUBDIR)
+
+BKMKDIR=$(TRUETOP)/bkmk
