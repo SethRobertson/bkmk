@@ -1,3 +1,12 @@
+2002-09-05  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.include (BK_WANT_HELP): set if WANT_HELP is non-empty
+
+	* Make.targets (default): disable help generation if BK_WANT_HELP=false
+
+	* Make.variables (EDIT_LT_PROGLINK): don't create a useless .BAK file
+	[James - when you're merging, don't create a useless .LTB file either]
+	
 2002-09-04  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* configure.in: look for bgcc in /usr/local/gnu/bin

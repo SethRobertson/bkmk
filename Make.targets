@@ -1,6 +1,6 @@
 # -*- makefile -*-
 # 
-# $Id: Make.targets,v 1.62 2002/08/26 21:07:17 seth Exp $
+# $Id: Make.targets,v 1.63 2002/09/05 21:20:42 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -58,11 +58,13 @@ endif # BK_WANT_C
 
 ifneq ($(strip $(BK_WANT_JAVA)),false)
 default:: $(BK_JAVA_JAR)
+ifneq ($(strip $(BK_WANT_HELP)),false)
 ifneq ($(strip $(BK_JAVA_HELP)),)
 ifneq ($(strip $(BK_JAVA_HELP_LANG)),)
 default:: help
 endif # BK_JAVA_HELP_LANG
 endif # BK_JAVA_HELP
+endif # BK_WANT_HELP
 endif # BK_WANT_JAVA
 endif # BK_WANT_DEFAULT
 
@@ -112,6 +114,7 @@ nukedepend::
 # colon rule.  Fortunately, only Java help file generation requires this now.
 
 ifneq ($(strip $(BK_WANT_JAVA)),false)
+ifneq ($(strip $(BK_WANT_HELP)),false)
 ifneq ($(strip $(BK_JAVA_HELP)),)
 ifneq ($(strip $(BK_JAVA_HELP_LANG)),)
 depend:: dotdepend
@@ -129,9 +132,10 @@ nuke clean::
 	for L in $(BK_JAVA_HELP_LANG); do \
 	  $(RM) `$(BK_INSTALLPROGDIR)/buildhelp -l $(BK_JAVA_HELP) $$L/Map.jhm`; \
 	done
-endif # BK_WANT_JAVA
-endif # BK_JAVA_LANG
+endif # BK_JAVA_HELPLANG
 endif # BK_JAVA_HELP
+endif # BK_WANT_HELP
+endif # BK_WANT_JAVA
 
 ifneq ($(strip $(BK_WANT_C)),false)
 ifneq ($(strip $(BK_SIMPLE_CSRC) $(BK_LARGE_CSRC) $(BK_LARGE_LIBCSRC) $(BK_LOCAL_CSRC) $(BK_LOCAL_OTHERDEPS)),)
@@ -176,55 +180,47 @@ else
 install:: install-first install-normal install-last
 
 install-first:
-	@ for d in $(BK_ALL_FIRST_DIRS);							\
-	do 											\
-		if [ -d $$d ]; 									\
-		then 										\
-			( cd $$d && $(MAKE) actual_install ) || 				\
-			{ ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; }	\
-		fi; 										\
-	done;											\
-	for d in $(BK_SUBDIR) $(BK_ALL_LAST_DIRS);						\
-	do 											\
-		if [ -d $$d ]; 									\
-		then 										\
-			( cd $$d && $(MAKE) $@)	||						\
-			{ ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; }	\
-		fi;										\
-	done
+	@for d in $(BK_ALL_FIRST_DIRS);					      \
+	do								      \
+	  if [ -d $$d ]; then						      \
+	    ( cd $$d && $(MAKE) actual_install ) ||			      \
+	    { ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; } \
+	  fi;								      \
+	done;								      \
+	for d in $(BK_SUBDIR) $(BK_ALL_LAST_DIRS);			      \
+	do								      \
+	  if [ -d $$d ]; then						      \
+	    ( cd $$d && $(MAKE) $@) ||					      \
+	    { ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; } \
+	  fi;								      \
+	done;
 
 install-normal:							
-	@ if [ -n "$(BK_SUBDIR)" ];								  \
-	then											  \
-		for d in $(BK_SUBDIR);								  \
-		do										  \
-			if [ -d $$d ];								  \
-			then									  \
-				( cd $$d && $(MAKE) $@ ) ||					  \
-				{ ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; } \
-												  \
-			fi;									  \
-		done;										  \
-	fi;											  \
+	@for d in $(BK_SUBDIR);						      \
+	do								      \
+	  if [ -d $$d ]; then						      \
+	    ( cd $$d && $(MAKE) $@ ) ||					      \
+	    { ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; } \
+	    fi;								      \
+	  done;								      \
+	fi;								      \
 	$(MAKE) actual_install;
 
 install-last:
-	@ for d in $(BK_ALL_LAST_DIRS);								\
-	do											\
-		if [ -d $$d ];									\
-		then										\
-			( cd $$d && $(MAKE) actual_install ) ||					\
-			{ ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; }	\
-		fi;										\
-	done;											\
-	for d in $(BK_SUBDIR) $(BK_ALL_FIRST_DIRS);						\
-	do											\
-		if [ -d $$d ];									\
-		then										\
-			( cd $$d && $(MAKE) $@ ) ||						\
-			{ ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; }	\
-		fi;										\
-	done
+	@for d in $(BK_ALL_LAST_DIRS);					      \
+	do								      \
+	  if [ -d $$d ]; then						      \
+	    ( cd $$d && $(MAKE) actual_install ) ||			      \
+	    { ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; } \
+	  fi;								      \
+	done;								      \
+	for d in $(BK_SUBDIR) $(BK_ALL_FIRST_DIRS);			      \
+	do								      \
+	  if [ -d $$d ]; then						      \
+	    ( cd $$d && $(MAKE) $@ ) ||					      \
+	    { ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; } \
+	  fi;								      \
+	done;
 endif
 
 ifeq ($(strip $(BK_WANT_JAVA)),false)
@@ -400,18 +396,18 @@ $(BK_INSTALLDOCDIR)/doxygen/Doxyfile:
 	   $(DOXYGEN) -g > /dev/null;	 \
 	   $(MV) Doxyfile Doxyfile.orig && \
 	   $(SED) -e '/^PROJECT_NAME/s%=.*%= $(BK_PKGNAME)%' \
-		  -e '/^OUTPUT_DIR/s%=.*%= $(BK_INSTALLDOCDIR)/doxygen%' \
-		  -e '/^MAN_OUT/s%=.*%= $(BK_REALMANDIR)%' \
-		  -e '/^INPUT[ \t]/s%=.*%= $(BK_DOXDIRS)%' \
-		  -e '/^FILE_PATTERNS/s%=.*%= *.[chyls] *.java%' \
-		  -e '/^GENERATE_MAN[ \t]/s%=.*%= YES%' \
-		  -e '/^RECURSIVE[ \t]/s%=.*%= YES%' \
-		  -e '/^EXCLUDE_PATTERNS/s%=.*%= *Test Test*%' \
-		  -e '/^EXTRACT_STATIC/s%=.*%= YES%' \
-		  -e '/^JAVADOC_AUTOBRIEF/s%=.*%= YES%' \
-		  -e '/^ALPHABETICAL_INDEX/s%=.*%= YES%' \
-		  -e '/^HAVE_DOT/s%=.*%= $(HAVE_DOT)%' \
-		< Doxyfile.orig > Doxyfile && \
+	      -e '/^OUTPUT_DIR/s%=.*%= $(BK_INSTALLDOCDIR)/doxygen%' \
+	      -e '/^MAN_OUT/s%=.*%= $(BK_REALMANDIR)%' \
+	      -e '/^INPUT[ \t]/s%=.*%= $(BK_DOXDIRS)%' \
+	      -e '/^FILE_PATTERNS/s%=.*%= *.[chyls] *.java%' \
+	      -e '/^GENERATE_MAN[ \t]/s%=.*%= YES%' \
+	      -e '/^RECURSIVE[ \t]/s%=.*%= YES%' \
+	      -e '/^EXCLUDE_PATTERNS/s%=.*%= *Test Test*%' \
+	      -e '/^EXTRACT_STATIC/s%=.*%= YES%' \
+	      -e '/^JAVADOC_AUTOBRIEF/s%=.*%= YES%' \
+	      -e '/^ALPHABETICAL_INDEX/s%=.*%= YES%' \
+	      -e '/^HAVE_DOT/s%=.*%= $(HAVE_DOT)%' \
+	    < Doxyfile.orig > Doxyfile && \
 	   $(ECHO) 'Please verify $(BK_INSTALLDOCDIR)/doxygen/Doxyfile'; \
 	 }
 
@@ -443,6 +439,7 @@ viewdox: doxygen
 # Generate Help Documentation
 #
 ifneq ($(strip $(BK_WANT_JAVA)),false)
+ifneq ($(strip $(BK_WANT_HELP)),false)
 ifneq ($(strip $(BK_JAVA_HELP)),)
 ifneq ($(strip $(BK_JAVA_HELP_LANG)),)
 
@@ -451,9 +448,10 @@ help: $(patsubst %, $(BK_JAVA_HELP)_%.jar, $(BK_JAVA_HELP_LANG))
 $(BK_JAVA_HELP)_%.jar: %/Map.jhm
 	$(BK_INSTALLPROGDIR)/buildhelp $(BK_JAVA_HELP) $<
 
-endif # BK_WANT_JAVA
-endif # BK_JAVA_LANG
+endif # BK_JAVA_HELP_LANG
 endif # BK_JAVA_HELP
+endif # BK_WANT_HELP
+endif # BK_WANT_JAVA
 
 # targets to avoid complaints about missing make includes
 $(BKMKDIR)/Make.$(BK_OSNAME)-pre:

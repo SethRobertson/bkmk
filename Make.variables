@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.101 2002/09/03 01:09:19 seth Exp $
+# $Id: Make.variables,v 1.102 2002/09/05 21:20:42 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -196,7 +196,7 @@ EDIT_LT_MODINSTALL=:
 else # BK_INSTALLRDIR==BK_INSTALLRPATH
 LINKMODE=prelink
 EDIT_LT_PROGLINK=\
-	$(PERL) -pi.BAK -e " \
+	$(PERL) -pi -e " \
 	  s|\S*(/[^/\s]*\.la)|$(BK_INSTALLRDIR)\1|g \
 	    if (/notinst_deplibs=/); \
 	  s|([,])(/n/[^/]+)?$(BK_INSTALLRDIR)|\1$(BK_INSTALLRPATH)|g \

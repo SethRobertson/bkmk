@@ -1,4 +1,4 @@
-#! /usr/bin/perl -i.orig 
+#! /usr/bin/perl -i.orig
 #
 #
 #
@@ -21,7 +21,7 @@ while (<>)
 {
   if ($. == 1)
     {
-print STDERR "Looking $ARGV\n" ;
+print STDERR "Looking at $ARGV\n" ;
       $state = 0;
     }
   if ($state == 2)
