@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.production,v 1.26 2002/01/07 17:03:12 jtt Exp $
+# $Id: Make.production,v 1.27 2002/01/07 19:45:41 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -106,14 +106,19 @@ $(BK_LARGE_LIB): $(BK_LARGE_LIBOBJ)
 # hacky and use a pseudo-stem "a" in .cl%ss and .j%va so that make treats
 # it like a pattern rule.  Amazingly enough, it works, as long as you don't
 # have a real pattern rule %.class: %.java that builds things one at a time.
+#
+# Note that you need to use $^ rather than $? so that all dependencies are
+# listed; with $? only those .java files that are newer than the first
+# out-of-date .class file will be regenerated, and the jar building stage will
+# complain about missing .class files (but won't fail).
 
 $(subst .class,.cl%ss,$(BK_JAVA_PKG_CLASS)): \
 		$(subst .java,.j%va,$(BK_JAVA_PKG_SRC))
-	$(JAVAC) $(JAVACFLAGS) -classpath "$(BK_JAVA_CPATH)" $?
+	$(JAVAC) $(JAVACFLAGS) -classpath "$(BK_JAVA_CPATH)" $^
 
 $(subst .class,.cl%ss,$(BK_JAVA_PKG_TCLASS)): \
 		$(subst .java,.j%va,$(BK_JAVA_PKG_TEST))
-	$(JAVAC) $(JAVACFLAGS) -classpath "$(BK_JAVA_TESTCP)" $?
+	$(JAVAC) $(JAVACFLAGS) -classpath "$(BK_JAVA_TESTCP)" $^
 
 $(BK_JAVADIR)/$(BK_JAVA_PKG)/%: % $(BK_JAVADIR)/$(BK_JAVA_PKG)/.
 	$(LN_S) -f $(CURDIR)/$< $@

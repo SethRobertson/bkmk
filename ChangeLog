@@ -1,5 +1,8 @@
 2002-01-07  Alexander Dupuy  <dupuy@sysdetect.com>
 
+	* Make.production ($(subst .class,.cl%ss,$(BK_JAVA_PKG_CLASS))):
+	use $^ rather than $? to ensure that all .java files are compiled
+
 	* Make.bkvariables (BK_DUMMY): tweak to not only clean, but re-run
 	configure; also reformat massive ${shell} with \ for readability
 
