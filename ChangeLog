@@ -1,3 +1,17 @@
+2002-04-03  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.GNUmakefile: include .user-variables
+	(DEFAULT, install, .DEFAULT): check BK_WANT_C before building
+
+	* Make.bkvariables (BK_WANT_*, BK_USING_*): allow user to omit BK_
+	prefix on commandline/.user-variables
+	
+	* Make.variables: normalize WANT/USING to use BK_ prefix
+
+	* Make.production: use BK_USING_INSURE
+
+	* Make.OpenBSD-2.9-post: use BK_USING_INSURE, BK_WANT_LIBTOOL
+
 2002-04-02  Seth Robertson  <seth@startide.sysdetect.com>
 
 	* Make.variables: Add /usr/local to standard paths.  Add -lintl to standard library.

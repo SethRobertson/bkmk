@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.GNUmakefile,v 1.2 2002/03/16 06:36:21 dupuy Exp $
+# $Id: Make.GNUmakefile,v 1.3 2002/04/03 17:22:42 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -19,19 +19,27 @@
 ARCH:=$(shell sh ./config.guess)
 CONFIGURED:=$(ARCH)/config.status
 
+-include $(GROUPTOP)/$(PKGTOP)/.user-variables
+
 include $(BKMKDIR)/Make.bkvariables
 -include $(BKMKDIR)/Make.$(BK_OSNAME)-pre
 include $(BKMKDIR)/Make.config
 -include $(BKMKDIR)/Make.$(BK_OSNAME)-post
 
 DEFAULT: $(CONFIGURED)
+ifneq ($(strip $(BK_WANT_C)),false)
 	cd $(ARCH) && $(MAKE)
+else
+	@:
+endif
 
 include $(PKGTOP)/Make.include
 
 install: $(CONFIGURED)
 	-mkdir -p $(INSTBASE)
+ifneq ($(strip $(BK_WANT_C)),false)
 	cd $(ARCH) && $(MAKE) && $(MAKE) $@
+endif
 
 subtags: tags
 neat: clean
@@ -45,7 +53,11 @@ distclean:
 	$(RM_CONFIG) -rf $(ARCH)
 
 .DEFAULT: $(CONFIGURED)
+ifneq ($(strip $(BK_WANT_C)),false)
 	cd $(ARCH) && $(MAKE) $@
+else
+	@:
+endif
 
 # targets to avoid complaints about missing make includes
 $(BKMKDIR)/Make.$(BK_OSNAME)-pre:

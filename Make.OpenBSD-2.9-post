@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.OpenBSD-2.9-post,v 1.2 2002/03/07 07:49:42 dupuy Exp $
+# $Id: Make.OpenBSD-2.9-post,v 1.3 2002/04/03 17:22:42 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -33,9 +33,9 @@ COMPILER_DEBUG+= -Wno-missing-prototypes
 
 # if any of debugging, shared libs, or optimization are turned off, ignore this
 ifneq ($(NO_DEBUG),true)
-ifneq ($(WANT_LIBTOOL),false)
+ifneq ($(BK_WANT_LIBTOOL),false)
 ifneq ($(NO_OPT),true)
-ifneq ($(USING_INSURE),true)
+ifneq ($(BK_USING_INSURE),true)
 # this really should be controlled by several independent make variables
 ifneq ($(BK_DEBUG_OPT),true)
 COPTDEBUG:=-O2 $(filter-out -O3, $(COPTDEBUG))

@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.67 2002/04/03 01:21:58 seth Exp $
+# $Id: Make.variables,v 1.68 2002/04/03 17:22:42 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -34,10 +34,6 @@ BK_INSTALLRPATH=$(shell $(PERL) -e $(NORMALIZERPATH))
 NORMALIZEPATH="\$$_ = qq^`$(PWD)`/$(BK_INSTALLPROGDIR)^;"$(NORMALIZE)
 BK_INSTALLPATH=$(shell $(PERL) -e $(NORMALIZEPATH))
 
-# compatibility for old name
-ifeq ($(USING_INSIGHT),true)
-USING_INSURE=true
-endif
 
 #
 # Junk
@@ -222,7 +218,7 @@ COMPILER_DEBUG+=-W -Wmissing-prototypes -Wstrict-prototypes -Wchar-subscripts -W
 COMPILER_DEBUG_ERROR=-Werror
 
 ifneq ($(NO_OPT),true)
-ifneq ($(USING_INSURE),true)
+ifneq ($(BK_USING_INSURE),true)
 ifeq ($(BK_DEBUG_OPT),true)
 COPTDEBUG+=-O2
 else
@@ -274,20 +270,20 @@ OBJEXT=.lo
 top_builddir=$(BKMKDIR)
 endif
 
-ifeq ($(WANT_GPROF),true)
+ifeq ($(BK_USING_GPROF),true)
 CFLAGS += -pg
 endif
 
-ifeq ($(WANT_PROF),true)
+ifeq ($(BK_USING_PROF),true)
 CFLAGS += -p
 endif
 
-ifeq ($(USING_DMALLOC),true)
+ifeq ($(BK_USING_DMALLOC),true)
 BK_LIBS+= -ldmalloc
 BK_DEFINES+=-DUSING_DMALLOC -DDMALLOC_FUNC_CHECK
 endif
 
-ifeq ($(USING_INSURE),true)
+ifeq ($(BK_USING_INSURE),true)
 CC=/usr/local/parasoft/bin/insure
 endif
 
