@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.27 2003/10/28 00:39:44 dupuy Exp $
+# $Id: Makefile,v 1.28 2003/12/07 01:36:37 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -43,7 +43,7 @@ clean:
 	rm -f $(OSFILE) confdefs.h config.cache config.status config.log \
 	 $(filter-out Make%,$(GENFILES)) libtool .timestamp
 
-ifeq ($(BK_CMDGOALS),)
+ifeq ($(strip $(BK_CMDGOALS)),)
 BK_CMDGOALS:=$(MAKECMDGOALS)
 endif
 
