@@ -1,3 +1,7 @@
+2001-11-12  James Tanis  <jtt@winwood.sysdetect.com>
+
+	* Make.variables: NO_OPT and NO_DEBUG now supported.
+
 2001-11-09  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.production: tweaks to java jar building rules
