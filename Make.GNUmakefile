@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.GNUmakefile,v 1.6 2002/07/16 22:03:42 jtt Exp $
+# $Id: Make.GNUmakefile,v 1.7 2002/08/31 21:17:31 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -16,7 +16,7 @@
 # Common elements for use in GNUmakefile bkmk adaptors for software
 # built in $(ARCH) subdirectories using autoconf-generated configure scripts
 #
-ARCH:=$(shell sh ./config.guess)
+ARCH:=$(shell if test -f ./config.guess; then sh ./config.guess; fi 2>/dev/null)
 CONFIGURED:=$(ARCH)/config.status
 
 -include $(GROUPTOP)/$(PKGTOP)/.user-variables
@@ -35,7 +35,7 @@ endif
 
 include $(PKGTOP)/Make.include
 
-install-first: install
+actual_install install-first: install
 install-normal install-last:
 
 install:: $(CONFIGURED)
@@ -66,3 +66,4 @@ endif
 $(BKMKDIR)/Make.$(BK_OSNAME)-pre:
 $(BKMKDIR)/Make.$(BK_OSNAME)-post:
 $(GROUPTOP)/$(PKGTOP)/.user-variables:
+
