@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.129 2003/01/28 18:17:46 jtt Exp $
+# $Id: Make.variables,v 1.130 2003/01/31 17:35:43 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -532,6 +532,11 @@ ifeq ($(BK_USING_INSURE),true)
 BK_DEFINES+=-D__INSURE__
 CC=$(INSURE)
 endif # BK_USING_INSURE
+
+
+ifeq ($(BK_NO_USER_SHARED_LIBS),true)
+BK_DEFINES+=-DBK_NO_USER_SHARED_LIBS
+endif
 
 OS_SEARCHPATH=/usr/local/lib /usr/lib /usr/local/gnu/lib
 
