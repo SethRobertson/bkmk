@@ -1,3 +1,10 @@
+2003-06-10  Seth Robertson  <seth@startide.sysdetect.com>
+
+	* Make.include: Rework WANT_BOUNDS_CHECKING, WANT_DMALLOC,
+	WANT_INSURE, WANT_INSURE_DEBUG to use standardized names
+	(discarding the USING_foo versions) and allowing dmalloc and
+	bound-checking to actually work.
+
 2003-06-09  Brian Lindauer  <lindauer@malkmus.sysdetect.com>
 
 	* Make.production ($(filter %.la,$(BK_LARGE_LIB))): Added external

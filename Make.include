@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.include,v 1.29 2003/05/15 20:44:52 jtt Exp $
+# $Id: Make.include,v 1.30 2003/06/10 19:21:02 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -97,21 +97,21 @@ override BK_USING_GPROF=false
 endif
 endif
 
-ifneq ($(findstring true,$(WANT_INSURE)$(USING_INSURE)$(USING_INSIGHT)),)
-ifneq ($(PARASOFT),)
-BK_USING_INSURE=true
-ifneq ($(findstring true,$(WANT_INSURE_DEBUG)$(USING_INSURE_DEBUG)$(USING_INSIGHT_DEBUG)),)
-BK_USING_INSURE_DEBUG=true
-endif
+ifneq ($(findstring true,$(WANT_BOUNDS_CHECKING)$(WANT_DMALLOC)$(WANT_INSURE)$(WANT_INSURE_DEBUG)),)
+ifneq ($(findstring true,$(WANT_INSURE_DEBUG)$(WANT_INSURE)),)
 override BK_WANT_LIBTOOL=false
 override BK_USING_DMALLOC=false
 override BK_USING_BOUNDS_CHECKING=false
+BK_USING_INSURE=true
+ifneq ($(findstring true,$(WANT_INSURE_DEBUG)),)
+BK_USING_INSURE_DEBUG=true
+endif
 else
-ifneq ($(findstring true,$(WANT_DMALLOC)$(USING_DMALLOC)),)
+ifneq ($(findstring true,$(WANT_DMALLOC)),)
 BK_USING_DMALLOC=true
 override BK_USING_INSURE=false
 override BK_USING_BOUNDS_CHECKING=false
-else 
+else
 ifneq ($(findstring true,$(WANT_BOUNDS_CHECKING)$(USING_BOUNDS_CHECKING)),)
 BK_USING_BOUNDS_CHECKING=true
 override BK_USING_INSURE=false
