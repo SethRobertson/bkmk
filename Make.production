@@ -1,4 +1,4 @@
-# $Id: Make.production,v 1.10 2001/11/29 21:44:53 ldog Exp $
+# $Id: Make.production,v 1.11 2001/11/30 01:57:29 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -29,9 +29,6 @@
 
 %.tab.c %.tab.h: %.y
 	$(YACC) $(YFLAGS) $<
-
-%.class: %.java
-	$(JAVAC) -classpath $(BK_JAVADIR) $<
 
 #
 # Simple program production
@@ -65,9 +62,13 @@ $(BK_LARGE_INTERNALPROG) $(BK_LARGE_LIB): $(BK_LARGE_LIBOBJ)
 #
 BK_JAVA_CLASS:=$(patsubst %.java,$(BK_JAVA_PKG)/%.class,$(BK_JAVA_SRC))
 BK_JAVA_TCLASS:=$(patsubst %.java,$(BK_JAVA_PKG)/%.class,$(BK_JAVA_TEST))
-BK_JAVA_ICLASS_T:=$(patsubst %.class, %\$$*, $(BK_JAVA_CLASS))
-BK_JAVA_ICLASS:=$(foreach tmp, $(BK_JAVA_ICLASS_T), $(wildcard $(BK_JAVADIR)/$(tmp)))
-BK_JAVA_ICLASS:=$(subst $$,\$$,$(patsubst $(BK_JAVADIR)/%,%,$(BK_JAVA_ICLASS)))
+BK_JAVA_ICLASS_TMP=\
+	$(foreach tmp, $(BK_JAVA_CLASS), $(wildcard $(BK_JAVADIR)/$(tmp)$$*))
+BK_JAVA_ICLASS=\
+	$(subst $$,\$$,$(patsubst $(BK_JAVADIR)/%,%,$(BK_JAVA_ICLASS_TMP)))
+BK_JAVA_PROPS=$(wildcard $(GROUPTOP)/$(LOCALE)/*.properties)
+BK_JAVA_LOCALE=$(patsubst $(GROUPTOP)/$(LOCALE)/%,%,$(BK_JAVA_PROPS))
+
 BK_JAVA_PKG_CLASS:=$(patsubst %,$(BK_JAVADIR)/%,$(BK_JAVA_CLASS))
 BK_JAVA_PKG_TCLASS:=$(patsubst %,$(BK_JAVADIR)/%,$(BK_JAVA_TCLASS))
 BK_JAVA_PKG_SRC:=$(patsubst %,$(BK_JAVADIR)/$(BK_JAVA_PKG)/%,$(BK_JAVA_SRC))
@@ -75,6 +76,28 @@ BK_JAVA_PKG_AUX:=$(patsubst %,$(BK_JAVADIR)/$(BK_JAVA_PKG)/%,$(BK_JAVA_AUX))
 BK_JAVA_PKG_LOCALE:=$(patsubst %,$(BK_JAVADIR)/%,$(BK_JAVA_LOCALE))
 
 BK_JAVA_MF:=$(patsubst %.jar,%.MF,$(BK_JAVA_JAR))
+
+# This pattern rule runs the java compiler on a single file, which is less
+# efficient; it is only used for random strange files in dependencies
+
+%.class: %.java
+	$(JAVAC) -classpath $(BK_JAVADIR) $<
+
+# These two multi-target rules will run the java compiler on entire
+# groups of files, which is more efficient (javac will not compile if
+# the .class is newer than the .java) when compilation is successful.
+# If there are errors which prevent compilation, you will get multiple
+# messages (this was true before, since javac would complain when it
+# tried to compile an imported class that you hadn't asked it to
+# compile).  Because of this, you probably do not want to set the -k
+# option to make when you are developing code that doesn't yet compile
+# cleanly.
+
+$(BK_JAVA_PKG_CLASS): $(BK_JAVA_PKG_SRC)
+	$(JAVAC) -classpath $(BK_JAVADIR) $^
+
+$(BK_JAVA_PKG_TCLASS): $(BK_JAVA_PKG_TEST)
+	$(JAVAC) -classpath $(BK_JAVADIR) $^
 
 $(BK_JAVADIR)/$(BK_JAVA_PKG)/%: %
 	$(LN_S) -f `$(PWD)`/$< $@

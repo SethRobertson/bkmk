@@ -1,3 +1,12 @@
+2001-11-29  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.production: tweak internal class support so that wildcard
+	expansion is done at jar time [after compiler has generated all
+	internal .class files]; modify javac compilation rule to operate
+	on all of BK_JAVA_SRC or BK_JAVA_TEST at once, which is much more
+	efficient given the way the javac compiler works; use wildcard to
+	find locale bundle files without needing Makefile support
+	
 2001-11-29  larry ogrodnek  <ldog@sysdetect.com>
 
 	* Make.production (BK_JAVA_ICLASS): support for internal classes.
