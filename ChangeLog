@@ -1,3 +1,8 @@
+2004-12-29  James Tanis  <jtt@blue.sysdetect.com>
+
+	* Make.GNUmakefile (INSTALLBASE): Provide hook for installing
+	third party distros into their own subtree.
+
 2004-12-27  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* configure.in, configure: only need -lutil once, if at all

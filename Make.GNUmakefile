@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.GNUmakefile,v 1.28 2004/02/02 19:56:33 jtt Exp $
+# $Id: Make.GNUmakefile,v 1.29 2004/12/29 21:15:46 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -39,8 +39,12 @@ include $(BKMKDIR)/Make.variables
 
 # make INSTBASE normalized absolute path
 BK_GETCWD= . $(BKMKDIR)/getcwd.sh 2>/dev/null || . $(BKMKDIR)/getcwd.sh.in
+
+# BKMK_INSTALL_SUBDIR is intended for use by third party distributions which you want
+# to install beneath $(INSTALLBASE) but in their own private subtree.
+INSTALLBASE:=$(shell $(BK_GETCWD); pawd $(BK_INSTALLBASE)/$(BKMK_INSTALL_SUBDIR))
+
 NORMALIZEBASE='$$_ = q^$(PWD)/$(INSTALLBASE)^;'$(NORMALIZE)
-INSTALLBASE:=$(shell $(BK_GETCWD); pawd $(BK_INSTALLBASE))
 INSTBASE:=$(shell $(PERL) -e $(NORMALIZEBASE))
 export INSTBASE
 
