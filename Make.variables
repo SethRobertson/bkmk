@@ -1,4 +1,4 @@
-# $Id: Make.variables,v 1.7 2001/06/19 00:30:54 jtt Exp $
+# $Id: Make.variables,v 1.8 2001/06/19 03:12:12 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -15,8 +15,29 @@
 # Variables
 #
 
+################################################################
+#
+# Make sure that we've configured using the correct architecture
+#
+BK_BKMK_DIR=$(GROUPTOP)/$(PKGTOP)/bkmk
+BK_CONFIG_OS_TYPE=$(shell cat $(BK_BKMK_DIR)/.config_os_type 2>/dev/null)
+#
+ifneq ($(BK_CONFIG_OS_TYPE),$(BK_OSNAME))
+#
+# Oh boy. What a bloody hack. Assign to a variable (using := so that it gets
+# evaluated right now), so that the line complies with makefile syntax, but
+# all the work done by the $(shell) command is displayed to the the current
+# tty. BTW: Note the use of "rm". Since we are on an configured arch., this
+# could technically fail, but it's pretty unlikely.
+#
+BK_DUMMY:=$(shell (cd $(BK_BKMK_DIR); rm config.cache; ./configure; echo "$(BK_OSNAME)" > .config_os_type)>/dev/tty)
+endif
+#
+################################################################
+
+
 # Include the autoconf'ed variables
-include $(GROUPTOP)/$(PKGTOP)/bkmk/Make.config
+include $(BK_BKMK_DIR)/Make.config
 
 #
 # Junk
@@ -47,26 +68,22 @@ _BK_MAN8=$(filter %.8,$(BK_MAN))
 #
 # Standard commands
 #
-RM=rm -f
-RRM=rm -rf
-MKDEP=$(CPP) -M $(CPPFLAGS)
-MKDIR=mkdir -p
-AR=ar
-#RANLIB=ranlib
+RRM:=$(RM) -rf
+RM:=$(RM) -f
+MKDEP:=$(CPP) -M $(CPPFLAGS)
+MKDIR:=$(MKDIR) -p
 
 # Install (GNU or BSD)
-INSTALL=install -c
+INSTALL:=$(INSTALL) -c
 INSTALL_BINFLAGS=-m 775
 INSTALL_OTHERFLAGS=-m 664
 
 
 # Yacc
-#YACC=bison -y
 YFLAGS=
-#YACCLIBS=-ly
+YACCLIBS=-ly
 
 # Lex
-#LEX=flex
 LOPTDEBUG= #-CF
 LFLAGS=$(LOPTDEBUG)
 LEXLIBS=-lfl
