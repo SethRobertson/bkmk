@@ -1,3 +1,10 @@
+2002-03-20  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.targets (depend): generate dependencies with $(OBJEXT)
+	(/usr/%.h): minor optimization for dependencies of installed headers
+
+	* Make.variables: check $(GROUPTOP)/lib/.libs for .a dependencies
+
 2002-03-19  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* libbk_autoconf.h.in (BK_DIR_SEPARATOR): a bit more portable than "/"

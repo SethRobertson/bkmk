@@ -1,6 +1,6 @@
 # -*- makefile -*-
 # 
-# $Id: Make.targets,v 1.44 2002/03/16 07:59:34 dupuy Exp $
+# $Id: Make.targets,v 1.45 2002/03/21 01:47:14 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -134,7 +134,14 @@ endif # BK_JAVA_HELP
 ifneq ($(strip $(BK_WANT_C)),false)
 ifneq ($(strip $(BK_SIMPLE_CSRC) $(BK_LARGE_CSRC) $(BK_LARGE_LIBCSRC) $(BK_LOCAL_CSRC) $(BK_LOCAL_OTHERDEPS)),)
 depend:: $(BK_SIMPLE_CSRC) $(BK_LARGE_CSRC) $(BK_LARGE_LIBCSRC) $(BK_LOCAL_CSRC) $(BK_LOCAL_OTHERDEPS)
-	$(MKDEP) $^ >> .depend
+	$(MKDEP) $^ | $(SED) -e 's/\([^:]*\)\.o: /\1.o \1$(OBJEXT): /' >> .depend
+
+# avoid lots of useless chaining (to RCS, SCCS, etc.) on installed header files
+ifeq ($(findstring /usr,$(BK_INSTALLINCDIR)),)
+/usr/%.h:
+	@
+endif
+
 endif # We Have Source
 endif # BK_WANT_C
 
