@@ -1,4 +1,4 @@
-# $Id: Make.variables,v 1.11 2001/06/20 17:31:20 seth Exp $
+# $Id: Make.variables,v 1.12 2001/06/20 18:12:41 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -14,30 +14,6 @@
 #
 # Variables
 #
-
-################################################################
-#
-# Make sure that we've configured using the correct architecture
-#
-BK_BKMK_DIR=$(GROUPTOP)/$(PKGTOP)/bkmk
-BK_CONFIG_OS_TYPE=$(shell cat $(BK_BKMK_DIR)/.config_os_type 2>/dev/null)
-#
-ifneq ($(BK_CONFIG_OS_TYPE),$(BK_OSNAME))
-#
-# Oh boy. What a bloody hack. Assign to a variable (using := so that it gets
-# evaluated right now), so that the line complies with makefile syntax, but
-# all the work done by the $(shell) command is displayed to the the current
-# tty. BTW: Note the use of "rm". Since we are on an configured arch., this
-# could technically fail, but it's pretty unlikely.
-#
-BK_DUMMY:=$(shell (cd $(BK_BKMK_DIR); rm config.cache; ./configure; echo "$(BK_OSNAME)" > .config_os_type)2>/dev/null >/dev/tty)
-endif
-#
-################################################################
-
-
-# Include the autoconf'ed variables
-include $(BK_BKMK_DIR)/Make.config
 
 #
 # Junk
@@ -68,10 +44,10 @@ _BK_MAN8=$(filter %.8,$(BK_MAN))
 #
 # Standard commands
 #
-RRM:=$(RM) -rf
-RM:=$(RM) -f
+RRM:=$(RM_CONFIG) -rf
+RM:=$(RM_CONFIG) -f
 MKDEP:=$(CPP) -M $(CPPFLAGS)
-MKDIR:=$(MKDIR) -p
+MKDIR:=$(MKDIR_CONFIG) -p
 
 # Install (GNU or BSD)
 INSTALL:=$(INSTALL) -c
@@ -117,10 +93,10 @@ endif # NO_STDBKCCSTUFF
 
 ifeq ($(CC),gcc)
 # C
-CC_normal=$(CC_CONFIG) $(GCCOPTS)
-CC_strict=$(CXX_CONFIG) $(GCCOPTS)
+CC_normal=$(CC_CONFIG) $(CCOPTS)
+CC_strict=$(CXX_CONFIG) $(CCXOPTS)
 CC=$(CC_normal)
-CXX=$(CXX_CONFIG) $(GCCOPTS)
+CXX=$(CXX_CONFIG) $(CXXOPTS)
 COMPILER_DEBUG=-W -Wall -Wpointer-arith -Wno-unused -Wno-sign-compare $(COMPILER_DEBUG_ERROR)
 COMPILER_DEBUG_ERROR=-Werror
 COPTDEBUG=-g -O $(COMPILER_DEBUG)
