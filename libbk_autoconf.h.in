@@ -1,5 +1,5 @@
 /*				-*- C -*-
- * $Id: libbk_autoconf.h.in,v 1.29 2002/11/11 22:53:56 jtt Exp $
+ * $Id: libbk_autoconf.h.in,v 1.30 2002/11/12 23:23:58 lindauer Exp $
  *
  * ++Copyright LIBBK++
  *
@@ -40,6 +40,8 @@
 
 #undef HAVE_CONSTRUCTOR_ATTRIBUTE
 #undef HAVE_PRAGMA_INIT
+
+#undef HAVE_FLOCK
 
 #undef HAVE_UNISTD_H
 #undef HAVE_SYS_TIME_H
