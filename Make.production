@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.production,v 1.27 2002/01/07 19:45:41 dupuy Exp $
+# $Id: Make.production,v 1.28 2002/01/09 06:26:37 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -55,8 +55,15 @@ Make%:
 #
 # Simple program production
 #
+ifeq ($(USING_INSURE),true)
+# Insure++ often generates exceedingly bogus errors when it compiles and links
+# in a single command, so make the dependency on the object file and link that.
+$(BK_SIMPLE_INTERNALPROGS) $(BK_SIMPLE_PROGS): %: %.o $(filter -l%,$(BK_ALLLIBS))
+	$(LINK.c) -o $@ $@.o $(LDLIBS)
+else
 $(BK_SIMPLE_INTERNALPROGS) $(BK_SIMPLE_PROGS): %: %.c $(filter -l%,$(BK_ALLLIBS))
 	$(LINK.c) -o $@ $@.c $(LDLIBS)
+endif
 
 #
 # Larger program production

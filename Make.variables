@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.45 2002/01/05 00:26:37 dupuy Exp $
+# $Id: Make.variables,v 1.46 2002/01/09 06:26:37 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -24,6 +24,11 @@ NORMALIZEPWD="			\
 	s@^/n/[^/]*/@/@;	\
 	print;"
 CURDIR=$(shell $(PERL) -e $(NORMALIZEPWD))
+
+# compatibility for old name
+ifeq ($(USING_INSIGHT),true)
+USING_INSURE=true
+endif
 
 #
 # Junk
@@ -153,7 +158,8 @@ BK_JAVA_JTEST:=$(patsubst %.java,%.rpt,$(BK_JAVA_SRC))
 # C stuff
 
 # Traditional resolver
-RESOLVER_DEFINES=-DRESOLVER=RESOLV
+#RESOLVER_DEFINES=-DRESOLVER=RESOLV
+RESOLVER_DEFINES=
 RESOLVER_INCLUDES=
 RESOLVER_LDS=
 #make it work on Windows for now
@@ -185,9 +191,9 @@ COMPILER_DEBUG+=-W -Wmissing-prototypes -Wstrict-prototypes -Wchar-subscripts -W
 COMPILER_DEBUG_ERROR=-Werror
 
 ifneq ($(NO_OPT),true)
-ifneq ($(USING_INSIGHT),true)
+ifneq ($(USING_INSURE),true)
 COPTDEBUG+=-O
-# gcc doesn't support -Wuninitialized without -O. And if using insight you
+# gcc doesn't support -Wuninitialized without -O. And if using insure++ you
 # get it anyway.
 COMPILER_DEBUG+=-Wuninitialized 
 endif
@@ -220,9 +226,8 @@ BK_LIBS+= -ldmalloc
 BK_DEFINES+=-DUSING_DMALLOC -DDMALLOC_FUNC_CHECK
 endif
 
-ifeq ($(USING_INSIGHT),true)
+ifeq ($(USING_INSURE),true)
 CC=/usr/local/parasoft/bin/insure
-BK_DEFINES+=-DUSING_INSIGHT
 endif
 
 OS_SEARCHPATH=/usr/local/lib /usr/lib /usr/local/gnu/lib

@@ -1,12 +1,14 @@
 #!/bin/perl -i.bak
 #
-#
+# <TODO>This script should be enhanced to maintain existing copyright dates,
+# as well as choice of Baka vs. SysD copyright notices</TODO>
+
 ######################################################################
 ## BAKA
 $BAKAHDR = <<EOF;
-#if !defined(lint) && !defined(__INSIGHT__)
+#if !defined(lint) && !defined(__INSURE__)
 static char libbk__rcsid[] = "\$Id\$";
-static char libbk__copyright[] = "Copyright (c) 2001";
+static char libbk__copyright[] = "Copyright (c) 2002";
 static char libbk__contact[] = "<projectbaka\@baka.org>";
 #endif /* not lint */
 EOF
@@ -14,7 +16,7 @@ EOF
 $BAKAPROD = <<EOF;
 ++Copyright LIBBK++
 
-Copyright (c) 2001 The Authors. All rights reserved.
+Copyright (c) 2002 The Authors. All rights reserved.
 
 This source code is licensed to you under the terms of the file
 LICENSE.TXT in this release for further details.
@@ -25,20 +27,19 @@ Mail <projectbaka\@baka.org> for further information
 EOF
 
 ######################################################################
-## Product
-
+## System Detection
 $SYSDHDR = <<EOF;
-#if !defined(lint) && !defined(__INSIGHT__)
+#if !defined(lint) && !defined(__INSURE__)
 static char sysd__rcsid[] = "\$Id\$";
-static char sysd__copyright[] = "Copyright (c) 2001 System Detection";
-static char sysd__contact[] = "System Detection <sysdetect\@baka.org> +1 212 242 2970";
+static char sysd__copyright[] = "Copyright (c) 2002 System Detection";
+static char sysd__contact[] = "System Detection <support\@systemdetection.com>";
 #endif /* not lint */
 EOF
 
 $SYSDPROD = <<EOF;
 ++Copyright SYSDETECT++
 
-Copyright (c) 2001 System Detection.  All rights reserved.
+Copyright (c) 2002 System Detection.  All rights reserved.
 
 THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF SYSTEM DETECTION.
 The copyright notice above does not evidence any actual
@@ -48,11 +49,11 @@ Only properly authorized employees and contractors of System Detection
 are authorized to view, possess, to otherwise use this file.
 
 System Detection
-5 West 19th Floor 2 Suite K
+5 West 19th Street Floor 2K
 New York, NY 10011-4240
 
-+1 212 242 2970
-<sysdetect\@sysdetect.org>
++1 212 206-1900
+<support\@systemdetection.com>
 
 --Copyright SYSDETECT--
 EOF
@@ -69,7 +70,7 @@ if ($opt_b)
   $prod = 0;
 }
 
-$q1 = '\#if \!defined\(lint\) \&\& \!defined\(__INSIGHT__\)';
+$q1 = '\#if \!defined\(lint\) \&\& \!defined\(__INS...T?__\)';
 $q2 = '\#endif \/\* not lint \*\/';
 
 while (<>)

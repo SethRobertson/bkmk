@@ -1,3 +1,15 @@
+2002-01-09  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.production ($(BK_SIMPLE_INTERNALPROGS) $(BK_SIMPLE_PROGS)):
+	build simple programs in separate compile and link steps for Insure++
+
+	* Make.variables (USING_INSURE): INSIGHT -> INSURE
+
+	* chcopy.pl: INSIGHT -> INSURE, also update copyright date, sysd email
+
+	* Make.bkvariables (BK_DUMMY): only make neat when ${BKMK_OSFILE}
+	exists and doesn't match current OS type
+
 2002-01-07  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.production ($(subst .class,.cl%ss,$(BK_JAVA_PKG_CLASS))):
