@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.production,v 1.44 2002/08/02 21:36:12 dupuy Exp $
+# $Id: Make.production,v 1.45 2002/08/21 21:12:43 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -118,8 +118,21 @@ $(filter %.a,$(BK_LARGE_LIB)): $(BK_LARGE_LIBOBJ)
 	fi
 	$(RANLIB) $@
 
-# don't use $(LDLIBS) in libtool links, as it may contain static/convenience
-# libs that will get included in the generated shared library.
+# We use a separate variable LT_LDLIBS to have better control over the run-time
+# dependencies and object files that are linked into a shared library object.
+# It is not used when linking programs.
+#
+# If we used LDLIBS for shared library linking, any referenced functions in .a
+# archive libraries or .la libtool convenience libraries could be included in
+# the generated shared library, potentially leading to different shared
+# libraries having their own versions of functions (and their global/static
+# variables, which is more problematic).
+#
+# Furthermore, when linking a shared library, *all* shared libraries referenced
+# in the link line will be recorded as runtime dependencies, _even if no
+# symbols from the library are used_.  Since LDLIBS contains libraries from all
+# over the module tree, many of which are not relevant, it is unusable for
+# shared library linking.
 ifeq ($(BK_WANT_LIBTOOL),true)
 $(filter %.la,$(BK_LARGE_LIB)): $(BK_LARGE_LIBOBJ)
 	-@$(MKDIR) $(BK_INSTALLRDIR) >/dev/null 2>&1
