@@ -1,3 +1,9 @@
+2003-04-16  James Tanis  <jtt@saint.sysdetect.com>
+
+	* Make.include: Convert to WANT_NO_OPT/BK_WANT_OPT and
+	WANT_NO_DEBUG/BK_NO_DEBUG to bring these symbles in line with the
+	general strategy of bkmk.
+
 2003-04-16  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* libbk_autoconf.h.in (HAVE_NETINET_ETHER_H): use this symbol

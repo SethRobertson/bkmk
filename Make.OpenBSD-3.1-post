@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.OpenBSD-3.1-post,v 1.1 2002/06/24 01:58:09 seth Exp $
+# $Id: Make.OpenBSD-3.1-post,v 1.2 2003/04/16 21:25:51 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -32,9 +32,9 @@ COMPILER_DEBUG+= -Wno-missing-prototypes
 # which causes the assembler to barf
 
 # if any of debugging, shared libs, or optimization are turned off, ignore this
-ifneq ($(NO_DEBUG),true)
+ifneq ($(BK_NO_DEBUG),true)
 ifneq ($(BK_WANT_LIBTOOL),false)
-ifneq ($(NO_OPT),true)
+ifneq ($(BK_NO_OPT),true)
 ifneq ($(BK_USING_INSURE),true)
 # this really should be controlled by several independent make variables
 ifneq ($(BK_DEBUG_OPT),true)

@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.137 2003/04/16 12:29:43 dupuy Exp $
+# $Id: Make.variables,v 1.138 2003/04/16 21:25:51 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -416,7 +416,7 @@ GCCHWOPT+= -m32 -mcpu=v8 -mtune=ultrasparc
 #GCCHWOPT+= -m64 -mcpu=ultrasparc
 endif
 
-ifneq ($(NO_OPT),true)
+ifneq ($(BK_NO_OPT),true)
 ifeq ($(BK_VALGRIND_OPT),true)
 COPTDEBUG+=-O
 else # !BK_VALGRIND_OPT
@@ -430,13 +430,13 @@ endif # !BK_VALGRIND_OPT
 # get it anyway.
 COMPILER_DEBUG+=-Wuninitialized 
 COPTDEBUG+=$(GCCHWOPT)
-endif # NO_OPT
+endif # BK_NO_OPT
 
-ifneq ($(NO_DEBUG),true)
+ifneq ($(BK_NO_DEBUG),true)
 COPTDEBUG+=-g $(COMPILER_DEBUG)
 else # NO_DEBUG
 COPTDEBUG+=-fomit-frame-pointer
-endif # NO_DEBUG
+endif # BK_NO_DEBUG
 
 endif # COMPILER_NAME=gcc
 

@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.include,v 1.27 2003/04/16 16:58:40 jtt Exp $
+# $Id: Make.include,v 1.28 2003/04/16 21:25:51 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -55,6 +55,15 @@ endif
 ifneq ($(strip $(WANT_HELP)),)
 BK_WANT_HELP=$(WANT_HELP)
 endif
+
+ifneq ($(strip $(WANT_NO_DEBUG)),)
+BK_NO_DEBUG=$(WANT_NO_DEBUG)
+endif
+
+ifneq ($(strip $(WANT_NO_OPT)),)
+BK_NO_OPT=$(WANT_NO_OPT)
+endif
+
 
 BK_USING_PTHREADS=false
 ifeq ($(HAVE_PTHREADS),true)
