@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.50 2002/01/30 23:58:08 dupuy Exp $
+# $Id: Make.variables,v 1.51 2002/01/31 21:13:31 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -202,7 +202,8 @@ COMPILER_DEBUG_ERROR=-Werror
 
 ifneq ($(NO_OPT),true)
 ifneq ($(USING_INSURE),true)
-COPTDEBUG+=-O
+#COPTDEBUG+=-O
+COPTDEBUG+=-O3 -mcpu=i686 -march=i686 -fforce-addr -fomit-frame-pointer -funroll-loops -frerun-cse-after-loop -frerun-loop-opt -malign-functions=4
 # gcc doesn't support -Wuninitialized without -O. And if using insure++ you
 # get it anyway.
 COMPILER_DEBUG+=-Wuninitialized 
