@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.168 2003/07/24 22:50:18 dupuy Exp $
+# $Id: Make.variables,v 1.169 2003/08/21 19:43:35 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -17,18 +17,18 @@
 # Variables
 #
 
-NORMALIZE='					\
-	while					\
-	(					\
-		s@//+@/@ ||			\
-		s@/\.$$@@ ||			\
-		s@/(\./)+@/@ ||			\
-		s@/[^/]+/\.\.$$@/@ ||		\
-		s@/[^/]+/\.\./@/@ ||		\
-		s@/[^/]+/\.\./@/@ ||		\
-		s@/[^/]+/\.\./@/@ ||		\
-		s@^/n/[^/]*/@/@			\
-	){}					\
+NORMALIZE='						\
+	while						\
+	(						\
+		s@//+@/@ ||				\
+		s@/\.$$@@ ||				\
+		s@/(\./)+@/@ ||				\
+		s@/[^/]+/\.\.$$@/@ ||			\
+		s@/[^/]+/\.\./@/@ ||			\
+		s@/[^/]+/\.\./@/@ ||			\
+		s@/[^/]+/\.\./@/@ ||			\
+		s@^/n/[^/]*/@/@				\
+	){}						\
 	print;'
 
 
@@ -92,7 +92,11 @@ endif # SSL_INC_PATH
 ifdef SSL_LIB_PATH
 BK_SSL_LIB_PATH=$(SSL_LIB_PATH)
 else
+ifneq ($(shell $(LS) $(BK_INSTALLBASE)/lib/libssl.so 2>/dev/null),)
+BK_SSL_LIB_PATH=$(BK_INSTALLRDIR)
+else
 BK_SSL_LIB_PATH=/usr/local/ssl/lib
+endif
 endif # SSL_LIB_PATH
 
 
