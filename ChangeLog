@@ -1,3 +1,14 @@
+2002-02-19  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.production ($(BK_JAVA_JAR)): avoid emacs compile mode stack
+	overflow on crazy long jar arguments
+
+	* Make.targets (depend, dotdepend, .depend): automatically create
+	.depend file for java help as it is necessary, not optional;
+	coordinate generation of .depend file between various rules;
+	automatically regenerate .depend file if Map.jhm files change
+	(clean, nuke): remove generated java help .html files
+	
 2002-02-14  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.production (jtest-%): don't make this phony, as it doesn't work

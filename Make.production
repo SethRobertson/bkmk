@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.production,v 1.35 2002/02/14 19:23:31 dupuy Exp $
+# $Id: Make.production,v 1.36 2002/02/19 22:49:01 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -158,11 +158,11 @@ $(BK_JAVADIR)/%.MF: %.MF $(BK_JAVADIR)/.
 	@$(LN_S) -f $(CURDIR)/$< $@
 	@test ! -L $@ && test ! $@ -ef $< 2>/dev/null && chmod -w $@ || true
 
-# BK_JAVA_ICLASS doesn't see newly created files, sigh
 $(BK_JAVA_JAR): $(BK_JAVADIR)/$(BK_JAVA_PKG)/. $(BK_JAVADIR)/$(BK_JAVA_MF) \
 		$(BK_JAVA_PKG_SRC) $(BK_JAVA_PKG_CLASS) \
 		$(BK_JAVA_PKG_AUX) $(BK_JAVA_PKG_LOCALE) $(BK_JAVA_PKG_IMAGES)
-	cd $(BK_JAVADIR) && \
+	@echo $(JAR) $(JARFLAGS) $@ $(BK_JAVA_MF) ...
+	@cd $(BK_JAVADIR) && \
 	  $(JAR) $(JARFLAGS) $@ $(BK_JAVA_MF) $(BK_JAVA_CLASS) \
 	    $(BK_JAVA_ICLASS) \
 	    $(patsubst %,$(BK_JAVA_PKG)/%,$(BK_JAVA_AUX)) \

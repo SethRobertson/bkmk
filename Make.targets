@@ -1,6 +1,6 @@
 # -*- makefile -*-
 # 
-# $Id: Make.targets,v 1.40 2002/02/06 17:32:37 ldog Exp $
+# $Id: Make.targets,v 1.41 2002/02/19 22:49:01 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -89,32 +89,46 @@ preprocess:: $(patsubst %.c,%.i,$(BK_SIMPLE_CSRC) $(BK_LARGE_CSRC) $(BK_LARGE_LI
 #
 # Dependency generation
 #
-nukedepend::
-	> .depend
-
-ifneq ($(strip $(BK_WANT_C)),false)
-ifneq ($(strip $(BK_SIMPLE_CSRC) $(BK_LARGE_CSRC) $(BK_LARGE_LIBCSRC) $(BK_LOCAL_CSRC) $(BK_LOCAL_OTHERDEPS)),)
 depend:: nukedepend
-depend:: $(BK_SIMPLE_CSRC) $(BK_LARGE_CSRC) $(BK_LARGE_LIBCSRC) $(BK_LOCAL_CSRC) $(BK_LOCAL_OTHERDEPS)
-	$(MKDEP) $^ >> .depend
-endif # We Have Source
-endif # BK_WANT_C
-depend::
-	$(BK_SUBDIRRULE)
+
+nukedepend::
+	$(RM) .depend
+
+# If a Makefile will not work without a depend file, use a rule for building
+# .depend directly.  There can only be one of these, so we cannot use a double
+# colon rule.  Fortunately, only Java help file generation requires this now.
 
 ifneq ($(strip $(BK_WANT_JAVA)),false)
 ifneq ($(strip $(BK_JAVA_HELP)),)
 ifneq ($(strip $(BK_JAVA_HELP_LANG)),)
-depend::
-	rm -f .depend
+depend:: dotdepend
+
+.SUFFIXES: .jhm .html .xml
+
+dotdepend .depend: $(foreach HLANG,$(BK_JAVA_HELP_LANG),$(HLANG)/Map.jhm)
 	for L in $(BK_JAVA_HELP_LANG); do \
 	  echo $(ECHO_N) "$(BK_JAVA_HELP)_$$L.jar: $(ECHO_C)"; \
 	  $(BK_INSTALLPROGDIR)/buildhelp -l $(BK_JAVA_HELP) $$L/Map.jhm; \
 	  echo ""; \
-	done >> .depend
+	done > .depend
+
+nuke clean::
+	for L in $(BK_JAVA_HELP_LANG); do \
+	  $(RM) `$(BK_INSTALLPROGDIR)/buildhelp -l $(BK_JAVA_HELP) $$L/Map.jhm`; \
+	done
 endif # BK_WANT_JAVA
 endif # BK_JAVA_LANG
 endif # BK_JAVA_HELP
+
+ifneq ($(strip $(BK_WANT_C)),false)
+ifneq ($(strip $(BK_SIMPLE_CSRC) $(BK_LARGE_CSRC) $(BK_LARGE_LIBCSRC) $(BK_LOCAL_CSRC) $(BK_LOCAL_OTHERDEPS)),)
+depend:: $(BK_SIMPLE_CSRC) $(BK_LARGE_CSRC) $(BK_LARGE_LIBCSRC) $(BK_LOCAL_CSRC) $(BK_LOCAL_OTHERDEPS)
+	$(MKDEP) $^ >> .depend
+endif # We Have Source
+endif # BK_WANT_C
+
+depend::
+	$(BK_SUBDIRRULE)
 
 
 #
@@ -358,6 +372,6 @@ endif # BK_JAVA_HELP
 #
 # Prevent targets from being files
 #
-.PHONY : DEFAULT default nuke clean neat depend nukedepend build install \
-	nukeetags nukectags etags ctags tags subtags preprocess \
+.PHONY : DEFAULT default nuke clean neat depend nukedepend dotdepend \
+	build install nukeetags nukectags etags ctags tags subtags preprocess \
 	doxygen viewdox test help
