@@ -1,13 +1,17 @@
-2001-11-27  Seth Robertson  <seth@startide.sysdetect.com>
-
-	* Make.variables (COMPILER_DEBUG): Add missing-prototypes or strict-prototypes
-
 2001-11-28  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* ex.pkg.Make.preinclude (BK_INSTALLBASE): use this consistently
+	instead of BK_INSTALLBASEDIR; GNUmakefiles modified to use this
 
 	* Make.production: do better at linking files into JAVA directory
 	tree on systems where symbolic links aren't fully supported
 
 	* ex.pkg.Makefile (BK_LOCALCLEANJUNK): add JAVA directory
+
+2001-11-27  Seth Robertson  <seth@startide.sysdetect.com>
+
+	* Make.variables (COMPILER_DEBUG): Add missing-prototypes or
+	strict-prototypes
 
 2001-11-27  Matt Miller  <matt@sysdetect.com>
 
