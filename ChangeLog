@@ -1,3 +1,9 @@
+2003-05-23  Seth Robertson  <seth@startide.sysdetect.com>
+
+	* Make.targets (subtags): Make tags use correct ($(PWD)) absolute
+	paths instead of relative paths because emacs interprets relative
+	paths and incorrect (/n/...) absolute paths.
+
 2003-05-16  Seth Robertson  <seth@hawking.sysdetect.com>
 
 	* Make.variables (BK_STDJUNK): pchdir directory created by latest
