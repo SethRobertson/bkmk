@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.169 2003/08/21 19:43:35 jtt Exp $
+# $Id: Make.variables,v 1.170 2003/09/29 23:15:37 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -64,8 +64,8 @@ ifndef BK_WANT_LIBTOOL
 BK_WANT_LIBTOOL=true
 endif # !BK_WANT_LIBTOOL
 
-ifeq ($(BK_WANT_LIBTOOL),)
-BK_WANT_LIBTOOL=true
+ifeq ($(WANT_LIBTOOL),false)
+BK_WANT_LIBTOOL=false
 endif # !BK_WANT_LIBTOOL
 
 ifeq ($(WANT_STATIC),true)
@@ -341,7 +341,14 @@ ifneq ($(NO_STDBKCCSTUFF),true)
 BK_DEFINES+= $(RESOLVER_DEFINES)
 BK_INCS= $(RESOLVER_INCLUDES)
 BK_LDS= $(RESOLVER_LDS)
-BK_LIBS= -lbk -ldict -lfsma -lpqueue -lpopt $(LIBRESOLVER) $(BK_LIBM) $(COMPRESS_LIBS)
+
+BK_LIBS=
+
+ifneq ($(strip $(BK_USING_SSL)),false)
+GROUP_LIBS+= -lbkssl
+endif
+
+BK_LIBS+= -lbkxml -lbk -ldict -lfsma -lpqueue -lpopt $(LIBRESOLVER) $(BK_LIBM) $(COMPRESS_LIBS)
 
 LT_LDLIBS+= $(AC_LIBS)
 
