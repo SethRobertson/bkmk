@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.14 2002/10/10 17:52:45 jtt Exp $
+# $Id: aclocal.m4,v 1.15 2002/10/16 04:39:49 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -59,6 +59,23 @@ AC_DEFUN([AC_CONSTRUCTORS],
   fi
  fi
 ])# AC_CONSTRUCTORS
+
+
+# AC_INADDR_T
+# ---------------------------------
+#
+# This macro determines if in_addr_t is defined or not.
+#
+AC_DEFUN([AC_INADDR_T], [AC_CACHE_CHECK([for in_addr_t typedef], ac_inaddr_t_defined,
+	AC_TRY_COMPILE(
+[
+#include <netinet/in.h>
+], [ in_addr_t foo; ],
+[ ac_inaddr_t_defined=yes; ],[ ac_inaddr_t_defined=no;]))
+ if [ $ac_inaddr_t_defined = 'yes' ]; then
+  AC_DEFINE(HAVE_IN_ADDR_T)
+ fi
+])
 
 
 # AC_SECOND_CONNECT_TO_REFUSED_PORT

@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.45 2002/10/09 21:39:25 jtt Exp $
+dnl $Id: configure.in,v 1.46 2002/10/16 04:39:49 seth Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.45 $)dnl
+AC_REVISION($Revision: 1.46 $)dnl
 AC_INIT(Make.bkvariables)
 AC_CONFIG_AUX_DIR(acaux)
 
@@ -130,6 +130,7 @@ AC_PATH_PROG(AR, ar)
 AC_DEFINE_UNQUOTED(PATH_SEPARATOR, "$PATH_SEPARATOR")
 
 AC_SECOND_CONNECT_TO_REFUSED_PORT
+AC_INADDR_T
 
 
 AC_CONFIG_HEADER(libbk_autoconf.h)

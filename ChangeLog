@@ -1,3 +1,9 @@
+2002-10-16  Seth Robertson  <seth@yeah.baka.org>
+
+	* libbk_autoconf.h.in: HAVE_IN_ADDR_T optionally define this symbol
+	* configure.in (AC_INADDR_T): Use test to see if in_addr_t is needed
+	* aclocal.m4: Define test to see if in_addr_t is needed
+
 2002-10-09  James Tanis  <jtt@hawking.sysdetect.com>
 
 	* aclocal.m4: (AC_SECOND_CONNECT_TO_REFUSED_PORT) Macro to
