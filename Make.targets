@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.targets,v 1.92 2003/09/12 09:36:15 dupuy Exp $
+# $Id: Make.targets,v 1.93 2003/10/08 04:26:16 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -37,7 +37,7 @@ else # BK_SUBDIR
 BK_SUBDIRRULE=@								     \
 	for d in $(BK_ALL_SUBDIR); do					     \
 	 if [ -f $$d/Makefile -o -f $$d/GNUmakefile ]; then		     \
-	  (cd $$d && $(MAKE) $@) ||					     \
+	  PWD=$$PWD/$$d $(MAKE) -C $$d $@ ||				     \
 	   { ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; } \
 	 fi;								     \
 	done; exit $$ERR
@@ -190,7 +190,7 @@ install-first:
 		continue;						      \
 	  fi;								      \
 	  if [ -f $$d/Makefile -o -f $$d/GNUmakefile ]; then		      \
-	    ( cd $$d && $(MAKE) actual_install ) ||			      \
+	    PWD=$$PWD/$$d $(MAKE) -C $$d actual_install ||		      \
 	    { ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; } \
 	  fi;								      \
 	done;								      \
@@ -200,7 +200,7 @@ install-first:
 		continue;						      \
 	  fi;								      \
 	  if [ -f $$d/Makefile -o -f $$d/GNUmakefile ]; then		      \
-	    ( cd $$d && $(MAKE) $@) ||					      \
+	    PWD=$$PWD/$$d $(MAKE) -C $$d $@ ||				      \
 	    { ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; } \
 	  fi;								      \
 	done; exit $$ERR
@@ -212,7 +212,7 @@ install-normal:
 		continue;						      \
 	  fi;								      \
 	  if [ -f $$d/Makefile -o -f $$d/GNUmakefile ]; then		      \
-	    ( cd $$d && $(MAKE) $@ ) ||					      \
+	    PWD=$$PWD/$$d $(MAKE) -C $$d $@ ||				      \
 	    { ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; } \
 	    fi;								      \
 	  done;								      \
@@ -225,7 +225,7 @@ install-last:
 		continue;						      \
 	  fi;								      \
 	  if [ -f $$d/Makefile -o -f $$d/GNUmakefile ]; then		      \
-	    ( cd $$d && $(MAKE) actual_install ) ||			      \
+	    PWD=$$PWD/$$d $(MAKE) -C $$d actual_install ||		      \
 	    { ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; } \
 	  fi;								      \
 	done;								      \
@@ -235,7 +235,7 @@ install-last:
 		continue;						      \
 	  fi;								      \
 	  if [ -f $$d/Makefile -o -f $$d/GNUmakefile ]; then		      \
-	    ( cd $$d && $(MAKE) $@ ) ||					      \
+	    PWD=$$PWD/$$d $(MAKE) -C $$d $@ ||				      \
 	    { ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; } \
 	  fi;								      \
 	done; exit $$ERR
@@ -530,8 +530,7 @@ $(GROUPTOP)/$(PKGTOP)/.user-variables:
 
 # Allow on-the-fly configure during a `make clean default`
 $(BK_REALTOP)/bkmk/.timestamp:
-	@(cd $(BK_REALTOP)/bkmk; $(MAKE) .timestamp)
-
+	PWD=$$PWD/$$d $(MAKE) -C $(BK_REALTOP)/bkmk .timestamp
 
 #
 # Prevent targets from being files
@@ -540,5 +539,3 @@ $(BK_REALTOP)/bkmk/.timestamp:
 	build install actual_install \
 	nukeetags nukectags etags ctags tags subtags preprocess \
 	doxygen viewdox test help
-os-name:
-	@echo $(BK_OSNAME)

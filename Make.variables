@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.171 2003/10/03 21:14:58 lindauer Exp $
+# $Id: Make.variables,v 1.172 2003/10/08 04:26:16 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -18,6 +18,7 @@
 #
 
 NORMALIZE='						\
+	s@^[^.]*//@/@g;					\
 	while						\
 	(						\
 		s@//+@/@ ||				\
@@ -34,7 +35,7 @@ NORMALIZE='						\
 
 # Protected code which runs only once per make tree build
 ifneq ($(BKMKVAR_VAR_CORRECT),true)
-# Correct make's PWD so that it uses nice paths (for descendants too)
+# Correct make's PWD so that it uses nice paths
 NORMALIZEPWD="\$$_ = qq^$(PWD)^;"$(NORMALIZE)
 PWD:=$(shell $(PERL) -e $(NORMALIZEPWD))
 
@@ -84,18 +85,21 @@ BK_USING_SSL = false
 endif # HAVE_LIBSSL != true
 
 ifdef SSL_INC_PATH
-BK_SSL_INC_PATH=$(SSL_INC_PATH)
+BK_SSL_INCLUDE=$(SSL_INC_PATH)
 else
-BK_SSL_INC_PATH=/usr/local/ssl/include
+BK_SSL_INCLUDE=/usr/local/ssl/include
 endif # SSL_INC_PATH
 
 ifdef SSL_LIB_PATH
-BK_SSL_LIB_PATH=$(SSL_LIB_PATH)
+BK_SSL_LIBDIR=$(SSL_LIB_PATH)
+BK_SSL_RPATH=$(SSL_LIB_PATH)
 else
 ifneq ($(shell $(LS) $(BK_INSTALLBASE)/lib/libssl.so 2>/dev/null),)
-BK_SSL_LIB_PATH=$(BK_INSTALLRDIR)
+BK_SSL_LIBDIR=$(BK_INSTALLRDIR)
+BK_SSL_RPATH=$(BK_INSTALLRPATH)
 else
-BK_SSL_LIB_PATH=/usr/local/ssl/lib
+BK_SSL_LIBDIR=/usr/local/ssl/lib
+BK_SSL_RPATH=/usr/local/ssl/lib
 endif
 endif # SSL_LIB_PATH
 
@@ -219,7 +223,7 @@ ifneq ($(BK_INSTALLRDIR),$(BK_INSTALLRPATH))
 LIBTOOL_INSTALL_TEST=\
  case $(BK_INSTALLRDIR) in *$(BK_INSTALLRPATH)) echo OK;; esac
 ifneq ($(shell $(LIBTOOL_INSTALL_TEST)),OK)
-$(error BK_INSTALLDIR must end with $(BK_INSTALLRPATH))
+$(error BK_INSTALLRDIR must end with $(BK_INSTALLRPATH))
 endif
 endif
 
@@ -348,7 +352,7 @@ ifneq ($(strip $(BK_USING_SSL)),false)
 GROUP_LIBS+= -lbkssl
 endif
 
-BK_LIBS+= -lbkxml -lbk -ldict -lfsma -lpqueue -lpopt $(LIBRESOLVER) $(BK_LIBM) $(COMPRESS_LIBS)
+BK_LIBS+= -lbk -ldict -lfsma -lpqueue -lpopt $(LIBRESOLVER) $(BK_LIBM) $(COMPRESS_LIBS)
 
 LT_LDLIBS+= $(AC_LIBS)
 
@@ -632,10 +636,44 @@ vpath %.5 $(BK_TRUECWD)
 vpath %.1 $(BK_TRUECWD)
 vpath %.8 $(BK_TRUECWD)
 
+# <KLUDGE>If you use absolute paths for BK_INSTALLLIBDIR (BK_INSTALLBASE) you
+# will get errors like the following as a result of the vpath declarations:
+#
+# # make[4]: Entering directory `/n/pearl/proj/pearl/dupuy/awb/libbk/lib'
+# ../../bkmk/Make.production:186: Commands were specified for file `libbk.la' at ../../bkmk/Make.targets:270,
+# ../../bkmk/Make.production:186: but `libbk.la' is now considered the same file as `/home/demo/awb/usr/antura/lib/libbk.la'.
+# ../../bkmk/Make.production:186: Commands for `/home/demo/awb/usr/antura/lib/libbk.la' will be ignored in favor of those for `libbk.la'.
+# make[4]: Circular /home/demo/awb/usr/antura/lib/libbk.la <- /home/demo/awb/usr/antura/lib/libbk.la dependency dropped.
+#
+# These prevent proper installation of libraries, so in the following vpath
+# statements, we can't use BK_INSTALLLIBDIR; instead, we compute a relative
+# path to BK_INSTALLLIBDIR from PWD.</KLUDGE>
+
+RELATIVIZE='								   \
+	@here = split("/", $$ARGV[0]);					   \
+	@there = split("/", $$ARGV[1]);					   \
+	if ($$ARGV[1] =~ m@^/@)						   \
+	{								   \
+		while ($$\#there >= 0)					   \
+		{							   \
+			last if ($$\#here < 0 || $$here[0] ne $$there[0]); \
+			shift(@here);					   \
+			shift(@there);					   \
+		}							   \
+		$$i = 0;						   \
+		while ($$i++ <= $$\#here)				   \
+		{							   \
+			unshift(@there, "..");				   \
+		}							   \
+	}								   \
+	print join("/", @there) . "\n";'
+
+BK_INSTALLRELLIBS:=$(shell $(PERL) -e $(RELATIVIZE) $(PWD) $(BK_INSTALLLIBDIR))
+
 # -l library search path
 vpath %.a $(GROUPTOP)/lib $(GROUPTOP)/lib/.libs
-vpath %.a $(BK_INSTALLLIBDIR) $(BK_LIBDIR)
-vpath %$(LIBEXT) $(GROUPTOP)/lib $(BK_INSTALLLIBDIR) $(BK_LIBDIR)
+vpath %.a $(BK_INSTALLRELLIBS) $(BK_LIBDIR)
+vpath %$(LIBEXT) $(GROUPTOP)/lib $(BK_INSTALLRELLIBS) $(BK_LIBDIR)
 
 # -l library extensions pattern rule to recognize libtool libraries
 .LIBPATTERNS=lib%$(LIBEXT) lib%.so lib%.a

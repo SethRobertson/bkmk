@@ -60,7 +60,7 @@ PROGRAM=ltmain.sh
 PACKAGE=libtool
 VERSION=1.5
 TIMESTAMP=" (1.7 2003/08/13 14:55:23)"
-TIMESTAMP="$TIMESTAMP [$Revision: 1.17 $]"
+TIMESTAMP="$TIMESTAMP [$Revision: 1.18 $]"
 
 default_mode=
 help="Try \`$progname --help' for more information."
@@ -2048,7 +2048,7 @@ EOF
 	  continue
 	fi # $pass = conv
 
-   
+
 	# Get the name of the library we link against.
 	linklib=
 	for l in $old_library $library_names; do
@@ -2093,7 +2093,7 @@ EOF
 
 	# Find the relevant object directory and library name.
 	if test "X$installed" = Xyes; then
-	  if test ! -f "$libdir/$linklib" && test -f "$abs_ladir/$linklib"; then
+	  if test -f "$abs_ladir/$linklib"; then
 	    if test -z "$inst_prefix_dir"; then
 	      # Determine the prefix the user has applied to our future dir.
 	      inst_prefix_dir=`$echo "$abs_ladir" | $SED "s%$libdir\$%%"`
@@ -2106,10 +2106,15 @@ EOF
 	      fi
 	    fi
 	    if test ! -f "$inst_prefix_dir$libdir/$linklib"; then
-	      $echo "$modename: warning: library \`$lib' was moved." 1>&2
-	      dir="$ladir"
-	      absdir="$abs_ladir"
-	      libdir="$abs_ladir"
+	      if test ! -f "$libdir/$linklib"; then
+	        $echo "$modename: warning: library \`$lib' was moved." 1>&2
+	        dir="$ladir"
+	        absdir="$abs_ladir"
+	        libdir="$abs_ladir"
+	      else		# system shared libs, not .la, were moved
+		dir="$libdir"
+		absdir="$libdir"
+	      fi
 	    else
 	      dir="$ladir"
 	      absdir="$libdir"
@@ -2157,7 +2162,7 @@ EOF
 	  continue
 	fi
 
-   
+
 	if test "$linkmode" = prog && test "$pass" != link; then
 	  newlib_search_path="$newlib_search_path $ladir"
 	  deplibs="$lib $deplibs"
@@ -2253,8 +2258,8 @@ EOF
 	    else
 	      $echo "*** Warning: Linking the shared library $output against the loadable module"
 	    fi
-	    $echo "*** $linklib is not portable!"   
-      fi	 
+	    $echo "*** $linklib is not portable!"
+      fi
 	  if test "$linkmode" = lib &&
 	     test "$hardcode_into_libs" = yes; then
 	    # Hardcode the library path.
@@ -2627,7 +2632,7 @@ EOF
 		path="-L$path"
 		;;
 		esac
-	
+
 		;;
 		  -l*)
 		case $host in
@@ -2638,24 +2643,24 @@ EOF
 		     if test -f "$tmp/lib$tmp_libs.dylib" ; then
 		       eval depdepl="$tmp/lib$tmp_libs.dylib"
 		       break
-		     fi 
+		     fi
          	   done
 		  path=""
 		  ;;
 		*) continue ;;
-		esac  		 
+		esac
 		;;
 	      *) continue ;;
 	      esac
- 	      # *pre*pend, since deplibs is processed in reverse order below
- 	      case " $deplibs " in
- 	      *" $depdepl "*) ;;
- 	      *) deplibs="$depdepl $deplibs" ;;
- 	      esac	      
- 	      case " $deplibs " in
- 	      *" $path "*) ;;
- 	      *) deplibs="$path $deplibs" ;;
-  	      esac
+	      # *pre*pend, since deplibs is processed in reverse order below
+	      case " $deplibs " in
+	      *" $depdepl "*) ;;
+	      *) deplibs="$depdepl $deplibs" ;;
+	      esac	      
+	      case " $deplibs " in
+	      *" $path "*) ;;
+	      *) deplibs="$path $deplibs" ;;
+	      esac
 	    done
 	  fi # link_all_deplibs != no
 	fi # linkmode = lib
@@ -4577,7 +4582,7 @@ static const void *lt_preloaded_setup() {
 
    The $output program cannot be directly executed until all the libtool
    libraries that it depends on are installed.
-  
+
    This wrapper executable should never be moved out of the build directory.
    If it is, it will not operate correctly.
 
@@ -5074,7 +5079,7 @@ fi\
 	  for obj in $save_oldobjs
 	  do
 	    last_oldobj=$obj
-	  done 
+	  done
 	  for obj in $save_oldobjs
 	  do
 	    oldobjs="$objlist $obj"
@@ -5088,7 +5093,7 @@ fi\
 	      oldobjs=$objlist
 	      if test "$obj" = "$last_oldobj" ; then
 	        RANLIB=$save_RANLIB
-	      fi 
+	      fi
 	      test -z "$concat_cmds" || concat_cmds=$concat_cmds~
 	      eval concat_cmds=\"\${concat_cmds}$old_archive_cmds\"
 	      objlist=

@@ -1,6 +1,19 @@
+2003-10-07  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.GNUmakefile: normalize out /./ and /../ correctly;
+	#2174: split INSTBASE into Makefile DESTDIR= and configure --prefix=
+
+	* Make.bkvariables (PWD): always compute PWD; make -C doesn't update it
+
+	* Make.variables: handle absolute BK_INSTALLBASE correctly
+	(BK_SSL_RPATH): for production RPATH build to use BK_INSTALLRPATH
+	
+	* acaux/ltmain.sh: compute install prefix correctly even if system
+	shared libraries are present in final install destination [-rpath]
+	
 2003-09-29  James Tanis  <jtt@pearl.sysdetect.com>
 
-	* Make.variables (GROUP_LIBS+): Make libbkssl part of  BK_LIBS is
+	* Make.variables (GROUP_LIBS+): Make libbkssl part of BK_LIBS if
 	SSL is on.
 
 	* Make.GNUmakefile: Include Make.config before anything else.

@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.bkvariables,v 1.47 2003/09/26 19:06:50 jtt Exp $
+# $Id: Make.bkvariables,v 1.48 2003/10/08 04:26:16 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -116,24 +116,16 @@ endif
 
 endif # BK_CONFIG_OS_TYPE != BK_OSNAME
 
-# Verify that $PWD points to the right place, since not all applications
-# maintain this (e.g. emacs)
-PWD:=$(shell $(BKMKDIR)/getcwd.sh 2>/dev/null || $(BKMKDIR)/getcwd.sh.in)
-
 #
 ##################################################
 endif # CONFIGURED
 
-
 endif # BKMK_VAR_CORRECT
 
-
-# Some older versions of GNU make appear to actively nuke PWD
-# (presumably since it may not always be correct)
-ifeq ($(strip $(PWD)),)
+# Verify that $PWD points to the right place, since it is not updated by make
+# when run with make -C dir (or by make otherwise, nor by emacs, et al.)
+# This MUST be run in EVERY make to ensure accuracy; things break otherwise.
 PWD:=$(shell $(BKMKDIR)/getcwd.sh 2>/dev/null || $(BKMKDIR)/getcwd.sh.in)
-endif
-
 
 BK_TRUEGROUPTOP=$(BK_BUILDTOP)$(GROUPTOP)
 BK_TRUEPKGTOP=$(TRUEGROUPTOP)/$(PKGTOP)
@@ -184,7 +176,3 @@ endif
 ifeq ($(BK_INSTALLPERLDIR),)
 BK_INSTALLPERLDIR=$(BK_INSTALLBASE)/perl
 endif
-
-
-
-

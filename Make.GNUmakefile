@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.GNUmakefile,v 1.23 2003/10/03 21:14:58 lindauer Exp $
+# $Id: Make.GNUmakefile,v 1.24 2003/10/08 04:26:16 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -43,12 +43,13 @@ BK_GETCWD= . $(BKMKDIR)/getcwd.sh 2>/dev/null || . $(BKMKDIR)/getcwd.sh.in
 NORMALIZEBASE='					\
 	$$_ = qq^$(PWD)/$(INSTALLBASE)^;	\
 	s@.*//@/@g;				\
-	s@/\\./@/@g;				\
-	s@/[^/]+/\\.\\./@/@g;			\
+	s@/\./@/@g;				\
+	s@/[^/]+/\.\./@/@g;			\
 	s@^/n/[^/]*/@/@;			\
 	print;'
 INSTALLBASE:=$(shell $(BK_GETCWD); pawd $(BK_INSTALLBASE))
 INSTBASE:=$(shell $(PERL) -e $(NORMALIZEBASE))
+export INSTBASE
 
 DEFAULT: $(CONFIGURED)
 ifneq ($(strip $(BK_WANT_C)),false)
@@ -96,10 +97,10 @@ distclean distclean-generic distclean-am::
 	  || test -f Makefile && $(MAKE) -k -f Makefile $@
 
 ifneq ($(strip $(WANT_SUBDIRBUILD)),false)
-CONFIGCMD=cd $(ARCH) && ../configure --prefix=$(INSTBASE) $(CONFIGOPTS)
+CONFIGCMD=cd $(ARCH) && ../configure --prefix=$$INSTBASE $(CONFIGOPTS)
 CONFIGOPTS=--cache-file=../$(BKMKDIR)/config.cache
 else
-CONFIGCMD=./configure --prefix=$(INSTBASE) $(CONFIGOPTS)
+CONFIGCMD=./configure --prefix=$$INSTBASE $(CONFIGOPTS)
 CONFIGOPTS=--cache-file=$(BKMKDIR)/config.cache
 endif
 
@@ -107,11 +108,29 @@ $(CONFIGURED):: configure
 ifneq ($(strip $(WANT_SUBDIRBUILD)),false)
 	-@$(MKDIR_CONFIG) -p $(ARCH)
 endif
-	case $(ARCH) in \
-	 *openbsd*) \
-	   export CPPFLAGS=-I/usr/local/include LDFLAGS="-L/usr/local/lib" ;; \
-	esac; \
-	$(CONFIGCMD)
+	@case $(ARCH) in						      \
+	 *openbsd*)							      \
+	   CPPFLAGS="-I/usr/local/include" LDFLAGS="-L/usr/local/lib";	      \
+	   export CPPFLAGS LDFLAGS ;;					      \
+	esac;								      \
+	if $(GREP) -s '\$$(DESTDIR)' Makefile.in > /dev/null 2>&1; then	      \
+	  case $$INSTBASE in						      \
+	    /*/usr/*)							      \
+	      eval `echo $$INSTBASE					      \
+		    | $(SED) 's@\(/.*\)\(/usr/.*\)@DESTDIR=\1 INSTBASE=\2@'`; \
+	      ;;							      \
+	    /*/opt/*)							      \
+	      eval `echo $$INSTBASE					      \
+		    | $(SED) 's@\(/.*\)\(/opt/.*\)@DESTDIR=\1 INSTBASE=\2@'`; \
+	      ;;							      \
+	    '') INSTBASE=$(INSTBASE) ;;					      \
+	  esac;								      \
+	fi;								      \
+	$(CONFIGCMD) &&							      \
+	if [ -n "$$DESTDIR" ]; then					      \
+	  echo DESTDIR=$$DESTDIR					      \
+	   | $(TEE) -a `find . -name Makefile -print` >/dev/null;	      \
+	fi
 ifneq ($(strip $(WANT_SUBDIRBUILD)),false)
 	-@$(MAKE) -f $(ARCH)/Makefile clean 2>/dev/null
 endif
@@ -119,7 +138,7 @@ endif
 .DEFAULT: $(CONFIGURED)
 ifneq ($(strip $(BK_WANT_C)),false)
 ifneq ($(strip $(WANT_SUBDIRBUILD)),false)
-	cd $(ARCH) && $(MAKE) $@
+	$(MAKE) -C $(ARCH) $@
 else
 	$(MAKE) -f Makefile $@
 endif
