@@ -1,16 +1,16 @@
 # -*- makefile -*-
 #
-# $Id: Make.production,v 1.53 2003/04/16 01:53:11 dupuy Exp $
+# $Id: Make.production,v 1.54 2003/04/16 19:04:43 dupuy Exp $
 #
 # ++Copyright LIBBK++
-#
-# Copyright (c) 2001,2002 The Authors.  All rights reserved.
-#
+# 
+# Copyright (c) 2001-2003 The Authors. All rights reserved.
+# 
 # This source code is licensed to you under the terms of the file
 # LICENSE.TXT in this release for further details.
-#
+# 
 # Mail <projectbaka@baka.org> for further information
-#
+# 
 # --Copyright LIBBK--
 #
 #
@@ -171,15 +171,19 @@ $(filter %.a,$(BK_LARGE_LIB)): $(BK_LARGE_LIBOBJ)
 ifeq ($(BK_WANT_LIBTOOL),true)
 $(filter %.la,$(BK_LARGE_LIB)): $(BK_LARGE_LIBOBJ)
 	-@$(MKDIR) $(BK_INSTALLRDIR) >/dev/null 2>&1
-	$(LIBTOOL_LINK) $(LINK.c) $(LT_LDFLAGS) -o $@ $^ $(LT_LDLIBS) \
-	 -rpath $(BK_INSTALLRPATH)
+	{ $(LIBTOOL_LINK) $(LINK.c) $(LT_LDFLAGS) -o $@ $^ $(LT_LDLIBS)	\
+	   -rpath $(BK_INSTALLRPATH) -no-undefined ||			\
+	  $(LIBTOOL_LINK) $(LINK.c) $(LT_LDFLAGS) -o $@ $^ $(LT_LDLIBS)	\
+	   -rpath $(BK_INSTALLRPATH); E=$$?; } 2>&1			\
+	 | grep -v '\.so: undefined'; exit $$E
 
 $(BK_LARGE_MODULE): $(BK_LARGE_LIBOBJ)
 	-@$(MKDIR) $(BK_INSTALLRDIR) >/dev/null 2>&1
-	$(LIBTOOL_LINK) $(LINK.c) $(LT_M_LDFLAGS) -o $@ $^ $(LT_LDLIBS)  \
-	  -rpath $(BK_INSTALLRPATH) -no-undefined ||			 \
-	 $(LIBTOOL_LINK) $(LINK.c) $(LT_M_LDFLAGS) -o $@ $^ $(LT_LDLIBS) \
-	   -rpath $(BK_INSTALLRPATH)
+	{ $(LIBTOOL_LINK) $(LINK.c) $(LT_M_LDFLAGS) -o $@ $^ $(LT_LDLIBS) \
+	   -rpath $(BK_INSTALLRPATH) -no-undefined ||			  \
+	  $(LIBTOOL_LINK) $(LINK.c) $(LT_M_LDFLAGS) -o $@ $^ $(LT_LDLIBS) \
+	    -rpath $(BK_INSTALLRPATH); E=$$?; } 2>&1			  \
+	 | grep -v '\.so: undefined'; exit $$E
 else
 $(BK_LARGE_MODULE): $(BK_LARGE_LIBOBJ)
 	@if [ -f $@ ]; then \
