@@ -1,3 +1,7 @@
+2002-08-22  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.bkvariables (WANT_STATIC): if you don't put BK_ before G*d
+
 2002-08-12  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.variables (COMPILER_DEBUG): Don't allow unused [static] funcs
