@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.bkvariables,v 1.32 2002/08/27 21:48:49 dupuy Exp $
+# $Id: Make.bkvariables,v 1.33 2002/09/03 16:08:04 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -60,7 +60,19 @@ ifneq ($(BK_CONFIG_OS_TYPE),$(BK_OSNAME))
 # tty. BTW: Note the use of "rm", since we can't depend on configured $(RM);
 # this could technically fail, but it's pretty unlikely.
 
-BK_TTY:=$(shell test -c /dev/fd/2 && echo /dev/fd/2 || echo /dev/tty)
+# <TRICKY>Linux's implementation of /dev/fd/* is LAME with a capital L A M E!
+# Rather than have a special character device that just dups a file descriptor,
+# they make /dev/fd/* a symlink (this works poorly if the file on /dev/fd/* has
+# been unlinked - a broken symlink to "/some/file (deleted)"!) and doesn't work
+# correctly if the process no longer has rights to open the file for the fd
+# (e.g. an su'd shell cannot open the /dev/pts/* terminal that is its
+# stdin/out/err).  So we must check for write access as well.</TRICKY>
+# <TRICKY>Why, one asks, do we need to use /dev/fd/* at all?  Well, xemacs
+# compile mode on FreeBSD doesn't bother to open a pseudo-tty for the compile
+# process (it just uses a pipe), so /dev/tty doesn't work - the process has no
+# controlling tty.  So we use stderr (or try to).</TRICKY>
+F2=/dev/fd/2
+BK_TTY:=$(shell test -c $(F2) && test -w $(F2) && echo $(F2) || echo /dev/tty)
 
 BK_DUMMY:=$(shell							      \
   (if [ -f $(BKMK_OSFILE) ]; then					      \
