@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.41 2002/09/29 16:26:39 seth Exp $
+dnl $Id: configure.in,v 1.42 2002/09/30 17:16:46 dupuy Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.41 $)dnl
+AC_REVISION($Revision: 1.42 $)dnl
 AC_INIT(Make.bkvariables)
 AC_CONFIG_AUX_DIR(acaux)
 
@@ -75,7 +75,7 @@ define(TIMET_TEST_PROG, [
 #include <time.h>
 main()
 {
-  if (sizeof(time_t) > sizeof(int))
+  if (sizeof(time_t) == sizeof(long))		// prefer long, if right size
   {
     if ((time_t)ULONG_MAX > (time_t)LONG_MAX)
     {
