@@ -1,8 +1,10 @@
 2004-12-27  Alexander Dupuy  <dupuy@sysdetect.com>
 
-	* configure.in: only need -lutil once, if at all
+	* configure.in, configure: only need -lutil once, if at all
 
 	* Make.Linux-2.6-pre: Linux kernel 2.6 placeholder
+
+	* Make.FreeBSD-5.3-pre: FreeBSD 5.3 OS-dependent makefile
 
 	* Make.Linux-2.4-pre, Make.FreeBSD-5.2-pre: eliminate redundant -lutil
 
