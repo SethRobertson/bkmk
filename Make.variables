@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.68 2002/04/03 17:22:42 dupuy Exp $
+# $Id: Make.variables,v 1.69 2002/04/04 21:35:45 kjs Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -104,7 +104,7 @@ LIBTOOL_INSTALL=$(LIBTOOL) --mode install --quiet
 
 ######################################################################
 # Java stuff
-JAVACFLAGS=$(USER_JAVAC_FLAGS)
+JAVACFLAGS=$(USER_JAVAC_FLAGS) -g
 JARFLAGS=-cfm
 
 BK_JAVA_CPATH=$(subst :,$(PATH_SEPARATOR),$(BK_JAVADIR):$(BK_JAVA_CP))
