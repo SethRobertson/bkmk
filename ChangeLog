@@ -1,3 +1,7 @@
+2001-11-18  Seth Robertson  <seth@winwood.sysdetect.com>
+
+	* Make.variables: USING_INSIGHT now working.
+
 2001-11-13  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.production: add -classpath $(BK_JAVADIR) to javac rule

@@ -1,4 +1,4 @@
-# $Id: Make.variables,v 1.26 2001/11/12 19:15:45 jtt Exp $
+# $Id: Make.variables,v 1.27 2001/11/18 20:55:55 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -138,6 +138,11 @@ endif
 ifeq ($(USING_DMALLOC),true)
 BK_LIBS+= -ldmalloc
 BK_DEFINES+=-DUSING_DMALLOC -DDMALLOC_FUNC_CHECK
+endif
+
+ifeq ($(USING_INSIGHT),true)
+CC=/usr/local/parasoft/bin/insure
+BK_DEFINES+=-DUSING_INSIGHT
 endif
 
 OS_SEARCHPATH=/usr/local/lib /usr/lib /usr/local/gnu/lib
