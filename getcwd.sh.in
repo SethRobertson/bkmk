@@ -2,7 +2,7 @@
 #! /bin/bash --norc
 #! /bin/ksh -p
 ######################################################################
-# $Id: getcwd.sh.in,v 1.1 2003/03/25 08:55:14 dupuy Exp $
+# $Id: getcwd.sh.in,v 1.2 2003/04/16 01:53:11 dupuy Exp $
 #
 # ++Copyright LIBBK++
 # 
@@ -30,7 +30,7 @@
 # paths and returns the first path if equal, the second path if not.
 #
 PAWD=${PAWD-"@PAWD@"}
-typeset -i > /dev/null 2>&1 && typeset=typeset || typeset=unset
+{ typeset -i; } > /dev/null 2>&1 && typeset=typeset || typeset=unset
 
 verifypath() {
   f1=$1 f2=$2

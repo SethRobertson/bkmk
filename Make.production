@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.production,v 1.52 2002/11/26 00:47:12 jtt Exp $
+# $Id: Make.production,v 1.53 2003/04/16 01:53:11 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -157,6 +157,17 @@ $(filter %.a,$(BK_LARGE_LIB)): $(BK_LARGE_LIBOBJ)
 # symbols from the library are used_.  Since LDLIBS contains libraries from all
 # over the module tree, many of which are not relevant, it is unusable for
 # shared library linking.
+#
+# Finally, in order to get warnings about undefined variables in modules (to
+# confirm that LT_LDLIBS is complete) we run libtool with -no-undefined;
+# however, this currently generates a lot of errors, so we will re-run without
+# it (effectively, these are warnings).  In particular, versioned references to
+# weak symbols (e.g. lseek64@GLIBC_2.2) generate link-time errors, even though
+# they work just fine at run-time.
+#
+# <TODO>Fix those undefined errors, add -no-undefined to LT_M_LDFLAGS, and
+# clean up the BK_LARGE_MODULE rule.</TODO>
+#
 ifeq ($(BK_WANT_LIBTOOL),true)
 $(filter %.la,$(BK_LARGE_LIB)): $(BK_LARGE_LIBOBJ)
 	-@$(MKDIR) $(BK_INSTALLRDIR) >/dev/null 2>&1
@@ -165,9 +176,10 @@ $(filter %.la,$(BK_LARGE_LIB)): $(BK_LARGE_LIBOBJ)
 
 $(BK_LARGE_MODULE): $(BK_LARGE_LIBOBJ)
 	-@$(MKDIR) $(BK_INSTALLRDIR) >/dev/null 2>&1
-	$(LIBTOOL_LINK) $(LINK.c) $(LT_M_LDFLAGS) -o $@ $^ $(LT_LDLIBS) \
-	 -rpath $(BK_INSTALLRPATH)
-
+	$(LIBTOOL_LINK) $(LINK.c) $(LT_M_LDFLAGS) -o $@ $^ $(LT_LDLIBS)  \
+	  -rpath $(BK_INSTALLRPATH) -no-undefined ||			 \
+	 $(LIBTOOL_LINK) $(LINK.c) $(LT_M_LDFLAGS) -o $@ $^ $(LT_LDLIBS) \
+	   -rpath $(BK_INSTALLRPATH)
 else
 $(BK_LARGE_MODULE): $(BK_LARGE_LIBOBJ)
 	@if [ -f $@ ]; then \

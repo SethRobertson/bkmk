@@ -1,3 +1,14 @@
+2003-04-15  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.production ($(BK_LARGE_MODULE)): use -no-undefined to get
+	warnings of undefined variables due to missing dependencies
+
+	* aclocal.m4: make -no-undefined mean something on GNU/non-Solaris
+
+	* acaux/ltmain.sh: suppress spurious -no-undefined errors on Linux
+
+	* getcwd.sh.in: suppress typeset: not found error for non-bash /bin/sh
+
 2003-04-03  Seth Robertson  <seth@winwood.sysdetect.com>
 
 	* configure.in (JAVA): Reorder java search path to prefer

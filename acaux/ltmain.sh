@@ -2380,6 +2380,11 @@ compiler."
 	else
 	  # Don't allow undefined symbols.
 	  allow_undefined_flag="$no_undefined_flag"
+	  # <KLUDGE>Linux libc.so has dependencies on symbols defined in
+	  # /lib/ld-linux.so.2, so add that to deplibs.</KLUDGE>
+	  if [ -x /lib/ld-linux.so.2 ]; then
+	    deplibs="$deplibs /lib/ld-linux.so.2"
+	  fi
 	fi
       fi
 
