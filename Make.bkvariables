@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.bkvariables,v 1.29 2002/08/22 05:53:37 dupuy Exp $
+# $Id: Make.bkvariables,v 1.30 2002/08/24 04:20:17 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -26,12 +26,19 @@
 # Do the activities requiring subprograms once only for efficiency
 ifneq ($(BKMK_VAR_CORRECT),true)
 
-BKMK_VAR_CORRECT = true
+# Discover where true (non-BUILD directory) group and package locations are
+BK_REALTOP:=$(shell cd $(GROUPTOP)/$(PKGTOP) && pwd)
+BK_PKGNAME:=$(shell basename $(BK_REALTOP) || echo "UNKNOWN-PKG")
+BK_BUILDTOP:=$(shell test -L $(GROUPTOP)/$(PKGTOP)/bkmk/Make.include && echo ../../ )
+
+override BKMK_VAR_CORRECT = true
 BK_ARCHNAME = $(shell uname -s | tr / - )-$(shell uname -r | sed 's/ .*//')-$(shell uname -m | tr / - )
 BK_OSNAME = $(shell uname -s | tr / - | sed 's/_.*//')-$(shell uname -r | sed 's/\(\.[^.()-]*\)[-.].*/\1/')
 
 BK_OSFILE=.config_os_type
 BKMK_OSFILE=$(BKMKDIR)/$(BK_OSFILE)
+
+export BK_ARCHNAME BK_OSNAME BKMK_VAR_CORRECT BK_REALTOP BK_PKGNAME BK_BUILDTOP
 
 # Avoid all this mess for 3rd party packages built via GNUmakefile
 ifeq ($(CONFIGURED),)
@@ -128,11 +135,6 @@ endif
 endif
 endif
 
-
-# Discover where true (non-BUILD directory) group and package locations are
-BK_REALTOP:=$(shell cd $(GROUPTOP)/$(PKGTOP) && pwd)
-BK_PKGNAME:=$(shell basename $(BK_REALTOP) || echo "UNKNOWN-PKG")
-BK_BUILDTOP:=$(shell test -L $(GROUPTOP)/$(PKGTOP)/bkmk/Make.include && echo ../../ )
 BK_TRUEGROUPTOP=$(BK_BUILDTOP)$(GROUPTOP)
 BK_TRUEPKGTOP=$(TRUEGROUPTOP)/$(PKGTOP)
 BK_TRUECWD=$(TRUEPKGTOP)/$(PKGSUBDIR)/$(GROUPSUBDIR)
