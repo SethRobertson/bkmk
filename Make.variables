@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.134 2003/03/26 16:46:05 jtt Exp $
+# $Id: Make.variables,v 1.135 2003/04/16 09:34:16 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -332,6 +332,8 @@ BK_DEFINES+= $(RESOLVER_DEFINES)
 BK_INCS= $(RESOLVER_INCLUDES)
 BK_LDS= $(RESOLVER_LDS)
 BK_LIBS= -lbk -ldict -lfsma -lpqueue -lpopt $(LIBRESOLVER) $(BK_LIBM) $(COMPRESS_LIBS)
+
+LT_LDLIBS+= $(AC_LIBS)
 
 endif # NO_STDBKCCSTUFF
 
