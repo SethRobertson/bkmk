@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.targets,v 1.88 2003/08/14 16:42:38 jtt Exp $
+# $Id: Make.targets,v 1.89 2003/08/19 20:30:53 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -347,6 +347,12 @@ ifneq ($(strip $(BK_INSTALLDATADIR)),)
 ifneq ($(strip $(BK_DATAFILES)),)
 	$(MKDIR) $(BK_INSTALLDATADIR)
 	$(INSTALL) $(INSTALL_OTHERFLAGS) $(BK_DATAFILES) $(BK_INSTALLDATADIR)
+endif # BK_DATAFILES
+endif # BK_INSTALLDATADIR
+ifneq ($(strip $(BK_INSTALLARCHIVEDIR)),)
+ifneq ($(strip $(BK_ARCHIVEFILES)),)
+	$(MKDIR) $(BK_INSTALLARCHIVEDIR)
+	$(INSTALL) $(INSTALL_OTHERFLAGS) $(BK_ARCHIVEFILES) $(BK_INSTALLARCHIVEDIR)
 endif # BK_DATAFILES
 endif # BK_INSTALLDATADIR
 ifneq ($(strip $(BK_INSTALLCONFIGDIR)),)
