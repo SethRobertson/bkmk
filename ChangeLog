@@ -1,3 +1,15 @@
+2002-09-30  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* aclocal.m4 (AC_TIME_MAX): get [cached] max time_t define in one pass
+	with default value for cross-compilation
+	(AC_FUNC_GETTEXT): eliminate use of obsolete AC_HAVE_LIBRARY
+
+	* configure.in: remove max time_t code [relocated to aclocal.m4]
+	eliminate non-libtool [line 74] autoconf warnings [autoconf -W all]
+	
+	* libbk_autoconf.h.in: eliminate religious superstition, remove comment
+	that breaks sed processing of file.
+	
 2002-09-08  Seth Robertson  <seth@yeah.baka.org>
 
 	* Make.bkvariables (PWD): Some versions of make appear to actively NUKE PWD.

@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.9 2002/07/26 07:32:13 dupuy Exp $
+# $Id: aclocal.m4,v 1.10 2002/09/30 21:59:08 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -120,7 +120,7 @@ LIBS="-L/usr/local/lib $LIBS"
 AC_CHECK_LIB(intl, gettext,
              [AC_DEFINE(HAVE_GETTEXT)
 LIBS="$LIBS -lintl"
-AC_HAVE_LIBRARY(iconv,LIBS="$LIBS -liconv")], LIBS=$ac_gettext_LIBS)])dnl
+AC_CHECK_LIB(iconv, main, LIBS="$LIBS -liconv")], LIBS=$ac_gettext_LIBS)])dnl
 ])# AC_FUNC_GETTEXT
 
 
@@ -161,6 +161,84 @@ AC_DEFUN([AC_SA_LEN],
   fi
  fi
 ])# AC_SA_LEN
+
+
+# AC_TIME_MAX
+# -----------------
+AC_DEFUN([AC_TIME_MAX],
+[AC_CACHE_CHECK([max time_t],
+               [ac_cv_$1],
+[AC_RUN_IFELSE([AC_LANG_SOURCE(
+[#define _ISOC99_SOURCE
+#define  __STDC_VERSION__ 199901L
+
+#include <limits.h>
+#include <time.h>
+
+main()
+{
+  if (sizeof(time_t) == sizeof(long))	/* prefer long if right size */
+  {
+    if ((time_t)ULONG_MAX > (time_t)LONG_MAX)
+    {
+      // printf("Unsigned long time_t\n");
+      return(10);
+    }
+    else
+    {
+      // printf("Signed long time_t\n");
+      return(11);
+    }
+  }
+#ifdef ULLONG_MAX
+  else if (sizeof(time_t) == sizeof(long long))
+  {
+    if ((time_t)ULLONG_MAX > (time_t)LLONG_MAX)
+    {
+      // printf("Unsigned long time_t\n");
+      return(12);
+    }
+    else
+    {
+      // printf("Signed long time_t\n");
+      return(13);
+    }
+  }
+#endif
+  else
+  {
+    if ((time_t)UINT_MAX > (time_t)INT_MAX)
+    {
+      // printf("Unsigned int time_t\n");
+      return(14);
+    }
+    else
+    {
+      // printf("Signed int time_t\n");
+      return(15);
+    }
+  }
+}
+])],
+               [echo $ECHO_N "(UNKNOWN)" >&6; unset ac_cv_$1],
+               [case $ac_status in
+ 10) ac_cv_$1=ULONG_MAX;;
+ 11) ac_cv_$1=LONG_MAX;;
+ 12) ac_cv_$1=ULLONG_MAX;;
+ 13) ac_cv_$1=LLONG_MAX;;
+ 14) ac_cv_$1=UINT_MAX;;
+ 15) ac_cv_$1=INT_MAX;;
+ *) echo $ECHO_N "(UNKNOWN)" >&6; unset ac_cv_$1;;
+esac;],
+               [ac_cv_$1=LONG_MAX])])
+AH_VERBATIM($1,
+[/* Define as an appropriately typed constant for maximum time_t value. */
+@%:@undef $1])dnl
+if test -n "$ac_cv_$1"; then
+  AC_DEFINE_UNQUOTED($1, $ac_cv_$1)
+fi
+])# AC_TIME_MAX
+
 
 # AC_STACKDIRECTION
 # -----------------

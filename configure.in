@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.42 2002/09/30 17:16:46 dupuy Exp $
+dnl $Id: configure.in,v 1.43 2002/09/30 21:59:09 dupuy Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.42 $)dnl
+AC_REVISION($Revision: 1.43 $)dnl
 AC_INIT(Make.bkvariables)
 AC_CONFIG_AUX_DIR(acaux)
 
@@ -69,53 +69,6 @@ else
 fi
 AC_SUBST(HAVE_ORACLE)
 
-echo $ECHO_N "checking for max time_t... $ECHO_C" >&6
-define(TIMET_TEST_PROG, [
-#include <limits.h>
-#include <time.h>
-main()
-{
-  if (sizeof(time_t) == sizeof(long))		// prefer long, if right size
-  {
-    if ((time_t)ULONG_MAX > (time_t)LONG_MAX)
-    {
-      // printf("Unsigned long time_t\n");
-      return(MYGOT_ULONG);
-    }
-    else
-    {
-      // printf("Signed long time_t\n");
-      return(MYGOT_LONG);
-    }
-  }
-  else
-  {
-    if ((time_t)UINT_MAX > (time_t)INT_MAX)
-    {
-      // printf("Unsigned int time_t\n");
-      return(MYGOT_UINT);
-    }
-    else
-    {
-      // printf("Signed int time_t\n");
-      return(MYGOT_INT);
-    }
-  }
-}
-])
-SAVE_CFLAGS="$CFLAGS"
-CFLAGS="-DMYGOT_ULONG=0 -DMYGOT_LONG=5 -DMYGOT_UINT=5 -DMYGOT_INT=5"
-AC_TRY_RUN(TIMET_TEST_PROG,BK_ARMAGEDDON=ULONG_MAX);
-CFLAGS="-DMYGOT_ULONG=5 -DMYGOT_LONG=0 -DMYGOT_UINT=5 -DMYGOT_INT=5"
-AC_TRY_RUN(TIMET_TEST_PROG,BK_ARMAGEDDON=LONG_MAX);
-CFLAGS="-DMYGOT_ULONG=5 -DMYGOT_LONG=5 -DMYGOT_UINT=0 -DMYGOT_INT=5"
-AC_TRY_RUN(TIMET_TEST_PROG,BK_ARMAGEDDON=UINT_MAX);
-CFLAGS="-DMYGOT_ULONG=5 -DMYGOT_LONG=5 -DMYGOT_UINT=5 -DMYGOT_INT=0"
-AC_TRY_RUN(TIMET_TEST_PROG,BK_ARMAGEDDON=INT_MAX);
-CFLAGS="$SAVE_CFLAGS"
-echo "${ECHO_T}${BK_ARMAGEDDON}" >&6
-AC_DEFINE_UNQUOTED(BK_ARMAGEDDON,${BK_ARMAGEDDON},// Max time_t)
-
 AC_LIBTOOL_WIN32_DLL
 AC_LIBTOOL_DLOPEN
 AC_PROG_LIBTOOL
@@ -131,6 +84,8 @@ AC_FUNC_MKTIME
 if test $ac_cv_func_working_mktime = no; then
  AC_DEFINE(MKTIME_HAS_BUGS)
 fi
+AC_TIME_MAX(BK_TIME_MAX)
+
 AC_CHECK_FUNCS(ntohll memmem memrchr strndup strnlen strverscmp)
 AC_CHECK_FUNCS(strptime gmtime_r timegm)
 AC_FUNC_STRFTIME
@@ -177,8 +132,5 @@ AC_CONFIG_HEADER(libbk_autoconf.h)
 
 AC_SUBST(link_static_flag)
 
-AC_OUTPUT(Make.config)
-
-
-
-
+AC_CONFIG_FILES(Make.config)
+AC_OUTPUT

@@ -1,5 +1,5 @@
 /*				-*- C -*-
- * $Id: libbk_autoconf.h.in,v 1.17 2002/09/29 16:26:39 seth Exp $
+ * $Id: libbk_autoconf.h.in,v 1.18 2002/09/30 21:59:09 dupuy Exp $
  *
  * ++Copyright LIBBK++
  *
@@ -20,6 +20,12 @@
 
 #ifndef _libbk_autoconf_h_
 #define _libbk_autoconf_h_
+
+/*
+ * <TRICKY>This file is processed by sed, and requires that all autoconf'd
+ * #defined constants be present in this file, as #undef (*not* #define) and
+ * with *no* comments on the same line as the definition.</TRICKY>
+ */
 
 #undef HAVE__FUNC__
 #undef HAVE__PRETTY_FUNCTION__
@@ -52,6 +58,8 @@
 #undef HAVE_ORACLE
 
 #undef STACK_DIRECTION
+
+#undef BK_TIME_MAX
 
 // value of _FILE_OFFSET_BITS needed for large files
 #undef _FILE_OFFSET_BITS
@@ -93,7 +101,5 @@
 #else  /* _WIN32 */
 #define BK_SYSPATH_SEPARATOR ";"
 #endif /* _WIN32 */
-
-#define BK_ARMAGEDDON X		// define max time_t
 
 #endif /* _libbk_autoconf_h_ */
