@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.35 2001/12/06 07:10:56 dupuy Exp $
+# $Id: Make.variables,v 1.36 2001/12/06 16:53:23 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -179,8 +179,10 @@ COMPILER_DEBUG_ERROR=-Werror
 ifneq ($(NO_OPT),true)
 ifneq ($(USING_INSIGHT),true)
 COPTDEBUG+=-O
-endif
+# gcc doesn't support -Wuninitialized without -O. And if using insight you
+# get it anyway.
 COMPILER_DEBUG+=-Wuninitialized 
+endif
 endif
 
 ifneq ($(NO_DEBUG),true)
