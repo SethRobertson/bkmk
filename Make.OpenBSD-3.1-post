@@ -1,0 +1,46 @@
+# -*- makefile -*-
+#
+# $Id: Make.OpenBSD-3.1-post,v 1.1 2002/06/24 01:58:09 seth Exp $
+#
+# ++Copyright LIBBK++
+#
+# Copyright (c) 2001,2002 The Authors.  All rights reserved.
+#
+# This source code is licensed to you under the terms of the file
+# LICENSE.TXT in this release for further details.
+#
+# Mail <projectbaka@baka.org> for further information
+#
+# --Copyright LIBBK--
+#
+#
+# OS-specific Variables
+#
+
+# -avoid-version causes OpenBSD ld to use archives instead of shared objects
+LT_LDFLAGS=
+# (we don't need to override LT_M_LDFLAGS since ld doesn't search for modules)
+
+
+# OpenBSD gcc gripes no previous prototype for `_GLOBAL_$I$pcap_event.cSC6Ipc'
+# when BK_INIT_FUN is used.  So we disable that warning (error).
+COMPILER_DEBUG+= -Wno-missing-prototypes
+
+
+# the following works around a gcc bug at 2.95.3 where using both -O3 and -fPIC
+# creates debugging references to local symbols that have been optimized away
+# which causes the assembler to barf
+
+# if any of debugging, shared libs, or optimization are turned off, ignore this
+ifneq ($(NO_DEBUG),true)
+ifneq ($(BK_WANT_LIBTOOL),false)
+ifneq ($(NO_OPT),true)
+ifneq ($(BK_USING_INSURE),true)
+# this really should be controlled by several independent make variables
+ifneq ($(BK_DEBUG_OPT),true)
+COPTDEBUG:=-O2 $(filter-out -O3, $(COPTDEBUG))
+endif
+endif
+endif
+endif
+endif
