@@ -3,6 +3,8 @@
 	* Make.production ($(subst .class,.cl%ss,$(BK_JAVA_PKG_CLASS))):
 	echo shortened version of javac command line to avoid overflowing
 	emacs compile-mode regex parser
+	(.PRECIOUS): fix to really avoid deleting JAVA symlinks, in part to
+	avoid overflowing emacs compile mode regex parser
 
 2002-01-19  Alexander Dupuy  <dupuy@sysdetect.com>
 

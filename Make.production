@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.production,v 1.30 2002/01/23 17:44:23 dupuy Exp $
+# $Id: Make.production,v 1.31 2002/01/24 01:25:35 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -100,7 +100,7 @@ $(BK_LARGE_LIB): $(BK_LARGE_LIBOBJ)
 #
 
 # Prevent make from deleting intermediate java and properties symlinks
-.PRECIOUS: %.java %.properties
+.PRECIOUS: $(BK_JAVADIR)/$(BK_JAVA_PKG)/%
 
 # Prevent make from trying to create foo.java from foo.java.c
 .SUFFIXES: .class .java .properties .MF
