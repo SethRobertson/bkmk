@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.197 2005/01/31 22:47:41 dupuy Exp $
+# $Id: Make.variables,v 1.198 2005/02/04 21:45:46 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -635,9 +635,9 @@ OS_SEARCHPATH=/usr/local/lib /usr/lib /usr/local/gnu/lib
 #
 # # make[4]: Entering directory `/n/pearl/proj/pearl/dupuy/awb/libbk/lib'
 # ../../bkmk/Make.production:186: Commands were specified for file `libbk.la' at ../../bkmk/Make.targets:270,
-# ../../bkmk/Make.production:186: but `libbk.la' is now considered the same file as `/home/demo/awb/usr/antura/lib/libbk.la'.
-# ../../bkmk/Make.production:186: Commands for `/home/demo/awb/usr/antura/lib/libbk.la' will be ignored in favor of those for `libbk.la'.
-# make[4]: Circular /home/demo/awb/usr/antura/lib/libbk.la <- /home/demo/awb/usr/antura/lib/libbk.la dependency dropped.
+# ../../bkmk/Make.production:186: but `libbk.la' is now considered the same file as `/home/demo/awb/$ANTURA_HOME/lib/libbk.la'.
+# ../../bkmk/Make.production:186: Commands for `/home/demo/awb/$ANTURA_HOME/lib/libbk.la' will be ignored in favor of those for `libbk.la'.
+# make[4]: Circular /home/demo/awb/$ANTURA_HOME/lib/libbk.la <- /home/demo/awb/$ANTURA_HOME/lib/libbk.la dependency dropped.
 #
 # These prevent proper installation of libraries, so in the following vpath
 # statements, we can't use BK_INSTALLLIBDIR; instead, we compute a relative
