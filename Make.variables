@@ -1,4 +1,4 @@
-# $Id: Make.variables,v 1.24 2001/11/08 09:26:44 dupuy Exp $
+# $Id: Make.variables,v 1.25 2001/11/09 22:45:16 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -147,8 +147,10 @@ ETAGS=etags
 
 
 ######################################################################
-# This is always built in to the shell`
+# These are built in to the shell, so you don't need to use them, but
+# they are defined for the use of the excessively paranoid
 CD=cd
+ECHO=echo
 
 ######################################################################
 # BUILD directory independence

@@ -1,4 +1,4 @@
-# $Id: Make.production,v 1.5 2001/11/08 09:26:44 dupuy Exp $
+# $Id: Make.production,v 1.6 2001/11/09 22:45:16 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -73,9 +73,13 @@ BK_JAVA_MF:=$(patsubst %.jar,%.MF,$(BK_JAVA_JAR))
 $(BK_JAVADIR)/$(BK_JAVA_PKG)/%.java: %.java
 	$(LN_S) `$(PWD)`/$< $@
 
-$(BK_JAVA_JAR): $(BK_JAVADIR)/$(BK_JAVA_PKG) $(BK_JAVA_PKG_SRC) $(BK_JAVA_PKG_CLASS)
-	$(LN_S) `$(PWD)`/$(BK_JAVA_MF) $(BK_JAVADIR)/$(BK_JAVA_MF) 
-	cd $(BK_JAVADIR) && $(JAR) $(JARFLAGS) $@ $(BK_JAVA_MF) -C $(BK_JAVA_CLASS)
+$(BK_JAVADIR)/%.MF: %.MF
+	$(LN_S) `$(PWD)`/$< $@
+
+$(BK_JAVA_JAR): $(BK_JAVADIR)/$(BK_JAVA_PKG) $(BK_JAVADIR)/$(BK_JAVA_MF) \
+		$(BK_JAVA_PKG_SRC) $(BK_JAVA_PKG_CLASS)
+	cd $(BK_JAVADIR) && \
+	  $(JAR) $(JARFLAGS) $@ $(BK_JAVA_MF) $(BK_JAVA_CLASS)
 	$(MV) $(BK_JAVADIR)/$(BK_JAVA_JAR) .
 
 $(BK_JAVADIR)/$(BK_JAVA_PKG):

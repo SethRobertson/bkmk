@@ -1,3 +1,15 @@
+2001-11-09  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.production: tweaks to java jar building rules
+
+	* Make.variables (ECHO): ECHO should be shell builtin
+
+	* Make.config.in (PERL): find perl; don't look for echo program
+
+	* configure.in: reordered by group; find perl; don't look for echo
+
+	* configure: rebuilt with local copy of autoconf 2.52 for good LN_S
+
 2001-11-08  Seth Robertson  <seth@startide.sysdetect.com>
 
 	* Make.targets (doxygen): Modified doxygen target to nuke
