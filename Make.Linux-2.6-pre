@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.Linux-2.6-pre,v 1.6 2005/02/06 23:35:42 seth Exp $
+# $Id: Make.Linux-2.6-pre,v 1.7 2005/02/07 19:14:16 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -19,6 +19,10 @@
 
 ifeq ($(shell if ( grep -q "Fedora Core release 3" /etc/fedora-release 2>/dev/null || grep -q "Gentoo Base System" /etc/gentoo-release 2>/dev/null ) && [ -f /usr/lib/libssl.so -o -f /usr/lib64/libssl.so ]; then echo OK; fi), OK)
 OPERATING_SYSTEM_OPENSSL_OK=true
+endif
+
+ifeq ($(shell if ( grep -q "Fedora Core release 3" /etc/fedora-release 2>/dev/null || grep -q "Gentoo Base System" /etc/gentoo-release 2>/dev/null ) && [ -f /usr/lib/libxml2.so -o -f /usr/lib64/libxml2.so ]; then echo OK; fi), OK)
+OPERATING_SYSTEM_XML2_OK=true
 endif
 
 # Is not searched by default under all circumstances for some stupid reason
