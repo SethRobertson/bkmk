@@ -1,0 +1,3 @@
+OS_INCS=-I/usr/local/include
+OS_LDS=-L/usr/local/lib
+OS_LIBS=-lintl

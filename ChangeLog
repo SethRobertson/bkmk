@@ -1,5 +1,11 @@
 2001-12-27  Alexander Dupuy  <dupuy@sysdetect.com>
 
+	* configure.in, libbk_autoconf.h.in: also check netinet/if_ether.h
+
+	* Make.variables (MAKE): don't define this as make - could be gmake
+
+	* Make.OpenBSD-2.9-pre (OS_INCS,OS_LDS,OS_LIBS): add /usr/local, -lintl
+
 	* libbk_autoconf.h.in: template for autoconf stuff; define BK_MINGW32
 
 	* configure.in: check for <net/ethernet.h>, generate libbk_autoconf.h

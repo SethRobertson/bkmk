@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.41 2001/12/22 00:18:02 dupuy Exp $
+# $Id: Make.variables,v 1.42 2001/12/27 22:31:09 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -74,9 +74,6 @@ YACCLIBS=-ly
 LOPTDEBUG= #-CF
 LFLAGS=$(LOPTDEBUG)
 LEXLIBS=-lfl
-
-# Must be gnu make
-MAKE=make
 
 ######################################################################
 # Java stuff

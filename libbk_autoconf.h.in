@@ -1,5 +1,5 @@
 /*				-*- C -*-
- * $Id: libbk_autoconf.h.in,v 1.1 2001/12/27 17:51:40 dupuy Exp $
+ * $Id: libbk_autoconf.h.in,v 1.2 2001/12/27 22:31:09 dupuy Exp $
  *
  * ++Copyright LIBBK++
  *
@@ -22,6 +22,7 @@
 #define _libbk_autoconf_h_
 
 #undef HAVE_NET_ETHERNET_H
+#undef HAVE_NETINET_IF_ETHER_H
 
 
 #if defined(_WIN32) && !defined(__CYGWIN32__)
