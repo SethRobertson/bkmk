@@ -1,3 +1,11 @@
+2001-12-27  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* libbk_autoconf.h.in: template for autoconf stuff; define BK_MINGW32
+
+	* configure.in: check for <net/ethernet.h>, generate libbk_autoconf.h
+
+	* Makefile (clean nuke): clean up libbk_autoconf.h
+
 2001-12-21  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.variables (BK_JAVA_TESTCP): BK_JAVA_CPATH + junit.jar

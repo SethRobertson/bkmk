@@ -1,6 +1,7 @@
 .config_os_type
+Make.config
 confdefs.h
 config.cache
-config.status
 config.log
-Make.config
+config.status
+libbk_autoconf.h

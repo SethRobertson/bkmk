@@ -1,0 +1,31 @@
+/*				-*- C -*-
+ * $Id: libbk_autoconf.h.in,v 1.1 2001/12/27 17:51:40 dupuy Exp $
+ *
+ * ++Copyright LIBBK++
+ *
+ * Copyright (c) 2001 The Authors.  All rights reserved.
+ *
+ * This source code is licensed to you under the terms of the file
+ * LICENSE.TXT in this release for further details.
+ *
+ * Mail <projectbaka@baka.org> for further information
+ *
+ * --Copyright LIBBK--
+ */
+
+/**
+ * @file
+ * autoconf-generated defines for C/C++
+ */
+
+#ifndef _libbk_autoconf_h_
+#define _libbk_autoconf_h_
+
+#undef HAVE_NET_ETHERNET_H
+
+
+#if defined(_WIN32) && !defined(__CYGWIN32__)
+#define BK_MINGW32 1		///< 1 if Win32 system but not using CygWin
+#endif
+
+#endif /* _libbk_autoconf_h_ */
