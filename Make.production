@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.production,v 1.28 2002/01/09 06:26:37 dupuy Exp $
+# $Id: Make.production,v 1.29 2002/01/11 10:19:27 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -128,19 +128,19 @@ $(subst .class,.cl%ss,$(BK_JAVA_PKG_TCLASS)): \
 	$(JAVAC) $(JAVACFLAGS) -classpath "$(BK_JAVA_TESTCP)" $^
 
 $(BK_JAVADIR)/$(BK_JAVA_PKG)/%: % $(BK_JAVADIR)/$(BK_JAVA_PKG)/.
-	$(LN_S) -f $(CURDIR)/$< $@
+	@$(LN_S) -f $(CURDIR)/$< $@
 	@test ! -L $@ && test ! $@ -ef $< 2>/dev/null && chmod -w $@ || true
 
 $(BK_JAVADIR)/%: $(GROUPTOP)/$(LOCALE)/% $(BK_JAVADIR)/.
-	$(LN_S) -f $(CURDIR)/$< $@
+	@$(LN_S) -f $(CURDIR)/$< $@
 	@test ! -L $@ && test ! $@ -ef $< 2>/dev/null && chmod -w $@ || true
 
 $(BK_JAVADIR)/%: $(GROUPTOP)/% $(patsubst %,$(BK_JAVADIR)/%/.,$(IMAGES))
-	$(LN_S) -f $(CURDIR)/$< $@
+	@$(LN_S) -f $(CURDIR)/$< $@
 	@test ! -L $@ && test ! $@ -ef $< 2>/dev/null && chmod -w $@ || true
 
 $(BK_JAVADIR)/%.MF: %.MF $(BK_JAVADIR)/.
-	$(LN_S) -f $(CURDIR)/$< $@
+	@$(LN_S) -f $(CURDIR)/$< $@
 	@test ! -L $@ && test ! $@ -ef $< 2>/dev/null && chmod -w $@ || true
 
 # BK_JAVA_ICLASS doesn't see newly created files, sigh
