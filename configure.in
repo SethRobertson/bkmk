@@ -1,5 +1,5 @@
 #
-# $Id: configure.in,v 1.6 2001/12/04 21:41:47 dupuy Exp $
+# $Id: configure.in,v 1.7 2001/12/11 17:55:29 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -61,7 +61,8 @@ AC_PATH_PROG(JAVAC,javac, $FALSE, $PATH:/usr/java/jdk1.3.1_01/bin)
 AC_PATH_PROG(JAR,jar, $FALSE, $PATH:/usr/java/jdk1.3.1_01/bin)
 
 AC_PATH_PROG(DOXYGEN,doxygen, $FALSE)
-AC_PATH_PROGS(BROWSER,netscape iexplore.exe lynx, $FALSE, $PATH:/cygdrive/c/progra~1/intern~1)
+AC_PATH_PROGS(BROWSER,netscape konqueror mozilla iexplore.exe lynx,
+	      $FALSE, $PATH:/cygdrive/c/progra~1/intern~1)
 
 AC_PATH_PROG(AR,ar)
 

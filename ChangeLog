@@ -1,3 +1,12 @@
+2001-12-11  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.production (jtest-%): phony target to force jtest run on file
+
+	* Make.targets (viewdox): use netscape remote, provide true URL
+	($(BK_INSTALLDOCDIR)/doxygen/Doxyfile): exclude JAVA link tree
+
+	* configure.in: add konqueror, mozilla to browser choices
+
 2001-12-10  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.targets (doxygen): Add Java support
