@@ -1,3 +1,14 @@
+2004-07-08  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* bk.conf.in (SHLIBEXT, MODULEXT): get autoconf'ed extensions
+
+	* configure.in: autoconf shared library and module extensions
+
+2004-07-08  Brian Lindauer  <lindauer@sysdetect.com>
+
+	* configure.in, libbk_autoconf.h.in, Make.production, Make.variables:
+	Darwin port compiles and runs, but core dumps on exit.
+
 2004-07-02  Seth Robertson  <seth@cheviot.sysdetect.com>
 
 	* Make.variables (MAKEFLAGS): Profile auto-make-parallelization

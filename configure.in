@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.112 2004/07/08 04:40:13 lindauer Exp $
+dnl $Id: configure.in,v 1.113 2004/07/08 21:41:40 dupuy Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.112 $)dnl
+AC_REVISION($Revision: 1.113 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
@@ -112,6 +112,16 @@ AC_PROG_LIBTOOL
 
 AC_DEFINE_UNQUOTED(SHLIBPATH_VAR, "$shlibpath_var")
 AC_SUBST(shlibpath_var)
+
+# expand command(Darwin)/normal variable for module/shared library extension
+module=yes
+eval modulext=$shrext
+unset module
+eval shlibext=$shrext
+AC_DEFINE_UNQUOTED(SHLIBEXT, "$shlibext")
+AC_SUBST(shlibext)
+AC_DEFINE_UNQUOTED(MODULEXT, "$modulext")
+AC_SUBST(modulext)
 
 AC_SUBST(lt_prog_compiler_static)
 
