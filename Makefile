@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.24 2003/09/05 18:41:27 seth Exp $
+# $Id: Makefile,v 1.25 2003/09/15 14:25:05 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -47,7 +47,7 @@ nuke::
 	rm -f $(GENFILES)
 
 %.status: ./%ure
-	./configure $(CONFIGURE_ARGS)
+	./configure --config-cache $(CONFIGURE_ARGS)
 	@-chmod +x $(filter %.sh %.pl,$(GENFILES))
 	echo "$(OSNAME)" > $(OSFILE) && : > .timestamp
 
