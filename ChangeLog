@@ -1,3 +1,12 @@
+2002-04-02  Seth Robertson  <seth@startide.sysdetect.com>
+
+	* Make.variables: Add /usr/local to standard paths.  Add -lintl to standard library.
+
+2002-03-29  Seth Robertson  <seth@winwood.sysdetect.com>
+
+	* Make.variables (BK_SIMPLE_CSRC): Update to include internalprogs
+	for dependency targets
+
 2002-04-02  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Makefile (install): package up tarball from top-level .install

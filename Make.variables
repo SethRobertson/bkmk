@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.64 2002/03/21 01:47:14 dupuy Exp $
+# $Id: Make.variables,v 1.65 2002/04/02 23:50:54 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -54,7 +54,7 @@ BK_BKNUKEJUNK=.\\\#* \\\#* *.rej *.orig *~
 #
 # C source filenames for standard production rules
 #
-BK_SIMPLE_CSRC:=$(patsubst %,%.c,$(BK_SIMPLE_PROGS))
+BK_SIMPLE_CSRC:=$(patsubst %,%.c,$(BK_SIMPLE_PROGS) $(BK_SIMPLE_INTERNALPROGS))
 BK_LARGE_CSRC:=$(patsubst %.y,%.tab.c,$(BK_LARGE_SRC))
 BK_LARGE_CSRC:=$(patsubst %.l,%.c,$(BK_LARGE_CSRC))
 BK_LARGE_LIBCSRC:=$(patsubst %.y,%.tab.c,$(BK_LARGE_LIBSRC))
@@ -199,9 +199,9 @@ MATH_LIBS=-lm
 # BK issues
 ifneq ($(NO_STDBKCCSTUFF),true)
 BK_DEFINES+= $(RESOLVER_DEFINES)
-BK_INCS= $(RESOLVER_INCLUDES)
-BK_LDS= $(RESOLVER_LDS)
-BK_LIBS= -lbk -ldict -lfsma -lpq -lpopt $(LIBRESOLVER) $(MATH_LIBS)
+BK_INCS= $(RESOLVER_INCLUDES) -I/usr/local/include
+BK_LDS= $(RESOLVER_LDS) -L/usr/local/lib
+BK_LIBS= -lbk -ldict -lfsma -lpq -lpopt -lintl $(LIBRESOLVER) $(MATH_LIBS)
 endif # NO_STDBKCCSTUFF
 
 # C
