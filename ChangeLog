@@ -1,3 +1,7 @@
+2002-05-13  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.targets (install): need dependency on BK_SIMPLE_SCRIPTS, too
+
 2002-05-10  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.bkvariables (BK_DUMMY): use tee to make this work on FreeBSD
