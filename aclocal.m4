@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.26 2002/11/05 07:36:34 dupuy Exp $
+# $Id: aclocal.m4,v 1.27 2002/11/11 22:53:56 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -61,32 +61,23 @@ AC_DEFUN([AC_CONSTRUCTORS],
 ])# AC_CONSTRUCTORS
 
 
+# AC_GMTIME_R_PROTOTYPE
+# -------------------
+# 
+# Check if the platform has a gmtime_r() prototype.
 #
-# GCC versions < 2.96 don't recognize -falign-functions, only -malign-functions
-# GCC versions >= 3.0 deprecate -malign-functions
 #
-# See which of these, if any, we should use on this platform, and put it in
-# ALIGN_FUNCTIONS_SWITCH variable.
-#
-# AC_C_ALIGN_FUNCTIONS
-# ---------------
-AC_DEFUN([AC_C_ALIGN_FUNCTIONS],
-[ac_saved_cflags=$CFLAGS
- CFLAGS="-falign-functions=4"
- AC_CACHE_CHECK(for function alignment switch, ac_cv_align_functions_switch,
- [AC_TRY_COMPILE([],[int f() { return 0; }],
-        ac_cv_align_functions_switch=-falign-functions,
-   CFLAGS="-malign-functions=4"
-   [AC_TRY_COMPILE([],[int f() { return 0; }],
-        ac_cv_align_functions_switch=-malign-functions,
-        ac_cv_align_functions_switch=)
-   ])
- ])
- ALIGN_FUNCTIONS_SWITCH=$ac_cv_align_functions_switch
- AC_SUBST(ALIGN_FUNCTIONS_SWITCH)
- CFLAGS=$ac_saved_cflags
-])# AC_C_ALIGN_FUNCTIONS
-
+AC_DEFUN([AC_GMTIME_R_PROTOTYPE], [AC_CACHE_CHECK([for prototype for gmtime_r], ac_cv_have_gmtime_r_prototype,
+ AC_TRY_COMPILE(
+[
+#include <time.h>
+],[struct tm *t = gmtime_r(0)],
+[ ac_cv_have_gmtime_r_prototype=no; ],[ ac_cv_have_gmtime_r_prototype=yes; ]))
+if test "$ac_cv_have_gmtime_r_prototype" = "yes"
+then
+	AC_DEFINE(HAVE_GMTIME_R_PROTOTYPE)
+fi
+])
 
 # BK_C_SIG_BRAINDAMAGE
 # --------
