@@ -1,6 +1,6 @@
 # -*- makefile -*-
 # 
-# $Id: Make.targets,v 1.67 2002/10/08 18:06:15 matt Exp $
+# $Id: Make.targets,v 1.68 2002/10/16 15:01:36 matt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -132,6 +132,7 @@ nuke clean::
 	for L in $(BK_JAVA_HELP_LANG); do \
 	  $(RM) `$(BK_INSTALLPROGDIR)/buildhelp -l $(BK_JAVA_HELP) $$L/Map.jhm`; \
 	done
+	$(RM) $(BK_JAVA_HELP_JAR) $(BK_JAVA_HELP_PDF)
 endif # BK_JAVA_HELPLANG
 endif # BK_JAVA_HELP
 endif # BK_WANT_HELP
