@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.51 2004/06/25 00:25:10 dupuy Exp $
+# $Id: aclocal.m4,v 1.52 2004/07/13 19:18:30 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -577,6 +577,45 @@ case "$ac_cv_dev_fd" in
   char*) AC_DEFINE(HAVE_DEV_FD, 1) ;;
 esac
 ])# AC_DEV_FD
+
+
+# AC_PROCFS
+# -----------------
+# Determine whether /proc/ is a directory allowing you to read process status.
+# Linux, BSD, and SVR4 implement this differently.
+#
+AC_DEFUN([AC_PROCFS],
+[AC_CACHE_CHECK([for /proc/ process status],
+                [ac_cv_procfs],
+ [AC_TRY_RUN([int main() {exit(0);}],
+   [if test -d /proc; then
+      if test -d /proc/self; then
+	: Linux
+	ac_cv_procfs='/proc/self'
+      elif test -d /proc/curproc; then
+	: BSD
+	ac_cv_procfs='/proc/curproc'
+      else
+	: SVR4/Solaris?
+	ac_cv_procfs='/proc'
+      fi
+    else
+      ac_cv_procfs='no'
+    fi],
+	     [AC_MSG_WARN([something is very broken with ac_try_run])],
+	     [ac_cv_procfs='cross-compilation assumes not'])])
+ AH_VERBATIM(HAVE_PROCFS,
+[/* Defined 1 if /proc procfs may exist, else undefined. */
+@%:@undef HAVE_PROCFS])dnl
+case "$ac_cv_procfs" in
+  no) : ;;
+  *) AC_DEFINE(HAVE_PROCFS, 1) ;;
+esac
+case "$ac_cv_procfs" in
+  /proc/self) AC_DEFINE(HAVE_PROC_SELF, 1) ;;
+  /proc/curproc) AC_DEFINE(HAVE_PROC_CURPROC, 1) ;;
+esac
+])# AC_PROCFS
 
 
 #

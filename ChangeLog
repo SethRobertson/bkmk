@@ -1,6 +1,20 @@
+2004-07-13  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* aclocal.m4 (AC_PROCFS): better /proc autoconf
+
+	* configure.in, libbk_autoconf.h.in: use HAVE_PROC{FS,_SELF,_CURPROC}
+
+2004-07-13  Brian Lindauer  <lindauer@malkmus.sysdetect.com>
+
+	* configure.in, libbk_autoconf.h.in: Darwin is a BSD without procfs
+
 2004-07-12  Brian Lindauer  <lindauer@malkmus.sysdetect.com>
 
 	* libbk_autoconf.h.in: Comment out HAVE_PRAGMA_INIT.
+
+2004-07-12  James Tanis  <jtt@sysdetect.com>
+
+	* configure, configure.in, libbk_autoconf.h.in: bk route information
 
 2004-07-09  Alexander Dupuy  <dupuy@sysdetect.com>
 

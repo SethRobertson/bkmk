@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.115 2004/07/13 15:06:39 lindauer Exp $
+dnl $Id: configure.in,v 1.116 2004/07/13 19:18:30 dupuy Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.115 $)dnl
+AC_REVISION($Revision: 1.116 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
@@ -146,9 +146,6 @@ AC_IN_ADDR_T
 AC_IN6_MULTICAST
 AC_FUNC_INET_PTON
 
-# Check for procfs
-AC_CHECK_FILES(/proc/)
-
 AC_FUNC_MKTIME
 if test $ac_cv_func_working_mktime = no; then
   AC_DEFINE(MKTIME_HAS_BUGS)
@@ -201,6 +198,7 @@ AC_FUNC_ALLOCA
 AC_SECOND_CONNECT_TO_REFUSED_PORT(BK_SECOND_REFUSED_CONNECT_ERRNO)
 
 AC_DEV_FD
+AC_PROCFS
 
 # these are built-ins to most shells, but in case of stupidity check anyhow
 AC_PATH_PROG(TRUE, true)
