@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.29 2001/11/28 00:08:27 matt Exp $
+# $Id: Make.variables,v 1.30 2001/11/28 18:24:09 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -107,7 +107,7 @@ CC_strict=$(CXX_CONFIG) $(CCXOPTS)
 CC=$(CC_normal)
 CXX=$(CXX_CONFIG) $(CXXOPTS)
 ifeq ($(CC_CONFIG),gcc)
-COMPILER_DEBUG+=-W -Wchar-subscripts -Wcomment -Wformat -Wimplicit -Wmain -Wmultichar -Wreturn-type -Wswitch -Wtrigraphs -Wno-unused -Wshadow -Wpointer-arith $(COMPILER_DEBUG_ERROR)
+COMPILER_DEBUG+=-W -Wmissing-prototypes -Wstrict-prototypes -Wchar-subscripts -Wcomment -Wformat -Wimplicit -Wmain -Wmultichar -Wreturn-type -Wswitch -Wtrigraphs -Wno-unused -Wshadow -Wpointer-arith $(COMPILER_DEBUG_ERROR)
 COMPILER_DEBUG_ERROR=-Werror
 
 ifneq ($(NO_OPT),true)
