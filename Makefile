@@ -23,6 +23,9 @@ endif
 #
 ################################################################
 
+autoconf:
+	/usr/local/bin/autoconf -Wall
+
 clean nuke:
 	rm -f .config_os_type confdefs.h config.cache config.status config.log libbk_autoconf.h .timestamp
 
@@ -35,6 +38,4 @@ clean nuke:
 
 config.status: acaux/config.* acaux/ltmain.sh
 
-
-jtt:
-	@echo "$(OSNAME)"
+.PHONY: default autoconf clean nuke

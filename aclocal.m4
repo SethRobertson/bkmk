@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.29 2002/11/19 22:27:40 lindauer Exp $
+# $Id: aclocal.m4,v 1.30 2002/11/21 01:08:58 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -15,17 +15,18 @@
 # autoconf m4 macros
 #
 
-#
+
+# AC_CONSTRUCTORS
+# ---------------
 # Gnu compilers use ((__constructor__)) and ((__destructor__)) __attributes__
 # to indicate that a function is a "static constructor" and should be called at
 # load time.  Solaris uses #pragma init(fn).  Other systems may use other
 # techniques, or we can just fall back on libtool's ltdl support to call it
 # ourselves.
 #
-# AC_CONSTRUCTORS
-# ---------------
 AC_DEFUN([AC_CONSTRUCTORS],
-[AC_CACHE_CHECK(for constructor attribute, ac_cv_have_constructor_attribute,
+[AC_CACHE_CHECK([for constructor attribute],
+		[ac_cv_have_constructor_attribute],
  [AC_TRY_RUN([
    static int x = 1;
    __attribute__((__constructor__)) reset() { x = 0; }
@@ -61,19 +62,19 @@ AC_DEFUN([AC_CONSTRUCTORS],
 ])# AC_CONSTRUCTORS
 
 
-#
+# AC_C_ALIGN_FUNCTIONS
+# ---------------
 # GCC versions < 2.96 don't recognize -falign-functions, only -malign-functions
 # GCC versions >= 3.0 deprecate -malign-functions
 #
 # See which of these, if any, we should use on this platform, and put it in
 # ALIGN_FUNCTIONS_SWITCH variable.
 #
-# AC_C_ALIGN_FUNCTIONS
-# ---------------
 AC_DEFUN([AC_C_ALIGN_FUNCTIONS],
 [ac_saved_cflags=$CFLAGS
  CFLAGS="-falign-functions=4"
- AC_CACHE_CHECK(for function alignment switch, ac_cv_align_functions_switch,
+ AC_CACHE_CHECK([for function alignment switch],
+		[ac_cv_align_functions_switch],
  [AC_TRY_COMPILE([],[int f() { return 0; }],
         ac_cv_align_functions_switch=-falign-functions,
    CFLAGS="-malign-functions=4"
@@ -90,9 +91,7 @@ AC_DEFUN([AC_C_ALIGN_FUNCTIONS],
 
 # BK_C_SIG_BRAINDAMAGE
 # --------
-# 
-# Check if gcc is brain dead in how it handles passing SIG_IGN/DFLT as functions
-#
+# Check if gcc is brain dead in how it handles passing SIG_IGN/DFL as functions
 #
 AC_DEFUN([BK_C_SIG_BRAINDAMAGE],dnl
 [
@@ -125,9 +124,7 @@ fi
 
 # BK_C_OVERZEALOUS_CHAR_SUBSCRIPTS
 # --------------------------------
-# 
 # Check if gcc -Wchar-subscripts is too overzealous for our tastes
-#
 #
 AC_DEFUN([BK_C_OVERZEALOUS_CHAR_SUBSCRIPTS],dnl
 [AC_CACHE_CHECK([if -Wchar-subscripts is overzealous], bk_c_overzealous_char_subscripts,
@@ -144,13 +141,13 @@ then
 fi
 ])
 
-#
+
+# AC_C__FUNC__
+# ----------
 # C 99 has an implicit local variable __func__ (a constant string) and several
 # C 89 compilers (notably GCC) have __FUNCTION__ and/or __PRETTY_FUNCTION__
 # names that work in similar ways (PRETTY does C++ name demangling).
 #
-# AC_C__FUNC__
-# ----------
 AC_DEFUN([AC_C__FUNC__],
 [AC_CACHE_CHECK(for __func__ support, ac_cv_have__func__,
  [AC_TRY_COMPILE([],[char *f =  __func__;],
@@ -181,12 +178,11 @@ AC_DEFUN([AC_C__FUNC__],
 ])# AC_C__FUNC__
 
 
-# AC_INADDR_T
+# AC_IN_ADDR_T
 # ---------------------------------
-#
 # This macro determines if in_addr_t is defined or not.
 #
-AC_DEFUN([AC_INADDR_T], [AC_CACHE_CHECK([for in_addr_t typedef], ac_inaddr_t_defined,
+AC_DEFUN([AC_IN_ADDR_T], [AC_CACHE_CHECK([for in_addr_t typedef], ac_inaddr_t_defined,
 	AC_TRY_COMPILE(
 [
 #include <sys/types.h>
@@ -196,11 +192,14 @@ AC_DEFUN([AC_INADDR_T], [AC_CACHE_CHECK([for in_addr_t typedef], ac_inaddr_t_def
  if test $ac_inaddr_t_defined = 'yes' ; then
   AC_DEFINE(HAVE_IN_ADDR_T)
  fi
-])
+])# AC_IN_ADDR_T
 
 
 # AC_FUNC_INET_PTON
 # ----------------
+# This macro determines if the inet_pton function is supported, and which
+# libraries (if any) need to be linked to get it.
+#
 AC_DEFUN([AC_FUNC_INET_PTON],
 [AC_CHECK_FUNCS(inet_pton, [],
 [# inet_pton is in -lnsl on Solaris
@@ -210,9 +209,11 @@ LIBS="-lnsl $LIBS"])])dnl
 ])# AC_FUNC_INET_PTON
 
 
-#
 # AC_FUNC_GETTEXT
 # ----------------
+# This macro determines if the gettext function is supported, and which
+# libraries (if any) need to be linked to get it.
+#
 AC_DEFUN([AC_FUNC_GETTEXT],
 [AC_CHECK_FUNCS(gettext, [],
 [# gettext is in -lintl on BSD, Solaris, other systems
@@ -225,14 +226,13 @@ AC_CHECK_LIB(iconv, main, LIBS="$LIBS -liconv")], LIBS=$ac_gettext_LIBS)])dnl
 ])# AC_FUNC_GETTEXT
 
 
-#
+# AC_SA_LEN
+# ---------
 # BSD-based systems have an sa_len field in struct sockaddr that may need to
 # be maintained.  Other systems do not have this, and must use the sa_family
 # field (and possibly other structure types and fields) to figure it out.  On
 # some systems, the lookup on sa_family can be accessed via the SA_LEN macro.
 #
-# AC_SA_LEN
-# ---------
 AC_DEFUN([AC_SA_LEN],
 [AC_CACHE_CHECK(whether struct sockaddr has sa_len, ac_cv_have_sockaddr_sa_len,
  [AC_TRY_COMPILE([
@@ -264,15 +264,15 @@ AC_DEFUN([AC_SA_LEN],
 ])# AC_SA_LEN
 
 
-#
+# AC_IN6_MULTICAST
+# ---------
 # The BSD and Solaris versions of IN6_IS_ADDR_MULTICAST take a pointer to
 # a struct in6_addr.  The Linux version takes the s6_addr from the 
 # struct in6_addr.  Figure out which version we have.
 #
-# AC_IN6_MULTICAST
-# ---------
 AC_DEFUN([AC_IN6_MULTICAST],
-[AC_CACHE_CHECK(whether IN6_IS_ADDR_MULTICAST takes an s6_addr, ac_cv_multicast_test_takes_s6_addr,
+[AC_CACHE_CHECK([whether IN6_IS_ADDR_MULTICAST takes an s6_addr],
+		[ac_cv_multicast_test_takes_s6_addr],
   [AC_TRY_COMPILE(
     [#include <netinet/in.h>
     ],
@@ -283,7 +283,8 @@ AC_DEFUN([AC_IN6_MULTICAST],
   if test $ac_cv_multicast_test_takes_s6_addr = yes; then
     AC_DEFINE(IN6_MULTICAST_TAKES_S6_ADDR)
   else
-    AC_CACHE_CHECK(whether IN6_IS_ADDR_MULTICAST takes a struct in6_addr ptr, ac_cv_multicast_test_takes_in6_addr,
+    AC_CACHE_CHECK([whether IN6_IS_ADDR_MULTICAST takes a struct in6_addr ptr],
+		   [ac_cv_multicast_test_takes_in6_addr],
       [AC_TRY_COMPILE(
         [#include <netinet/in.h>
         ],
@@ -301,6 +302,8 @@ AC_DEFUN([AC_IN6_MULTICAST],
 
 # AC_STACKDIRECTION
 # -----------------
+# Try to figure out which way the stack grows, if possible.
+#
 AC_DEFUN([AC_STACKDIRECTION],
 [AC_CACHE_CHECK([stack direction for C],
                [ac_cv_c_stack_direction],
@@ -341,6 +344,8 @@ AC_DEFINE_UNQUOTED(STACK_DIRECTION, $ac_cv_c_stack_direction)
 
 # AC_TIME_MAX
 # -----------------
+# Determine the ANSI limit.h constant that expresses the maximum time_t.
+#
 AC_DEFUN([AC_TIME_MAX],
 [AC_CACHE_CHECK([max time_t],
                [ac_cv_$1],
@@ -418,12 +423,10 @@ fi
 
 # AC_SECOND_CONNECT_TO_REFUSED_PORT
 # ---------------------------------
-#
 # This macro determines the correct errno value for calls to connect(2) on
 # sockets which have already been refused at the endpoint. Most OS's seem to
 # return ECONNREFUSED (again) which you would expect. Oddly *BSD returns
 # EINVAL.
-#
 #
 # <WARNING>This program test uses a blocking (as opposed to non-blocking)
 # socket.  The errno determined here seems to be the one we are looking for,
@@ -518,6 +521,40 @@ if test -n "$ac_cv_$1"; then
   AC_DEFINE_UNQUOTED($1, $ac_cv_$1)
 fi
 ])# AC_SECOND_CONNECT_TO_REFUSED_PORT
+
+
+# AC_DEV_FD
+# -----------------
+# Determine whether /dev/fd/ is a directory allowing you to reopen file
+# descriptors.  BSD and Solaris implement this with character devices, which
+# works with file descriptors that are sockets, unlinked files, etc. but Linux,
+# for some reason, implements this as a directory of symbolic links, which
+# don't work with sockets, unlinked files, etc.  You can test for basic /dev/fd
+# support with #ifdef HAVE_DEV_FD, and for true /dev/fd support with #if.
+#
+AC_DEFUN([AC_DEV_FD],
+[AC_CACHE_CHECK([for /dev/fd/ file descriptor support],
+                [ac_cv_dev_fd],
+ [AC_TRY_RUN([int main() {exit(0);}],
+   [if test -r /dev/fd/0; then
+      if test -c /dev/fd/31; then
+	ac_cv_dev_fd='character device'
+      else
+	ac_cv_dev_fd='symbolic link'
+      fi
+    else
+      ac_cv_dev_fd='no'
+    fi],
+	     [AC_MSG_WARN([something is very broken with ac_try_run])],
+	     [ac_cv_dev_fd='cross-compilation assumes not'])])
+ AH_VERBATIM(HAVE_DEV_FD,
+[/* Defined 0 if /dev/fd/0 is symlink, 1 if true device, else undefined. */
+@%:@undef HAVE_DEV_FD])dnl
+case "$ac_cv_dev_fd" in
+  symb*) AC_DEFINE(HAVE_DEV_FD, 0) ;;
+  char*) AC_DEFINE(HAVE_DEV_FD, 1) ;;
+esac
+])# AC_DEV_FD
 
 
 #

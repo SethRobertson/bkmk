@@ -1,3 +1,14 @@
+2002-11-20  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Makefile (autoconf): add autoconf target to run with -Wall
+
+	* configure.in: use AC_DEV_FD; AC_IN_ADDR_T instead of AC_INADDR_T
+	
+	* aclocal.m4: quote AC_CACHE_CHECK arguments, add defun comments
+	(AC_DEV_FD): determine if /dev/fd/ supported, and how, using
+	HAVE_DEV_FD [not HAVE_DEVFD], and don't croak when cross-compiling
+	(AC_IN_ADDR_T): instead of AC_INADDR_T, for consistency with type decl
+
 2002-11-20  Brian Lindauer  <lindauer@malkmus.sysdetect.com>
 
 	* configure.in: autoconf existence of /dev/fd filesystem.

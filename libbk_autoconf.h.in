@@ -1,5 +1,5 @@
 /*				-*- C -*-
- * $Id: libbk_autoconf.h.in,v 1.33 2002/11/20 19:08:20 lindauer Exp $
+ * $Id: libbk_autoconf.h.in,v 1.34 2002/11/21 01:08:58 dupuy Exp $
  *
  * ++Copyright LIBBK++
  *
@@ -21,12 +21,15 @@
 #ifndef _libbk_autoconf_h_
 #define _libbk_autoconf_h_
 
+// <TODO>This file really should be generated with autoheader</TODO>
+
 /*
  * <TRICKY>This file is processed by sed, and requires that all autoconf'd
  * #defined constants be present in this file, as #undef (*not* #define) and
  * with *no* comments on the same line as the definition.</TRICKY>
  */
 
+#undef STACK_DIRECTION
 #undef WORDS_BIGENDIAN
 
 #undef u_int8_t
@@ -41,11 +44,11 @@
 #undef HAVE_CONSTRUCTOR_ATTRIBUTE
 #undef HAVE_PRAGMA_INIT
 
-#undef HAVE_FLOCK
+#undef BK_TIME_MAX
 
-#undef HAVE_UNISTD_H
 #undef HAVE_SYS_TIME_H
 #undef TIME_WITH_SYS_TIME
+#undef HAVE_UNISTD_H
 #undef HAVE_PATHS_H
 #undef HAVE_IEEEFP_H
 #undef HAVE_ALLOCA_H
@@ -57,6 +60,7 @@
 #undef HAVE_SOCKADDR_SA_LEN
 #undef HAVE_SA_LEN_MACRO
 #undef HAVE_INET_PTON
+
 #undef HAVE_MEMMEM
 #undef HAVE_MEMRCHR
 #undef HAVE_STRNDUP
@@ -64,25 +68,17 @@
 #undef HAVE_STRVERSCMP
 #undef HAVE_STRPTIME
 #undef HAVE_GMTIME_R
-#undef HAVE_GMTIME_R_PROTOTYPE
 #undef HAVE_TIMEGM
 #undef HAVE_STRFTIME
 #undef HAVE_GETTEXT
 #undef MKTIME_HAS_BUGS
 #undef HAVE_ALLOCA
-#undef HAVE_ORACLE
 #undef HAVE_ISINF
 #undef HAVE_SETENV
 #undef HAVE_GETHOSTBYNAME2
 
-#undef HAVE_DEVFD
-
 #undef IN6_MULTICAST_TAKES_IN6_ADDR
 #undef IN6_MULTICAST_TAKES_S6_ADDR
-
-#undef STACK_DIRECTION
-
-#undef BK_TIME_MAX
 
 /*
  * The errno value returned by system on *second* connect to refused
@@ -90,6 +86,10 @@
  * all OS's, gets it wrong.
  */
 #undef BK_SECOND_REFUSED_CONNECT_ERRNO
+
+#undef HAVE_DEV_FD
+
+#undef HAVE_ORACLE
 
 #ifndef _FILE_OFFSET_BITS
 // value of _FILE_OFFSET_BITS needed for large files

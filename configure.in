@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.64 2002/11/20 19:08:20 lindauer Exp $
+dnl $Id: configure.in,v 1.65 2002/11/21 01:08:58 dupuy Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.64 $)dnl
+AC_REVISION($Revision: 1.65 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
@@ -56,7 +56,10 @@ CFLAGS="$SAVE_CFLAGS"
 echo "${ECHO_T}$BK_SPECIAL_DEBUG" >&6
 BK_C_SIG_BRAINDAMAGE
 
+# <TODO>This macro doesn't work right when cross-compiling; it should be
+# replaced by something that greps the generated object file.</TODO>
 AC_C_BIGENDIAN
+
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PATH_PROG(PWDPROG, pawd, pwd)
@@ -80,6 +83,7 @@ AC_SUBST(HAVE_ORACLE)
 
 AC_LIBTOOL_WIN32_DLL
 AC_LIBTOOL_DLOPEN
+# ignore warnings from autoconf -Wall regarding this; not worth fixing
 AC_PROG_LIBTOOL
 
 AC_SUBST(link_static_flag)
@@ -91,9 +95,9 @@ AC_CHECK_HEADERS(paths.h ieeefp.h alloca.h)
 AC_CHECK_HEADERS(net/ethernet.h netinet/if_ether.h)
 AC_CHECK_HEADERS(sys/capability.h)
 AC_SA_LEN
-AC_INADDR_T
-AC_FUNC_INET_PTON
+AC_IN_ADDR_T
 AC_IN6_MULTICAST
+AC_FUNC_INET_PTON
 
 AC_FUNC_MKTIME
 if test $ac_cv_func_working_mktime = no; then
@@ -117,6 +121,7 @@ AC_CHECK_LIB([pthread],[pthread_create],[HAVE_PTHREADS=true],[HAVE_PTHREADS=fals
 AC_SUBST(HAVE_PTHREADS)
 LIBS=$saved_LIBS
 
+dnl <TODO bugid="881">should use getaddressinfo function instead</TODO>>
 AC_SEARCH_LIBS([gethostbyname2],[resolv],AC_DEFINE(HAVE_GETHOSTBYNAME2))
 
 AC_CHECK_FUNCS(isinf ntohll)
@@ -128,6 +133,8 @@ AC_STACKDIRECTION
 AC_FUNC_ALLOCA
 
 AC_SECOND_CONNECT_TO_REFUSED_PORT(BK_SECOND_REFUSED_CONNECT_ERRNO)
+
+AC_DEV_FD
 
 AC_PATH_PROG(RM, rm)
 AC_PATH_PROG(FALSE, false)
@@ -163,11 +170,9 @@ AC_PATH_PROGS(BROWSER, browser netscape konqueror mozilla iexplore.exe lynx,
 
 AC_PATH_PROG(AR, ar)
 
-AC_CHECK_FILE(/dev/fd/0, AC_DEFINE(HAVE_DEVFD))
-
 if test "$ac_cv_search_gethostbyname2" = "no"
 then
-  AC_MSG_WARN([you will only be able to resolve AF_INET names])
+  AC_MSG_WARN([you will not be able to resolve IPv6 names])
 fi
 
 AC_DEFINE_UNQUOTED(PATH_SEPARATOR, "$PATH_SEPARATOR")
