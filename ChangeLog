@@ -1,3 +1,7 @@
+2002-10-04  James Tanis  <jtt@hawking.sysdetect.com>
+
+	* Make.variables (INSTALL): Use correct path for default install.
+
 2002-09-30  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* aclocal.m4 (AC_TIME_MAX): get [cached] max time_t define in one pass

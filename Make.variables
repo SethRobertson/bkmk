@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.107 2002/09/25 16:04:41 dupuy Exp $
+# $Id: Make.variables,v 1.108 2002/10/04 18:51:13 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -25,6 +25,13 @@ NORMALIZE='			\
 	s@/[^/.]+/\.\./@/@g;	\
 	s@^/n/[^/]*/@/@;	\
 	print;'
+
+ifeq ($(AC_INSTALL), aux/install-sh)
+INSTALL=$(PKGTOP)/$(GROUPTOP)/bkmk/$(AC_INSTALL)
+else
+INSTALL=$(AC_INSTALL)
+endif
+
 
 # Protected code which runs only once per make tree build
 ifneq ($(BKMKVAR_VAR_CORRECT),true)
