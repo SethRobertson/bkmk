@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.bkvariables,v 1.10 2002/01/05 00:26:37 dupuy Exp $
+# $Id: Make.bkvariables,v 1.11 2002/01/07 17:03:12 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -26,16 +26,19 @@
 # Do the activities requiring subprograms once only for efficiency
 ifneq ($(BKMK_VAR_CORRECT),true)
 
+
 BKMK_VAR_CORRECT = true
 BK_ARCHNAME = $(shell uname -s | tr / - )-$(shell uname -r | sed 's/ .*//')-$(shell uname -m | tr / - )
 BK_OSNAME = $(shell uname -s | tr / - )-$(shell uname -r | sed 's/\(\.[^.]*\)\..*/\1/')
 
-ifneq ($(BKMKOSFILE),)
+BKMK_OSFILE=$(BKMKDIR)/.config_os_type
+
+#ifneq ($(BKMK_OSFILE),)
 ##################################################
 #
 # Make sure that we've configured using the correct architecture
 #
-BK_CONFIG_OS_TYPE=$(shell cat $(BKMKOSFILE) 2>/dev/null)
+BK_CONFIG_OS_TYPE=$(shell cat $(BKMK_OSFILE) 2>/dev/null)
 
 ifneq ($(BK_CONFIG_OS_TYPE),$(BK_OSNAME))
 
@@ -45,7 +48,9 @@ ifneq ($(BK_CONFIG_OS_TYPE),$(BK_OSNAME))
 # tty. BTW: Note the use of "rm", since we can't depend on configured $(RM);
 # this could technically fail, but it's pretty unlikely.
 
-BK_DUMMY:=$(shell (cd $(BKMKDIR) && { rm -f config.cache config.status; $(MAKE) -s .timestamp OSNAME=$(BK_OSNAME) OSFILE=$(BKMKOSFILE); }) 2>/dev/null >/dev/tty)
+#BK_DUMMY:=$(shell (cd $(BKMKDIR) && { rm -f config.cache config.status; $(MAKE) -s .timestamp OSNAME=$(BK_OSNAME) OSFILE=$(BKMK_OSFILE); }) 2>/dev/null >/dev/tty)
+
+BK_DUMMY:=$(shell (echo $(BK_OSNAME) > $(BKMK_OSFILE) && cd $(GROUPTOP)/$(PKGTOP) && echo -e "\n\tDETECTED ARCHITECTURE CHANGE\n" && echo -n "Making neat (Don't forget to run $(MAKE) depend aftwards)...." && $(MAKE) neat >/dev/null && echo "done"  && cd $(BKMKDIR) && { rm -f config.status; $(MAKE) -s .timestamp OSNAME=$(BK_OSNAME) OSFILE=$(BKMK_OSFILE); }) 2>/dev/null >/dev/tty)
 
 else
 
@@ -55,7 +60,7 @@ endif # BK_CONFIG_OS_TYPE != BK_OSNAME
 
 #
 ##################################################
-endif # BKMKOSFILE
+#endif # BKMK_OSFILE
 
 
 endif # BKMK_VAR_CORRECT

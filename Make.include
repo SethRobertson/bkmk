@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.include,v 1.8 2002/01/05 00:26:37 dupuy Exp $
+# $Id: Make.include,v 1.9 2002/01/07 17:03:12 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -17,7 +17,6 @@
 # General Baka makefile environment
 #
 BKMKDIR=$(GROUPTOP)/$(PKGTOP)/bkmk
-BKMKOSFILE=$(BKMKDIR)/.config_os_type
 
 include $(BKMKDIR)/Make.bkvariables
 -include $(BKMKDIR)/Make.$(BK_OSNAME)-pre
