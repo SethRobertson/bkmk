@@ -1,3 +1,7 @@
+2002-03-05  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.targets (install): indicate when libtool used for install lib
+
 2002-02-22  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.OpenBSD-2.9-pre: (LT_LDFLAGS, COPTDEBUG): moved to -post

@@ -1,6 +1,6 @@
 # -*- makefile -*-
 # 
-# $Id: Make.targets,v 1.41 2002/02/19 22:49:01 dupuy Exp $
+# $Id: Make.targets,v 1.42 2002/03/05 22:24:08 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -174,7 +174,7 @@ ifneq ($(filter %.la,$(BK_LARGE_LIB)),)
 	@if [ $^ != $(BK_INSTALLRPATH)/$(^F) ]; then \
 	  echo $(MKDIR) $(BK_INSTALLRPATH); \
 	  $(MKDIR) $(BK_INSTALLRPATH); \
-	  echo $(INSTALL) $(INSTALL_LIBFLAGS) $^ $(BK_INSTALLRPATH); \
+	  echo $(LIBTOOL_INSTALL) $(INSTALL) $(INSTALL_LIBFLAGS) $^ $(BK_INSTALLRPATH); \
 	  $(LIBTOOL_INSTALL) $(INSTALL) $(INSTALL_LIBFLAGS) $^ $(BK_INSTALLRPATH); \
 	fi
 else # non-libtool installation without absolute path
