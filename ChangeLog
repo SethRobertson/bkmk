@@ -1,3 +1,7 @@
+2003-10-29  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.bkvariables (BK_CMDGOALS): set this automatically if not already
+
 2003-10-27  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Makefile (nuke): only remove Make.config if "nuke" is the last goal

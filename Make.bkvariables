@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.bkvariables,v 1.51 2003/10/27 20:52:07 dupuy Exp $
+# $Id: Make.bkvariables,v 1.52 2003/10/30 03:07:01 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -120,6 +120,12 @@ endif # BK_CONFIG_OS_TYPE != BK_OSNAME
 endif # CONFIGURED
 
 endif # BKMK_VAR_CORRECT
+
+ifeq ($(BK_CMDGOALS),)
+BK_CMDGOALS:=$(MAKECMDGOALS)
+endif
+export BK_CMDGOALS
+
 
 # Verify that $PWD points to the right place, since it is not updated by make
 # when run with make -C dir (or by make otherwise, nor by emacs, et al.)
