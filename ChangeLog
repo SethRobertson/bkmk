@@ -1,3 +1,9 @@
+2004-10-14  Seth Robertson  <seth@startide.sysdetect.com>
+
+	* Make.variables (CC_normal|strict): Set via $(strip)
+	so that trailing space due to normally empty CCOPTS
+	is nuked to prevent stupid ./configure error checking.
+
 2004-10-13  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.targets (tag): "alias" for tags
@@ -12,7 +18,7 @@
 	unexpectedly successful; avoid accidental self-connect by opening
 	"client" before closing "server"; don't interpret SIGSEGV etc. as
 	error code - treat as unknown.
-	
+
 2004-08-30  Brian Lindauer  <lindauer@sysdetect.com>
 
 	* Make.override: Manual override for creation of RELEASE file
@@ -140,7 +146,7 @@
 
 	* configure.in, libbk_autoconf.h.in: Check for pty, util, ioctl, filio
 	and if_ether header files
-	
+
 	* aclocal.m4 (RANDOM_INT_10): When calling time() don't forget the NULL
 
 2003-12-30  Alexander Dupuy  <dupuy@sysdetect.com>
