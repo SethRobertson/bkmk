@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.bkvariables,v 1.26 2002/05/11 01:09:36 dupuy Exp $
+# $Id: Make.bkvariables,v 1.27 2002/05/11 01:18:48 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -49,6 +49,8 @@ ifneq ($(BK_CONFIG_OS_TYPE),$(BK_OSNAME))
 # tty. BTW: Note the use of "rm", since we can't depend on configured $(RM);
 # this could technically fail, but it's pretty unlikely.
 
+BK_TTY:=$(shell test -c /dev/fd/2 && echo /dev/fd/2 || echo /dev/tty)
+
 BK_DUMMY:=$(shell							      \
   (if [ -f $(BKMK_OSFILE) ]; then					      \
      NEAT=true;								      \
@@ -64,11 +66,11 @@ BK_DUMMY:=$(shell							      \
      echo -n 'Making neat (Remember to "$(MAKE) depend" afterwards)...';      \
      $(MAKE) neat >/dev/null;						      \
      echo "done"; echo; }; ); )	2>&1					      \
-  | tee /dev/tty )
+  | tee $(BK_TTY) )
 
 else
 
-BK_DUMMY:=$(shell (cd $(BKMKDIR) && $(MAKE) -s .timestamp) 2>&1 | tee /dev/tty)
+BK_DUMMY:=$(shell (cd $(BKMKDIR) && $(MAKE) -s .timestamp) 2>&1 | tee $(BK_TTY))
 
 endif # BK_CONFIG_OS_TYPE != BK_OSNAME
 

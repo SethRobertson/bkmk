@@ -1,6 +1,7 @@
 2002-05-10  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.bkvariables (BK_DUMMY): use tee to make this work on FreeBSD
+	(BK_TTY): not FreeBSD make, but FreeBSD xemacs compile mode
 
 2002-04-24  Alexander Dupuy  <dupuy@sysdetect.com>
 
