@@ -1,5 +1,16 @@
 2001-12-05  Alexander Dupuy  <dupuy@sysdetect.com>
 
+	* Make.targets (jtest): new target, linked to test if java present
+
+	* Make.production: add rule to create directories in dependiencies
+	[if specified with trailing /.]; make various things .PRECIOUS;
+	add Jtest productions to generate reports, errors
+
+	* Make.variables (JTEST): path for jtest script
+	(BK_JAVA_PKGDOT): Java package in com.sysdetect.* dotted format
+	(JTESTOUT): GUI control, dependent on JTESTUI=true
+	(BK_JAVA_JTEST): Jtest reports
+
 	* Make.targets (BK_SUBDIRRULE): allow top-level [module] directories
 	to be absent
 

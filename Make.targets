@@ -1,6 +1,6 @@
 # -*- makefile -*-
 # 
-# $Id: Make.targets,v 1.23 2001/12/06 00:17:47 seth Exp $
+# $Id: Make.targets,v 1.24 2001/12/06 01:01:50 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -182,12 +182,22 @@ subtags:: $(BK_SIMPLE_CSRC) $(BK_LARGE_CSRC) $(BK_LARGE_LIBCSRC) $(BK_LOCAL_CSRC
 #
 # Test support
 #
-test:: $(BK_JAVADIR)/$(BK_JAVA_PKG) \
-		$(BK_JAVA_PKG_SRC) $(BK_JAVA_PKG_CLASS) \
-		$(BK_JAVA_PKG_AUX) $(BK_JAVA_PKG_LOCALE) \
-		$(BK_JAVA_PKG_TEST) $(BK_JAVA_PKG_TCLASS)
+test:: $(BK_JAVA_PKG_SRC) $(BK_JAVA_PKG_CLASS) \
+       $(BK_JAVA_PKG_AUX) $(BK_JAVA_PKG_LOCALE) \
+       $(BK_JAVA_PKG_TEST) $(BK_JAVA_PKG_TCLASS)
 	$(BK_SUBDIRRULE)
-	# should really run jtest
+
+ifneq ($(strip $(BK_JAVA_SRC)),)
+test:: jtest
+
+JTEST_HOST=winwood
+ifeq ($(shell hostname),$(JTEST_HOST))
+jtest: $(BK_JAVA_JTEST)
+else
+jtest:
+	@echo Jtest can only be run on $(JTEST_HOST)
+endif # JTEST_HOST
+endif # BK_JAVA_SRC
 
 #
 # Doxygen support
