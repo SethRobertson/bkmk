@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.production,v 1.50 2002/10/18 18:12:15 dupuy Exp $
+# $Id: Make.production,v 1.51 2002/11/12 18:14:49 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -190,27 +190,38 @@ endif
 # Prevent make from trying to create foo.java from foo.java.c
 .SUFFIXES: .class .java .properties .MF
 
-# These two "pattern" rules will run the java compiler (once!) on
-# entire groups of files, which is more efficient and reduces duplicated
-# error messages, as implicitly compiled sources are only compiled once.
-# This isn't really a pattern rule, but if it weren't the rule would be
-# invoked once for each target (which is totally redundant).  So we get
-# hacky and use a pseudo-stem "a" in .cl%ss and .j%va so that make treats
-# it like a pattern rule.  Amazingly enough, it works, as long as you don't
-# have a real pattern rule %.class: %.java that builds things one at a time.
-#
+# These two "pattern" rules will run the java compiler (once!) on entire groups
+# of files, which is more efficient and reduces duplicated error messages, as
+# implicitly compiled sources are only compiled once.  This isn't really a
+# pattern rule, but if it weren't the rule would be invoked once for each
+# target (which is totally redundant).  So we get hacky and replace the last
+# part of the $(BK_JAVADIR) prefixed to each component of $(BK_JAVA_PKG_CLASS)
+# and $(BK_JAVA_PKG_SRC) with the pseudo-stem % so that it appears to be a
+# pattern rule.  Amazingly enough, it works, as long as you don't have a real
+# pattern rule %.class: %.java that builds things one at a time.
+
+# [This requires that $(BK_JAVADIR) cannot end with a / -- originally the
+# pseudo-stem was the 'a' in .cl%ss and .j%va, but that prevented Seth from
+# using a hidden .java directory for $(BK_JAVADIR).  Furthermore, if the last
+# component of $(BK_JAVADIR) appears more than once in $(BK_JAVADIR) (e.g.
+# BK_JAVADIR=.../.java/.java) the original failure mode due to multiple % will
+# still occur.  Until GNU Make implements a $(firstsubst) function that only
+# substitutes once, there appears to be no fix for this.]
+
 # Note that you need to use $^ rather than $? so that all dependencies are
 # listed; with $? only those .java files that are newer than the first
 # out-of-date .class file will be regenerated, and the jar building stage will
 # complain about missing .class files (but won't fail).
 
-$(subst .class,.cl%ss,$(BK_JAVA_PKG_CLASS)): \
-		$(subst .java,.j%va,$(BK_JAVA_PKG_SRC))
+BK_JAVAPAT=$(subst $(notdir $(BK_JAVADIR)),%,$(BK_JAVADIR))
+
+$(subst $(BK_JAVADIR),$(BK_JAVAPAT),$(BK_JAVA_PKG_CLASS)): \
+		$(subst $(BK_JAVADIR),$(BK_JAVAPAT),$(BK_JAVA_PKG_SRC))
 	@echo $(JAVAC) $(JAVACFLAGS) -cp "$(BK_JAVA_CPATH)" $(BK_JAVA_SRC)
 	@$(JAVAC) $(JAVACFLAGS) -classpath "$(BK_JAVA_CPATH)" $^
 
-$(subst .class,.cl%ss,$(BK_JAVA_PKG_TCLASS)): \
-		$(subst .java,.j%va,$(BK_JAVA_PKG_TEST))
+$(subst $(BK_JAVADIR),$(BK_JAVAPAT),$(BK_JAVA_PKG_TCLASS)): \
+		$(subst $(BK_JAVADIR),$(BK_JAVAPAT),$(BK_JAVA_PKG_TEST))
 	@echo $(JAVAC) $(JAVACFLAGS) -cp "$(BK_JAVA_CPATH)" $(BK_JAVA_TEST)
 	@$(JAVAC) $(JAVACFLAGS) -classpath "$(BK_JAVA_TESTCP)" $^
 
@@ -243,7 +254,7 @@ $(BK_JAVA_JAR): $(BK_JAVADIR)/$(BK_JAVA_MF) \
 	@cd $(BK_JAVADIR) && \
 	  $(JAR) $(JARFLAGS) $@ $(BK_JAVA_MF) $(BK_JAVA_CLASS) \
 	    $(BK_JAVA_ICLASS) \
-	    $(patsubst %,$(BK_JAVA_PKG)/%,$(BK_JAVA_AUX)) \
+	    $(addprefix $(BK_JAVA_PKG)/,$(BK_JAVA_AUX)) \
 	    $(BK_JAVA_LOCALE) $(BK_JAVA_IMAGES)
 	$(MV) $(BK_JAVADIR)/$(BK_JAVA_JAR) $@
 
