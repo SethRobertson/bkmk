@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.OpenBSD-2.9-pre,v 1.7 2002/04/03 01:21:58 seth Exp $
+# $Id: Make.OpenBSD-2.9-pre,v 1.8 2003/06/03 10:31:06 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -20,3 +20,8 @@
 OS_INCS=-I/usr/local/include
 OS_LDS=-L/usr/local/lib
 OS_LIBS=
+
+# Provide safe default so that LD_LIBRARY_PATH will be used in preference
+# to ELF-embedded RPATH (Linux/Solaris/etc. use RUNPATH which works right).
+# As always, users must use "override" in .user-variables to set another path.
+BK_INSTALLRPATH=/lib

@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.bkvariables,v 1.37 2003/03/25 08:55:14 dupuy Exp $
+# $Id: Make.bkvariables,v 1.38 2003/06/03 10:31:06 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -94,6 +94,7 @@ BK_DUMMY:=$(shell							      \
 
 else
 
+export CONFIGURE_ARGS
 BK_DUMMY:=$(shell (cd $(BKMKDIR) && $(MAKE) -s config.status .timestamp) 2>&1 | tee $(BK_TTY))
 
 endif # BK_CONFIG_OS_TYPE != BK_OSNAME

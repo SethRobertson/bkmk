@@ -60,7 +60,7 @@ PROGRAM=ltmain.sh
 PACKAGE=libtool
 VERSION=1.5
 TIMESTAMP=" (1.4 2003/05/31 07:06:25)"
-TIMESTAMP="$TIMESTAMP [$Revision: 1.13 $]"
+TIMESTAMP="$TIMESTAMP [$Revision: 1.14 $]"
 
 default_mode=
 help="Try \`$progname --help' for more information."
@@ -1979,6 +1979,8 @@ EOF
 	  ;;
 	esac # case $deplib
 	if test "$found" = yes || test -f "$lib"; then :
+	elif test -f "$inst_prefix_dir$lib"; then
+	  lib="$inst_prefix_dir$lib"
 	else
 	  $echo "$modename: cannot find the library \`$lib'" 1>&2
 	  exit 1
@@ -2092,10 +2094,26 @@ EOF
 	# Find the relevant object directory and library name.
 	if test "X$installed" = Xyes; then
 	  if test ! -f "$libdir/$linklib" && test -f "$abs_ladir/$linklib"; then
-	    $echo "$modename: warning: library \`$lib' was moved." 1>&2
-	    dir="$ladir"
-	    absdir="$abs_ladir"
-	    libdir="$abs_ladir"
+	    if test -z "$inst_prefix_dir"; then
+	      # Determine the prefix the user has applied to our future dir.
+	      inst_prefix_dir=`$echo "$abs_ladir" | $SED "s%$libdir\$%%"`
+
+	      # If user has "moved" library outside of our expected location
+	      # it is not a valid install prefix, b/c it prevents finding
+	      # dependent libraries that are installed to the same prefix.
+	      if test "$inst_prefix_dir" = "$destdir"; then
+		unset inst_prefix_dir
+	      fi
+	    fi
+	    if test ! -f "$inst_prefix_dir$libdir/$linklib"; then
+	      $echo "$modename: warning: library \`$lib' was moved." 1>&2
+	      dir="$ladir"
+	      absdir="$abs_ladir"
+	      libdir="$abs_ladir"
+	    else
+	      dir="$ladir"
+	      absdir="$libdir"
+	    fi
 	  else
 	    dir="$libdir"
 	    absdir="$libdir"
@@ -2436,7 +2454,7 @@ EOF
 	      # We cannot seem to hardcode it, guess we'll fake it.
 	      add_dir="-L$libdir"
 	      # Try looking first in the location we're being installed to.
-	      if test -n "$inst_prefix_dir"; then
+	      if test -n "$inst_prefix_dir" && test -d "$inst_prefix_dir$libdir" ; then
 		case "$libdir" in
 		  [\\/]*)
 		    add_dir="-L$inst_prefix_dir$libdir $add_dir"
@@ -2558,6 +2576,10 @@ EOF
 		  fi
 		  ;;
 		esac
+		if test -n "$inst_prefix_dir" && test ! -f "$deplib" &&
+		    test -f "$inst_prefix_dir$deplib"; then
+		  deplib="$inst_prefix_dir$deplib"
+		fi
 		if grep "^installed=no" $deplib > /dev/null; then
 		  path="$absdir/$objdir"
 		else
@@ -2567,7 +2589,21 @@ EOF
 		    exit 1
 		  fi
 		  if test "$absdir" != "$libdir"; then
-		    $echo "$modename: warning: \`$deplib' seems to be moved" 1>&2
+		    if test -z "$inst_prefix_dir"; then
+		      # Determine prefix user has applied to our future dir.
+		      inst_prefix_dir=`$echo "$absdir" | $SED "s%$libdir\$%%"`
+
+		      # If user has "moved" library outside of our expected
+		      # location it is not a valid install prefix, b/c it
+		      # prevents finding dependent libraries that are installed
+		      # to the same prefix.
+		      if test "$inst_prefix_dir" = "$destdir"; then
+			unset inst_prefix_dir
+		      fi
+		    fi
+		    if test "$absdir" != "$inst_prefix_dir$libdir"; then
+		      $echo "$modename: warning: \`$deplib' seems to be moved" 1>&2
+		    fi
 		  fi
 		  path="$absdir"
 		fi
@@ -5115,6 +5151,10 @@ fi\
 	      case $deplib in
 	      *.la)
 		name=`$echo "X$deplib" | $Xsed -e 's%^.*/%%'`
+		if test -n "$inst_prefix_dir" && test ! -f "$deplib" &&
+		    test -f "$inst_prefix_dir$deplib"; then
+		  deplib="$inst_prefix_dir$deplib"
+		fi
 		eval libdir=`${SED} -n -e 's/^libdir=\(.*\)$/\1/p' $deplib`
 		if test -z "$libdir"; then
 		  $echo "$modename: \`$deplib' is not a valid libtool archive" 1>&2
@@ -5129,6 +5169,10 @@ fi\
 	    newdlfiles=
 	    for lib in $dlfiles; do
 	      name=`$echo "X$lib" | $Xsed -e 's%^.*/%%'`
+	      if test -n "$inst_prefix_dir" && test ! -f "$lib" &&
+		  test -f "$inst_prefix_dir$lib"; then
+		lib="$inst_prefix_dir$lib"
+	      fi
 	      eval libdir=`${SED} -n -e 's/^libdir=\(.*\)$/\1/p' $lib`
 	      if test -z "$libdir"; then
 		$echo "$modename: \`$lib' is not a valid libtool archive" 1>&2
@@ -5140,6 +5184,10 @@ fi\
 	    newdlprefiles=
 	    for lib in $dlprefiles; do
 	      name=`$echo "X$lib" | $Xsed -e 's%^.*/%%'`
+	      if test -n "$inst_prefix_dir" && test ! -f "$lib" &&
+		  test -f "$inst_prefix_dir$lib"; then
+		lib="$inst_prefix_dir$lib"
+	      fi
 	      eval libdir=`${SED} -n -e 's/^libdir=\(.*\)$/\1/p' $lib`
 	      if test -z "$libdir"; then
 		$echo "$modename: \`$lib' is not a valid libtool archive" 1>&2
