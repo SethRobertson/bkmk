@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.184 2004/03/05 21:10:36 seth Exp $
+# $Id: Make.variables,v 1.185 2004/05/04 14:30:31 brian Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -380,11 +380,10 @@ ifeq ($(COMPILER_NAME),gcc)
 
 GCC_VERSION:=$(shell $(CC_CONFIG) --version | $(AWK) ' NR==1 { print $$3 }')
 
-ifneq ($(GCC_VERSION),3.3)
-ifneq ($(GCC_VERSION),3.3.2)
+# don't eliminate inline warnings
+# make them work, remove them, or tweak the inliner settings (SEE
+# COMPILER_INLINER LIMIT)
 GCC_INLINE_CHECK=-Winline
-endif
-endif
 
 COMPILER_DEBUG+=-Wmissing-prototypes -Wcomment -Wformat -Wimplicit -Wmain -Wmultichar -Wswitch -Wshadow -Wtrigraphs $(GCC_INLINE_CHECK) $(COMPILER_DEBUG_ERROR)
 
@@ -396,9 +395,16 @@ ifneq ($(BK_NO_STRICT_PROTOTYPES),true)
 COMPILER_DEBUG+=-Wstrict-prototypes
 endif
 
+# raise the default instruction limit for the inliner so that some of
+# our bigger functions will be inlined. changing this value may affect
+# code bloat, but hey, they _are_ inlined functions... 
+# NB: this only works with gcc 3.3+, but is ignored otherwise. these
+# problems exisited in prior versions but warnings weren't issued
+COMPILER_INLINE_LIMIT=1200
+
 # options for gcc only
 ifeq ($(CC_CONFIG),gcc)
-COMPILER_DEBUG+=-Wreturn-type -Wpointer-arith
+COMPILER_DEBUG+=-Wreturn-type -Wpointer-arith -finline-limit=$(COMPILER_INLINE_LIMIT)
 endif # CC_CONFIG=gcc
 
 COMPILER_DEBUG+=$(BK_SPECIAL_DEBUG)
