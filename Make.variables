@@ -1,4 +1,4 @@
-# $Id: Make.variables,v 1.10 2001/06/19 04:33:14 jtt Exp $
+# $Id: Make.variables,v 1.11 2001/06/20 17:31:20 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -117,8 +117,10 @@ endif # NO_STDBKCCSTUFF
 
 ifeq ($(CC),gcc)
 # C
-CC_normal=$(CC) $(GCCOPTS)
-CC_strict=$(CXX) $(GCCOPTS)
+CC_normal=$(CC_CONFIG) $(GCCOPTS)
+CC_strict=$(CXX_CONFIG) $(GCCOPTS)
+CC=$(CC_normal)
+CXX=$(CXX_CONFIG) $(GCCOPTS)
 COMPILER_DEBUG=-W -Wall -Wpointer-arith -Wno-unused -Wno-sign-compare $(COMPILER_DEBUG_ERROR)
 COMPILER_DEBUG_ERROR=-Werror
 COPTDEBUG=-g -O $(COMPILER_DEBUG)

@@ -1,0 +1,8 @@
+2001-06-20  Seth Robertson  <seth@yeah.baka.org>
+
+	* Make.variables: Support to use configured discovered compiler
+	names.
+
+	* Make.config.in: Don't define CC and CXX directly--there might be
+	args.  This may apply to YACC, RM, MKDIR and friends as well, but
+	configure is broken so I can't check.
