@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.Linux-2.6-pre,v 1.4 2005/02/04 23:49:20 seth Exp $
+# $Id: Make.Linux-2.6-pre,v 1.5 2005/02/05 03:17:12 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -19,4 +19,9 @@
 
 ifeq ($(shell if ( grep -q "Fedora Core release 3" /etc/fedora-release 2>/dev/null || grep -q "Gentoo Base System" /etc/gentoo-release 2>/dev/null ) && [ -f /usr/lib/libssl.so ]; then echo OK; fi), OK)
 OPERATING_SYSTEM_OPENSSL_OK=true
+endif
+
+# Is not searched by default under all circumstances for some stupid reason
+ifeq ($(shell uname -m),x86_64)
+OS_LDS=-L/usr/lib64 -L/lib64
 endif

@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.198 2005/02/04 21:45:46 jtt Exp $
+# $Id: Make.variables,v 1.199 2005/02/05 03:17:12 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -629,6 +629,11 @@ BK_DEFINES+=-DBK_NO_USER_SHARED_LIBS
 endif
 
 OS_SEARCHPATH=/usr/local/lib /usr/lib /usr/local/gnu/lib
+
+ifeq ($(shell uname -m),x86_64)
+OS_SEARCHPATH:=/usr/lib64 /usr/local/lib64 ${OS_SEARCHPATH}
+endif
+
 
 # <KLUDGE>If you use absolute paths for BK_INSTALLLIBDIR (BK_INSTALLBASE) you
 # will get errors like the following as a result of the vpath declarations:
