@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.128 2003/01/24 07:07:16 dupuy Exp $
+# $Id: Make.variables,v 1.129 2003/01/28 18:17:46 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -444,6 +444,10 @@ endif # COMPILER_NAME=gcc
 
 else # BK_USING_INSURE==true
 COPTDEBUG=-g
+# Yes for some reason, according to the Insure folks, this should be repated
+ifeq ($(BK_USING_INSURE_DEBUG), true)
+INSURE_DEBUG_LIBS=-Zvm -Zvm -Zvm
+endif
 endif # BK_USING_INSURE==true
 
 ################################################################
@@ -534,7 +538,8 @@ OS_SEARCHPATH=/usr/local/lib /usr/lib /usr/local/gnu/lib
 BK_ALLDEFINES=$(LOCAL_DEFINES) $(GROUP_DEFINES) $(PKG_DEFINES) $(BK_DEFINES) $(OS_DEFINES)
 BK_ALLINCS=$(LOCAL_INCS) $(GROUP_INCS) $(PKG_INCS) $(BK_INCS) $(OS_INCS)
 BK_ALLLDS=$(LOCAL_LDS) $(GROUP_LDS) $(PKG_LDS) $(BK_LDS) $(OS_LDS)
-BK_ALLLIBS=$(LOCAL_LIBS) $(GROUP_LIBS) $(PKG_LIBS) $(BK_LIBS) $(OS_LIBS) $(AC_LIBS) $(PTHREAD_LIBS)
+# The insure debug libs are alledgedly supposed to go last.
+BK_ALLLIBS=$(LOCAL_LIBS) $(GROUP_LIBS) $(PKG_LIBS) $(BK_LIBS) $(OS_LIBS) $(AC_LIBS) $(PTHREAD_LIBS) $(INSURE_DEBUG_LIBS)
 BK_LIBDIR=$(OS_SEARCHPATH) $(patsubst -L%,%,$(filter -L%,$(BK_ALLLDS)))
 BK_RELINKLIBS=$(LOCAL_RELINK_LIBS) $(GROUP_RELINK_LIBS) $(PKG_RELINK_LIBS) $(BK_RELINK_LIBS) $(OS_RELINK_LIBS)
 

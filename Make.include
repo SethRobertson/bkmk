@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.include,v 1.21 2003/01/24 07:07:16 dupuy Exp $
+# $Id: Make.include,v 1.22 2003/01/28 18:17:46 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -67,6 +67,9 @@ endif
 
 ifneq ($(findstring true,$(WANT_INSURE)$(USING_INSURE)$(USING_INSIGHT)),)
 BK_USING_INSURE=true
+ifneq ($(findstring true,$(WANT_INSURE_DEBUG)$(USING_INSURE_DEBUG)$(USING_INSIGHT_DEBUG)),)
+BK_USING_INSURE_DEBUG=true
+endif
 override BK_USING_DMALLOC=false
 override BK_USING_BOUNDS_CHECKING=false
 else
