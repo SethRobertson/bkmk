@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.155 2003/06/25 21:23:32 brian Exp $
+# $Id: Make.variables,v 1.156 2003/06/25 23:50:49 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -371,7 +371,7 @@ ifneq ($(BK_USING_INSURE),true)
 # gcc options common to both gcc and bgcc
 ifeq ($(COMPILER_NAME),gcc)
 
-COMPILER_DEBUG+=-Wmissing-prototypes -Wcomment -Wformat -Wimplicit -Wmain -Wmultichar -Wswitch -Wshadow -Wtrigraphs $(COMPILER_DEBUG_ERROR)
+COMPILER_DEBUG+=-Wmissing-prototypes -Wcomment -Wformat -Wimplicit -Wmain -Wmultichar -Wswitch -Wshadow -Wtrigraphs -Winline $(COMPILER_DEBUG_ERROR)
 
 ifneq ($(HAVE_OVERZEALOUS_CHAR_SUBSCRIPT),true)
 COMPILER_DEBUG+=-Wchar-subscripts

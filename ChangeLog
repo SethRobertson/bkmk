@@ -1,3 +1,8 @@
+2003-06-25  James Tanis  <jtt@austin.sysdetect.com>
+
+	* Make.variables (COMPILER_DEBUG+): Add -Winline (warn if can't
+	inline).
+
 2003-06-16  Seth Robertson  <seth@startide.sysdetect.com>
 
 	* cleanwhite.pl: Clean up nasty whitespace from our source
