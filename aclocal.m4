@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.48 2003/11/25 02:51:14 dupuy Exp $
+# $Id: aclocal.m4,v 1.49 2003/12/02 19:28:13 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -463,6 +463,9 @@ AC_DEFUN([AC_SECOND_CONNECT_TO_REFUSED_PORT],
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
+// Idea stolen from perl of course.
+#define RANDOM_INT_10 (sleep((unsigned int)(((unsigned int)getpid() | (unsigned int)time()) % 10)))
+
 int
 main(int argc, char **argv)
 {
@@ -482,6 +485,7 @@ main(int argc, char **argv)
   sin.sin_addr.s_addr = INADDR_ANY;
 
   // Locate an available, unbound port
+retry:
   do
   {
     port++;
@@ -512,14 +516,16 @@ main(int argc, char **argv)
 
   if (connect(s, (struct sockaddr *)(&sin), sizeof(sin)) == 0)
   {
-    fprintf(stderr, "connect succeeded - should have failed");
-    exit(1);
+    fprintf(stderr, "connect succeeded - should have failed. Trying again.");
+    RANDOM_INT_10;
+    goto retry;
   }
 
   if (connect(s, (struct sockaddr *)(&sin), sizeof(sin)) == 0)
   {
-    fprintf(stderr, "connect succeeded - should have failed");
-    exit(1);
+    fprintf(stderr, "connect succeeded - should have failed. Trying again.");
+    RANDOM_INT_10;
+    goto retry;
   }
 
   exit(errno);

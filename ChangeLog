@@ -1,3 +1,9 @@
+2003-12-02  James Tanis  <jtt@pearl.sysdetect.com>
+
+	* aclocal.m4 (AC_SECOND_CONNECT_TO_REFUSED_PORT): If the
+	either connection which should fail, succeeds, wait for a "random"
+	number of second (0-9) and try again with a different port.
+
 2003-11-24  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* bk.conf.in (SHLIBPATH_VAR): #2576: added for worker.sh use
