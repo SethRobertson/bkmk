@@ -1,3 +1,7 @@
+2002-02-14  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.production (jtest-%): don't make this phony, as it doesn't work
+
 2002-02-07  James Tanis  <jtt@saint.sysdetect.com>
 
 	* Make.variables (BK_LDS): Add math.
