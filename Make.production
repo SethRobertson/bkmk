@@ -1,4 +1,6 @@
-# $Id: Make.production,v 1.12 2001/11/30 02:17:03 dupuy Exp $
+# -*- makefile -*-
+#
+# $Id: Make.production,v 1.13 2001/11/30 07:49:10 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -14,6 +16,12 @@
 #
 # Production rules--convert "source" to "targets"
 #
+
+#
+# Prevent make from being stupid about building makefile pieces
+# (this is just a performance hack, but it helps)
+Make%: 
+.depen%:
 
 #
 # Standard compiling targets
@@ -60,45 +68,26 @@ $(BK_LARGE_INTERNALPROG) $(BK_LARGE_LIB): $(BK_LARGE_LIBOBJ)
 #
 # Java production
 #
-BK_JAVA_CLASS:=$(patsubst %.java,$(BK_JAVA_PKG)/%.class,$(BK_JAVA_SRC))
-BK_JAVA_TCLASS:=$(patsubst %.java,$(BK_JAVA_PKG)/%.class,$(BK_JAVA_TEST))
-BK_JAVA_ICLASS_TMP=\
-	$(foreach tmp, $(patsubst %.class,%,$(BK_JAVA_CLASS)), \
-		$(wildcard $(BK_JAVADIR)/$(tmp)$$*.class))
-BK_JAVA_ICLASS=\
-	$(subst $$,\$$,$(patsubst $(BK_JAVADIR)/%,%,$(BK_JAVA_ICLASS_TMP)))
-BK_JAVA_PROPS=$(wildcard $(GROUPTOP)/$(LOCALE)/*.properties)
-BK_JAVA_LOCALE=$(patsubst $(GROUPTOP)/$(LOCALE)/%,%,$(BK_JAVA_PROPS))
 
-BK_JAVA_PKG_CLASS:=$(patsubst %,$(BK_JAVADIR)/%,$(BK_JAVA_CLASS))
-BK_JAVA_PKG_TCLASS:=$(patsubst %,$(BK_JAVADIR)/%,$(BK_JAVA_TCLASS))
-BK_JAVA_PKG_SRC:=$(patsubst %,$(BK_JAVADIR)/$(BK_JAVA_PKG)/%,$(BK_JAVA_SRC))
-BK_JAVA_PKG_AUX:=$(patsubst %,$(BK_JAVADIR)/$(BK_JAVA_PKG)/%,$(BK_JAVA_AUX))
-BK_JAVA_PKG_LOCALE:=$(patsubst %,$(BK_JAVADIR)/%,$(BK_JAVA_LOCALE))
+# Prevent make from trying to create foo.java from foo.java.c
+.SUFFIXES: .class .java .properties .MF
 
-BK_JAVA_MF:=$(patsubst %.jar,%.MF,$(BK_JAVA_JAR))
+# These two "pattern" rules will run the java compiler (once!) on
+# entire groups of files, which is more efficient and reduces duplicated
+# error messages, as implicitly compiled sources are only compiled once.
+# This isn't really a pattern rule, but if it weren't the rule would be
+# invoked once for each target (which is totally redundant).  So we get
+# hacky and replace the stem "a" in .cl%ss and %.j%va so that make treats
+# it like a pattern rule.  Amazingly enough, it works, as long as you don't
+# have a real pattern rule %.class: %.java that builds things one at a time.
 
-# This pattern rule runs the java compiler on a single file, which is less
-# efficient; it is only used for random strange files in dependencies
+$(subst .class,.cl%ss,$(BK_JAVA_PKG_CLASS)): \
+		$(subst .java,.j%va,$(BK_JAVA_PKG_SRC))
+	$(JAVAC) $(JAVACFLAGS) -classpath $(BK_JAVADIR) $?
 
-%.class: %.java
-	$(JAVAC) -classpath $(BK_JAVADIR) $<
-
-# These two multi-target rules will run the java compiler on entire
-# groups of files, which is more efficient (javac will not compile if
-# the .class is newer than the .java) when compilation is successful.
-# If there are errors which prevent compilation, you will get multiple
-# messages (this was true before, since javac would complain when it
-# tried to compile an imported class that you hadn't asked it to
-# compile).  Because of this, you probably do not want to set the -k
-# option to make when you are developing code that doesn't yet compile
-# cleanly.
-
-$(BK_JAVA_PKG_CLASS): $(BK_JAVA_PKG_SRC)
-	$(JAVAC) -classpath $(BK_JAVADIR) $^
-
-$(BK_JAVA_PKG_TCLASS): $(BK_JAVA_PKG_TEST)
-	$(JAVAC) -classpath $(BK_JAVADIR) $^
+$(subst .class,.cl%ss,$(BK_JAVA_PKG_TCLASS)): \
+		$(subst .java,.j%va,$(BK_JAVA_PKG_TEST))
+	$(JAVAC) $(JAVACFLAGS) -classpath $(BK_JAVADIR) $?
 
 $(BK_JAVADIR)/$(BK_JAVA_PKG)/%: %
 	$(LN_S) -f `$(PWD)`/$< $@
@@ -112,15 +101,15 @@ $(BK_JAVADIR)/%.MF: %.MF
 	$(LN_S) -f `$(PWD)`/$< $@
 	@-test ! -L $@ && test ! $@ -ef $< 2>/dev/null && chmod -w $@
 
+# BK_JAVA_ICLASS doesn't see newly created files, sigh
 $(BK_JAVA_JAR): $(BK_JAVADIR)/$(BK_JAVA_PKG) $(BK_JAVADIR)/$(BK_JAVA_MF) \
-		$(BK_JAVA_PKG_SRC) $(BK_JAVA_PKG_AUX) $(BK_JAVA_PKG_CLASS) \
-		$(BK_JAVA_PKG_TCLASS) $(BK_JAVA_PKG_LOCALE)
+		$(BK_JAVA_PKG_SRC) $(BK_JAVA_PKG_CLASS) \
+		$(BK_JAVA_PKG_AUX) $(BK_JAVA_PKG_LOCALE)
 	cd $(BK_JAVADIR) && \
 	  $(JAR) $(JARFLAGS) $@ $(BK_JAVA_MF) $(BK_JAVA_CLASS) \
-	  $(BK_JAVA_ICLASS) \
+	    $(BK_JAVA_ICLASS) \
 	    $(patsubst %,$(BK_JAVA_PKG)/%,$(BK_JAVA_AUX)) $(BK_JAVA_LOCALE)
 	$(MV) $(BK_JAVADIR)/$(BK_JAVA_JAR) $@
 
 $(BK_JAVADIR)/$(BK_JAVA_PKG):
 	$(MKDIR) $(BK_JAVADIR)/$(BK_JAVA_PKG)
-

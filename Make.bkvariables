@@ -1,4 +1,6 @@
-# $Id: Make.bkvariables,v 1.7 2001/11/08 09:26:44 dupuy Exp $
+# -*- makefile -*-
+#
+# $Id: Make.bkvariables,v 1.8 2001/11/30 07:49:10 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #

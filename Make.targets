@@ -1,6 +1,6 @@
 # -*- makefile -*-
 # 
-# $Id: Make.targets,v 1.20 2001/11/28 00:08:27 matt Exp $
+# $Id: Make.targets,v 1.21 2001/11/30 07:49:10 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -176,6 +176,19 @@ subtags:: $(BK_SIMPLE_CSRC) $(BK_LARGE_CSRC) $(BK_LARGE_LIBCSRC) $(BK_LOCAL_CSRC
 	if [ "$^" ]; then $(TAGCMD) -a -o $(TAGOUT) $^; fi
 	$(BK_SUBDIRRULE)
 
+#
+# Test support
+#
+test:: $(BK_JAVADIR)/$(BK_JAVA_PKG) \
+		$(BK_JAVA_PKG_SRC) $(BK_JAVA_PKG_CLASS) \
+		$(BK_JAVA_PKG_AUX) $(BK_JAVA_PKG_LOCALE) \
+		$(BK_JAVA_PKG_TEST) $(BK_JAVA_PKG_TCLASS)
+	$(BK_SUBDIRRULE)
+	# should really run jtest
+
+#
+# Doxygen support
+#
 $(BK_INSTALLDOCDIR)/doxygen/Doxyfile:
 	@	if [ "X$(BK_INSTALLDOCDIR)" = "X" ]; \
 		then \
@@ -207,4 +220,6 @@ viewdox: doxygen
 #
 # Prevent targets from being files
 #
-.PHONY : default nuke clean neat depend nukedepend build install nukeetags nukectags etags ctags tags subtags preprocess
+.PHONY : default nuke clean neat depend nukedepend build install \
+	nukeetags nukectags etags ctags tags subtags preprocess \
+	doxygen viewdox test

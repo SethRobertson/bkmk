@@ -1,4 +1,6 @@
-# $Id: Make.include,v 1.6 2001/08/27 03:10:21 seth Exp $
+# -*- makefile -*-
+#
+# $Id: Make.include,v 1.7 2001/11/30 07:49:10 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #

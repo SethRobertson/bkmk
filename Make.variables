@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.31 2001/11/29 17:39:56 jtt Exp $
+# $Id: Make.variables,v 1.32 2001/11/30 07:49:10 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -73,7 +73,37 @@ MFLAGS=
 
 ######################################################################
 # Java stuff
-JARFLAGS=-cfvm
+JAVACFLAGS=
+JARFLAGS=-cfm
+
+# file list variables for Java production rules
+
+BK_JAVA_CLASS:=$(patsubst %.java,$(BK_JAVA_PKG)/%.class,$(BK_JAVA_SRC))
+BK_JAVA_TCLASS:=$(patsubst %.java,$(BK_JAVA_PKG)/%.class,$(BK_JAVA_TEST))
+
+# These are recursively expanded variables using =, rather than directly
+# expanded variables using :=, so that the $(wildcard ...) matching will
+# occur after the java compiler has had a chance to create the inner class
+# class files.  Unfortunately, somehow $(wildcard) doesn't see the new files.
+#BK_JAVA_ICLASS_TMP=\
+#	$(foreach tmp, $(patsubst %.class,%,$(BK_JAVA_CLASS)), \
+#		$(wildcard $(BK_JAVADIR)/$(tmp)$$*.class))
+BK_JAVA_ICLASS_TMP=$(filter-out %$$*.class, \
+  $(shell echo $(patsubst %.class,$(BK_JAVADIR)/%\$$*.class,$(BK_JAVA_CLASS))))
+BK_JAVA_ICLASS=\
+	$(subst $$,\$$,$(patsubst $(BK_JAVADIR)/%,%,$(BK_JAVA_ICLASS_TMP)))
+
+BK_JAVA_PROPS:=$(wildcard $(GROUPTOP)/$(LOCALE)/*.properties)
+BK_JAVA_LOCALE:=$(patsubst $(GROUPTOP)/$(LOCALE)/%,%,$(BK_JAVA_PROPS))
+
+BK_JAVA_PKG_CLASS:=$(patsubst %,$(BK_JAVADIR)/%,$(BK_JAVA_CLASS))
+BK_JAVA_PKG_TCLASS:=$(patsubst %,$(BK_JAVADIR)/%,$(BK_JAVA_TCLASS))
+BK_JAVA_PKG_SRC:=$(patsubst %,$(BK_JAVADIR)/$(BK_JAVA_PKG)/%,$(BK_JAVA_SRC))
+BK_JAVA_PKG_TEST:=$(patsubst %,$(BK_JAVADIR)/$(BK_JAVA_PKG)/%,$(BK_JAVA_TEST))
+BK_JAVA_PKG_AUX:=$(patsubst %,$(BK_JAVADIR)/$(BK_JAVA_PKG)/%,$(BK_JAVA_AUX))
+BK_JAVA_PKG_LOCALE:=$(patsubst %,$(BK_JAVADIR)/%,$(BK_JAVA_LOCALE))
+
+BK_JAVA_MF:=$(patsubst %.jar,%.MF,$(BK_JAVA_JAR))
 
 ######################################################################
 # C stuff

@@ -1,3 +1,20 @@
+2001-11-30  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.variables (JAVACFLAGS): flags for javac
+	(BK_JAVA_*): file list variables for Java production rules
+	(BK_JAVA_ICLASS_TMP): can't use $(wildcard) for this--it doesn't
+	see newly created files--so go back to $(shell echo)
+
+	* Make.targets (test): compile Java test classes
+	(.PHONY): add recent targets to list
+
+	* Make.production (Make%,.depen%): prevent implicit rule recursion
+	(.SUFFIXES): prevent implicit rule recursion for java/class/etc. files
+	(BK_JAVA_*): move JAVA variables to Make.variables
+	($(subst .class,.cl%ss,$(BK_JAVA_PKG_CLASS))): really make single
+	javac invocation work, using multiple-target "pattern rules"
+	($(BK_JAVA_JAR)): no longer depends on test classes
+
 2001-11-29  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.production: tweak internal class support so that wildcard
