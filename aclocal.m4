@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.20 2002/10/18 21:18:29 jtt Exp $
+# $Id: aclocal.m4,v 1.21 2002/10/18 22:51:00 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -79,7 +79,7 @@ then
 fi
 ])
 
-# BK_ISINF
+# BK_FUNC_ISINF
 # --------
 # 
 # Check if the platform supports the isinf function
@@ -94,6 +94,42 @@ AC_DEFUN([BK_FUNC_ISINF], [AC_CACHE_CHECK([for isinf], bk_func_isinf,
 if test "$bk_func_isinf" = "yes"
 then
 	AC_DEFINE(HAVE_ISINF)
+fi
+])
+
+# BK_TYPE_LONG_LONG
+# --------
+# 
+# Check if the platform supports long long
+#
+#
+AC_DEFUN([BK_TYPE_LONG_LONG], [AC_CACHE_CHECK([for long long], bk_type_long_long,
+ AC_TRY_LINK(
+[
+#include <sys/types.h>
+],[long long t],
+[ bk_type_long_long=yes; ],[ bk_type_long_long=no; ]))
+if test "$bk_type_long_long" = "yes"
+then
+	AC_DEFINE(HAVE_LONG_LONG)
+fi
+])
+
+# BK_TYPE_QUAD_INT
+# --------
+# 
+# Check if the platform supports quad_t as an integer type
+#
+#
+AC_DEFUN([BK_TYPE_QUAD_INT], [AC_CACHE_CHECK([for quad_t as in integer type], bk_type_quad_int,
+ AC_TRY_LINK(
+[
+#include <sys/types.h>
+],[quad_t t=0],
+[ bk_type_quad_int=yes; ],[ bk_type_quad_int=no; ]))
+if test "$bk_type_quad_int" = "yes"
+then
+	AC_DEFINE(HAVE_QUAD_INT)
 fi
 ])
 

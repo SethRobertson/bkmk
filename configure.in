@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.50 2002/10/18 21:18:29 jtt Exp $
+dnl $Id: configure.in,v 1.51 2002/10/18 22:51:01 jtt Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.50 $)dnl
+AC_REVISION($Revision: 1.51 $)dnl
 AC_INIT(Make.bkvariables)
 AC_CONFIG_AUX_DIR(acaux)
 
@@ -96,6 +96,20 @@ AC_FUNC_STRFTIME
 AC_FUNC_GETTEXT
 AC_STACKDIRECTION
 AC_FUNC_ALLOCA
+
+BK_TYPE_LONG_LONG
+BK_TYPE_QUAD_INT
+
+if test "$bk_type_quad_int" = "yes"
+then
+   AC_DEFINE_UNQUOTED([BK_QUAD_TYPE],[NATIVE])
+elif test "$bk_type_long_long" = "yes"
+then
+   AC_DEFINE_UNQUOTED([BK_QUAD_TYPE],[LONG_LONG])
+else     
+   AC_DEFINE_UNQUOTED([BK_QUAD_TYPE],[LONG])
+   AC_WARN([must treat quads as longs])
+fi
 
 AC_CHECK_TYPE(u_int8_t, uint8_t)
 AC_CHECK_TYPE(u_int16_t, uint16_t)
