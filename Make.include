@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.include,v 1.31 2003/06/17 05:59:47 seth Exp $
+# $Id: Make.include,v 1.32 2003/11/06 18:19:19 brian Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -54,6 +54,10 @@ endif
 
 ifneq ($(strip $(WANT_HELP)),)
 BK_WANT_HELP=$(WANT_HELP)
+else
+ifeq ($(JHINDEXER), $(FALSE))
+BK_WANT_HELP=false
+endif
 endif
 
 ifneq ($(strip $(WANT_NO_DEBUG)),)
