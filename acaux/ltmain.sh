@@ -60,7 +60,7 @@ PROGRAM=ltmain.sh
 PACKAGE=libtool
 VERSION=1.5
 TIMESTAMP=" (1.9 2004/06/17 21:41:22)"
-TIMESTAMP="$TIMESTAMP [$Revision: 1.21 $]"
+TIMESTAMP="$TIMESTAMP [$Revision: 1.22 $]"
 
 default_mode=
 help="Try \`$progname --help' for more information."
@@ -2101,7 +2101,8 @@ EOF
 	  if test -f "$abs_ladir/$linklib"; then
 	    if test -z "$inst_prefix_dir"; then
 	      # Determine the prefix the user has applied to our future dir.
-	      inst_prefix_dir=`$echo "$abs_ladir" | $SED "s%$libdir\$%%"`
+	      libpat=`$echo "$libdir" | $SED "s%/+%/\+%"`
+	      inst_prefix_dir=`$echo "$abs_ladir" | $SED "s%$libpat\$%%"`
 
 	      # If user has "moved" library outside of our expected location
 	      # it is not a valid install prefix, b/c it prevents finding

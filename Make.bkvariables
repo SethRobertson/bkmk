@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.bkvariables,v 1.55 2004/07/30 18:45:43 jtt Exp $
+# $Id: Make.bkvariables,v 1.56 2004/12/30 21:26:39 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -148,7 +148,9 @@ BK_USER_VARIABLES:=$(BK_TOP_USER_VARIABLES)
 # Perl code fragment to smash a pathname into submission.  <TRICKY>The first
 # two patterns of this are intended to normalize $(PWD)//absolute/path to
 # /absolute/path, yet not remove a leading $(PWD)/.././relative//path that
-# might be due to trailing slash.</TRICKY>
+# might be due to trailing slash.  The last one removes any final trailing
+# slash, which may lead to doubled slashes elsewhere that break libtool or
+# other similarly fragile software.</TRICKY>
 NORMALIZE='						\
 	s@(/\.\.?/.*)//+@\1/@g;				\
 	s@^.*//@/@;					\
@@ -163,6 +165,7 @@ NORMALIZE='						\
 		s@/[^/]+/\.\./@/@ ||			\
 		s@^/n/[^/]*/@/@				\
 	){}						\
+	s@/$$@@;					\
 	print;'
 
 ifeq ($(BK_JAVADIR),)
