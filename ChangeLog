@@ -1,5 +1,12 @@
 2001-12-11  Alexander Dupuy  <dupuy@sysdetect.com>
 
+	* configure.in: look for dot in PATH, define HAVE_DOT accordingly
+
+	* Make.config.in (HAVE_DOT): use autoconf definition
+
+	* Make.targets ($(BK_INSTALLDOCDIR)/doxygen/Doxyfile): enable HAVE_DOT
+	if autoconf finds it, exclude libpcap/glib/libclc
+	
 	* Make.variables (BK_JAVA_PNGS,BK_JAVA_IMAGES,BK_JAVA_PKG_IMAGES):
 	add support for images in jar files [note - JAVA_AUX is deprecated]
 
