@@ -1,3 +1,8 @@
+2003-06-26  James Tanis  <jtt@austin.sysdetect.com>
+
+	* Make.variables (NORMALIZE): Continue to make normalizing passes
+	until no more changes occur.
+
 2003-06-25  James Tanis  <jtt@austin.sysdetect.com>
 
 	* Make.variables (COMPILER_DEBUG+): Add -Winline (warn if can't
