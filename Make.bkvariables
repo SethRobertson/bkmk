@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.bkvariables,v 1.41 2003/06/27 07:56:53 dupuy Exp $
+# $Id: Make.bkvariables,v 1.42 2003/08/27 15:10:00 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -66,6 +66,12 @@ BK_CONFIG_OS_TYPE=$(shell cat $(BKMK_OSFILE) 2>/dev/null)
 F2=/dev/fd/2
 BK_TTY:=$(shell test -c $(F2) && test -w $(F2) && echo $(F2) || echo /dev/tty)
 
+ifneq ($(findstring $(MAKECMDGOALS),neat clean nuke),)
+BK_GOAL_IS_CLEAN:=true
+else
+BK_GOAL_IS_CLEAN:=false
+endif
+
 ifneq ($(BK_CONFIG_OS_TYPE),$(BK_OSNAME))
 
 # Oh boy. What a bloody hack. Assign to a variable (using := so that it gets
@@ -73,6 +79,11 @@ ifneq ($(BK_CONFIG_OS_TYPE),$(BK_OSNAME))
 # the work done by the $(shell) command is displayed to the the current tty.
 # Note the use of "rm", since we can't depend on configured $(RM); this could
 # technically fail, but it's pretty unlikely.
+
+# NB: we do not bother reconfiguring if the cmd goal is one of our clean 
+# targets *unless* we are changing architectures in which case we need to
+# to reconfigure in order to give the target the best chance (by no means
+# guarenteed) of succeeding.
 
 BK_DUMMY:=$(shell							      \
   (if [ -f $(BKMK_OSFILE) ]; then					      \
@@ -82,7 +93,7 @@ BK_DUMMY:=$(shell							      \
      NEAT=false;							      \
    fi;									      \
    rm -f $(BKMK_OSFILE);						      \
-   (cd $(BKMKDIR) && {							      \
+   (cd $(BKMKDIR) && [ $$NEAT = "true" -o $(BK_GOAL_IS_CLEAN) = "false" ] {   \
      rm -f config.cache config.status;					      \
      $(MAKE) -s config.status OSNAME=$(BK_OSNAME) OSFILE=$(BK_OSFILE); }; );  \
    ($$NEAT && cd $(GROUPTOP)/$(PKGTOP) && {				      \
@@ -95,7 +106,10 @@ BK_DUMMY:=$(shell							      \
 else
 
 export CONFIGURE_ARGS
+
+ifneq ($(BK_GOAL_IS_CLEAN),true)
 BK_DUMMY:=$(shell (cd $(BKMKDIR) && $(MAKE) -s config.status .timestamp) 2>&1 | tee $(BK_TTY))
+endif
 
 endif # BK_CONFIG_OS_TYPE != BK_OSNAME
 
