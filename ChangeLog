@@ -1,3 +1,7 @@
+2003-06-27  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.bkvariables (BK_TTY): make this visible in top-level Makefile
+
 2003-06-26  James Tanis  <jtt@austin.sysdetect.com>
 
 	* Make.variables (NORMALIZE): Continue to make normalizing passes

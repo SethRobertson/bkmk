@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.bkvariables,v 1.40 2003/06/17 05:59:47 seth Exp $
+# $Id: Make.bkvariables,v 1.41 2003/06/27 07:56:53 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -52,14 +52,6 @@ ifeq ($(CONFIGURED),)
 #
 BK_CONFIG_OS_TYPE=$(shell cat $(BKMK_OSFILE) 2>/dev/null)
 
-ifneq ($(BK_CONFIG_OS_TYPE),$(BK_OSNAME))
-
-# Oh boy. What a bloody hack. Assign to a variable (using := so that it gets
-# evaluated right now), so that the line complies with makefile syntax, but
-# all the work done by the $(shell) command is displayed to the the current
-# tty. BTW: Note the use of "rm", since we can't depend on configured $(RM);
-# this could technically fail, but it's pretty unlikely.
-
 # <TRICKY>Linux's implementation of /dev/fd/* is LAME with a capital L A M E!
 # Rather than have a special character device that just dups a file descriptor,
 # they make /dev/fd/* a symlink (this works poorly if the file on /dev/fd/* has
@@ -73,6 +65,14 @@ ifneq ($(BK_CONFIG_OS_TYPE),$(BK_OSNAME))
 # controlling tty.  So we use stderr (or try to).</TRICKY>
 F2=/dev/fd/2
 BK_TTY:=$(shell test -c $(F2) && test -w $(F2) && echo $(F2) || echo /dev/tty)
+
+ifneq ($(BK_CONFIG_OS_TYPE),$(BK_OSNAME))
+
+# Oh boy. What a bloody hack. Assign to a variable (using := so that it gets
+# evaluated right now), so that the line complies with makefile syntax, but all
+# the work done by the $(shell) command is displayed to the the current tty.
+# Note the use of "rm", since we can't depend on configured $(RM); this could
+# technically fail, but it's pretty unlikely.
 
 BK_DUMMY:=$(shell							      \
   (if [ -f $(BKMK_OSFILE) ]; then					      \
