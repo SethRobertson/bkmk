@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.10 2002/09/30 21:59:08 dupuy Exp $
+# $Id: aclocal.m4,v 1.11 2002/10/09 21:39:25 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -59,6 +59,87 @@ AC_DEFUN([AC_CONSTRUCTORS],
   fi
  fi
 ])# AC_CONSTRUCTORS
+
+
+# AC_SECOND_CONNECT_TO_REFUSED_PORT
+# ---------------------------------
+#
+# This macro determines the correct errno value for calls to connect(2) on
+# sockets which have already been refused at the endpoint. Most OS's seem to
+# return ECONNREFUSED (again) which you would expect. Oddly *BSD returns
+# EINVAL.
+#
+#
+# <WARNING> This program test usnig a blocking (as opposed to non-blocking)
+# socket. The errno determined here seems to be the one we are looking for,
+# but it's possible on some bizzare OS the two errnos might differ. At that
+# point some poor sucker will have to convert this test to use asynchronous
+# sockets. HA HA HA HA HA HA. <WARNING>
+#
+AC_DEFUN([AC_SECOND_CONNECT_TO_REFUSED_PORT], [AC_CACHE_CHECK(for errno
+value of second connect to refused port, ac_cv_second_connect_errno,
+	AC_TRY_RUN(
+[
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <errno.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+
+int
+main(int argc, char **argv)
+{
+  int s;
+  unsigned short port;
+  struct sockaddr_in sin;
+changequote(, )dnl
+  char buf[2048];
+changequote([, ])dnl
+
+  if ((s = socket(PF_INET, SOCK_STREAM, 0)) < 0)
+    exit(6);
+  
+  port = 40000;
+  sin.sin_family = AF_INET;
+  inet_aton("127.0.0.1", &sin.sin_addr);
+
+  while (1)
+  {
+    port++;
+    sin.sin_port = htons(port);
+    if (bind(s, (struct sockaddr *)(&sin), sizeof(sin)) < 0)
+      break;
+
+    if (port == 0xffff)
+      exit(2);
+  }
+
+  close(s);
+
+  // Located an available, unbound port
+  if ((s = socket(PF_INET, SOCK_STREAM, 0)) < 0)
+    exit(3);
+
+  if (connect(s, (struct sockaddr *)(&sin), sizeof(sin)) == 0)
+    exit(4);
+
+  if (connect(s, (struct sockaddr *)(&sin), sizeof(sin)) == 0)
+    exit(5);
+
+  	
+  snprintf(buf,sizeof(buf),"echo %d >/tmp/errno", errno);
+  system(buf);
+  exit(0);
+}],
+[ ac_cv_second_connect_errno=`cat /tmp/errno`; rm /tmp/errno ]))
+if test "X$ac_cv_second_connect_errno" != "X" 
+then
+	AC_DEFINE_UNQUOTED(BK_SECOND_CONNECT_ERRNO, $ac_cv_second_connect_errno)
+fi
+])
+
+
 
 
 #

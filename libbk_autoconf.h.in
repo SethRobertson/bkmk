@@ -1,5 +1,5 @@
 /*				-*- C -*-
- * $Id: libbk_autoconf.h.in,v 1.18 2002/09/30 21:59:09 dupuy Exp $
+ * $Id: libbk_autoconf.h.in,v 1.19 2002/10/09 21:39:25 jtt Exp $
  *
  * ++Copyright LIBBK++
  *
@@ -60,6 +60,13 @@
 #undef STACK_DIRECTION
 
 #undef BK_TIME_MAX
+
+/*
+ * The errno value returned by system on *second* connect to refused
+ * port.It should be ECONNREFUSED (and is on most systems), but *BSD*, of
+ * all OS's, gets it wrong.
+ */
+#undef BK_SECOND_CONNECT_ERRNO
 
 // value of _FILE_OFFSET_BITS needed for large files
 #undef _FILE_OFFSET_BITS

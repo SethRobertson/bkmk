@@ -1,3 +1,11 @@
+2002-10-09  James Tanis  <jtt@hawking.sysdetect.com>
+
+	* aclocal.m4: (AC_SECOND_CONNECT_TO_REFUSED_PORT) Macro to
+	determine errno of *second* connect(2) call on a socket which was
+	refused.
+
+	* configure.in (CFLAGS): Do AC_SECOND_CONNECT_TO_REFUSED_PORT.
+
 2002-10-08  Matt Miller  <matt@sysdetect.com>
 
 	* Make.variables (BK_JAVA_HELP_PDF): build help pdf
