@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.48 2002/01/11 10:06:04 dupuy Exp $
+# $Id: Make.variables,v 1.49 2002/01/29 18:14:03 ldog Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -132,6 +132,7 @@ BK_JAVA_PKG_LOCALE:=$(patsubst %,$(BK_JAVADIR)/%,$(BK_JAVA_LOCALE))
 BK_JAVA_PKG_IMAGES:=$(patsubst %,$(BK_JAVADIR)/%,$(BK_JAVA_IMAGES))
 
 BK_JAVA_MF:=$(patsubst %.jar,%.MF,$(BK_JAVA_JAR))
+BK_JAVA_HELP_JAR:=$(patsubst %, $(BK_JAVA_HELP)_%.jar, $(BK_JAVA_HELP_LANG))
 
 ######################################################################
 # Jtest stuff

@@ -1,6 +1,6 @@
 # -*- makefile -*-
 # 
-# $Id: Make.targets,v 1.35 2002/01/28 16:53:38 dupuy Exp $
+# $Id: Make.targets,v 1.36 2002/01/29 18:14:03 ldog Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -131,6 +131,7 @@ install::
 
 ifeq ($(strip $(BK_WANT_JAVA)),false)
 BK_JAVA_JAR=
+BK_JAVA_HELP_JAR=
 endif # BK_WANT_JAVA
 
 
@@ -152,7 +153,7 @@ endif # BK_LARGE_LIB
 endif # BK_INSTALLLIBDIR
 
 
-install:: $(BK_SIMPLE_PROGS) $(BK_LARGE_PROG) $(BK_JAVA_JAR) $(BK_PUBLIC_INC) $(BK_DATAFILES) $(BK_MAN)
+install:: $(BK_SIMPLE_PROGS) $(BK_LARGE_PROG) $(BK_JAVA_JAR) $(BK_JAVA_HELP_JAR) $(BK_PUBLIC_INC) $(BK_DATAFILES) $(BK_MAN)
 ifneq ($(strip $(BK_INSTALLPROGDIR)),)
 	$(MKDIR) $(BK_INSTALLPROGDIR)
 ifneq ($(strip $(BK_SIMPLE_PROGS)),)
