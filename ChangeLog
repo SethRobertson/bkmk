@@ -2,6 +2,9 @@
 
 	* configure.in: AC_ENABLE_PATHENV to prefer LD_LIBRARY_PATH over -rpath
 
+	* acaux/ltmain.sh: nuke --mode=prelink KLUDGE; comment Darwin KLUDGE
+	not in libtool-1.5 [we can put it back in if it is still needed]
+	
 	* aclocal.m4: merged from libtool with --enable-pathenv support;
 	fix getcwd hacks to work with libtool-1.5 macros
 

@@ -60,7 +60,7 @@ PROGRAM=ltmain.sh
 PACKAGE=libtool
 VERSION=1.5
 TIMESTAMP=" (1.4 2003/05/31 07:06:25)"
-TIMESTAMP="$TIMESTAMP [$Revision: 1.12 $]"
+TIMESTAMP="$TIMESTAMP [$Revision: 1.13 $]"
 
 default_mode=
 help="Try \`$progname --help' for more information."
@@ -314,8 +314,8 @@ if test -z "$show_help"; then
 
   # Infer the operation mode.
   if test -z "$mode"; then
-    $echo "*** Warning: inferring the mode of operation is deprecated." 1>&2
-    $echo "*** Future versions of Libtool will require -mode=MODE be specified." 1>&2
+#    $echo "*** Warning: inferring the mode of operation is deprecated." 1>&2
+#    $echo "*** Future versions of Libtool will require -mode=MODE be specified." 1>&2
     case $nonopt in
     *cc | cc* | *++ | gcc* | *-gcc* | g++* | xlc*)
       mode=link
@@ -816,8 +816,8 @@ EOF
     exit 0
     ;;
 
-  # libtool link mode (<KLUDGE>prelink is a hack; see below.</KLUDGE>)
-  link | relink | prelink)
+  # libtool link mode
+  link | relink)
     modename="$modename: link"
     case $host in
     *-*-cygwin* | *-*-mingw* | *-*-pw32* | *-*-os2*)
@@ -1771,13 +1771,6 @@ EOF
     need_relink=no # whether we're linking any uninstalled libtool libraries
     notinst_deplibs= # not-installed libtool libraries
     notinst_path= # paths that contain not-installed libtool libraries
-    # <KLUDGE>Force relinking to occur at install time; needed for production
-    # builds with RPATH/RUNPATH different from that used for install.</KLUDGE>
-    case $mode in
-    prelink)
-	mode=link
-	test $linkmode = lib && need relink=yes
-    esac
     case $linkmode in
     lib)
 	passes="conv link"
@@ -3498,9 +3491,7 @@ EOF
 	  # Hardcode the library paths
 	  hardcode_libdirs=
 	  dep_rpath=
-	  # <KLUDGE>Use cmdline rpath, not dependencies, for lib relink; this
-	  # is needed for building with production RPATH/RUNPATH.</KLUDGE>
-	  test "$linkmode,$mode" != "lib,relink" && rpath="$finalize_rpath"
+	  rpath="$finalize_rpath"
 	  test "$mode" != relink && rpath="$compile_rpath$rpath"
 	  for libdir in $rpath; do
 	    if test -n "$hardcode_libdir_flag_spec"; then
@@ -3704,19 +3695,19 @@ EOF
 	fi
 
 	# <KLUDGE>Remove all convenience libraries from $deplibs to avoid
-	# problems with libtool relink.</KLUDGE>
-	save_deplibs="$deplibs"
-	if test "$build_libtool_libs" = "yes"; then
-	  for conv in $convenience; do
-	    tmp_deplibs=
-	    for test_deplib in $deplibs; do
-	      if test "$test_deplib" != "$conv"; then
-		tmp_deplibs="$tmp_deplibs $test_deplib"
-	      fi
-	    done
-	    deplibs="$tmp_deplibs"
-	  done
-	fi
+	# on MacOS X -- not clear if this is still needed.</KLUDGE>
+	#save_deplibs="$deplibs"
+	#if test "$build_libtool_libs" = "yes"; then
+	#  for conv in $convenience; do
+	#    tmp_deplibs=
+	#    for test_deplib in $deplibs; do
+	#      if test "$test_deplib" != "$conv"; then
+	#	tmp_deplibs="$tmp_deplibs $test_deplib"
+	#      fi
+	#    done
+	#    deplibs="$tmp_deplibs"
+	#  done
+	#fi
 	# Do each of the archive commands.
 	if test "$module" = yes && test -n "$module_cmds" ; then
 	  if test -n "$export_symbols" && test -n "$module_expsym_cmds"; then
@@ -3732,7 +3723,7 @@ EOF
 	  fi
 	fi
 	# <KLUDGE>Restore convenience libraries to $deplibs.</KLUDGE>
-	save_deplibs="$deplibs"
+	#save_deplibs="$deplibs"
 
 	if test "X$skipped_export" != "X:" && len=`expr "X$cmds" : ".*"` &&
 	   test "$len" -le "$max_cmd_len" || test "$max_cmd_len" -le -1; then
