@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.include,v 1.23 2003/02/03 19:26:35 jtt Exp $
+# $Id: Make.include,v 1.24 2003/02/08 01:57:04 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -19,6 +19,12 @@
 BKMKDIR=$(GROUPTOP)/$(PKGTOP)/bkmk
 
 include $(BKMKDIR)/Make.bkvariables
+
+# turn off some environment variables that get annoying if SHELL=/bin/bash
+export CDPATH
+CDPATH=
+export ENV
+ENV=
 
 ifneq ($(BK_USER_VARIABLES),)
 include $(BK_USER_VARIABLES)

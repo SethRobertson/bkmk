@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.131 2003/02/03 19:26:35 jtt Exp $
+# $Id: Make.variables,v 1.132 2003/02/08 01:57:04 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -109,7 +109,7 @@ RM=$(RM_CONFIG) -f
 MKDEP=$(CPP) -M $(CPPFLAGS)
 MKDIR=$(MKDIR_CONFIG) -p
 
-# Use -p to preserve timestamps whereever possible. This is mostly so that
+# Use -p to preserve timestamps wherever possible. This is mostly so that
 # header file installs don't trigger dependencies.
 
 # Install (GNU or BSD)
