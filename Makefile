@@ -7,7 +7,8 @@ default:
 install:
 	@(cd ../.install; \
 	  P=`pwd | bash -pc 'read P; P=\$${P%/*}; P=\$${P##*/}; echo \$$P'`; \
-	  tar -zcvf ../$$P.tar.gz bin/worker bin/*.sh lib/*.so java/*.jar)
+	  tar -zcvf ../$$P.tar.gz bin/worker bin/*.sh lib/*.so java/*.jar || \
+	  rm -rf ../$$P.tar.gz) 2>/dev/null
 
 ################################################################
 #
