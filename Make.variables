@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.186 2004/05/22 00:11:39 jtt Exp $
+# $Id: Make.variables,v 1.187 2004/07/02 19:46:45 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -34,6 +34,12 @@ BK_INSTALLPATH=$(shell $(PERL) -e $(NORMALIZEPATH))
 #NORMALIZEDIR:='$$_ = q^$(PWD)/$(BK_SAVE_INSTALLBASE)^;'$(NORMALIZE)
 NORMALIZEDIR:='$$_ = q^$(PWD)/$(BK_INSTALLBASE)^;'$(NORMALIZE)
 BK_INSTALLDIR=$(shell $(PERL) -e $(NORMALIZEDIR))
+
+# Allow automatic make parallelization discovery
+ifndef BKMK_NO_AUTOPARALLELIZATION
+MAKEFLAGS+=$(shell $(PERL) -e 'exit 0 unless open(X,"/proc/cpuinfo"); while(<X>) { if (/^processor\s+: (\d+)/) { $$procnum = $$1; } } print " --jobs ".scalar($$procnum+2)."\n";' )
+export MAKEFLAGS
+endif # BKMK_NO_AUTOPARALLELIZATION
 
 BKMKVAR_VAR_CORRECT=true
 export BK_INSTALLRDIR BK_INSTALLPATH BKMKVAR_VAR_CORRECT BK_INSTALLDIR
@@ -457,6 +463,10 @@ endif # !BK_VALGRIND_OPT
 COMPILER_DEBUG+=-Wuninitialized
 COPTDEBUG+=$(GCCHWOPT)
 endif # BK_NO_OPT
+
+ifneq ($(BK_NO_PIPE),true)
+COPTDEBUG+=-pipe
+endif # BK_NO_PIPE
 
 ifneq ($(BK_NO_DEBUG),true)
 COPTDEBUG+=-g $(COMPILER_DEBUG)
