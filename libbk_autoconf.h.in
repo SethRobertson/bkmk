@@ -1,5 +1,5 @@
 /*				-*- C -*-
- * $Id: libbk_autoconf.h.in,v 1.8 2002/03/06 19:08:37 dupuy Exp $
+ * $Id: libbk_autoconf.h.in,v 1.9 2002/03/19 16:06:21 dupuy Exp $
  *
  * ++Copyright LIBBK++
  *
@@ -49,20 +49,37 @@
 /// Search path separator for PATH in shell commands
 #define PATH_SEPARATOR ":"
 
-#if defined(_WIN32) && !defined(__CYGWIN32__)
+#if !defined(_WIN32) || defined(__CYGWIN32__)
+
+/// Search path separator for PATH environment variable
+#define BK_PATH_SEPARATOR PATH_SEPARATOR
+/// Directory separator string for parsing input filenames only
+#define BK_DIR_SEPARATOR "/"
+
+#else  /* BK_MINGW32 */
+
 /// defined 1 if Win32 system but not using CygWin
 #define BK_MINGW32 1
 #define BK_PATH_SEPARATOR ";"
-#else
-/// Search path separator for PATH environment variable
-#define BK_PATH_SEPARATOR PATH_SEPARATOR
-#endif
+/**
+ * <TRICKY>MINGW32 (really, the WIN32 C runtime API) allows use of '/' as
+ * directory separator in all file operations.  BK_DIR_SEPARATOR should only be
+ * using when parsing filenames; when performing file operations, use '/'
+ * unless appending/prepending to externally specified filenames.</TRICKY>
+ */
+#define BK_DIR_SEPARATOR "\\"
 
-#if defined(_WIN32)
-#define BK_SYSPATH_SEPARATOR ";"
-#else
+#endif /* BK_MINGW32 */
+
+/// Directory separator as a character constant instead of string
+#define BK_DIR_SEPCHAR BK_DIR_SEPARATOR[0]
+
+#if !defined(_WIN32)
 /// Search path separator for environment variables other than PATH
 #define BK_SYSPATH_SEPARATOR ":"
-#endif
+#else  /* _WIN32 */
+#define BK_SYSPATH_SEPARATOR ";"
+#endif /* _WIN32 */
+
 
 #endif /* _libbk_autoconf_h_ */

@@ -1,3 +1,8 @@
+2002-03-19  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* libbk_autoconf.h.in (BK_DIR_SEPARATOR): a bit more portable than "/"
+	(BK_DIR_SEPCHAR): a bit more convenient for str{r}chr()
+
 2002-03-18  larry ogrodnek  <ldog@sysdetect.com>
 
 	* Make.variables (BK_JAVA_IMAGES): include BK_JAVA_GIFS.
