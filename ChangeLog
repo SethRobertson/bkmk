@@ -1,3 +1,14 @@
+2004-09-22  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* aclocal.m4 (AC_SECOND_CONNECT_TO_REFUSED_PORT): don't leak fd if
+	unexpectedly successful; avoid accidental self-connect by opening
+	"client" before closing "server"; don't interpret SIGSEGV etc. as
+	error code - treat as unknown.
+	
+2004-08-30  Brian Lindauer  <lindauer@sysdetect.com>
+
+	* Make.override: Manual override for creation of RELEASE file
+
 2004-07-30  James Tanis  <jtt@buscemi.sysdetect.com>
 
 	* configure.in: Test if install supports -p.

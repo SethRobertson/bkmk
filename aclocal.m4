@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.52 2004/07/13 19:18:30 dupuy Exp $
+# $Id: aclocal.m4,v 1.53 2004/09/22 07:38:01 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -448,7 +448,7 @@ fi
 # socket.  The errno determined here seems to be the one we are looking for,
 # but it's possible on some bizzare OS the two errnos might differ.  At that
 # point some poor sucker will have to convert this test to use asynchronous
-# sockets. HA HA HA HA HA HA.<WARNING>
+# sockets. HA HA HA HA HA HA.</WARNING>
 #
 AC_DEFUN([AC_SECOND_CONNECT_TO_REFUSED_PORT],
 [AC_CACHE_CHECK([errno value of second connect to refused port],
@@ -468,7 +468,7 @@ AC_DEFUN([AC_SECOND_CONNECT_TO_REFUSED_PORT],
 int
 main(int argc, char **argv)
 {
-  int s;
+  int ss, cs;
   int ret;
   unsigned short port;
   struct sockaddr_in sin;
@@ -481,7 +481,6 @@ main(int argc, char **argv)
 
   port = 40000;
   sin.sin_family = AF_INET;
-  sin.sin_addr.s_addr = INADDR_ANY;
 
   // Locate an available, unbound port
 retry:
@@ -489,17 +488,16 @@ retry:
   {
     port++;
     sin.sin_port = htons(port);
+    sin.sin_addr.s_addr = INADDR_ANY;
 
-    if ((s = socket(PF_INET, SOCK_STREAM, 0)) < 0)
+    if ((ss = socket(PF_INET, SOCK_STREAM, 0)) < 0)
     {
       perror("socket");
       exit(1);
     }
 
-    ret = bind(s, (struct sockaddr *)(&sin), sizeof(sin));
+    ret = bind(ss, (struct sockaddr *)(&sin), sizeof(sin));
    
-    close(s);
-
     if ((port == 0xffff) && (ret == -1))
     {
       fprintf(stderr, "all sockets in use");
@@ -507,22 +505,28 @@ retry:
     }
   } while (ret < 0);
 
-  if ((s = socket(PF_INET, SOCK_STREAM, 0)) < 0)
+  if ((cs = socket(PF_INET, SOCK_STREAM, 0)) < 0)
   {
     perror("socket");
     exit(1);
   }
 
-  if (connect(s, (struct sockaddr *)(&sin), sizeof(sin)) == 0)
+  close(ss);
+  sleep(1);
+
+  sin.sin_addr.s_addr = htonl(0x7f000001U); // loopback address
+  if (connect(cs, (struct sockaddr *)(&sin), sizeof(sin)) == 0)
   {
     fprintf(stderr, "connect succeeded - should have failed. Trying again.");
+    close(cs);
     RANDOM_INT_10;
     goto retry;
   }
 
-  if (connect(s, (struct sockaddr *)(&sin), sizeof(sin)) == 0)
+  if (connect(cs, (struct sockaddr *)(&sin), sizeof(sin)) == 0)
   {
     fprintf(stderr, "connect succeeded - should have failed. Trying again.");
+    close(cs);
     RANDOM_INT_10;
     goto retry;
   }
@@ -533,8 +537,11 @@ retry:
 	[echo $ECHO_N "(UNKNOWN)" >&6; unset ac_cv$1],
 	[case $ac_status in
  1|2|3|4|5|6|7|8|9) echo $ECHO_N "(UNKNOWN)" >&6; unset ac_cv$1;;
- *) ac_cv_$1=$ac_status;;
-esac;],
+ *) if test $ac_status -gt 127; then
+      echo $ECHO_N "(UNKNOWN)" >&6; unset ac_cv$1; echo "(SIG$ac_status)" 1>&2;
+    else
+      ac_cv_$1=$ac_status;
+    fi;; esac;],
 	[ac_cv_$1=ECONNREFUSED])])
 AH_VERBATIM($1,
 [/* Define as errno returned from second connect to unbound socket. */
