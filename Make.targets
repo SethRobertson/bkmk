@@ -1,6 +1,6 @@
 # -*- makefile -*-
 # 
-# $Id: Make.targets,v 1.70 2002/10/18 20:03:28 jtt Exp $
+# $Id: Make.targets,v 1.71 2002/10/21 11:08:29 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -184,15 +184,21 @@ else
 install:: install-first install-normal install-last
 
 install-first:
-	@for d in $(BK_ALL_FIRST_DIRS);					      \
+	@for d in $(BK_ALL_FIRST_DIRS) strict_sh_fodder;		      \
 	do								      \
+	  if [ $$d = "strict_sh_fodder" ]; then				      \
+		continue;						      \
+	  fi;								      \
 	  if [ -d $$d ]; then						      \
 	    ( cd $$d && $(MAKE) actual_install ) ||			      \
 	    { ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; } \
 	  fi;								      \
 	done;								      \
-	for d in $(BK_SUBDIR) $(BK_ALL_LAST_DIRS);			      \
+	for d in $(BK_SUBDIR) $(BK_ALL_LAST_DIRS) strict_sh_fodder;	      \
 	do								      \
+	  if [ $$d = "strict_sh_fodder" ]; then				      \
+		continue;						      \
+	  fi;								      \
 	  if [ -d $$d ]; then						      \
 	    ( cd $$d && $(MAKE) $@) ||					      \
 	    { ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; } \
@@ -200,8 +206,11 @@ install-first:
 	done
 
 install-normal:							
-	@for d in $(BK_SUBDIR);						      \
+	@for d in $(BK_SUBDIR) strict_sh_fodder;			      \
 	do								      \
+	  if [ $$d = "strict_sh_fodder" ]; then				      \
+		continue;						      \
+	  fi;								      \
 	  if [ -d $$d ]; then						      \
 	    ( cd $$d && $(MAKE) $@ ) ||					      \
 	    { ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; } \
@@ -210,15 +219,21 @@ install-normal:
 	$(MAKE) actual_install
 
 install-last:
-	@for d in $(BK_ALL_LAST_DIRS);					      \
+	@for d in $(BK_ALL_LAST_DIRS) strict_sh_fodder;			      \
 	do								      \
+	  if [ $$d = "strict_sh_fodder" ]; then				      \
+		continue;						      \
+	  fi;								      \
 	  if [ -d $$d ]; then						      \
 	    ( cd $$d && $(MAKE) actual_install ) ||			      \
 	    { ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; } \
 	  fi;								      \
 	done;								      \
-	for d in $(BK_SUBDIR) $(BK_ALL_FIRST_DIRS);			      \
+	for d in $(BK_SUBDIR) $(BK_ALL_FIRST_DIRS) strict_sh_fodder;	      \
 	do								      \
+	  if [ $$d = "strict_sh_fodder" ]; then				      \
+		continue;						      \
+	  fi;								      \
 	  if [ -d $$d ]; then						      \
 	    ( cd $$d && $(MAKE) $@ ) ||					      \
 	    { ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; } \
