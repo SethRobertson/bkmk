@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.61 2002/03/16 06:25:34 dupuy Exp $
+# $Id: Make.variables,v 1.62 2002/03/16 07:59:34 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -30,6 +30,9 @@ CURDIR=$(shell $(PERL) -e $(NORMALIZEPWD))
 
 NORMALIZERPATH="\$$_ = qq^`$(PWD)`/$(BK_INSTALLLIBDIR)^;"$(NORMALIZE)
 BK_INSTALLRPATH=$(shell $(PERL) -e $(NORMALIZERPATH))
+
+NORMALIZEPATH="\$$_ = qq^`$(PWD)`/$(BK_INSTALLPROGDIR)^;"$(NORMALIZE)
+BK_INSTALLPATH=$(shell $(PERL) -e $(NORMALIZEPATH))
 
 # compatibility for old name
 ifeq ($(USING_INSIGHT),true)

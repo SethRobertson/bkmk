@@ -1,5 +1,8 @@
 2002-03-16  Alexander Dupuy  <dupuy@sysdetect.com>
 
+	* Make.targets, Make.variables:
+	use libtool to install programs [not libtool wrapper scripts]
+
 	* Make.bkvariables, Make.targets, Make.variables, Make.GNUmakefile:
 	clean up makefile structure, vpaths
 
