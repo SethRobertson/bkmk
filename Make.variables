@@ -1,4 +1,4 @@
-# $Id: Make.variables,v 1.9 2001/06/19 03:19:27 jtt Exp $
+# $Id: Make.variables,v 1.10 2001/06/19 04:33:14 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -115,14 +115,15 @@ BK_LDS= $(RESOLVER_LDS)
 BK_LIBS= -lbk -ldict -lfsma -lpq $(LIBRESOLVER)
 endif # NO_STDBKCCSTUFF
 
+ifeq ($(CC),gcc)
 # C
-CC_normal=gcc $(GCCOPTS)
-CC_strict=g++ $(GCCOPTS)
-#CXX=g++
-#CC=$(CC_normal)
+CC_normal=$(CC) $(GCCOPTS)
+CC_strict=$(CXX) $(GCCOPTS)
 COMPILER_DEBUG=-W -Wall -Wpointer-arith -Wno-unused -Wno-sign-compare $(COMPILER_DEBUG_ERROR)
 COMPILER_DEBUG_ERROR=-Werror
 COPTDEBUG=-g -O $(COMPILER_DEBUG)
+endif
+
 CFLAGS=$(COPTDEBUG)
 CPPFLAGS=$(BK_ALLINCS) $(BK_ALLDEFINES)
 LDFLAGS=$(BK_ALLLDS)
