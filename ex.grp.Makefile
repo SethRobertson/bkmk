@@ -1,5 +1,16 @@
 ######################################################################
-# $Id: ex.grp.Makefile,v 1.2 2001/06/18 19:29:32 seth Exp $
+# $Id: ex.grp.Makefile,v 1.3 2001/06/18 20:09:50 seth Exp $
+#
+# ++Copyright LIBBK++
+#
+# Copyright (c) 2001 The Authors.  All rights reserved.
+#
+# This source code is licensed to you under the terms of the file
+# LICENSE.TXT in this release for further details.
+#
+# Mail <projectbaka@baka.org> for further information
+#
+# --Copyright LIBBK--
 #
 # Foo group Makefile 
 #
@@ -10,9 +21,10 @@ GROUPSUBDIR=.
 ##################################################
 ## BEGIN BKSTANDARD MAKEFILE
 -include $(GROUPTOP)/Make.preinclude
-include $(PKGTOP)/bkmk/Make.include
--include $(PKGTOP)/Make.include
+include $(GROUPTOP)/$(PKGTOP)/bkmk/Make.include
+-include $(GROUPTOP)/$(PKGTOP)/Make.include
 -include $(GROUPTOP)/Make.include
 -include ./Make.include
+
 ## END BKSTANDARD MAKEFILE
 ##################################################

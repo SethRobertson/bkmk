@@ -1,0 +1,37 @@
+#!/bin/perl5 -i.orig 
+#
+#
+#
+$FIRST="## BEGIN BKSTANDARD MAKEFILE";
+$MIDDLE=<<'EOF';
+-include $(GROUPTOP)/Make.preinclude
+include $(GROUPTOP)/$(PKGTOP)/bkmk/Make.include
+-include $(GROUPTOP)/$(PKGTOP)/Make.include
+-include $(GROUPTOP)/Make.include
+-include ./Make.include
+EOF
+$LAST="## END BKSTANDARD MAKEFILE";
+$state = 0;
+
+while (<>)
+{
+  if ($state == 0)
+    {
+      unless (/^$FIRST/)
+	{
+	  print;
+	  next;
+	}
+      $state = 1;
+      print "$FIRST\n$MIDDLE$LAST\n";
+      next;
+    }
+  if ($state == 1)
+    {
+      /^$LAST/ || next;
+      $state = 2;
+      next;
+    }
+
+  print;
+}
