@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.include,v 1.9 2002/01/07 17:03:12 jtt Exp $
+# $Id: Make.include,v 1.10 2002/07/29 23:58:18 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -18,9 +18,18 @@
 #
 BKMKDIR=$(GROUPTOP)/$(PKGTOP)/bkmk
 
-include $(BKMKDIR)/Make.bkvariables
+
 -include $(BKMKDIR)/Make.$(BK_OSNAME)-pre
 include $(BKMKDIR)/Make.config
+
+BK_USER_VARIABLES:=$(shell $(BKMKDIR)/find_user_var.pl "$(GROUPTOP)/$(PKGTOP)" "$(PWD)")
+ifneq ($(BK_USER_VARIABLES),)
+include $(BK_USER_VARIABLES)
+endif
+
+include $(BKMKDIR)/Make.bkvariables
+
+
 include $(BKMKDIR)/Make.variables
 include $(BKMKDIR)/Make.targets
 include $(BKMKDIR)/Make.production
