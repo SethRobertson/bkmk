@@ -11255,7 +11255,7 @@ echo $ECHO_N "checking if more special flags are required for pthreads... $ECHO_
         flag=no
         case "${host_cpu}-${host_os}" in
                 *-aix* | *-freebsd*)     flag="-D_THREAD_SAFE";;
-                *solaris* | *-osf* | *-hpux*) flag="-D_REENTRANT";;
+                *solaris* | *-osf* | *-hpux* | *-linux* ) flag="-D_REENTRANT";;
         esac
         echo "$as_me:11260: result: ${flag}" >&5
 echo "${ECHO_T}${flag}" >&6

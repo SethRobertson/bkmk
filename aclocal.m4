@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.34 2003/04/16 14:43:25 dupuy Exp $
+# $Id: aclocal.m4,v 1.35 2003/04/16 16:26:56 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -724,7 +724,7 @@ if test "x$acx_pthread_ok" = xyes; then
         flag=no
         case "${host_cpu}-${host_os}" in
                 *-aix* | *-freebsd*)     flag="-D_THREAD_SAFE";;
-                *solaris* | *-osf* | *-hpux*) flag="-D_REENTRANT";;
+                *solaris* | *-osf* | *-hpux* | *-linux* ) flag="-D_REENTRANT";;
         esac
         AC_MSG_RESULT(${flag})
         if test "x$flag" != xno; then
