@@ -18,9 +18,9 @@ while (<>)
 {
   if (/[ \t]+$/)
   {
-    if (/\\[ \t]+$/)
+    if (/\\[ \t]+$/ || $ARGV =~ /\.MF/)
     {
-      # Don't nuke backslash-quoted whitespace
+      # Don't nuke backslash-quoted (or other magic) whitespace
     }
     else
     {
