@@ -134,7 +134,10 @@ sub pprint($$)
 {
   my ($prefix,$string) = @_;
   my (@lines);
+  my ($output);
 
   @lines = split(/\n/,$string);
-  print $prefix.join("\n$prefix",@lines)."\n";
+  $output = sprint $prefix.join("\n$prefix",@lines)."\n";
+  $output =~ s/\s+$//mg;
+  print $output;
 }
