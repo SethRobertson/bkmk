@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.79 2003/05/14 19:01:48 lindauer Exp $
+dnl $Id: configure.in,v 1.80 2003/05/15 20:44:53 jtt Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.79 $)dnl
+AC_REVISION($Revision: 1.80 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
@@ -152,7 +152,23 @@ AC_PATH_PROG(XML2CONFIG, xml2-config, $FALSE)
 # not everybody puts /usr/local/gnu/bin in their PATH
 AC_PATH_PROG(BGCC, bgcc, $FALSE, $PATH:/usr/local/gnu/bin)
 
+# Look for PARASOFT directory if $PARASOFT is not found
+if test "X$PARASOFT" '=' "X"
+then	
+	if test -d /usr/local/parasoft
+	then
+		export PARASOFT="/usr/local/parasoft"
+	fi
+fi
+
+if test \! -d $PARASOFT
+then
+	export PARASOFT=/path/to/nowhere
+fi
+
+AC_SUBST(PARASOFT)
 AC_PATH_PROG(INSURE, insure, $FALSE, $PATH:$PARASOFT/bin:/usr/local/parasoft/bin)
+AC_PATH_PROG(JTEST, jtest, $FALSE, $PATH:$PARASOFT/bin:/usr/local/parasoft/bin:/home/rculling/jtest/bin)
 
 # note - don't use $PATH_SEPARATOR in this file; we always use Cygwin make
 

@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.include,v 1.28 2003/04/16 21:25:51 jtt Exp $
+# $Id: Make.include,v 1.29 2003/05/15 20:44:52 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -98,10 +98,12 @@ endif
 endif
 
 ifneq ($(findstring true,$(WANT_INSURE)$(USING_INSURE)$(USING_INSIGHT)),)
+ifneq ($(PARASOFT),)
 BK_USING_INSURE=true
 ifneq ($(findstring true,$(WANT_INSURE_DEBUG)$(USING_INSURE_DEBUG)$(USING_INSIGHT_DEBUG)),)
 BK_USING_INSURE_DEBUG=true
 endif
+override BK_WANT_LIBTOOL=false
 override BK_USING_DMALLOC=false
 override BK_USING_BOUNDS_CHECKING=false
 else
@@ -114,6 +116,7 @@ ifneq ($(findstring true,$(WANT_BOUNDS_CHECKING)$(USING_BOUNDS_CHECKING)),)
 BK_USING_BOUNDS_CHECKING=true
 override BK_USING_INSURE=false
 override BK_USING_DMALLOC=false
+endif
 endif
 endif
 endif

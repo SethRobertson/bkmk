@@ -1,3 +1,16 @@
+2003-05-15  James Tanis  <jtt@saint.sysdetect.com>
+
+	* configure.in: Check for $PARASOFT in ENV and /usr/local/parasoft
+	if not found. Define $PARASOFT appropriately.
+
+	* Make.variables (JTEST): No more hard coded JTEST paths
+	(INSURE_LIBS): Add INSURE paths and libs
+
+	* Make.include (BK_USING_INSURE_DEBUG): Only set INSURE if
+	$PARASOFT has been autconf'ed. 
+	(BK_USING_INSURE_DEBUG): Turn of libtool when compiling with
+	INSURE (ARGHH!! This was *working*).
+
 2003-05-14  Brian Lindauer  <lindauer@malkmus.sysdetect.com>
 
 	* configure.in: Configure location of javadoc program.
