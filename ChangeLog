@@ -1,3 +1,7 @@
+2002-03-12  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Makefile (%.status): disable fast install, don't generate lt-worker
+
 2002-03-07  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.OpenBSD-2.9-post (COMPILER_DEBUG): needs to be set before

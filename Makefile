@@ -23,7 +23,7 @@ clean nuke:
 	rm -f .config_os_type confdefs.h config.cache config.status config.log libbk_autoconf.h
 
 %.status: ./%ure
-	./configure
+	./configure --disable-fast-install
 	@echo "$(OSNAME)" > $(OSFILE) && touch .timestamp
 
 .timestamp: *.in config.status
