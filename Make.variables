@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.79 2002/07/16 23:31:57 jtt Exp $
+# $Id: Make.variables,v 1.80 2002/07/18 22:52:38 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -251,14 +251,13 @@ CC_strict=$(CXX_CONFIG) $(CXXOPTS)
 CC=$(CC_normal)
 CXX=$(CXX_CONFIG) $(CXXOPTS)
 
+# gcc options common to both gcc and bgcc
 ifeq ($(COMPILER_NAME),gcc)
+COMPILER_DEBUG+=-Wmissing-prototypes -Wstrict-prototypes -Wchar-subscripts -Wcomment -Wformat -Wimplicit -Wmain -Wmultichar -Wswitch -Wshadow -Wtrigraphs -Wunused $(COMPILER_DEBUG_ERROR)
 
-# gcc options that bgcc understands and 
-COMPILER_DEBUG+=-Wmissing-prototypes -Wstrict-prototypes -Wchar-subscripts -Wcomment -Wformat -Wimplicit -Wmain -Wmultichar -Wswitch -Wtrigraphs -Wno-unused -Wshadow $(COMPILER_DEBUG_ERROR)
-
-# Options that only gcc understands (not bgcc). Eventually gcc and bgcc should be the same.
+# options for gcc only 
 ifeq ($(CC_CONFIG),gcc)
-COMPILER_DEBUG+=-W -Wreturn-type -Wpointer-arith 
+COMPILER_DEBUG+=-W -Wno-unused-parameter -Wreturn-type -Wpointer-arith 
 endif
 
 ifneq ($(NO_WERROR),true)

@@ -1,3 +1,7 @@
+2002-07-18  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.variables (COMPILER_DEBUG): turn on -Wunused
+
 2002-07-16  James Tanis  <jtt@saint.sysdetect.com>
 
 	* aclocal.m4 (LIBS): Check for libiconv on machines which need libintl.
