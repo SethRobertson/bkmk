@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.40 2001/12/19 18:26:18 dupuy Exp $
+# $Id: Make.variables,v 1.41 2001/12/22 00:18:02 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -84,6 +84,7 @@ JAVACFLAGS=
 JARFLAGS=-cfm
 
 BK_JAVA_CPATH=$(subst :,$(PATH_SEPARATOR),$(BK_JAVADIR):$(BK_JAVA_CP))
+BK_JAVA_TESTCP=$(BK_JAVA_CPATH)$(PATH_SEPARATOR)/usr/local/java/lib/junit.jar
 
 BK_JAVA_PKGDOT=$(subst /,.,$(BK_JAVA_PKG))
 
