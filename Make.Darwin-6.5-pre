@@ -1,0 +1,23 @@
+# -*- makefile -*-
+#
+# $Id: Make.Darwin-6.5-pre,v 1.1 2003/04/23 16:42:22 brian Exp $
+#
+# ++Copyright LIBBK++
+#
+# Copyright (c) 2001,2002 The Authors.  All rights reserved.
+#
+# This source code is licensed to you under the terms of the file
+# LICENSE.TXT in this release for further details.
+#
+# Mail <projectbaka@baka.org> for further information
+#
+# --Copyright LIBBK--
+#
+#
+# OS-specific Variables
+#
+OS_INCS=-I/sw/include
+OS_LDS=-L/sw/lib
+OS_LIBS=
+
+COPTDEBUG+=-no-cpp-precomp
