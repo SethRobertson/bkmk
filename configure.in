@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.120 2004/12/28 04:56:19 dupuy Exp $
+dnl $Id: configure.in,v 1.121 2005/02/02 23:02:32 lindauer Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.120 $)dnl
+AC_REVISION($Revision: 1.121 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
@@ -65,6 +65,13 @@ then
   AC_DEFINE(HAVE_LIBCRYPTO)
 fi
 AC_SUBST(HAVE_LIBCRYPTO)
+
+AC_CHECK_FILE(/proj/postgres, HAVE_PROJ_POSTGRES=true, HAVE_PROJ_POSTGRES=false)
+if test "$HAVE_PROJ_POSTGRES" "=" "true"
+then
+  AC_DEFINE(HAVE_PROJ_POSTGRES)
+fi
+AC_SUBST(HAVE_PROJ_POSTGRES)
 
 AC_C_ALIGN_FUNCTIONS
 
