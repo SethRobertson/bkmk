@@ -1,5 +1,5 @@
 #
-# $Id: configure.in,v 1.15 2002/01/24 08:54:43 dupuy Exp $
+# $Id: configure.in,v 1.16 2002/01/30 23:58:08 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -15,7 +15,7 @@
 #
 # Autoconf configuration
 #
-AC_REVISION($Revision: 1.15 $)dnl
+AC_REVISION($Revision: 1.16 $)dnl
 AC_INIT(Make.bkvariables)
 AC_CONFIG_AUX_DIR(acaux)
 
@@ -35,13 +35,17 @@ fi
 AC_PROG_CXX
 AC_PROG_LEX
 AC_PROG_YACC
-AC_PROG_RANLIB
 AC_PROG_CPP
 AC_PROG_CXXCPP
 AC_PROG_CC_C_O
 
 AC_PROG_INSTALL
 AC_PROG_LN_S
+
+AC_LIBTOOL_WIN32_DLL
+AC_LIBTOOL_DLOPEN
+AC_PROG_LIBTOOL
+
 AC_PATH_PROG(RM,rm)
 AC_PATH_PROG(FALSE,false)
 AC_PATH_PROGS(MV,mv cp, $FALSE)
@@ -76,7 +80,7 @@ AC_FUNC_MKTIME
 if test $ac_cv_func_working_mktime = no; then
  AC_DEFINE(MKTIME_HAS_BUGS)
 fi
-AC_CHECK_FUNCS(strptime gmtime_r timegm)
+AC_CHECK_FUNCS(ntohll strptime gmtime_r timegm)
 AC_FUNC_STRFTIME
 
 AC_DEFINE_UNQUOTED(PATH_SEPARATOR, "$PATH_SEPARATOR")

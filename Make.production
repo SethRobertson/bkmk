@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.production,v 1.31 2002/01/24 01:25:35 dupuy Exp $
+# $Id: Make.production,v 1.32 2002/01/30 23:58:08 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -37,11 +37,14 @@ Make%:
 # (it wouldn't be able to, but the unlink: Is a directory error is annoying
 .PRECIOUS: %/.
 
+# just in case these aren't already on the suffixes list
+.SUFFIXES: $(EXEEXT) $(LIBEXT) $(OBJEXT)
+
 #
 # Standard compiling targets
 #
-%.o: %.c
-	$(COMPILE.c) $(OUTPUT_OPTION) $<
+%$(OBJEXT): %.c
+	$(LIBTOOL) $(COMPILE.c) $(OUTPUT_OPTION) $<
 
 %.i: %.c
 	$(CC) -E $(CPPFLAGS) -o $@ $<
@@ -58,34 +61,34 @@ Make%:
 ifeq ($(USING_INSURE),true)
 # Insure++ often generates exceedingly bogus errors when it compiles and links
 # in a single command, so make the dependency on the object file and link that.
-$(BK_SIMPLE_INTERNALPROGS) $(BK_SIMPLE_PROGS): %: %.o $(filter -l%,$(BK_ALLLIBS))
-	$(LINK.c) -o $@ $@.o $(LDLIBS)
+$(BK_SIMPLE_INTERNALPROGS) $(BK_SIMPLE_PROGS): %: %$(OBJEXT) $(filter -l%,$(BK_ALLLIBS))
+	$(LIBTOOL) $(LINK.c) -o $@ $@$(OBJEXT) $(LDLIBS)
 else
 $(BK_SIMPLE_INTERNALPROGS) $(BK_SIMPLE_PROGS): %: %.c $(filter -l%,$(BK_ALLLIBS))
-	$(LINK.c) -o $@ $@.c $(LDLIBS)
+	$(LIBTOOL) $(LINK.c) -o $@ $@.c $(LDLIBS)
 endif
 
 #
 # Larger program production
 #
-BK_LARGE_OBJ:=$(patsubst %.c,%.o,$(BK_LARGE_SRC))
-BK_LARGE_OBJ:=$(patsubst %.y,%.tab.o,$(BK_LARGE_OBJ))
-BK_LARGE_OBJ:=$(patsubst %.l,%.o,$(BK_LARGE_OBJ))
+BK_LARGE_OBJ:=$(patsubst %.c,%$(OBJEXT),$(BK_LARGE_SRC))
+BK_LARGE_OBJ:=$(patsubst %.y,%.tab$(OBJEXT),$(BK_LARGE_OBJ))
+BK_LARGE_OBJ:=$(patsubst %.l,%$(OBJEXT),$(BK_LARGE_OBJ))
 
 $(BK_LARGE_INTERNALPROG) $(BK_LARGE_PROG): $(BK_LARGE_OBJ) $(filter -l%,$(BK_ALLLIBS))
-	$(LINK.c) -o $@ $(BK_LARGE_OBJ) $(LDLIBS)
+	$(LIBTOOL) $(LINK.c) -o $@ $(BK_LARGE_OBJ) $(LDLIBS)
 
 #
 # Large library production
 #
-BK_LARGE_LIBOBJ:=$(patsubst %.c,%.o,$(BK_LARGE_LIBSRC))
-BK_LARGE_LIBOBJ:=$(patsubst %.y,%.tab.o,$(BK_LARGE_LIBOBJ))
-BK_LARGE_LIBOBJ:=$(patsubst %.l,%.o,$(BK_LARGE_LIBOBJ))
+BK_LARGE_LIBOBJ:=$(patsubst %.c,%$(OBJEXT),$(BK_LARGE_LIBSRC))
+BK_LARGE_LIBOBJ:=$(patsubst %.y,%.tab$(OBJEXT),$(BK_LARGE_LIBOBJ))
+BK_LARGE_LIBOBJ:=$(patsubst %.l,%$(OBJEXT),$(BK_LARGE_LIBOBJ))
 
 # Even if target doesn't exist, $? may not contain all dependencies since
 # vpath search may find installed version of static library that isn't quite
 # up to date.  So make sure that new files get all dependencies.
-$(BK_LARGE_LIB): $(BK_LARGE_LIBOBJ)
+$(filter %.a,$(BK_LARGE_LIB)): $(BK_LARGE_LIBOBJ)
 	@if [ -f $@ ]; then \
 	  echo $(AR) $(ARFLAGS) $@ $?; \
 	  $(AR) $(ARFLAGS) $@ $?; \
@@ -94,6 +97,15 @@ $(BK_LARGE_LIB): $(BK_LARGE_LIBOBJ)
 	  $(AR) $(ARFLAGS) $@ $^; \
 	fi
 	$(RANLIB) $@
+
+# don't use $(LDLIBS) in libtool links, as it may contain static/convenience
+# libs that will get included in the generated shared library.
+$(filter %.la,$(BK_LARGE_LIB)): $(BK_LARGE_LIBOBJ)
+	$(LIBTOOL) $(LINK.c) -o $@ $^
+
+$(BK_LARGE_MODULE): $(BK_LARGE_LIBOBJ)
+	$(LIBTOOL) $(LINK.c) -o $@ $^ \
+	 -avoid-version -module -rpath $(BK_INSTALLRPATH)
 
 #
 # Java production

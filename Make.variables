@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.49 2002/01/29 18:14:03 ldog Exp $
+# $Id: Make.variables,v 1.50 2002/01/30 23:58:08 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -17,13 +17,18 @@
 # Variables
 #
 
-NORMALIZEPWD="			\
-	\$$_ = qq^`$(PWD)`^;	\
-	s@/\\./@/@g;		\
-	s@/[^/]+/\\.\\./@/@g;	\
+NORMALIZE='			\
+	s@/\./@/@g;		\
+	s@/[^/]+/\.\./@/@g;	\
+	s@/[^/]+/\.\./@/@g;	\
+	s@/[^/]+/\.\./@/@g;	\
 	s@^/n/[^/]*/@/@;	\
-	print;"
+	print;'
+NORMALIZEPWD="\$$_ = qq^`$(PWD)`^;"$(NORMALIZE)
 CURDIR=$(shell $(PERL) -e $(NORMALIZEPWD))
+
+NORMALIZERPATH="\$$_ = qq^`$(PWD)`/$(BK_INSTALLLIBDIR)^;"$(NORMALIZE)
+BK_INSTALLRPATH=$(shell $(PERL) -e $(NORMALIZERPATH))
 
 # compatibility for old name
 ifeq ($(USING_INSIGHT),true)
@@ -37,7 +42,7 @@ BK_NEATSTUFF=$(BK_LOCALJUNK) $(BK_GROUPJUNK) $(BK_PKGJUNK) $(BK_BKJUNK) $(BK_STD
 BK_CLEANSTUFF=$(BK_NEATSTUFF) $(BK_LOCALCLEANJUNK) $(BK_GROUPCLEANJUNK) $(BK_PKGCLEANJUNK) $(BK_BKCLEANJUNK)
 BK_NUKESTUFF=$(BK_CLEANSTUFF) $(BK_NUKEJUNK) $(BK_LOCALNUKEJUNK) $(BK_GROUPNUKEJUNK) $(BK_PKGNUKEJUNK) $(BK_BKNUKEJUNK)
 BK_BKJUNK=$(BK_SIMPLE_PROGS) $(BK_LARGE_PROG) $(BK_LARGE_LIB) $(BK_SIMPLE_INTERNALPROGS) $(BK_LARGE_INTERNALPROG) $(BK_LARGE_INTERNALLIB) $(BK_JAVA_JAR)
-BK_STDJUNK=*.o *.a core tca.log tca.map .inslog* _1001.out a.out mon.out *.core *.class *.err
+BK_STDJUNK=*.o *.obj *.lo *.a *.la core tca.log tca.map .libs .inslog* _1001.out a.out mon.out *.core *.class *.err
 BK_BKCLEANJUNK=.depend tags TAGS *.rpt
 BK_BKNUKEJUNK=.\\\#* \\\#* *.rej *.orig *~
 
@@ -215,8 +220,24 @@ CPPFLAGS=$(BK_ALLINCS) $(BK_ALLDEFINES)
 LDFLAGS=$(BK_ALLLDS)
 LDLIBS=$(BK_ALLLIBS)
 
+OBJEXT=.$(OBJEXT_CONFIG)
+ifeq ($(strip $(EXEEXT_CONFIG)),)
+EXEEXT=
+else
+EXEEXT=.$(EXEEXT_CONFIG)
+endif
+
 ######################################################################
 # What are you using, and what do you want?
+
+ifeq ($(WANT_LIBTOOL),false)
+LIBTOOL:=
+LIBEXT=.a
+else
+LIBEXT=.la
+OBJEXT=.lo
+top_builddir=$(BKMKDIR)
+endif
 
 ifeq ($(WANT_GPROF),true)
 CFLAGS += -pg
@@ -266,4 +287,4 @@ vpath %.3 $(BK_TRUECWD)
 vpath %.5 $(BK_TRUECWD)
 vpath %.1 $(BK_TRUECWD)
 vpath %.8 $(BK_TRUECWD)
-vpath %.a $(BK_LIBDIR)
+vpath %$(LIBEXT) $(BK_LIBDIR)

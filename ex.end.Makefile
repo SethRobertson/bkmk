@@ -1,5 +1,5 @@
 ######################################################################
-# $Id: ex.end.Makefile,v 1.4 2001/06/18 22:41:46 seth Exp $
+# $Id: ex.end.Makefile,v 1.5 2002/01/30 23:58:08 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -22,8 +22,8 @@ BK_LARGE_PROG=bar
 BK_LARGE_SRC=main.c init.c list.c parse.y tok.l
 LOCAL_LIBS=-lbaz
 
-BK_LARGE_INTERNALLIB=libbaz.a
-BK_LARGE_LIB=libbaz.a
+BK_LARGE_INTERNALLIB=libbaz$(LIBEXT)
+BK_LARGE_LIB=libbaz$(LIBEXT)
 BK_LARGE_LIBSRC=alpha.c beta.c delta.c epsilon.c gamma.c
 
 BK_PUBLIC_INC=foo.h

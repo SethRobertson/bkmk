@@ -7,3 +7,4 @@ config.*
 conftest.*
 lex.yy.c
 libbk_autoconf.h
+libtool

@@ -1,3 +1,28 @@
+2002-01-30  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.targets (install): libtool alternate installation for LARGE_LIB,
+	installation for LARGE_MODULE
+
+	* Make.production: .o -> ${OBJEXT}, use ${LIBTOOL} for compilation
+	(.SUFFIXES): add libtool/generic suffixes
+	($(filter %.la,$(BK_LARGE_LIB))): build libtool versions of libraries
+	($(BK_LARGE_MODULE)): build libtool dlopenable modules
+
+	* Make.variables (BK_INSTALLRPATH): normalized absolute INSTALLLIBDIR
+	(OBJEXT): object file extension [including .]
+	(EXEEXT): executable file extension [if any, and including .]
+	(WANT_LIBTOOL): set to false to disable libtool support entirely
+
+	* Make.config.in (LIBTOOL, OBJEXT_CONFIG, EXEEXT_CONFIG): config vars
+
+	* aclocal.m4: incorporated libtool.m4 from libtool 1.4.2
+
+	* configure.in, Make.config.in: converted to use libtool
+
+	* acaux/ltmain.sh: added from libtool 1.4.2
+
+	* acaux/config.guess, acaux/config.sub: added from gnu.org master copy
+
 2002-01-25  larry ogrodnek  <ldog@sysdetect.com>
 
 	* configure: find buildhelp.
