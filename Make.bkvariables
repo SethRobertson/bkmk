@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.bkvariables,v 1.44 2003/08/27 16:55:17 jtt Exp $
+# $Id: Make.bkvariables,v 1.45 2003/08/27 17:02:23 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -118,7 +118,7 @@ endif # BK_CONFIG_OS_TYPE != BK_OSNAME
 
 # Verify that $PWD points to the right place, since not all applications
 # maintain this (e.g. emacs)
-PWD:=$(shell $(BKMKDIR)/getcwd.sh 2>/dev/null)
+PWD:=$(shell $(BKMKDIR)/getcwd.sh 2>/dev/null || exit 0)
 
 #
 ##################################################
