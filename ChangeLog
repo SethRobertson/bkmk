@@ -1,3 +1,15 @@
+2001-10-04  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.targets (install): use ${INSTALL_INCFLAGS} for ${BK_PUBLIC_INC}
+
+	* Make.variables (INSTALL_INCFLAGS): install header files
+	read-only to avoid editing them [and not originals]
+	(INSTALL): removed--install doesn't always grok -c, and autoconf
+	finds install with that semantics or uses install-sh shell script
+	[so INSTALL from Make.config is always good enough]
+
+	* Make.config.in (RM_CONFIG,MKDIR_CONFIG): eliminate duplicate -f,-p
+
 2001-09-08  Seth Robertson  <seth@yeah.baka.org>
 
 	* Make.targets (subtags): Only tag if we have targets.
