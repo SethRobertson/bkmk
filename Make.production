@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.production,v 1.55 2003/06/03 03:28:13 dupuy Exp $
+# $Id: Make.production,v 1.56 2003/06/03 20:28:53 dupuy Exp $
 #
 # ++Copyright LIBBK++
 # 
@@ -114,6 +114,8 @@ BK_LARGE_LIBOBJ:=$(patsubst %.l,%$(OBJEXT),$(BK_LARGE_LIBOBJ))
 ifeq ($(BK_WANT_LIBTOOL),true)
 BK_LARGE_LIBOBJ2=\
  $(foreach obj,$(BK_LARGE_LIBOBJ),$(dir $(obj)).libs/$(subst $(OBJEXT),.$(OBJEXT_CONFIG),$(notdir $(obj))))
+else
+BK_LARGE_LIBOBJ2=$(BK_LARGE_LIBOBJ)
 endif
 
 #
@@ -125,6 +127,8 @@ BK_RELINK_LIBOBJ:=$(patsubst %.l,%$(OBJEXT),$(BK_RELINK_LIBOBJ))
 ifeq ($(BK_WANT_LIBTOOL),true)
 BK_RELINK_LIBOBJ2=\
  $(foreach obj,$(BK_RELINK_LIBOBJ),$(dir $(obj)).libs/$(subst $(OBJEXT),.$(OBJEXT_CONFIG),$(notdir $(obj))))
+else
+BK_RELINK_LIBOBJ2=$(BK_RELINK_LIBOBJ)
 endif
 ifdef BK_RELINK_LIBSRC
 BK_LARGE_LIBOBJ+=bk_relink_target.$(OBJEXT_CONFIG)
