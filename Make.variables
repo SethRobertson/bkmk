@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.144 2003/06/03 03:28:13 dupuy Exp $
+# $Id: Make.variables,v 1.145 2003/06/03 21:52:00 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -514,6 +514,8 @@ endif
 LT_LDFLAGS += $(PTHREAD_CFLAGS)
 LT_M_LDFLAGS += $(PTHREAD_CFLAGS)
 
+else
+PTHREAD_LIBS=
 endif
 
 ifeq ($(BK_USING_DMALLOC),true)
