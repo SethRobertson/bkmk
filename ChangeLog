@@ -1,6 +1,11 @@
+2003-06-09  Seth Robertson  <seth@startide.sysdetect.com>
+
+	* Make.variables (BK_ALLDEFINES): Include USER_DEFINES to allow
+	.user-variable to create testing defines.
+
 2003-06-06  Alexander Dupuy  <dupuy@sysdetect.com>
 
-	* Make.variables (LIBTOOL_LINK): do this quietly to avoid overflowing 
+	* Make.variables (LIBTOOL_LINK): do this quietly to avoid overflowing
 	xemacs regex stack
 
 2003-06-04  James Tanis  <jtt@hawking.StevesRUs.sysdetect.com>
@@ -90,7 +95,7 @@
 	(INSURE_LIBS): Add INSURE paths and libs
 
 	* Make.include (BK_USING_INSURE_DEBUG): Only set INSURE if
-	$PARASOFT has been autconf'ed. 
+	$PARASOFT has been autconf'ed.
 	(BK_USING_INSURE_DEBUG): Turn off libtool when compiling with
 	INSURE [ARGHH!! This was *working*].
 
@@ -445,7 +450,7 @@
 
 2002-08-25  Seth Robertson  <seth@winwood.sysdetect.com>
 
-        * Make.*: Many many performance changes [make overhead now cut to
+	* Make.*: Many many performance changes [make overhead now cut to
 	4/5ths of previous level] and normalization to normal make
 	standards where there was a bizarre reassignment [PWD/CURDIR].
 
@@ -820,7 +825,7 @@
 
 2002-01-31  Alexander Dupuy  <dupuy@sysdetect.com>
 
-	* configure.in: use autoconf m4 style comments 
+	* configure.in: use autoconf m4 style comments
 
 	* Make.production ($(filter %.la,$(BK_LARGE_LIB))): use rpath for
 	non-module libtool libraries too
@@ -1217,7 +1222,7 @@
 	* configure.in: Add a few more program checks.
 
 	* Make.targets ($(BK_INSTALLDOCDIR)/doxygen/Doxyfile): Do doxygen
-	stuff. 
+	stuff.
 
 2001-10-04  Alexander Dupuy  <dupuy@sysdetect.com>
 

@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.147 2003/06/06 16:54:36 dupuy Exp $
+# $Id: Make.variables,v 1.148 2003/06/09 13:08:25 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -207,7 +207,7 @@ endif
 
 ######################################################################
 # Java stuff
-JAVACFLAGS=$(USER_JAVAC_FLAGS) -g 
+JAVACFLAGS=$(USER_JAVAC_FLAGS) -g
 JARFLAGS=-cfm
 #JARFLAGS=-cifm causes the following Java exception
 #java.io.IOException: invalid header field
@@ -376,7 +376,7 @@ endif
 
 # options for gcc only
 ifeq ($(CC_CONFIG),gcc)
-COMPILER_DEBUG+=-Wreturn-type -Wpointer-arith 
+COMPILER_DEBUG+=-Wreturn-type -Wpointer-arith
 endif # CC_CONFIG=gcc
 
 COMPILER_DEBUG+=$(BK_SPECIAL_DEBUG)
@@ -426,7 +426,7 @@ endif # !BK_DEBUG_OPT
 endif # !BK_VALGRIND_OPT
 # gcc doesn't support -Wuninitialized without -O. And if using insure++ you
 # get it anyway.
-COMPILER_DEBUG+=-Wuninitialized 
+COMPILER_DEBUG+=-Wuninitialized
 COPTDEBUG+=$(GCCHWOPT)
 endif # BK_NO_OPT
 
@@ -503,7 +503,7 @@ ifeq ($(BK_USING_GPROF),true)
 BK_LIBCRYPT := -lcrypt_p
 BK_LIBDL := -ldl_p
 CFLAGS += -pg
-OS_LIBS += -lc_p 
+OS_LIBS += -lc_p
 else
 BK_LIBCRYPT := -lcrypt
 BK_LIBDL := -ldl
@@ -559,7 +559,7 @@ endif
 
 OS_SEARCHPATH=/usr/local/lib /usr/lib /usr/local/gnu/lib
 
-BK_ALLDEFINES=$(LOCAL_DEFINES) $(GROUP_DEFINES) $(PKG_DEFINES) $(BK_DEFINES) $(OS_DEFINES)
+BK_ALLDEFINES=$(USER_DEFINES) $(LOCAL_DEFINES) $(GROUP_DEFINES) $(PKG_DEFINES) $(BK_DEFINES) $(OS_DEFINES)
 BK_ALLINCS=$(LOCAL_INCS) $(GROUP_INCS) $(PKG_INCS) $(BK_INCS) $(OS_INCS)
 BK_ALLLDS=$(LOCAL_LDS) $(GROUP_LDS) $(PKG_LDS) $(BK_LDS) $(OS_LDS) $(INSURE_LDS)
 # The insure debug libs are allegedly supposed to go last.
