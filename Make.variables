@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.38 2001/12/06 18:49:31 dupuy Exp $
+# $Id: Make.variables,v 1.39 2001/12/11 19:19:55 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -107,12 +107,18 @@ BK_JAVA_ICLASS=\
 BK_JAVA_PROPS:=$(wildcard $(GROUPTOP)/$(LOCALE)/*.properties)
 BK_JAVA_LOCALE:=$(patsubst $(GROUPTOP)/$(LOCALE)/%,%,$(BK_JAVA_PROPS))
 
+BK_JAVA_PNGS:=$(foreach I,$(IMAGES),$(wildcard $(GROUPTOP)/$(I)/*.png))
+BK_JAVA_JPGS:=$(foreach I,$(IMAGES),$(wildcard $(GROUPTOP)/$(I)/*.jpg))
+BK_JAVA_IMAGES:=$(patsubst $(GROUPTOP)/%,%,$(BK_JAVA_PNGS) $(BK_JAVA_JPGS))
+
 BK_JAVA_PKG_CLASS:=$(patsubst %,$(BK_JAVADIR)/%,$(BK_JAVA_CLASS))
 BK_JAVA_PKG_TCLASS:=$(patsubst %,$(BK_JAVADIR)/%,$(BK_JAVA_TCLASS))
 BK_JAVA_PKG_SRC:=$(patsubst %,$(BK_JAVADIR)/$(BK_JAVA_PKG)/%,$(BK_JAVA_SRC))
 BK_JAVA_PKG_TEST:=$(patsubst %,$(BK_JAVADIR)/$(BK_JAVA_PKG)/%,$(BK_JAVA_TEST))
+# AUX is deprecated - use images instead
 BK_JAVA_PKG_AUX:=$(patsubst %,$(BK_JAVADIR)/$(BK_JAVA_PKG)/%,$(BK_JAVA_AUX))
 BK_JAVA_PKG_LOCALE:=$(patsubst %,$(BK_JAVADIR)/%,$(BK_JAVA_LOCALE))
+BK_JAVA_PKG_IMAGES:=$(patsubst %,$(BK_JAVADIR)/%,$(BK_JAVA_IMAGES))
 
 BK_JAVA_MF:=$(patsubst %.jar,%.MF,$(BK_JAVA_JAR))
 

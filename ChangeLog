@@ -1,6 +1,11 @@
 2001-12-11  Alexander Dupuy  <dupuy@sysdetect.com>
 
+	* Make.variables (BK_JAVA_PNGS,BK_JAVA_IMAGES,BK_JAVA_PKG_IMAGES):
+	add support for images in jar files [note - JAVA_AUX is deprecated]
+
 	* Make.production (jtest-%): phony target to force jtest run on file
+	($(BK_JAVADIR)/%): add support for images in jar files
+	($(BK_JAVA_JAR)): add support for images in jar files
 
 	* Make.targets (viewdox): use netscape remote, provide true URL
 	($(BK_INSTALLDOCDIR)/doxygen/Doxyfile): exclude JAVA link tree

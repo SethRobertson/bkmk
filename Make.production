@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.production,v 1.19 2001/12/11 17:55:29 dupuy Exp $
+# $Id: Make.production,v 1.20 2001/12/11 19:19:55 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -113,6 +113,10 @@ $(BK_JAVADIR)/%: $(GROUPTOP)/$(LOCALE)/% $(BK_JAVADIR)/.
 	$(LN_S) -f $(CURDIR)/$< $@
 	@test ! -L $@ && test ! $@ -ef $< 2>/dev/null && chmod -w $@ || true
 
+$(BK_JAVADIR)/%: $(GROUPTOP)/% $(patsubst %,$(BK_JAVADIR)/%/.,$(IMAGES))
+	$(LN_S) -f $(CURDIR)/$< $@
+	@test ! -L $@ && test ! $@ -ef $< 2>/dev/null && chmod -w $@ || true
+
 $(BK_JAVADIR)/%.MF: %.MF $(BK_JAVADIR)/.
 	$(LN_S) -f $(CURDIR)/$< $@
 	@test ! -L $@ && test ! $@ -ef $< 2>/dev/null && chmod -w $@ || true
@@ -120,11 +124,12 @@ $(BK_JAVADIR)/%.MF: %.MF $(BK_JAVADIR)/.
 # BK_JAVA_ICLASS doesn't see newly created files, sigh
 $(BK_JAVA_JAR): $(BK_JAVADIR)/$(BK_JAVA_PKG)/. $(BK_JAVADIR)/$(BK_JAVA_MF) \
 		$(BK_JAVA_PKG_SRC) $(BK_JAVA_PKG_CLASS) \
-		$(BK_JAVA_PKG_AUX) $(BK_JAVA_PKG_LOCALE)
+		$(BK_JAVA_PKG_AUX) $(BK_JAVA_PKG_LOCALE) $(BK_JAVA_PKG_IMAGES)
 	cd $(BK_JAVADIR) && \
 	  $(JAR) $(JARFLAGS) $@ $(BK_JAVA_MF) $(BK_JAVA_CLASS) \
 	    $(BK_JAVA_ICLASS) \
-	    $(patsubst %,$(BK_JAVA_PKG)/%,$(BK_JAVA_AUX)) $(BK_JAVA_LOCALE)
+	    $(patsubst %,$(BK_JAVA_PKG)/%,$(BK_JAVA_AUX)) \
+	    $(BK_JAVA_LOCALE) $(BK_JAVA_IMAGES)
 	$(MV) $(BK_JAVADIR)/$(BK_JAVA_JAR) $@
 
 # Jtest productions
