@@ -1,10 +1,42 @@
+2004-06-23  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.FreeBSD-5.1-pre, Make.FreeBSD-5.2-pre: FreeBSD 5 support
+
 2004-06-07  James Tanis  <jtt@buscemi.sysdetect.com>
 
 	* configure.in: Determine size of void *.
 
+2004-05-22  James Tanis  <jtt@sysdetect.com>
+
+	* Make.override, Make.variables: __INSURE__ triggered
+	malloc/calloc/realloc/free wrappers for handling realloc(3)'s
+	manually in order to silences Insure's incessent griping about
+	realloc(3). This also seems to have eliminated the BOGUS_LEAKs
+	which lately have been reported out of pcap-event.
+
+2004-05-04  Brian Larkins  <brian@sysdetect.com>
+
+	* Make.variables:
+	new compiler rev
+	much more anal with inlines
+	pick a good value
+
+2004-05-03  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* bk.conf.in: #3205:
+	a KLUDGE by any
+	other name might smell sweeter
+	to a customer
+
+2004-03-25  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* acaux/.cvsignore:
+	ignore lowercased versions of uppercase filenames [e.g. README->readme]
+	that may appear on [V]FAT filesystems mounted on Linux
+
 2004-03-15  Seth Robertson  <seth@pearl.sysdetect.com>
 
-	* Make.targets (BK_SUBDIRRULE): Allow certain targets (like tags)
+	* Make.targets (BK_SUBDIRRULE): Allow certain targets [like tags]
 	to not fail if the subdirectories fail.  Of course, deferred
 	failure would be best, but I am not greedy here.
 

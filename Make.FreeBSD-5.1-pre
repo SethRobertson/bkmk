@@ -1,0 +1,27 @@
+# -*- makefile -*-
+#
+# $Id: Make.FreeBSD-5.1-pre,v 1.1 2004/06/23 20:25:00 dupuy Exp $
+#
+# ++Copyright LIBBK++
+#
+# Copyright (c) 2003 The Authors. All rights reserved.
+#
+# This source code is licensed to you under the terms of the file
+# LICENSE.TXT in this release for further details.
+#
+# Mail <projectbaka@baka.org> for further information
+#
+# --Copyright LIBBK--
+#
+#
+# OS-specific Variables
+#
+
+OS_INCS=-I/usr/local/include
+OS_LDS=-L/usr/local/lib
+OS_LIBS=
+
+# Provide safe default so that LD_LIBRARY_PATH will be used in preference
+# to ELF-embedded RPATH (Linux/Solaris/etc. use RUNPATH which works right).
+# As always, users must use "override" in .user-variables to set another path.
+BK_INSTALLRPATH=/lib
