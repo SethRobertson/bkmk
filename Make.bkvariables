@@ -1,4 +1,4 @@
-# $Id: Make.bkvariables,v 1.5 2001/11/06 00:24:44 jtt Exp $
+# $Id: Make.bkvariables,v 1.6 2001/11/06 22:15:50 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -14,6 +14,12 @@
 #
 # Baka specific master variables
 #
+
+# WARNING: BEWARE OF THE OVERUSE OF AUTOCONF'ED PROGRAM NAMES IN $(shell) 
+# DIRECTIVES. SINCE MANY OF THESE ASSIGNMENTS WILL BE EVALUATED BETWEEN A
+# make clean AND THE SUBSEQUENT configure, AUTOCONF'ED VARIABLES WILL BE 
+# UNDEFINED RESULTING IN THE SHELL ATTEMPTING TO "EXECUTE" THE *ARGUMENTS* OF 
+# THE PROGRAM TO WHICH THE VARIABLE WOULD HAVE REFERED. 
 
 # Do the activities requiring subprograms once only for efficiency
 ifneq ($(BKMK_VAR_CORRECT),true)
@@ -47,6 +53,7 @@ endif # BKMK_VAR_CORRECT
 
 # Discover where the true (e.g. non-BUILD indirectory) group and package locations are
 BK_REALTOP:=$(shell cd $(GROUPTOP)/$(PKGTOP) && pwd)
+BK_PKGNAME:=$(shell  basename $(BK_REALTOP) || echo "NONAME PKG")
 BK_BUILDTOP:=$(shell test -L $(GROUPTOP)/$(PKGTOP)/bkmk/Make.include && echo ../../ )
 BK_TRUEGROUPTOP=$(BK_BUILDTOP)$(GROUPTOP)
 BK_TRUEPKGTOP=$(TRUEGROUPTOP)/$(PKGTOP)

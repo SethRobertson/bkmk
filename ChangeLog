@@ -1,3 +1,13 @@
+2001-11-06  James Tanis  <jtt@winwood.sysdetect.com>
+
+	* Make.targets ($(BK_INSTALLDOCDIR)/doxygen/Doxyfile): Extract
+	static functions too.
+
+	* configure.in: Add a few more program checks.
+
+	* Make.targets ($(BK_INSTALLDOCDIR)/doxygen/Doxyfile): Do doxygen
+	stuff. 
+
 2001-10-04  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.targets (install): use ${INSTALL_INCFLAGS} for ${BK_PUBLIC_INC}

@@ -1,4 +1,4 @@
-# $Id: Make.targets,v 1.14 2001/11/06 21:26:06 seth Exp $
+# $Id: Make.targets,v 1.15 2001/11/06 22:15:50 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -168,7 +168,7 @@ subtags:: $(BK_SIMPLE_CSRC) $(BK_LARGE_CSRC) $(BK_LARGE_LIBCSRC) $(BK_LOCAL_CSRC
 	if [ "$^" ]; then $(TAGCMD) -a -o $(TAGOUT) $^; fi
 	$(BK_SUBDIRRULE)
 
-$(BK_INSTALLDOCDIR)/doxygen/Doxyfile:
+$(BK_INSTALLDOCDIR)/doxygen/Doxyfile: $(BK_INSTALLDOCDIR)/doxygen/.lastbuild
 	@	if [ "X$(BK_INSTALLDOCDIR)" == "X" ]; \
 		then \
 			echo "You must first set \$$BK_INSTALLDOCDIR in your make environment (most likely Make.preinstall)"; exit 1;\
@@ -176,7 +176,7 @@ $(BK_INSTALLDOCDIR)/doxygen/Doxyfile:
 	-@	$(MKDIR) $(BK_INSTALLDOCDIR)/doxygen 2>/dev/null; \
 		$(DOXYGEN) -g $(BK_INSTALLDOCDIR)/doxygen/Doxyfile;	 \
 		$(MV) $(BK_INSTALLDOCDIR)/doxygen/Doxyfile $(BK_INSTALLDOCDIR)/doxygen/Doxyfile.orig && \
-		${SED} -e 's%^PROJECT_NAME[ \t]*=%PROJECT_NAME="Poorly Named Project"%' -e "s%^OUTPUT_DIRECTORY[ \t]\*=%OUTPUT_DIRECTORY=${BK_INSTALLDOCDIR}/doxygen%" -e "s%^INPUT[ \t]*=%INPUT=${BK_REALTOP}%" -e 's%^FILE_PATTERNS[ \t]*=%FILE_PATTERNS= \*.[chyls]%' -e 's%^RECURSIVE[ \t]*=[ \t]*NO%RECURSIVE=YES%' -e 's%^EXTRACT_STATIC[ \t]*=[ \t]*NO%EXTRACT_STATIC=YES%' < ${BK_INSTALLDOCDIR}/doxygen/Doxyfile.orig > ${BK_INSTALLDOCDIR}/doxygen/Doxyfile  && \
+		${SED} -e "s%^PROJECT_NAME[ \t]*=%PROJECT_NAME=${BK_PKGNAME}%" -e "s%^OUTPUT_DIRECTORY[ \t]\*=%OUTPUT_DIRECTORY=${BK_INSTALLDOCDIR}/doxygen%" -e "s%^INPUT[ \t]*=%INPUT=${BK_REALTOP}%" -e 's%^FILE_PATTERNS[ \t]*=%FILE_PATTERNS= \*.[chyls]%' -e 's%^RECURSIVE[ \t]*=[ \t]*NO%RECURSIVE=YES%' -e 's%^EXTRACT_STATIC[ \t]*=[ \t]*NO%EXTRACT_STATIC=YES%'< ${BK_INSTALLDOCDIR}/doxygen/Doxyfile.orig > ${BK_INSTALLDOCDIR}/doxygen/Doxyfile  && \
 		$(ECHO) "I have created ${BK_INSTALLDOCDIR}/doxygen/Doxyfile and attempted to give it some sane values. You should verify these" \
 
 doxygen: $(BK_INSTALLDOCDIR)/doxygen/Doxyfile
@@ -185,7 +185,9 @@ doxygen: $(BK_INSTALLDOCDIR)/doxygen/Doxyfile
 		$(DOXYGEN) ./Doxyfile > .lastbuild 2>&1
 
 viewdox: doxygen
-	-@ netscape $(BK_INSTALLDOCDIR)/doxygen/html/index.html
+	-@ 	$(ECHO) "Starting $(BROWSER)...." && \
+	 	$(BROWSER) $(BK_INSTALLDOCDIR)/doxygen/html/index.html
+
 #
 # Prevent targets from being files
 #

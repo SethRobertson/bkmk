@@ -1,4 +1,4 @@
-# $Id: Make.variables,v 1.22 2001/11/06 00:24:44 jtt Exp $
+# $Id: Make.variables,v 1.23 2001/11/06 22:15:50 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -143,11 +143,7 @@ ETAGS=etags
 
 
 ######################################################################
-# Doxygen XXX autoconf this
-DOXYGEN=doxygen
-SED=sed
-MV=mv
-ECHO=echo
+# This is always built in to the shell`
 CD=cd
 
 ######################################################################
