@@ -1143,6 +1143,11 @@ compiler."
 
       -pthread)
 	pthread=yes
+	arg=-pthread
+	linker_flags="$linker_flags $arg"
+	compiler_flags="$compiler_flags $arg"
+	compile_command="$compile_command $arg"
+	finalize_command="$finalize_command $arg"
 	continue
 	;;
 
@@ -2904,21 +2909,15 @@ EOF
 	  fi
 	fi
 
-	if test "$pthread" = yes; then
-	  eval flag=\"-pthread\"
-	  linker_flags="$linker_flags $flag"
-	  case $host in
-	  *-*-openbsd* | *-*-freebsd*)
+	case $host in
+	*-*-openbsd* | *-*-freebsd*)
+	  if test "$pthread" = yes; then
 	    deplibs="$deplibs -lc_r"
-	    ;;
-	  esac
-	else
-	  case $host in
-	  *-*-openbsd* | *-*-freebsd*)
+	  else
 	    deplibs="$deplibs -lc"
-	    ;;
-	  esac
-	fi
+	  fi
+	  ;;
+	esac
 
 	if test "$thread_safe" = yes && test -n "$thread_safe_flag_spec"; then
 	  eval flag=\"$thread_safe_flag_spec\"
