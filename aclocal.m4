@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.13 2002/10/09 23:39:08 jtt Exp $
+# $Id: aclocal.m4,v 1.14 2002/10/10 17:52:45 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -94,26 +94,29 @@ main(int argc, char **argv)
 changequote(, )dnl
   char buf[2048];
 changequote([, ])dnl
+  int ret;
 
-  if ((s = socket(PF_INET, SOCK_STREAM, 0)) < 0)
-    exit(0);
-  
+  // <TRICKY> This program is expected to return a value, so "0" mean *failure* </TRICKY>
+
   port = 40000;
   sin.sin_family = AF_INET;
-  inet_aton("127.0.0.1", &sin.sin_addr);
+  sin.sin_addr.s_addr = INADDR_ANY;
 
-  while (1)
+ do	
   {
     port++;
     sin.sin_port = htons(port);
-    if (bind(s, (struct sockaddr *)(&sin), sizeof(sin)) < 0)
-      break;
 
-    if (port == 0xffff)
+    if ((s = socket(PF_INET, SOCK_STREAM, 0)) < 0)
       exit(0);
-  }
 
-  close(s);
+    ret = bind(s, (struct sockaddr *)(&sin), sizeof(sin));
+    
+    close(s);
+
+    if ((port == 0xffff) && (ret == -1))
+      exit(0);
+  } while (ret < 0);
 
   // Located an available, unbound port
   if ((s = socket(PF_INET, SOCK_STREAM, 0)) < 0)

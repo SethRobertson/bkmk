@@ -10421,26 +10421,29 @@ main(int argc, char **argv)
   unsigned short port;
   struct sockaddr_in sin;
   char buf[2048];
+  int ret;
 
-  if ((s = socket(PF_INET, SOCK_STREAM, 0)) < 0)
-    exit(0);
+  // <TRICKY> This program is expected to return a value, so "0" mean *failure* </TRICKY>
 
   port = 40000;
   sin.sin_family = AF_INET;
-  inet_aton("127.0.0.1", &sin.sin_addr);
+  sin.sin_addr.s_addr = INADDR_ANY;
 
-  while (1)
+ do
   {
     port++;
     sin.sin_port = htons(port);
-    if (bind(s, (struct sockaddr *)(&sin), sizeof(sin)) < 0)
-      break;
 
-    if (port == 0xffff)
+    if ((s = socket(PF_INET, SOCK_STREAM, 0)) < 0)
       exit(0);
-  }
 
-  close(s);
+    ret = bind(s, (struct sockaddr *)(&sin), sizeof(sin));
+
+    close(s);
+
+    if ((port == 0xffff) && (ret == -1))
+      exit(0);
+  } while (ret < 0);
 
   // Located an available, unbound port
   if ((s = socket(PF_INET, SOCK_STREAM, 0)) < 0)
@@ -10456,15 +10459,15 @@ main(int argc, char **argv)
 }
 _ACEOF
 rm -f conftest$ac_exeext
-if { (eval echo "$as_me:10459: \"$ac_link\"") >&5
+if { (eval echo "$as_me:10462: \"$ac_link\"") >&5
   (eval $ac_link) 2>&5
   ac_status=$?
-  echo "$as_me:10462: \$? = $ac_status" >&5
+  echo "$as_me:10465: \$? = $ac_status" >&5
   (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
-  { (eval echo "$as_me:10464: \"$ac_try\"") >&5
+  { (eval echo "$as_me:10467: \"$ac_try\"") >&5
   (eval $ac_try) 2>&5
   ac_status=$?
-  echo "$as_me:10467: \$? = $ac_status" >&5
+  echo "$as_me:10470: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
   :
 else
@@ -10476,7 +10479,7 @@ fi
 rm -f core core.* *.core conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
 fi
 fi
-echo "$as_me:10479: result: $ac_cv_second_connect_errno" >&5
+echo "$as_me:10482: result: $ac_cv_second_connect_errno" >&5
 echo "${ECHO_T}$ac_cv_second_connect_errno" >&6
 if test "X$ac_cv_second_connect_errno" != "X"
 then
@@ -10569,7 +10572,7 @@ DEFS=-DHAVE_CONFIG_H
 : ${CONFIG_STATUS=./config.status}
 ac_clean_files_save=$ac_clean_files
 ac_clean_files="$ac_clean_files $CONFIG_STATUS"
-{ echo "$as_me:10572: creating $CONFIG_STATUS" >&5
+{ echo "$as_me:10575: creating $CONFIG_STATUS" >&5
 echo "$as_me: creating $CONFIG_STATUS" >&6;}
 cat >$CONFIG_STATUS <<_ACEOF
 #! $SHELL
@@ -10747,7 +10750,7 @@ cat >>$CONFIG_STATUS <<\EOF
     echo "$ac_cs_version"; exit 0 ;;
   --he | --h)
     # Conflict between --help and --header
-    { { echo "$as_me:10750: error: ambiguous option: $1
+    { { echo "$as_me:10753: error: ambiguous option: $1
 Try \`$0 --help' for more information." >&5
 echo "$as_me: error: ambiguous option: $1
 Try \`$0 --help' for more information." >&2;}
@@ -10766,7 +10769,7 @@ Try \`$0 --help' for more information." >&2;}
     ac_need_defaults=false;;
 
   # This is an error.
-  -*) { { echo "$as_me:10769: error: unrecognized option: $1
+  -*) { { echo "$as_me:10772: error: unrecognized option: $1
 Try \`$0 --help' for more information." >&5
 echo "$as_me: error: unrecognized option: $1
 Try \`$0 --help' for more information." >&2;}
@@ -10803,7 +10806,7 @@ do
   # Handling of arguments.
   "Make.config" ) CONFIG_FILES="$CONFIG_FILES Make.config" ;;
   "libbk_autoconf.h" ) CONFIG_HEADERS="$CONFIG_HEADERS libbk_autoconf.h" ;;
-  *) { { echo "$as_me:10806: error: invalid argument: $ac_config_target" >&5
+  *) { { echo "$as_me:10809: error: invalid argument: $ac_config_target" >&5
 echo "$as_me: error: invalid argument: $ac_config_target" >&2;}
    { (exit 1); exit 1; }; };;
   esac
@@ -11065,7 +11068,7 @@ done; }
   esac
 
   if test x"$ac_file" != x-; then
-    { echo "$as_me:11068: creating $ac_file" >&5
+    { echo "$as_me:11071: creating $ac_file" >&5
 echo "$as_me: creating $ac_file" >&6;}
     rm -f "$ac_file"
   fi
@@ -11083,7 +11086,7 @@ echo "$as_me: creating $ac_file" >&6;}
       -) echo $tmp/stdin ;;
       [\\/$]*)
          # Absolute (can't be DOS-style, as IFS=:)
-         test -f "$f" || { { echo "$as_me:11086: error: cannot find input file: $f" >&5
+         test -f "$f" || { { echo "$as_me:11089: error: cannot find input file: $f" >&5
 echo "$as_me: error: cannot find input file: $f" >&2;}
    { (exit 1); exit 1; }; }
          echo $f;;
@@ -11096,7 +11099,7 @@ echo "$as_me: error: cannot find input file: $f" >&2;}
            echo $srcdir/$f
          else
            # /dev/null tree
-           { { echo "$as_me:11099: error: cannot find input file: $f" >&5
+           { { echo "$as_me:11102: error: cannot find input file: $f" >&5
 echo "$as_me: error: cannot find input file: $f" >&2;}
    { (exit 1); exit 1; }; }
          fi;;
@@ -11157,7 +11160,7 @@ for ac_file in : $CONFIG_HEADERS; do test "x$ac_file" = x: && continue
   * )   ac_file_in=$ac_file.in ;;
   esac
 
-  test x"$ac_file" != x- && { echo "$as_me:11160: creating $ac_file" >&5
+  test x"$ac_file" != x- && { echo "$as_me:11163: creating $ac_file" >&5
 echo "$as_me: creating $ac_file" >&6;}
 
   # First look for the input files in the build tree, otherwise in the
@@ -11168,7 +11171,7 @@ echo "$as_me: creating $ac_file" >&6;}
       -) echo $tmp/stdin ;;
       [\\/$]*)
          # Absolute (can't be DOS-style, as IFS=:)
-         test -f "$f" || { { echo "$as_me:11171: error: cannot find input file: $f" >&5
+         test -f "$f" || { { echo "$as_me:11174: error: cannot find input file: $f" >&5
 echo "$as_me: error: cannot find input file: $f" >&2;}
    { (exit 1); exit 1; }; }
          echo $f;;
@@ -11181,7 +11184,7 @@ echo "$as_me: error: cannot find input file: $f" >&2;}
            echo $srcdir/$f
          else
            # /dev/null tree
-           { { echo "$as_me:11184: error: cannot find input file: $f" >&5
+           { { echo "$as_me:11187: error: cannot find input file: $f" >&5
 echo "$as_me: error: cannot find input file: $f" >&2;}
    { (exit 1); exit 1; }; }
          fi;;
@@ -11298,7 +11301,7 @@ cat >>$CONFIG_STATUS <<\EOF
   rm -f $tmp/in
   if test x"$ac_file" != x-; then
     if cmp -s $ac_file $tmp/config.h 2>/dev/null; then
-      { echo "$as_me:11301: $ac_file is unchanged" >&5
+      { echo "$as_me:11304: $ac_file is unchanged" >&5
 echo "$as_me: $ac_file is unchanged" >&6;}
     else
       ac_dir=`$as_expr X"$ac_file" : 'X\(.*[^/]\)//*[^/][^/]*/*$' \| \
