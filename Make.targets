@@ -1,4 +1,4 @@
-# $Id: Make.targets,v 1.7 2001/06/18 22:41:46 seth Exp $
+# $Id: Make.targets,v 1.8 2001/07/05 15:19:11 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -69,10 +69,13 @@ preprocess:: $(patsubst %.c,%.i,$(BK_SIMPLE_CSRC) $(BK_LARGE_CSRC) $(BK_LARGE_LI
 nukedepend::
 	> .depend
 
+ifneq ($(strip $(BK_SIMPLE_CSRC) $(BK_LARGE_CSRC) $(BK_LARGE_LIBCSRC) $(BK_LOCAL_CSRC) $(BK_LOCAL_OTHERDEPS)),)
 depend:: nukedepend
-
 depend:: $(BK_SIMPLE_CSRC) $(BK_LARGE_CSRC) $(BK_LARGE_LIBCSRC) $(BK_LOCAL_CSRC) $(BK_LOCAL_OTHERDEPS)
 	$(MKDEP) $^ >> .depend
+endif # We Have Source
+
+depend::
 	$(BK_SUBDIRRULE)
 
 

@@ -1,4 +1,4 @@
-# $Id: Make.variables,v 1.13 2001/06/20 18:19:17 seth Exp $
+# $Id: Make.variables,v 1.14 2001/07/05 15:19:11 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -44,10 +44,10 @@ _BK_MAN8=$(filter %.8,$(BK_MAN))
 #
 # Standard commands
 #
-RRM:=$(RM_CONFIG) -rf
-RM:=$(RM_CONFIG) -f
-MKDEP:=$(CPP) -M $(CPPFLAGS)
-MKDIR:=$(MKDIR_CONFIG) -p
+RRM=$(RM_CONFIG) -rf
+RM=$(RM_CONFIG) -f
+MKDEP=$(CPP) -M $(CPPFLAGS)
+MKDIR=$(MKDIR_CONFIG) -p
 
 # Install (GNU or BSD)
 INSTALL:=$(INSTALL) -c
@@ -94,10 +94,10 @@ endif # NO_STDBKCCSTUFF
 # C
 CC_normal=$(CC_CONFIG) $(CCOPTS)
 CC_strict=$(CXX_CONFIG) $(CCXOPTS)
-CC=$(CC_normal)
+CC=$(CC_strict)
 CXX=$(CXX_CONFIG) $(CXXOPTS)
 ifeq ($(CC_CONFIG),gcc)
-COMPILER_DEBUG=-W -Wall -Wpointer-arith -Wno-unused -Wno-sign-compare $(COMPILER_DEBUG_ERROR)
+COMPILER_DEBUG=-W -Wchar-subscripts -Wcomment -Wformat -Wimplicit -Wmain -Wmultichar -Wreturn-type -Wswitch -Wtrigraphs -Wno-unused -Wuninitialized -Wshadow -Wpointer-arith $(COMPILER_DEBUG_ERROR)
 COMPILER_DEBUG_ERROR=-Werror
 COPTDEBUG=-g -O $(COMPILER_DEBUG)
 endif # CC is gcc

@@ -1,3 +1,8 @@
+2001-07-05  Seth Robertson  <seth@yeah.baka.org>
+
+	* Make.variables (MKDEP): Remove := immediate assignment to allow
+	deferred configuration to work correctly.
+
 2001-06-20  Seth Robertson  <seth@yeah.baka.org>
 
 	* Make.bkvariables: Move autoconfigure stuff into Make.bkvariables which
