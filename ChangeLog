@@ -1,3 +1,8 @@
+2003-11-21  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.targets (etags, ctags): '-quotes deferred `-quotes; use "-quotes
+	[immediate eval of `/bin/pwd` for awb/TAGS, not TAGS in every dir]
+
 2003-11-13  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.GNUmakefile, Make.bkvariables, Make.targets: quote '$(FOO)'
