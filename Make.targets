@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.targets,v 1.101 2005/01/07 20:25:03 jtt Exp $
+# $Id: Make.targets,v 1.102 2005/01/11 21:52:06 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -177,7 +177,7 @@ depend::
 #
 ifneq ($(strip $(PKGSUBDIR)),)
 build::
-	-d=BUILD/$(BK_ARCHNAME); (ls ./Make*; find $(BK_ALL_SUBDIR) -name Make\* -print) | while read f; do mkdir -p $$d/`dirname $$f`; ln -s $(PWD)/$$f $$d/$$f; done
+	-d=BUILD/$(BK_ARCHNAME); (ls ./Make*; $(FIND) $(BK_ALL_SUBDIR) -name Make\* -print) | while read f; do $(MKDIR) $$d/`dirname $$f`; $(LN_S) $(PWD)/$$f $$d/$$f; done
 	@echo "To compile: cd BUILD/$(BK_ARCHNAME) and type make"
 endif # PKGSUBDIR
 
@@ -394,8 +394,8 @@ endif # _BK_MAN8
 endif # BK_INSTALLMANDIR
 ifneq ($(strip $(BK_REPLICATE)),)
 	$(MKDIR) $(BK_REPLICATEDIR)
-	$(TAR) cf - $(BK_REPLICATE) | (cd $(BK_REPLICATEDIR); tar xf -)
-	$(RM) $(BK_REPLICATEDIR)/Make{file,.include,.preinclude}
+	$(TAR) cf - $(addprefix --exclude ,$(BK_EXCLUDE)) $(BK_REPLICATE) | \
+	 (cd $(BK_REPLICATEDIR); umask 02; $(TAR) xf -)
 endif # BK_REPLICATE
 
 #
@@ -437,11 +437,11 @@ xref::
 	@echo "// BEGIN BK-GEN: $(PWD)" >> $(USERXREFRC); \
 	echo "[$(PWD):$(ALTPWD):`/bin/pwd`]" >> $(USERXREFRC); \
 	echo "// dynamic listing of files to include" >> $(USERXREFRC); \
-	echo "\`find $(PWD)/ -type f \( -name \*.[chyls] -o -name \*.java \) -not \( -path \*$(BK_JAVADIR)\* -o -path \*$$(basename $(BK_INSTALLBASE))\* \)\`" >> $(USERXREFRC); \
+	echo "\`$(FIND) $(PWD)/ -type f \( -name \*.[chyls] -o -name \*.java \) -not \( -path \*$(BK_JAVADIR)\* -o -path \*$$(basename $(BK_INSTALLBASE))\* \)\`" >> $(USERXREFRC); \
 	echo "-refs $(PWD)/.xrefs" >> $(USERXREFRC); \
 	echo "-refnum=100" >> $(USERXREFRC); \
 	echo "// automatically generated include directories" >> $(USERXREFRC); \
-	echo `( for f in $$(find $(PWD)/ -type f -name \*.h -not -path \*$$(basename $(BK_INSTALLBASE))\*); do echo "-I $$(dirname $$f)"; done ) | sort -u` >> $(USERXREFRC); \
+	echo `( for f in $$($(FIND) $(PWD)/ -type f -name \*.h -not -path \*$$(basename $(BK_INSTALLBASE))\*); do echo "-I $$(dirname $$f)"; done ) | sort -u` >> $(USERXREFRC); \
 	echo "// END BK-GEN: $(PWD)" >> $(USERXREFRC);
 	@echo "$(XREF) -p $(PWD)";
 	@$(XREF) -p $(PWD) > /dev/null 2>&1

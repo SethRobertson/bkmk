@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.GNUmakefile,v 1.31 2005/01/07 17:41:55 jtt Exp $
+# $Id: Make.GNUmakefile,v 1.32 2005/01/11 21:52:06 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -130,7 +130,7 @@ endif
 	$(CONFIGCMD) &&							      \
 	if [ -n "$$DESTDIR" ]; then					      \
 	  echo DESTDIR=$$DESTDIR					      \
-	   | $(TEE) -a `find . -name Makefile -print` >/dev/null;	      \
+	   | $(TEE) -a `$(FIND) . -name Makefile -print` >/dev/null;	      \
 	fi
 ifneq ($(strip $(WANT_SUBDIRBUILD)),false)
 	-@$(MAKE) -f $(ARCH)/Makefile clean 2>/dev/null
