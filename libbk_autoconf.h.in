@@ -1,5 +1,5 @@
 /*				-*- C -*-
- * $Id: libbk_autoconf.h.in,v 1.45 2003/06/25 15:32:38 brian Exp $
+ * $Id: libbk_autoconf.h.in,v 1.46 2003/09/19 16:42:23 dupuy Exp $
  *
  * ++Copyright LIBBK++
  *
@@ -79,6 +79,7 @@
 #undef HAVE_STRPTIME
 #undef HAVE_GMTIME_R
 #undef HAVE_TIMEGM
+#undef HAVE_GETPWUID_R
 #undef HAVE_STRFTIME
 #undef HAVE_GETTEXT
 #undef MKTIME_HAS_BUGS

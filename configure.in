@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.102 2003/08/22 19:53:00 dupuy Exp $
+dnl $Id: configure.in,v 1.103 2003/09/19 16:42:23 dupuy Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.102 $)dnl
+AC_REVISION($Revision: 1.103 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
@@ -151,6 +151,7 @@ AC_SEARCH_LIBS([gethostbyname2],[resolv],AC_DEFINE(HAVE_GETHOSTBYNAME2))
 AC_CHECK_FUNCS(isinf ntohll)
 AC_CHECK_FUNCS(memmem memrchr setenv strndup strnlen strverscmp strsignal)
 AC_CHECK_FUNCS(strptime gmtime_r timegm)
+AC_CHECK_FUNCS(getpwuid_r)
 AC_CHECK_FUNCS(log2)
 AC_FUNC_STRFTIME
 AC_FUNC_GETTEXT
