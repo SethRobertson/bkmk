@@ -2,6 +2,24 @@ OS_INCS=-I/usr/local/include
 OS_LDS=-L/usr/local/lib
 OS_LIBS=-lintl
 
+
 # -avoid-version causes OpenBSD ld to use archives instead of shared objects
 LT_LDFLAGS=--mode link
 # (we don't need to override LT_M_LDFLAGS since ld doesn't search for modules)
+
+
+# the following works around a gcc bug at 2.95.3 where using both -O3 and -fPIC
+# creates debugging references to local symbols that have been optimized away
+# which causes the assembler to barf
+
+# if any of debugging, shared libs, or optimization are turned off, ignore this
+ifneq ($(NO_DEBUG),true)
+ifneq ($(WANT_LIBTOOL),false)
+ifneq ($(NO_OPT),true)
+ifneq ($(USING_INSURE),true)
+# this really should be controlled by several independent make variables
+override COPTDEBUG+=-O2 -mcpu=i686 -march=i686 -fforce-addr -fomit-frame-pointer -funroll-loops -frerun-cse-after-loop -frerun-loop-opt -malign-functions=4
+endif
+endif
+endif
+endif
