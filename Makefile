@@ -29,6 +29,9 @@ clean nuke:
 	rm -f $(OSFILE) confdefs.h config.cache config.status config.log \
 	 $(filter-out Make%,$(GENFILES)) libtool .timestamp
 
+nuke:
+	rm -f $(GENFILES)
+
 %.status: ./%ure
 	./configure $(CONFIGURE_ARGS)
 	@-chmod +x $(filter %.sh %.pl,$(GENFILES))
