@@ -1,11 +1,7 @@
-2002-05-15  Alexander Dupuy  <dupuy@sysdetect.com>
-
-	* Make.targets (install): install feature sets and models
-
 2002-05-13  James Tanis  <jtt@saint.sysdetect.com>
 
 	* Make.production ($(filter %.la,$(BK_LARGE_LIB))): Need to create
-	install directory before libtool tries to install into it.o
+	install directory before libtool tries to install into it.
 	($(BK_LARGE_MODULE)): Ditto.
 
 2002-05-13  Alexander Dupuy  <dupuy@sysdetect.com>
