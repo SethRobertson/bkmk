@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.117 2004/07/30 19:32:32 jtt Exp $
+dnl $Id: configure.in,v 1.118 2004/12/24 00:31:38 dupuy Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.117 $)dnl
+AC_REVISION($Revision: 1.118 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
@@ -184,7 +184,7 @@ AC_SEARCH_LIBS([openpty],[c util],
 
 AC_CHECK_FUNCS(isinf ntohll)
 AC_CHECK_FUNCS(memmem memrchr setenv strndup strnlen strverscmp strsignal)
-AC_CHECK_FUNCS(strptime gmtime_r timegm)
+AC_CHECK_FUNCS(strptime gmtime_r localtime_r timegm)
 AC_CHECK_FUNCS(getpwuid_r)
 
 AC_CHECK_FUNCS(log2)

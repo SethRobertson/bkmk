@@ -1,3 +1,11 @@
+2004-12-23  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* configure.in: check for localtime_r as well
+
+2004-11-29  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* os-name.sh: fedora doesn't call itself linux for some reason...
+
 2004-10-14  Seth Robertson  <seth@startide.sysdetect.com>
 
 	* Make.variables (CC_normal|strict): Set via $(strip)
