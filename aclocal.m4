@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.23 2002/10/21 16:02:25 jtt Exp $
+# $Id: aclocal.m4,v 1.24 2002/10/22 21:06:24 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -96,6 +96,42 @@ then
 	AC_DEFINE(HAVE_ISINF)
 fi
 ])
+
+
+# BK_C_SIG_BRAINDAMAGE
+# --------
+# 
+# Check if gcc is brain dead in how it handles passing SIG_IGN/DFLT as functions
+#
+#
+AC_DEFUN([BK_C_SIG_BRAINDAMAGE],dnl
+[
+if test $ac_cv_prog_ac_ct_CC = gcc; then 
+
+CFLAGS_HOLD=$CFLAGS
+CFLAGS="-Werror -Wstrict-prototypes $CFLAGS"
+
+AC_CACHE_CHECK([if $ac_cv_prog_ac_ct_CC is smart about passing SIG_IGN/DFLT as functions], bk_c_sig_braindamage,
+ AC_TRY_COMPILE(
+[
+#include <signal.h>
+
+int main(void);
+extern void sub(void(*handler)(void));
+
+],[sub((void *)SIG_IGN)],
+[ bk_c_sig_braindamage=yes; ],[ bk_c_sig_braindamage=no; ]))
+if test "$bk_c_sig_braindamage" = "no"
+then
+	BK_NO_STRICT_PROTOTYPES=true
+	AC_SUBST(BK_NO_STRICT_PROTOTYPES)
+	AC_MSG_WARN([Turning off -Wstrict-prototypes to avoid bug in this gcc version])
+fi
+
+CFLAGS=$HOLD_CFLAGS
+fi
+])
+
 
 # BK_C_OVERZEALOUS_CHAR_SUBSCRIPTS
 # --------------------------------
@@ -3644,8 +3680,8 @@ fi
 # AC_PROG_LD - find the path to the GNU or non-GNU linker
 AC_DEFUN([AC_PROG_LD],
 [AC_ARG_WITH(gnu-ld,
-[  --with-gnu-ld           assume the C compiler uses GNU ld [default=no]],
-test "$withval" = no || with_gnu_ld=yes, with_gnu_ld=no)
+[  --without-gnu-ld           assume the C compiler uses GNU ld [default=no]],
+test "$withval" = no || with_gnu_ld=no, with_gnu_ld=yes)
 AC_REQUIRE([AC_PROG_CC])dnl
 AC_REQUIRE([AC_CANONICAL_HOST])dnl
 AC_REQUIRE([AC_CANONICAL_BUILD])dnl

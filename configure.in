@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.54 2002/10/21 16:02:25 jtt Exp $
+dnl $Id: configure.in,v 1.55 2002/10/22 21:06:25 jtt Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.54 $)dnl
+AC_REVISION($Revision: 1.55 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
@@ -55,6 +55,7 @@ AC_TRY_COMPILE(,,BK_SPECIAL_DEBUG="$CFLAGS",BK_SPECIAL_DEBUG="-W")
 AC_SUBST(BK_SPECIAL_DEBUG)
 CFLAGS="$SAVE_CFLAGS"
 echo "${ECHO_T}$BK_SPECIAL_DEBUG" >&6
+BK_C_SIG_BRAINDAMAGE
 
 AC_C_BIGENDIAN
 AC_PROG_INSTALL
@@ -98,6 +99,17 @@ if test $ac_cv_func_working_mktime = no; then
 fi
 AC_TIME_MAX(BK_TIME_MAX)
 
+AC_CHECK_TYPE(u_int8_t, uint8_t)
+AC_CHECK_TYPE(u_int16_t, uint16_t)
+AC_CHECK_TYPE(u_int32_t, uint32_t)
+AC_CHECK_TYPE(u_int64_t, uint64_t)
+
+AC_SEARCH_LIBS([aioread64],[aio])
+AC_SEARCH_LIBS([socket],[socket])
+AC_SEARCH_LIBS([gethostbyname],[resolv nsl])
+AC_SEARCH_LIBS([inet_aton],[resolv nsl])
+AC_SEARCH_LIBS([gethostbyname2],[resolv],AC_DEFINE(HAVE_GETHOSTBYNAME2))
+
 AC_CHECK_FUNCS(ntohll memmem memrchr setenv strndup strnlen strverscmp)
 AC_CHECK_FUNCS(strptime gmtime_r timegm)
 AC_GMTIME_R_PROTOTYPE
@@ -105,16 +117,6 @@ AC_FUNC_STRFTIME
 AC_FUNC_GETTEXT
 AC_STACKDIRECTION
 AC_FUNC_ALLOCA
-
-AC_CHECK_TYPE(u_int8_t, uint8_t)
-AC_CHECK_TYPE(u_int16_t, uint16_t)
-AC_CHECK_TYPE(u_int32_t, uint32_t)
-AC_CHECK_TYPE(u_int64_t, uint64_t)
-
-AC_SEARCH_LIBS([socket],[socket])
-AC_SEARCH_LIBS([gethostbyname],[resolv nsl])
-AC_SEARCH_LIBS([inet_aton],[resolv nsl])
-AC_SEARCH_LIBS([gethostbyname2],[resolv],AC_DEFINE(HAVE_GETHOSTBYNAME2))
 
 AC_SECOND_CONNECT_TO_REFUSED_PORT(BK_SECOND_REFUSED_CONNECT_ERRNO)
 

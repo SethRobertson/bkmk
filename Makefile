@@ -28,9 +28,13 @@ clean nuke:
 
 %.status: ./%ure
 	./configure --disable-fast-install
-	@echo "$(OSNAME)" > $(OSFILE) && touch .timestamp
+	echo "$(OSNAME)" > $(OSFILE) && touch .timestamp
 
 .timestamp: *.in config.status
 	@./config.status && touch $@
 
 config.status: acaux/config.* acaux/ltmain.sh
+
+
+jtt:
+	@echo "$(OSNAME)"
