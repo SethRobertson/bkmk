@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.GNUmakefile,v 1.30 2005/01/07 03:38:24 jtt Exp $
+# $Id: Make.GNUmakefile,v 1.31 2005/01/07 17:41:55 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -94,12 +94,12 @@ distclean distclean-generic distclean-am::
 	  || test -f Makefile && $(MAKE) -k -f Makefile $@
 
 ifneq ($(strip $(WANT_SUBDIRBUILD)),false)
-CONFIGCMD=cd $(ARCH) && ../configure --prefix=$$INSTBASE $(CACHE_FILE) $(BKMK_CONFIGOPTS) 
+CONFIGCMD=cd $(ARCH) && ../configure --prefix=$$INSTBASE $(CACHE_FILE) $(CONFIGOPTS) 
 ifneq ($(WANT_CONFIG_CACHE),false)
 CACHE_FILE=--cache-file=../$(BKMKDIR)/config.cache
 endif
 else
-CONFIGCMD=./configure --prefix=$$INSTBASE $(CACHE_FILE) $(BKMK_CONFIGOPTS)
+CONFIGCMD=./configure --prefix=$$INSTBASE $(CACHE_FILE) $(CONFIGOPTS)
 ifneq ($(WANT_CONFIG_CACHE),false)
 CACHE_FILE=--cache-file=$(BKMKDIR)/config.cache
 endif
