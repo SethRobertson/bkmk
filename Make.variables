@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.76 2002/07/14 03:41:24 jtt Exp $
+# $Id: Make.variables,v 1.77 2002/07/15 18:04:21 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -229,11 +229,17 @@ ifeq ($(BK_USING_BOUNDS_CHECKING),true)
 ifeq ($(CC_CONFIG),gcc)
 CC_CONFIG=$(BGCC)
 CCOPTS+=-fbounds-checking
+COMPILER_NAME=gcc
 endif
 # NB: At SYSD, this does not yet work
 ifeq ($(CXX_CONFIG),g++)
 CXXOPTS+=-fbounds-checking
+COMPILER_NAME=gcc
 endif
+endif
+
+ifeq ($(CC_CONFIG),gcc)
+COMPILER_NAME=gcc
 endif
 
 # C
@@ -243,9 +249,15 @@ CC_strict=$(CXX_CONFIG) $(CXXOPTS)
 CC=$(CC_normal)
 CXX=$(CXX_CONFIG) $(CXXOPTS)
 
-ifeq ($(CC_CONFIG),gcc)
+ifeq ($(COMPILER_NAME),gcc)
 
-COMPILER_DEBUG+=-W -Wmissing-prototypes -Wstrict-prototypes -Wchar-subscripts -Wcomment -Wformat -Wimplicit -Wmain -Wmultichar -Wreturn-type -Wswitch -Wtrigraphs -Wno-unused -Wshadow -Wpointer-arith $(COMPILER_DEBUG_ERROR)
+# gcc options that bgcc understands and 
+COMPILER_DEBUG+=-Wmissing-prototypes -Wstrict-prototypes -Wchar-subscripts -Wcomment -Wformat -Wimplicit -Wmain -Wmultichar -Wswitch -Wtrigraphs -Wno-unused -Wshadow $(COMPILER_DEBUG_ERROR)
+
+# Options that only gcc understands (not bgcc). Eventually gcc and bgcc should be the same.
+ifeq ($(CC_CONFIG),gcc)
+COMPILER_DEBUG+=-W -Wreturn-type -Wpointer-arith 
+endif
 
 ifneq ($(NO_WERROR),true)
 COMPILER_DEBUG_ERROR=-Werror
@@ -271,7 +283,12 @@ COPTDEBUG+=-fomit-frame-pointer
 endif
 
 ifeq ($(BK_WANT_STATIC),true)
+ifeq ($(COMPILER_NAME),gcc)
 COPTDEBUG+=-static
+endif
+ifeq ($(COMPILER_NAME),CC)
+COPTDEBUG+=-Bstatic
+endif
 endif
 
 endif # CC is gcc
