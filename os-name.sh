@@ -1,5 +1,5 @@
 #! /bin/sh
-# $Id: os-name.sh,v 1.6 2004/02/26 07:58:53 seth Exp $
+# $Id: os-name.sh,v 1.7 2004/02/26 19:32:23 dupuy Exp $
 #
 # ++Copyright SYSDETECT++
 #
@@ -36,6 +36,9 @@ if [ -f /etc/debian_version ]; then
 elif [ -f /etc/slackware-version ]; then
   sed -e 's/^\([0-9]*.[0-9]*\).*/SlackwareLinux-\1/' /etc/slackware-version
   exit
+elif [ -f /etc/gentoo-release ]; then
+  sed -e '/^Gentoo /s/.* \([0-9][0-9.]*\)/GentooLinux-\1/' /etc/gentoo-release
+  exit
 fi
 
 for REL in /etc/*-release /etc/issue
@@ -45,13 +48,6 @@ do
      < $REL | grep Linux && exit
   fi
 done
-
-if [ -f /etc/gentoo-release ]
- then
-  sed -e 's/^\(Gentoo\).*version \([0-9][0-9.]*\)/\1-\2/' /etc/gentoo-release
-  exit
- fi
-
 
 echo Unknown`uname -s` `uname -r | sed -e 's/-.*//'` \
  | sed -e 's/ /-/' -e 's/ //g'
