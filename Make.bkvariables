@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.bkvariables,v 1.35 2002/09/28 20:36:54 seth Exp $
+# $Id: Make.bkvariables,v 1.36 2002/11/21 03:29:57 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -89,7 +89,8 @@ BK_DUMMY:=$(shell							      \
      rm -f config.cache config.status;					      \
      $(MAKE) -s config.status OSNAME=$(BK_OSNAME) OSFILE=$(BK_OSFILE); }; );  \
    ($$NEAT && cd $(GROUPTOP)/$(PKGTOP) && {				      \
-     echo -n 'Making neat (Remember to "$(MAKE) depend" afterwards)...';      \
+     eval `sed -n -e "s/=/='/" -e "/^ECHO_/s/.*/&'/p" < bkmk/Make.config` &&  \
+     echo $$ECHO_N 'Making neat (Remember to "$(MAKE) depend")...'$$ECHO_C;   \
      $(MAKE) neat >/dev/null;						      \
      echo "done"; echo; }; ); )	2>&1					      \
   | tee $(BK_TTY) )

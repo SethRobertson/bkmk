@@ -1,5 +1,7 @@
 2002-11-20  Alexander Dupuy  <dupuy@sysdetect.com>
 
+	* Make.bkvariables (BK_DUMMY): get correct echo args on arch change
+
 	* Makefile (autoconf): add autoconf target to run with -Wall
 
 	* configure.in: use AC_DEV_FD; AC_IN_ADDR_T instead of AC_INADDR_T
