@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.59 2002/02/22 19:24:02 jtt Exp $
+# $Id: Make.variables,v 1.60 2002/03/06 00:39:39 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -76,9 +76,9 @@ MKDIR=$(MKDIR_CONFIG) -p
 # Install (GNU or BSD)
 INSTALL_BINFLAGS=-p -m 775
 # install header files read-only to avoid editing them (and not originals)
-ifeq ($(strip $(findstring $(BK_OSTYPE),CYGWIN)),)
+ifeq ($(findstring CYGWIN,$(BK_OSNAME)),)
 INSTALL_INCFLAGS=-p -m 444
-else
+else # on CygWin, install -p on read-only files fails
 INSTALL_INCFLAGS=-m 444
 endif
 INSTALL_LIBFLAGS=$(INSTALL_OTHERFLAGS)

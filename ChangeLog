@@ -1,5 +1,7 @@
 2002-03-05  Alexander Dupuy  <dupuy@sysdetect.com>
 
+	* Make.variables (INSTALL_INCFLAGS) [CYGWIN]: don't use -p on r/o files
+
 	* Make.targets (install): indicate when libtool used for install lib
 
 2002-02-22  Alexander Dupuy  <dupuy@sysdetect.com>
