@@ -1,4 +1,4 @@
-# $Id: Make.targets,v 1.15 2001/11/06 22:15:50 jtt Exp $
+# $Id: Make.targets,v 1.16 2001/11/07 23:33:25 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -168,7 +168,7 @@ subtags:: $(BK_SIMPLE_CSRC) $(BK_LARGE_CSRC) $(BK_LARGE_LIBCSRC) $(BK_LOCAL_CSRC
 	if [ "$^" ]; then $(TAGCMD) -a -o $(TAGOUT) $^; fi
 	$(BK_SUBDIRRULE)
 
-$(BK_INSTALLDOCDIR)/doxygen/Doxyfile: $(BK_INSTALLDOCDIR)/doxygen/.lastbuild
+$(BK_INSTALLDOCDIR)/doxygen/Doxyfile:
 	@	if [ "X$(BK_INSTALLDOCDIR)" == "X" ]; \
 		then \
 			echo "You must first set \$$BK_INSTALLDOCDIR in your make environment (most likely Make.preinstall)"; exit 1;\
@@ -179,6 +179,13 @@ $(BK_INSTALLDOCDIR)/doxygen/Doxyfile: $(BK_INSTALLDOCDIR)/doxygen/.lastbuild
 		${SED} -e "s%^PROJECT_NAME[ \t]*=%PROJECT_NAME=${BK_PKGNAME}%" -e "s%^OUTPUT_DIRECTORY[ \t]\*=%OUTPUT_DIRECTORY=${BK_INSTALLDOCDIR}/doxygen%" -e "s%^INPUT[ \t]*=%INPUT=${BK_REALTOP}%" -e 's%^FILE_PATTERNS[ \t]*=%FILE_PATTERNS= \*.[chyls]%' -e 's%^RECURSIVE[ \t]*=[ \t]*NO%RECURSIVE=YES%' -e 's%^EXTRACT_STATIC[ \t]*=[ \t]*NO%EXTRACT_STATIC=YES%'< ${BK_INSTALLDOCDIR}/doxygen/Doxyfile.orig > ${BK_INSTALLDOCDIR}/doxygen/Doxyfile  && \
 		$(ECHO) "I have created ${BK_INSTALLDOCDIR}/doxygen/Doxyfile and attempted to give it some sane values. You should verify these" \
 
+# Since this target depends not just on its configuration file (Doxyfile)
+# but also on the *entire* source distribution which it covers, we just
+# rebuild the database each time (ie we never make a "doxygen" file do the
+# target "doxygen" is always out of date. If this gets to odious for words
+# then we can break the dependency of viewdox on doxygen and leave it up to
+# the user to type "make doxygen" from time to time in order to update his
+# database.
 doxygen: $(BK_INSTALLDOCDIR)/doxygen/Doxyfile
 	-@ $(ECHO) "Rebuilding oxygen database in $(BK_INSTALLDOCDIR)/doxygen" 
 	-@ 	$(CD) $(BK_INSTALLDOCDIR)/doxygen && \
