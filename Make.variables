@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.172 2003/10/08 04:26:16 dupuy Exp $
+# $Id: Make.variables,v 1.173 2003/10/08 21:06:22 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -352,7 +352,7 @@ ifneq ($(strip $(BK_USING_SSL)),false)
 GROUP_LIBS+= -lbkssl
 endif
 
-BK_LIBS+= -lbk -ldict -lfsma -lpqueue -lpopt $(LIBRESOLVER) $(BK_LIBM) $(COMPRESS_LIBS)
+BK_LIBS+= -lbkxml -lbk -ldict -lfsma -lpqueue -lpopt $(LIBRESOLVER) $(BK_LIBM) $(COMPRESS_LIBS)
 
 LT_LDLIBS+= $(AC_LIBS)
 
