@@ -1,5 +1,30 @@
 2002-01-04  Alexander Dupuy  <dupuy@sysdetect.com>
 
+	* Make.bkvariables (BK_DUMMY): don't bother with this for GNUmakefile
+	controlled 3rd party modules; use ${BKMKOSFILE}, ${MAKE}; let Makefile
+	generate the OS file if it runs configure
+	
+	* Make.include (BKMKOSFILE): file containing OS name
+
+	* Make.production (.user-variable%): suppress rule chaining
+
+	* Makefile (clean nuke): don't remove Make.config [was created anyhow]
+	(.timestamp): only run configure if config.status out of date/missing
+	[nuke, new configure script, different OS] and generate OS file here
+	
+	* Make.variables (INSTALL_LIBFLAGS): eliminate duplicate -p
+
+	* acaux/install-sh: implement -p option now that we depend on it
+
+2002-01-04  James Tanis  <jtt@stevedore.sysdetect.com>
+
+	* Make.bkvariables, Makefile, Make.targets: run configure when
+	things get out of date, not on all cvs udpates
+
+	* Make.variables: use -p in all installs
+
+2002-01-04  Alexander Dupuy  <dupuy@sysdetect.com>
+
 	* force: no longer needs to do anything; keep file to avoid errors
 
 	* Make.targets (install): deal with VPATH of .a dependencies,

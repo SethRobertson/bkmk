@@ -1,4 +1,5 @@
 .config_os_type
+.timestamp
 Make.config
 confdefs.h
 config.cache

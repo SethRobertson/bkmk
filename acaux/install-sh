@@ -48,6 +48,10 @@ while [ x"$1" != x ]; do
 	    shift
 	    continue;;
 
+	-p) instcmd="$cpprog -p"
+	    shift
+	    continue;;
+
 	-d) dir_arg=true
 	    shift
 	    continue;;

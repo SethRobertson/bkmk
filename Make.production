@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.production,v 1.24 2002/01/04 19:48:53 dupuy Exp $
+# $Id: Make.production,v 1.25 2002/01/05 00:26:37 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -22,6 +22,7 @@
 # (this is just a performance hack, but it helps)
 Make%: 
 .depen%:
+.user-variable%:
 
 #
 # Last-resort rule to make directories referenced in dependencies (must include
@@ -86,6 +87,13 @@ $(BK_LARGE_LIB): $(BK_LARGE_LIBOBJ)
 	  $(AR) $(ARFLAGS) $@ $^; \
 	fi
 	$(RANLIB) $@
+
+# This rule would attempt to force recompilation after running configure,
+# which might be helpful in some cases, but is not a complete solution
+# (imagine static archive libraries being partially updated) and is generally
+# not ready for prime time
+#$(BK_LARGE_OBJ) $(BK_LARGE_LIBOBJ): $(BKMKOSFILE)
+
 
 #
 # Java production
