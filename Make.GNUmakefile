@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.GNUmakefile,v 1.22 2003/09/29 23:15:37 jtt Exp $
+# $Id: Make.GNUmakefile,v 1.23 2003/10/03 21:14:58 lindauer Exp $
 #
 # ++Copyright LIBBK++
 #
