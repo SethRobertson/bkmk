@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.production,v 1.61 2003/07/24 22:50:18 dupuy Exp $
+# $Id: Make.production,v 1.62 2003/07/24 22:59:40 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -276,7 +276,7 @@ $(BK_JAVADIR)/%.MF: %.MF
 	   case $$CP in *.*) echo "Class-Path: $$CP" ;; esac;	 \
 	   echo 'Implementation-Title: $(BK_JAVA_PKGDOT)';	 \
 	   echo 'Implementation-Vendor: System Detection, Inc.'; \
-	   echo "Implementation-Version: `date +%Y-%m-%dT%H`";	 \
+	   echo "Implementation-Version: `date +%Y%m%d.%H%M`";	 \
 	   echo 'Specification-Vendor: System Detection, Inc.';	 \
 	   echo 'Specification-Version: 1.1';			 \
 	 } > $@T
