@@ -1,0 +1,20 @@
+# -*- makefile -*-
+#
+# $Id: Make.Linux-2.6-pre,v 1.1 2004/12/28 00:00:11 dupuy Exp $
+#
+# ++Copyright LIBBK++
+#
+# Copyright (c) 2003 The Authors. All rights reserved.
+#
+# This source code is licensed to you under the terms of the file
+# LICENSE.TXT in this release for further details.
+#
+# Mail <projectbaka@baka.org> for further information
+#
+# --Copyright LIBBK--
+#
+#
+# OS-specific Variables
+#
+
+OS_LIBS=-lutil 
