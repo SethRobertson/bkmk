@@ -3,12 +3,14 @@
 # <TODO>This script should be enhanced to maintain existing copyright dates,
 # as well as choice of Baka vs. SysD copyright notices</TODO>
 
+$YEAR = 1900 + (localtime time)[5];
+
 ######################################################################
 ## BAKA
 $BAKAHDR = <<EOF;
 #if !defined(lint)
 static const char libbk__rcsid[] = "\$Id\$";
-static const char libbk__copyright[] = "Copyright (c) 2002";
+static const char libbk__copyright[] = "Copyright (c) $YEAR";
 static const char libbk__contact[] = "<projectbaka\@baka.org>";
 #endif /* not lint */
 EOF
@@ -16,7 +18,7 @@ EOF
 $BAKAPROD = <<EOF;
 ++Copyright LIBBK++
 
-Copyright (c) 2002 The Authors. All rights reserved.
+Copyright (c) $YEAR The Authors. All rights reserved.
 
 This source code is licensed to you under the terms of the file
 LICENSE.TXT in this release for further details.
@@ -31,7 +33,7 @@ EOF
 $SYSDHDR = <<EOF;
 #if !defined(lint)
 static const char sysd__rcsid[] = "\$Id\$";
-static const char sysd__copyright[] = "Copyright (c) 2002 System Detection";
+static const char sysd__copyright[] = "Copyright (c) $YEAR System Detection";
 static const char sysd__contact[] = "System Detection <support\@sysd.com>";
 #endif /* not lint */
 EOF
@@ -39,7 +41,7 @@ EOF
 $SYSDPROD = <<EOF;
 ++Copyright SYSDETECT++
 
-Copyright (c) 2002 System Detection.  All rights reserved.
+Copyright (c) $YEAR System Detection.  All rights reserved.
 
 THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF SYSTEM DETECTION.
 The copyright notice above does not evidence any actual
