@@ -1,3 +1,7 @@
+2003-09-17  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.GNUmakefile (install-*): avoid installing three times
+
 2003-09-15  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Makefile (%.status): use configure cache
