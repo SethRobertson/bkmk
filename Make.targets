@@ -1,6 +1,6 @@
 # -*- makefile -*-
 # 
-# $Id: Make.targets,v 1.79 2003/04/17 21:40:08 dupuy Exp $
+# $Id: Make.targets,v 1.80 2003/04/23 22:37:54 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -172,14 +172,14 @@ endif # PKGSUBDIR
 #
 # Installation support
 #
-#ifneq ($(BK_NO_USER_SHARED_LIBS),true)
-#
-#install:: actual_install
-#
-#actual_install::
-#	$(BK_SUBDIRRULE)
-#
-#else
+ifeq ($(BK_ONE_PASS_INSTALL),true)
+
+install:: actual_install
+
+actual_install::
+	$(BK_SUBDIRRULE)
+
+else
 
 install:: install-first install-normal install-last
 
@@ -239,7 +239,7 @@ install-last:
 	    { ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; } \
 	  fi;								      \
 	done
-#endif
+endif
 
 ifeq ($(strip $(BK_WANT_JAVA)),false)
 BK_JAVA_JAR=

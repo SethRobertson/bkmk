@@ -1,3 +1,7 @@
+2003-04-23  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.targets (actual_install): BK_ONE_PASS_INSTALL support
+
 2003-04-18  James Tanis  <jtt@waimea.tanis.org>
 
 	* aclocal.m4: Test for socklen_t
