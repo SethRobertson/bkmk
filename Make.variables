@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.56 2002/02/07 22:31:09 jtt Exp $
+# $Id: Make.variables,v 1.57 2002/02/21 21:26:23 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -193,7 +193,7 @@ MATH_LIBS=-lm
 
 # BK issues
 ifneq ($(NO_STDBKCCSTUFF),true)
-BK_DEFINES= $(RESOLVER_DEFINES)
+BK_DEFINES+= $(RESOLVER_DEFINES)
 BK_INCS= $(RESOLVER_INCLUDES)
 BK_LDS= $(RESOLVER_LDS)
 BK_LIBS= -lbk -ldict -lfsma -lpq -lpopt $(LIBRESOLVER) $(MATH_LIBS)
@@ -213,8 +213,11 @@ COMPILER_DEBUG_ERROR=-Werror
 
 ifneq ($(NO_OPT),true)
 ifneq ($(USING_INSURE),true)
-#COPTDEBUG+=-O
+ifeq ($(BK_DEBUG_OPT), true)
+COPTDEBUG+=-O2
+else
 COPTDEBUG+=-O3 -mcpu=i686 -march=i686 -fforce-addr -funroll-loops -frerun-cse-after-loop -frerun-loop-opt -malign-functions=4
+endif
 # gcc doesn't support -Wuninitialized without -O. And if using insure++ you
 # get it anyway.
 COMPILER_DEBUG+=-Wuninitialized 
