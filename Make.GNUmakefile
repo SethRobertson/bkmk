@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.GNUmakefile,v 1.27 2003/11/14 02:42:29 dupuy Exp $
+# $Id: Make.GNUmakefile,v 1.28 2004/02/02 19:56:33 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -30,10 +30,11 @@ else
 CONFIGURED:=config.status
 endif
 
-include $(BKMKDIR)/Make.config
 include $(BKMKDIR)/Make.bkvariables
-include $(BKMKDIR)/Make.variables
 -include $(BKMKDIR)/Make.$(BK_OSNAME)-pre
+include $(BKMKDIR)/Make.config
+include $(BKMKDIR)/Make.override
+include $(BKMKDIR)/Make.variables
 -include $(BKMKDIR)/Make.$(BK_OSNAME)-post
 
 # make INSTBASE normalized absolute path

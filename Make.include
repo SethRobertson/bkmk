@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.include,v 1.32 2003/11/06 18:19:19 brian Exp $
+# $Id: Make.include,v 1.33 2004/02/02 19:56:33 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -33,97 +33,7 @@ endif
 -include $(BKMKDIR)/Make.$(BK_OSNAME)-pre
 include $(BKMKDIR)/Make.config
 
-#
-# User configuration (from .user-variables or command line)
-#
-ifneq ($(strip $(WANT_JAVA)),)
-BK_WANT_JAVA=$(WANT_JAVA)
-endif
-
-ifneq ($(strip $(WANT_C)),)
-BK_WANT_C=$(WANT_C)
- endif
-
-ifneq ($(strip $(WANT_LIBTOOL)),)
-BK_WANT_LIBTOOL=$(WANT_LIBTOOL)
-endif
-
-ifneq ($(strip $(WANT_STATIC)),)
-BK_WANT_STATIC=$(WANT_STATIC)
-endif
-
-ifneq ($(strip $(WANT_HELP)),)
-BK_WANT_HELP=$(WANT_HELP)
-else
-ifeq ($(JHINDEXER), $(FALSE))
-BK_WANT_HELP=false
-endif
-endif
-
-ifneq ($(strip $(WANT_NO_DEBUG)),)
-BK_NO_DEBUG=$(WANT_NO_DEBUG)
-endif
-
-ifneq ($(strip $(WANT_NO_OPT)),)
-BK_NO_OPT=$(WANT_NO_OPT)
-endif
-
-
-BK_USING_PTHREADS=false
-ifeq ($(HAVE_PTHREADS),true)
-ifneq ($(strip $(WANT_PTHREADS)),false)
-BK_USING_PTHREADS=true
-endif
-endif
-
-BK_USING_ORACLE=false
-ifeq ($(strip $(WANT_ORACLE)),true)
-ifeq ($(strip $(HAVE_ORACLE)),true)
-ifeq ($(strip $(BK_USING_PTHREADS)),true)
-BK_USING_ORACLE=true
-endif
-endif
-endif
-
-ifneq ($(strip $(WANT_POSTGRES)),)
-BK_WANT_POSTGRES=$(WANT_POSTGRES)
-endif
-
-ifneq ($(findstring true,$(WANT_GPROF)$(USING_GPROF)),)
-BK_USING_GPROF=true
-override BK_USING_PROF=false
-override BK_WANT_LIBTOOL=false
-override BK_WANT_STATIC=true
-else
-ifneq ($(findstring true,$(WANT_PROF)$(USING_PROF)),)
-BK_USING_PROF=true
-override BK_USING_GPROF=false
-endif
-endif
-
-ifneq ($(findstring true,$(WANT_BOUNDS_CHECKING)$(WANT_DMALLOC)$(WANT_INSURE)$(WANT_INSURE_DEBUG)),)
-ifneq ($(findstring true,$(WANT_INSURE_DEBUG)$(WANT_INSURE)),)
-override BK_WANT_LIBTOOL=false
-override BK_USING_DMALLOC=false
-override BK_USING_BOUNDS_CHECKING=false
-BK_USING_INSURE=true
-ifneq ($(findstring true,$(WANT_INSURE_DEBUG)),)
-BK_USING_INSURE_DEBUG=true
-endif
-else
-ifneq ($(findstring true,$(WANT_DMALLOC)),)
-BK_USING_DMALLOC=true
-override BK_USING_INSURE=false
-override BK_USING_BOUNDS_CHECKING=false
-else
-ifneq ($(findstring true,$(WANT_BOUNDS_CHECKING)$(USING_BOUNDS_CHECKING)),)
-BK_USING_BOUNDS_CHECKING=true
-override BK_USING_INSURE=false
-override BK_USING_DMALLOC=false
-endif
-endif
-endif
-endif
+include $(BKMKDIR)/Make.override
 
 include $(BKMKDIR)/Make.variables
 include $(BKMKDIR)/Make.targets
