@@ -59,6 +59,7 @@ BK_USING_GPROF=true
 override BK_USING_PROF=false
 override BK_WANT_LIBTOOL=false
 override BK_WANT_STATIC=true
+override BK_USING_PTHREADS=false
 else
 ifneq ($(findstring true,$(WANT_PROF)$(USING_PROF)),)
 BK_USING_PROF=true
