@@ -1,3 +1,9 @@
+2004-07-30  James Tanis  <jtt@fort.tanis.org>
+
+	* Make.bkvariables (FD_DEV): tee /dev/fd/2 2>/dev/null does not do
+	what you want. The redirection redirects /dev/fd/2 too. BK_TTY
+	must be /dev/fd/1 (or /dev/tty).
+
 2004-07-15  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.variables (LT_LDLIBS): explicit thread library dependency

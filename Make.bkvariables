@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.bkvariables,v 1.54 2003/12/30 05:41:58 seth Exp $
+# $Id: Make.bkvariables,v 1.55 2004/07/30 18:45:43 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -63,8 +63,9 @@ BK_CONFIG_OS_TYPE=$(shell cat $(BKMK_OSFILE) 2>/dev/null)
 # compile mode on FreeBSD doesn't bother to open a pseudo-tty for the compile
 # process (it just uses a pipe), so /dev/tty doesn't work - the process has no
 # controlling tty.  So we use stderr (or try to).</TRICKY>
-F2=/dev/fd/2
-BK_TTY:=$(shell test -c $(F2) && test -w $(F2) && echo $(F2) || echo /dev/tty)
+FD=1
+FD_DEV=/dev/fd/$(FD)
+BK_TTY:=$(shell test -c $(FD_DEV) && test -w $(FD_DEV) && test -t $(FD) && echo $(FD_DEV) || echo /dev/tty)
 
 BK_CLEANING:=true
 ifeq ($(findstring neat,$(MAKECMDGOALS)),)
