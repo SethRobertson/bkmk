@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.include,v 1.22 2003/01/28 18:17:46 jtt Exp $
+# $Id: Make.include,v 1.23 2003/02/03 19:26:35 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -24,6 +24,9 @@ ifneq ($(BK_USER_VARIABLES),)
 include $(BK_USER_VARIABLES)
 endif
 
+-include $(BKMKDIR)/Make.$(BK_OSNAME)-pre
+include $(BKMKDIR)/Make.config
+
 #
 # User configuration (from .user-variables or command line)
 #
@@ -33,7 +36,7 @@ endif
 
 ifneq ($(strip $(WANT_C)),)
 BK_WANT_C=$(WANT_C)
-endif
+ endif
 
 ifneq ($(strip $(WANT_LIBTOOL)),)
 BK_WANT_LIBTOOL=$(WANT_LIBTOOL)
@@ -47,8 +50,22 @@ ifneq ($(strip $(WANT_HELP)),)
 BK_WANT_HELP=$(WANT_HELP)
 endif
 
-ifneq ($(strip $(WANT_ORACLE)),)
-BK_WANT_ORACLE=$(WANT_ORACLE)
+BK_USING_PTHREADS=false
+ifeq ($(HAVE_PTHREADS),true)
+ifneq ($(strip $(WANT_PTHREADS)),false)
+BK_USING_PTHREADS=true
+PTHREAD_LIBS=-lpthread
+BK_DEFINES+=-DBK_USING_PTHREADS
+endif
+endif
+
+BK_USING_ORACLE=false
+ifeq ($(strip $(WANT_ORACLE)),true)
+ifeq ($(strip $(HAVE_ORACLE)),true)
+ifeq ($(strip $(BK_USING_PTHREADS)),true)
+BK_USING_ORACLE=true
+endif
+endif
 endif
 
 ifneq ($(strip $(WANT_POSTGRES)),)
@@ -86,8 +103,6 @@ endif
 endif
 endif
 
--include $(BKMKDIR)/Make.$(BK_OSNAME)-pre
-include $(BKMKDIR)/Make.config
 include $(BKMKDIR)/Make.variables
 include $(BKMKDIR)/Make.targets
 include $(BKMKDIR)/Make.production

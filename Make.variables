@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.130 2003/01/31 17:35:43 jtt Exp $
+# $Id: Make.variables,v 1.131 2003/02/03 19:26:35 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -25,16 +25,6 @@ NORMALIZE='			\
 	s@/[^/.]+/\.\./@/@g;	\
 	s@^/n/[^/]*/@/@;	\
 	print;'
-
-ifeq ($(strip $(HAVE_PTHREADS)),true)
-ifneq ($(strip $(WANT_PTHREADS)),false)
-BK_USING_PTHREADS=true
-PTHREAD_LIBS=-lpthread
-BK_DEFINES+=-DBK_USING_PTHREADS
-else
-BK_USING_PTHREADS=false
-endif
-endif
 
 # Protected code which runs only once per make tree build
 ifneq ($(BKMKVAR_VAR_CORRECT),true)
@@ -490,19 +480,9 @@ OBJEXT=.lo
 top_builddir=$(BKMKDIR)
 endif # !BK_WANT_LIBTOOL
 
-ifeq ($(BK_WANT_ORACLE), false)
-HAVE_ORACLE=false
-endif
-
 # Even if we want oracle, a *platform* without pthreads can't do oracle
-ifeq ($(HAVE_ORACLE),true)
-ifeq ($(HAVE_PTHREADS),false)
-HAVE_ORACLE=false
-endif
-endif
-
-ifeq ($(HAVE_ORACLE), true)
-BK_DEFINES += -DHAVE_ORACLE
+ifeq ($(BK_USING_ORACLE), true)
+BK_DEFINES += -DUSING_ORACLE
 endif
 
 ifeq ($(BK_USING_GPROF),true)
