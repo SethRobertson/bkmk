@@ -1,3 +1,8 @@
+2003-03-13  James Tanis  <jtt@saint.sysdetect.com>
+
+	* Make.targets: Sigh.. 3 phase build not required (too many header
+	dependencies). 
+
 2003-03-13  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* configure: autoconf strsignal
