@@ -1,8 +1,34 @@
+2003-06-02  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* configure.in: AC_ENABLE_PATHENV to prefer LD_LIBRARY_PATH over -rpath
+
+	* aclocal.m4: merged from libtool with --enable-pathenv support;
+	fix getcwd hacks to work with libtool-1.5 macros
+
+	* Makefile (%.status): no longer need to disable fast-install
+	(autoconf): just generate the important errors
+
+	* Make.variables (EDIT_LT_LIBINSTALL, EDIT_LT_LIBINSTALL): nuked!
+	(BK_INSTALLRPATH): s=/BAKA/Silly/Pathnames/Die/Die/Die==
+
+	* Make.targets: remove references to ${EDIT_LT_*INSTALL} kludge scripts
+
+	* Make.production: remove references to ${EDIT_LT_PROGLINK} kludge;
+	(BK_LARGE_LIBOBJ2, BK_RELINK_LIBOBJ2): libtool-1.5 now keeps PIC .o
+	object files as .libs/*.o and the .lo files are just shell text;
+	note deprecation of explicit .a--should be replaced with ${LIBEXT}
+	($(BK_LARGE_MODULE)): remove unneeded grep [libtool works better now]
+
+2003-05-31  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* acaux/ltmain.sh, aclocal.m4: merged from devtools/libtool 1.5 merge
+	[this version was broken for libpcap at least, probably for everything]
+
 2003-05-23  Seth Robertson  <seth@startide.sysdetect.com>
 
-	* Make.targets (subtags): Make tags use correct ($(PWD)) absolute
+	* Make.targets (subtags): Make tags use correct [${PWD}] absolute
 	paths instead of relative paths because emacs interprets relative
-	paths and incorrect (/n/...) absolute paths.
+	paths and incorrect [/n/...] absolute paths.
 
 2003-05-16  Seth Robertson  <seth@hawking.sysdetect.com>
 
@@ -16,7 +42,7 @@
 
 	* aclocal.m4 (ACX_PTHREAD): leave LIBS/CFLAGS set up for threads when
 	executing $acx_pthread_ok = yes case
-	
+
 2003-05-15  James Tanis  <jtt@saint.sysdetect.com>
 
 	* configure.in: Check for $PARASOFT in ENV and /usr/local/parasoft
@@ -58,10 +84,10 @@
 
 	* Make.targets (actual_install): only install out-of-date libraries/
 	modules [such a simple fix - why didn't I do it months ago?]
-	
+
 	* Make.variables (NORMALIZE): correctly subst /foo/././bar -> /foo/bar
 	[prevents libtool warnings about foo.la seems to be moved]
-	
+
 2003-04-16  James Tanis  <jtt@saint.sysdetect.com>
 
 	* Make.include: Convert to WANT_NO_OPT/BK_WANT_OPT and
@@ -78,7 +104,7 @@
 	library [Linux] is preferred to -pthread gcc option [Linux/BSD];
 	this allows us to distinguish Linux from BSD [where special -lc/-lc_r
 	handling is needed]
-	
+
 	* configure.in: use ACX_PTHREAD
 
 	* Make.variables (BK_DEFINES, CFLAGS, CC_CONFIG): get pthreads settings
@@ -93,7 +119,7 @@
 
 	* acaux/ltmain.sh: -lc_r treatment for FreeBSD as well as OpenBSD;
 	append -lc or -lc_r to link based on presence/absence of -pthread
-	
+
 2003-04-15  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.production ($(BK_LARGE_MODULE)): use -no-undefined to get
@@ -189,7 +215,7 @@
 	* Makefile: we don't need no steenking "true" or "touch" -
 	/bin/sh's ":" does it all! [without requiring valid Make.config]
 	[also make the default no default message less antagonizing]
-	
+
 2002-11-21  James Tanis  <jtt@hawking.sysdetect.com>
 
 	* configure.in (LIBS): Find "true" and "cp".
@@ -201,7 +227,7 @@
 	* Makefile (autoconf): add autoconf target to run with -Wall
 
 	* configure.in: use AC_DEV_FD; AC_IN_ADDR_T instead of AC_INADDR_T
-	
+
 	* aclocal.m4: quote AC_CACHE_CHECK arguments, add defun comments
 	(AC_DEV_FD): determine if /dev/fd/ supported, and how, using
 	HAVE_DEV_FD [not HAVE_DEVFD], and don't croak when cross-compiling
@@ -215,7 +241,7 @@
 
 	* Make.variables, Make.config.in: move definition of INSTALL back into
 	Make.config [jars install depends on this]
-	
+
 2002-11-19  Brian Lindauer  <lindauer@malkmus.sysdetect.com>
 
 	* aclocal.m4 (LIBS): Add test for IN6_IS_ADDR_MULTICAST signature.
@@ -227,14 +253,14 @@
 	* Make.variables: restore fixes undone by opx_rollup_3 [jtt's idea
 	of rollup is more like steamroller]; nuke BK_USING_DMALLOCTH support
 	for more automatic solution using {HAVE,WANT,USING}_{PTHREADS,DMALLOC}
-	
+
 2002-11-13  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.variables, Make.production: patsubst -> addprefix/addsuffix
 
 	* Make.production: fix for JAVA COMPILE FAILURE--NON-DEFAULT BK_JAVADIR
 	so that Seth can set BK_JAVADIR=${GROUPTOP}/${PKGTOP}/.install/.java
-	
+
 	* configure.in, aclocal.m4: restore fixes undone by opx_rollup_3
 
 2002-10-31  James Tanis  <jtt@hawking.sysdetect.com>
@@ -250,10 +276,10 @@
 
 	* chcopy.pl: Insure doesn't mind unused static const char arrays;
 	update e-mail addresses
-	
+
 	* Make.production, Make.variables: get useful gcc error messages from
 	Insure++ by running the compiler with -D__INSURE__ directly
-	
+
 2002-10-18  Brian Lindauer  <lindauer@malkmus.sysdetect.com>
 
 	* aclocal.m4: Fix in_addr_t test to work on FreeBSD, too.
@@ -300,10 +326,10 @@
 
 	* configure.in: remove max time_t code [relocated to aclocal.m4]
 	eliminate non-libtool [line 74] autoconf warnings [autoconf -W all]
-	
+
 	* libbk_autoconf.h.in: eliminate religious superstition, remove comment
 	that breaks sed processing of file.
-	
+
 2002-09-08  Seth Robertson  <seth@yeah.baka.org>
 
 	* Make.bkvariables (PWD): Some versions of make appear to actively NUKE PWD.
@@ -334,7 +360,7 @@
 
 	* Make.variables (EDIT_LT_PROGLINK): don't create a useless .BAK file
 	[James - when you're merging, don't create a useless .LTB file either]
-	
+
 2002-09-04  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* configure.in: look for bgcc in /usr/local/gnu/bin
@@ -352,12 +378,12 @@
 
 	* Make.variables (COMPILER_DEBUG): don't bother setting this if using
 	insure, since it will suppress/ignore the warnings anyhow
-	
+
 	* Make.bkvariables: moved *WANT* & *USING* conversions to Make.include
 
 	* Make.include (BK_WANT_*, BK_USING*): set these here, rather than
 	Make.bkvariables, to get settings from .user-variables
-	
+
 2002-08-26  Seth Robertson  <seth@winwood.sysdetect.com>
 
 	* Make.variables (BK_INSTALLRPATH): BK_INSTALLRPATH is hardcoded in
@@ -368,7 +394,7 @@
 
 	* Make.targets ($(BK_REALTOP)/bkmk/.timestamp): Target to rebuild
 	bkmk configuration if missing.
-	
+
 	(default install actual_install): Check for missing bkmk
 	configuration.
 
@@ -440,7 +466,7 @@
 
 	* Make.variables (GCC_VERSION, COMPILER_DEBUG): use appropriate	gcc
 	warning options based on runtime determination of compiler version
-	
+
 2002-08-22  Seth Robertson  <seth@startide.sysdetect.com>
 
 	* Make.targets (default): Place BK_LARGE_MODULE in default target
@@ -473,10 +499,10 @@
 
 	* Make.production: use perl to edit libtool wrapper script so that
 	[correct] rpath is embedded, but not used to resolve anything at relink
-	
+
 	* Make.targets: use perl to edit libtool library script so that rpath
 	is embedded, but not used to resolve anything at relink
-	
+
 	* configure.in: configure PWDPROG before building libtool
 
 	* aclocal.m4: set libtool $pwd to PWDPROG
@@ -490,7 +516,7 @@
 	the directory that [maybe] gets recorded in RPATH/RUNPATH of
 	libraries and executables -- that is still BK_INSTALLRPATH, which
 	can be overridden in .user-variables for "production" builds.
-	
+
 2002-07-24  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* configure.in: look for memmem function
@@ -499,7 +525,7 @@
 
 	* Make.FreeBSD-4.5-pre: deal with FreeBSD gcc's -Wno-unused-parame
 	problems
-	
+
 2002-07-18  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.variables (COMPILER_DEBUG): turn on -Wunused
@@ -581,7 +607,7 @@
 
 	* Make.bkvariables (BK_WANT_*, BK_USING_*): allow user to omit BK_
 	prefix on commandline/.user-variables
-	
+
 	* Make.variables: normalize WANT/USING to use BK_ prefix
 
 	* Make.production: use BK_USING_INSURE
@@ -702,7 +728,7 @@
 	coordinate generation of .depend file between various rules;
 	automatically regenerate .depend file if Map.jhm files change
 	(clean, nuke): remove generated java help .html files
-	
+
 2002-02-14  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.production (jtest-%): don't make this phony, as it doesn't work
@@ -788,9 +814,9 @@
 2002-01-25  larry ogrodnek  <ldog@sysdetect.com>
 
 	* configure: find buildhelp.
-	
+
 	* Make.config.in: add BUILDHELP.
-	
+
 	* Make.targets (default): add "help" if BK_WANT_JAVA,
 	BK_JAVA_HELP, and BK_JAVA_HELP_LANG are defined.
 	(depend): create help file dependencies if BK_WANT_JAVA,
@@ -837,7 +863,7 @@
 
 	* Make.variables (INSTALL_INCFLAGS): Cygwin install can't handle -p
 	when desired mode is 444 [read-only] so omit -p on Cygwin
-	
+
 	* Make.bkvariables (BK_OSNAME): CYGWIN_98-4.10-1.3.5(0.47/3/2) ->
 	CYGWIN-1.3
 
@@ -888,7 +914,7 @@
 	* Make.bkvariables (BK_DUMMY): don't bother with this for GNUmakefile
 	controlled 3rd party modules; use ${BKMKOSFILE}, ${MAKE}; let Makefile
 	generate the OS file if it runs configure
-	
+
 	* Make.include (BKMKOSFILE): file containing OS name
 
 	* Make.production (.user-variable%): suppress rule chaining
@@ -896,7 +922,7 @@
 	* Makefile (clean nuke): don't remove Make.config [was created anyhow]
 	(.timestamp): only run configure if config.status out of date/missing
 	[nuke, new configure script, different OS] and generate OS file here
-	
+
 	* Make.variables (INSTALL_LIBFLAGS): eliminate duplicate -p
 
 	* acaux/install-sh: implement -p option now that we depend on it
@@ -946,7 +972,7 @@
 2001-12-19  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.targets ($(BK_INSTALLDOCDIR)/doxygen/Doxyfile): exclude tests
-	
+
 	* Make.variables (BK_STDJUNK): clean up .inslog2
 
 2001-12-14  Seth Robertson  <seth@yeah.baka.org>
@@ -962,7 +988,7 @@
 
 	* Make.targets ($(BK_INSTALLDOCDIR)/doxygen/Doxyfile): enable HAVE_DOT
 	if autoconf finds it, exclude libpcap/glib/libclc
-	
+
 	* Make.variables (BK_JAVA_PNGS,BK_JAVA_IMAGES,BK_JAVA_PKG_IMAGES):
 	add support for images in jar files [note - JAVA_AUX is deprecated]
 
@@ -1052,7 +1078,7 @@
 	on all of BK_JAVA_SRC or BK_JAVA_TEST at once, which is much more
 	efficient given the way the javac compiler works; use wildcard to
 	find locale bundle files without needing Makefile support
-	
+
 2001-11-29  larry ogrodnek  <ldog@sysdetect.com>
 
 	* Make.production (BK_JAVA_ICLASS): support for internal classes.
@@ -1141,7 +1167,7 @@
 	* Make.bkvariables: spelling fixes, avoid BK_PKGNAME with space
 
 	* ex.hints: spelling fixes
-	
+
 	* ex.pkg.Make.preinclude: renamed from ex.pkg.Make.preinstall
 
 2001-11-06  James Tanis  <jtt@winwood.sysdetect.com>

@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.86 2003/05/16 04:30:49 dupuy Exp $
+dnl $Id: configure.in,v 1.87 2003/06/03 03:28:13 dupuy Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.86 $)dnl
+AC_REVISION($Revision: 1.87 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
@@ -74,7 +74,7 @@ AC_PATH_PROG(PAWD, pawd, '')
 
 AC_LIBTOOL_WIN32_DLL
 AC_LIBTOOL_DLOPEN
-# ignore warnings from autoconf -Wall regarding this; not worth fixing
+AC_ENABLE_PATHENV(first)
 AC_PROG_LIBTOOL
 
 AC_SUBST(link_static_flag)

@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.42 2003/05/31 09:17:30 dupuy Exp $
+# $Id: aclocal.m4,v 1.43 2003/06/03 03:28:13 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -775,7 +775,7 @@ AC_LANG_RESTORE
 ])dnl ACX_PTHREAD
 
 #
-# Remainder of the file was incorporated verbatim from libtool.m4 (1.4)
+# Remainder of the file was incorporated verbatim from libtool.m4 (1.5)
 # [local modifications have been made - see ChangeLog or CVS log]
 #
 
@@ -862,10 +862,6 @@ AC_BEFORE([$0],[AC_LIBTOOL_GCJ])dnl
 # This can be used to rebuild libtool when needed
 LIBTOOL_DEPS="$ac_aux_dir/ltmain.sh"
 
-# <WARNING>SysD local mod to get canonical name for working directory</WARNING>
-. ./getcwd.sh.in
-getcwd=`getcwd`/getcwd.sh
-
 # Always use our own libtool.
 LIBTOOL='$(SHELL) $(top_builddir)/libtool'
 AC_SUBST(LIBTOOL)dnl
@@ -882,6 +878,7 @@ AC_DEFUN([AC_LIBTOOL_SETUP],
 AC_REQUIRE([AC_ENABLE_SHARED])dnl
 AC_REQUIRE([AC_ENABLE_STATIC])dnl
 AC_REQUIRE([AC_ENABLE_FAST_INSTALL])dnl
+AC_REQUIRE([AC_ENABLE_PATHENV])dnl
 AC_REQUIRE([AC_CANONICAL_HOST])dnl
 AC_REQUIRE([AC_CANONICAL_BUILD])dnl
 AC_REQUIRE([AC_PROG_CC])dnl
@@ -1010,10 +1007,27 @@ AC_ARG_WITH([pic],
     [pic_mode=default])
 test -z "$pic_mode" && pic_mode=default
 
+# <WARNING>SysD local mod to get canonical name for working directory</WARNING>
+. ./getcwd.sh.in
+getcwd=`getcwd`/getcwd.sh
+
 # Use C for the default configuration in the libtool script
 tagname=
 AC_LIBTOOL_LANG_C_CONFIG
 _LT_AC_TAGCONFIG
+
+if test "$enable_pathenv" != default &&
+    test "$enable_pathenv" != "$shlibpath_overrides_runpath"; then
+  case "$shlibpath_overrides_runpath-$enable_pathenv" in
+  never-no) : close enough not to care;;
+  never-*) AC_MSG_WARN([environment variable never used for search]) ;;
+  *-any) : anything other than never is good enough ;;
+  yes-*) AC_MSG_WARN([`$shlibpath_var' overrides hardcoded path]) ;;
+  no-*) AC_MSG_WARN([hardcoded path overrides environment variable]) ;;
+  *-no) AC_MSG_WARN([`$shlibpath_var' might override hardcoded path]) ;;
+  *-yes) AC_MSG_WARN([hardcoded path might override environment variable]) ;;
+  esac
+fi
 ])# AC_LIBTOOL_SETUP
 
 
@@ -1903,6 +1917,8 @@ aix3*)
   version_type=linux
   library_names_spec='${libname}${release}${shared_ext}$versuffix $libname.a'
   shlibpath_var=LIBPATH
+  # PORTME: what is the behavior of LIBPATH for AIX 3?
+  shlibpath_overrides_runpath=unknown
 
   # AIX 3 has no versioning support, so we append a major version to the name.
   soname_spec='${libname}${release}${shared_ext}$major'
@@ -1917,6 +1933,8 @@ aix4* | aix5*)
     # AIX 5 supports IA64
     library_names_spec='${libname}${release}${shared_ext}$major ${libname}${release}${shared_ext}$versuffix $libname${shared_ext}'
     shlibpath_var=LD_LIBRARY_PATH
+    # PORTME: what is the behavior of LD_LIBRARY_PATH for AIX 5L/IA64?
+    shlibpath_overrides_runpath=unknown
   else
     # With GCC up to 2.95.x, collect2 would create an import file
     # for dependence libraries.  The import file would start with
@@ -1949,6 +1967,7 @@ aix4* | aix5*)
       soname_spec='${libname}${release}${shared_ext}$major'
     fi
     shlibpath_var=LIBPATH
+    shlibpath_overrides_runpath=yes
   fi
   ;;
 
@@ -1971,6 +1990,7 @@ bsdi4*)
   soname_spec='${libname}${release}${shared_ext}$major'
   finish_cmds='PATH="\$PATH:/sbin" ldconfig $libdir'
   shlibpath_var=LD_LIBRARY_PATH
+  shlibpath_overrides_runpath=no
   sys_lib_search_path_spec="/shlib /usr/lib /usr/X11/lib /usr/contrib/lib /lib /usr/local/lib"
   sys_lib_dlsearch_path_spec="/shlib /usr/lib /usr/local/lib"
   # the default ld.so.conf also contains /usr/contrib/lib and
@@ -2093,6 +2113,8 @@ freebsd*)
     hardcode_into_libs=yes
     ;;
   *) # from 3.2 on
+    # PORTME: if $enable_pathenv=yes check if --enable-new-dtags works AND
+    # DT_RUNPATH honored by ld-elf.so (not the case as of freebsd-4.8).
     shlibpath_overrides_runpath=no
     hardcode_into_libs=yes
     ;;
@@ -2106,6 +2128,9 @@ gnu*)
   library_names_spec='${libname}${release}${shared_ext}$versuffix ${libname}${release}${shared_ext}${major} ${libname}${shared_ext}'
   soname_spec='${libname}${release}${shared_ext}$major'
   shlibpath_var=LD_LIBRARY_PATH
+  # PORTME: if $enable_pathenv=yes check if --enable-new-dtags works AND
+  # DT_RUNPATH honored by runtime linker (unknown whether this is the case)
+  shlibpath_overrides_runpath=no
   hardcode_into_libs=yes
   ;;
 
@@ -2121,7 +2146,18 @@ hpux9* | hpux10* | hpux11*)
     hardcode_into_libs=yes
     dynamic_linker="$host_os dld.so"
     shlibpath_var=LD_LIBRARY_PATH
-    shlibpath_overrides_runpath=yes # Unless +noenvvar is specified.
+    shlibpath_overrides_runpath=yes
+    # PORTME: this ought to work, but I cannot test as I have no hp-ux systems
+    case "$enable_pathenv" in
+    no) _LT_AC_TAGVAR(hardcode_libdir_flag_spec, $1)="$_LT_AC_TAGVAR(hardcode_libdir_flag_spec, $1) ${wl}+rpathfirst"
+	_LT_AC_TAGVAR(hardcode_libdir_flag_spec_ld, $1)="$_LT_AC_TAGVAR(hardcode_libdir_flag_spec_ld, $1) +rpathfirst"
+	shlibpath_overrides_runpath=no
+	;;
+    never) _LT_AC_TAGVAR(hardcode_libdir_flag_spec, $1)="$_LT_AC_TAGVAR(hardcode_libdir_flag_spec, $1) ${wl}+noenvvar"
+	_LT_AC_TAGVAR(hardcode_libdir_flag_spec_ld, $1)="$_LT_AC_TAGVAR(hardcode_libdir_flag_spec_ld, $1) +noenvvar"
+	shlibpath_overrides_runpath=never
+	;;
+    esac
     library_names_spec='${libname}${release}${shared_ext}$versuffix ${libname}${release}${shared_ext}$major $libname${shared_ext}'
     soname_spec='${libname}${release}${shared_ext}$major'
     if test "X$HPUX_IA64_MODE" = X32; then
@@ -2131,22 +2167,53 @@ hpux9* | hpux10* | hpux11*)
     fi
     sys_lib_dlsearch_path_spec=$sys_lib_search_path_spec
     ;;
-   hppa*64*)
-     shrext='.sl'
-     hardcode_into_libs=yes
-     dynamic_linker="$host_os dld.sl"
-     shlibpath_var=LD_LIBRARY_PATH # How should we handle SHLIB_PATH
-     shlibpath_overrides_runpath=yes # Unless +noenvvar is specified.
-     library_names_spec='${libname}${release}${shared_ext}$versuffix ${libname}${release}${shared_ext}$major $libname${shared_ext}'
-     soname_spec='${libname}${release}${shared_ext}$major'
-     sys_lib_search_path_spec="/usr/lib/pa20_64 /usr/ccs/lib/pa20_64"
-     sys_lib_dlsearch_path_spec=$sys_lib_search_path_spec
-     ;;
-   *)
+  hppa*64*)
+    shrext='.sl'
+    hardcode_into_libs=yes
+    dynamic_linker="$host_os dld.sl"
+    shlibpath_var=LD_LIBRARY_PATH # How should we handle SHLIB_PATH
+    shlibpath_overrides_runpath=yes
+    # PORTME: this ought to work, but I cannot test as I have no hp-ux systems
+    case "$enable_pathenv" in
+    no) _LT_AC_TAGVAR(hardcode_libdir_flag_spec, $1)="$_LT_AC_TAGVAR(hardcode_libdir_flag_spec, $1) ${wl}+rpathfirst"
+	_LT_AC_TAGVAR(hardcode_libdir_flag_spec_ld, $1)="$_LT_AC_TAGVAR(hardcode_libdir_flag_spec_ld, $1) +rpathfirst"
+	shlibpath_overrides_runpath=no
+	;;
+    never) _LT_AC_TAGVAR(hardcode_libdir_flag_spec, $1)="$_LT_AC_TAGVAR(hardcode_libdir_flag_spec, $1) ${wl}+noenvvar"
+	_LT_AC_TAGVAR(hardcode_libdir_flag_spec_ld, $1)="$_LT_AC_TAGVAR(hardcode_libdir_flag_spec_ld, $1) +noenvvar"
+	shlibpath_overrides_runpath=never
+	;;
+    esac
+    library_names_spec='${libname}${release}${shared_ext}$versuffix ${libname}${release}${shared_ext}$major $libname${shared_ext}'
+    soname_spec='${libname}${release}${shared_ext}$major'
+    sys_lib_search_path_spec="/usr/lib/pa20_64 /usr/ccs/lib/pa20_64"
+    sys_lib_dlsearch_path_spec=$sys_lib_search_path_spec
+    ;;
+  *)
     shrext='.sl'
     dynamic_linker="$host_os dld.sl"
     shlibpath_var=SHLIB_PATH
-    shlibpath_overrides_runpath=no # +s is required to enable SHLIB_PATH
+    # FIXME: Note that +s is not always sufficient to force SHLIB_PATH search;
+    # dependencies with full paths for internal names ($soname, specified with
+    # +h), or (without an internal name? and) specified on the link line with
+    # full path, are marked "static" and only the embedded path is used.  As
+    # libtool always uses +h with $soname_spec, which has no path, this should
+    # not be an issue for libraries generated with libtool; it may be an issue
+    # for 3rd-party or system libraries.  SHLIB_PATH search can be forced by
+    # using chatr -l for each dependency to switch it from static to dynamic.
+    # [see http://mail.gnu.org/archive/html/libtool/2002-05/msg00069.html]
+    shlibpath_overrides_runpath=never
+    # PORTME: this ought to work, but I cannot test as I have no hp-ux systems
+    case "$enable_pathenv" in
+    yes) _LT_AC_TAGVAR(hardcode_libdir_flag_spec, $1)="${wl}+s $_LT_AC_TAGVAR(hardcode_libdir_flag_spec, $1)"
+	_LT_AC_TAGVAR(hardcode_libdir_flag_spec_ld, $1)="+s $_LT_AC_TAGVAR(hardcode_libdir_flag_spec_ld, $1)"
+	shlibpath_overrides_runpath=yes
+	;;
+    no) _LT_AC_TAGVAR(hardcode_libdir_flag_spec, $1)="$_LT_AC_TAGVAR(hardcode_libdir_flag_spec, $1) ${wl}+s"
+	_LT_AC_TAGVAR(hardcode_libdir_flag_spec_ld, $1)="$_LT_AC_TAGVAR(hardcode_libdir_flag_spec_ld, $1) +s"
+	shlibpath_overrides_runpath=no
+	;;
+    esac
     library_names_spec='${libname}${release}${shared_ext}$versuffix ${libname}${release}${shared_ext}$major $libname${shared_ext}'
     soname_spec='${libname}${release}${shared_ext}$major'
     ;;
@@ -2186,6 +2253,8 @@ irix5* | irix6* | nonstopux*)
     ;;
   esac
   shlibpath_var=LD_LIBRARY${shlibsuff}_PATH
+  # PORTME: if $enable_pathenv=yes check if --enable-new-dtags works AND
+  # DT_RUNPATH honored by runtime linker (unknown whether this is the case)
   shlibpath_overrides_runpath=no
   sys_lib_search_path_spec="/usr/lib${libsuff} /lib${libsuff} /usr/local/lib${libsuff}"
   sys_lib_dlsearch_path_spec="/usr/lib${libsuff} /lib${libsuff}"
@@ -2206,10 +2275,15 @@ linux*)
   soname_spec='${libname}${release}${shared_ext}$major'
   finish_cmds='PATH="\$PATH:/sbin" ldconfig -n $libdir'
   shlibpath_var=LD_LIBRARY_PATH
-  shlibpath_overrides_runpath=no
-  # This implies no fast_install, which is unacceptable.
-  # Some rework will be needed to allow for fast_install
-  # before this can be enabled.
+  if test "$enable_pathenv" = yes; then
+    # FIXME: unpatched RedHat prior to 7.3 doesn't correctly implement
+    # DT_RUNPATH [see https://rhn.redhat.com/errata/RHSA-2001-160.html]
+    # (need new autoconf macro to test correct operation of --enable-new-dtags)
+    _LT_AC_TAGVAR(hardcode_libdir_flag_spec, $1)="$_LT_AC_TAGVAR(hardcode_libdir_flag_spec, $1) ${wl}--enable-new-dtags"
+    shlibpath_overrides_runpath=yes
+  else
+    shlibpath_overrides_runpath=no
+  fi
   hardcode_into_libs=yes
 
   # We used to test for /lib/ld.so.1 and disable shared libraries on
@@ -2293,6 +2367,12 @@ osf3* | osf4* | osf5*)
   soname_spec='${libname}${release}${shared_ext}$major'
   library_names_spec='${libname}${release}${shared_ext}$versuffix ${libname}${release}${shared_ext}$major $libname${shared_ext}'
   shlibpath_var=LD_LIBRARY_PATH
+  shlibpath_overrides_runpath=no
+  # PORTME: this ought to work, but I cannot test as I have no Tru64 systems
+  if test "$enable_pathenv" = never; then
+    _LT_AC_TAGVAR(hardcode_libdir_flag_spec, $1)="$_LT_AC_TAGVAR(hardcode_libdir_flag_spec, $1) ${wl}-no_library_replacement"
+    shlibpath_overrides_runpath=never
+  fi
   sys_lib_search_path_spec="/usr/shlib /usr/ccs/lib /usr/lib/cmplrs/cc /usr/lib /usr/local/lib /var/shlib"
   sys_lib_dlsearch_path_spec="$sys_lib_search_path_spec"
   ;;
@@ -2608,6 +2688,46 @@ AC_DEFUN([AC_DISABLE_FAST_INSTALL],
 [AC_BEFORE([$0],[AC_LIBTOOL_SETUP])dnl
 AC_ENABLE_FAST_INSTALL(no)
 ])# AC_DISABLE_FAST_INSTALL
+
+
+# AC_ENABLE_PATHENV([DEFAULT])
+# ---------------------------------
+# implement the --enable-pathenv flag
+# DEFAULT is `first', `last', `never', `any', or `default' (if omitted).
+AC_DEFUN([AC_ENABLE_PATHENV],
+[define([AC_ENABLE_PATHENV_DEFAULT], ifelse($1, [], default, $1))dnl
+AC_ARG_ENABLE([pathenv],
+    [AC_HELP_STRING([--enable-pathenv=first],
+	[search environment path before hardcoded library path])
+AC_HELP_STRING([--enable-pathenv=last],
+	[search hardcoded library path before environment path])
+AC_HELP_STRING([--enable-pathenv=never])
+AC_HELP_STRING([--disable-pathenv],
+	[never search environment path])],
+    [case $enableval in
+     first) enable_pathenv=yes ;;
+     last) enable_pathenv=no ;;
+     no|never) enable_pathenv=never ;;
+     default) enable_pathenv=default ;;
+     *) enable_pathenv=any ;;
+     esac],
+    [case ]AC_ENABLE_PATHENV_DEFAULT[ in
+     first) enable_pathenv=yes ;;
+     last) enable_pathenv=no ;;
+     no|never) enable_pathenv=never ;;
+     default) enable_pathenv=default ;;
+     *) enable_pathenv=any ;;
+     esac])
+])# AC_ENABLE_PATHENV
+
+
+# AC_DISABLE_PATHENV
+# -----------------------
+# set the default to --disable-pathenv
+AC_DEFUN([AC_DISABLE_PATHENV],
+[AC_BEFORE([$0],[AC_LIBTOOL_SETUP])dnl
+AC_ENABLE_PATHENV(never)
+])# AC_DISABLE_PATHENV
 
 
 # AC_LIBTOOL_PICMODE([MODE])
@@ -3300,7 +3420,7 @@ AC_LIBTOOL_SYS_LIB_STRIP
 AC_LIBTOOL_SYS_DYNAMIC_LINKER($1)
 AC_LIBTOOL_DLOPEN_SELF($1)
 
-# Report which librarie types wil actually be built
+# Report which library types will actually be built
 AC_MSG_CHECKING([if libtool supports shared libraries])
 AC_MSG_RESULT([$can_build_shared])
 
@@ -4615,6 +4735,7 @@ if test -f "$ltmain"; then
   # Now quote all the things that may contain metacharacters while being
   # careful not to overquote the AC_SUBSTed values.  We take copies of the
   # variables and quote the copies for generation of the libtool script.
+  # <WARNING>getcwd added to get canonical name for working directory</WARNING>
   for var in echo old_CC old_CFLAGS AR AR_FLAGS EGREP RANLIB LN_S LTCC NM SED SHELL \
     getcwd \
     libname_spec library_names_spec soname_spec extract_expsyms_cmds \
@@ -4794,6 +4915,7 @@ LD=$lt_[]_LT_AC_TAGVAR(LD, $1)
 # Whether we need hard or soft links.
 LN_S=$lt_LN_S
 
+# <WARNING>SysD local mod to get canonical name for working directory</WARNING>
 # Shell source script to define getcwd()
 pwd=$lt_getcwd
 
@@ -6104,6 +6226,7 @@ EOF
 
     bsdi4*)
       _LT_AC_TAGVAR(export_dynamic_flag_spec, $1)=-rdynamic
+      runpath_var=LD_RUN_PATH
       ;;
 
     cygwin* | mingw* | pw32*)

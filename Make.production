@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.production,v 1.54 2003/04/16 19:04:43 dupuy Exp $
+# $Id: Make.production,v 1.55 2003/06/03 03:28:13 dupuy Exp $
 #
 # ++Copyright LIBBK++
 # 
@@ -77,7 +77,6 @@ $(BK_SIMPLE_INTERNALPROGS) $(BK_SIMPLE_PROGS): %: %$(OBJEXT) $(filter -l%,$(BK_A
 else
 $(BK_SIMPLE_INTERNALPROGS) $(BK_SIMPLE_PROGS): %: %.c $(filter -l%,$(BK_ALLLIBS))
 	$(LTLD) $(LINK.c) $(LT_LDFLAGS) -o $@ $@.c $(LDLIBS) -rpath $(BK_INSTALLRPATH)
-	@$(EDIT_LT_PROGLINK)
 endif
 else
 ifeq ($(BK_USING_INSURE),true)
@@ -101,7 +100,6 @@ BK_LARGE_OBJ:=$(patsubst %.l,%$(OBJEXT),$(BK_LARGE_OBJ))
 ifeq ($(BK_WANT_LIBTOOL),true)
 $(BK_LARGE_INTERNALPROG) $(BK_LARGE_PROG): $(BK_LARGE_OBJ) $(filter -l%,$(BK_ALLLIBS))
 	$(LTLD) $(LINK.c) $(LT_LDFLAGS) -o $@ $(BK_LARGE_OBJ) $(LDLIBS) -rpath $(BK_INSTALLRPATH)
-	@$(EDIT_LT_PROGLINK)
 else
 $(BK_LARGE_INTERNALPROG) $(BK_LARGE_PROG): $(BK_LARGE_OBJ) $(filter -l%,$(BK_ALLLIBS))
 	$(LTLD) $(LINK.c) $(LT_LDFLAGS) -o $@ $(BK_LARGE_OBJ) $(LDLIBS)
@@ -113,19 +111,28 @@ endif
 BK_LARGE_LIBOBJ:=$(patsubst %.c,%$(OBJEXT),$(BK_LARGE_LIBSRC))
 BK_LARGE_LIBOBJ:=$(patsubst %.y,%.tab$(OBJEXT),$(BK_LARGE_LIBOBJ))
 BK_LARGE_LIBOBJ:=$(patsubst %.l,%$(OBJEXT),$(BK_LARGE_LIBOBJ))
+ifeq ($(BK_WANT_LIBTOOL),true)
+BK_LARGE_LIBOBJ2=\
+ $(foreach obj,$(BK_LARGE_LIBOBJ),$(dir $(obj)).libs/$(subst $(OBJEXT),.$(OBJEXT_CONFIG),$(notdir $(obj))))
+endif
 
 #
-# Relink library production
+# Relink library production -- should really use libtool...
 #
 BK_RELINK_LIBOBJ:=$(patsubst %.c,%$(OBJEXT),$(BK_RELINK_LIBSRC))
 BK_RELINK_LIBOBJ:=$(patsubst %.y,%.tab$(OBJEXT),$(BK_RELINK_LIBOBJ))
 BK_RELINK_LIBOBJ:=$(patsubst %.l,%$(OBJEXT),$(BK_RELINK_LIBOBJ))
+ifeq ($(BK_WANT_LIBTOOL),true)
+BK_RELINK_LIBOBJ2=\
+ $(foreach obj,$(BK_RELINK_LIBOBJ),$(dir $(obj)).libs/$(subst $(OBJEXT),.$(OBJEXT_CONFIG),$(notdir $(obj))))
+endif
 ifdef BK_RELINK_LIBSRC
-BK_LARGE_LIBOBJ+=bk_relink_target$(OBJEXT)
+BK_LARGE_LIBOBJ+=bk_relink_target.$(OBJEXT_CONFIG)
+BK_LARGE_LIBOBJ2+=bk_relink_target.$(OBJEXT_CONFIG)
 
 # It is possible that this will require libtool conversion
-bk_relink_target$(OBJEXT): $(BK_RELINK_LIBOBJ)
-	$(LINK.c) -Xlinker -r -nostdlib -o $@ $^ $(BK_RELINKLIBS)
+bk_relink_target.$(OBJEXT_CONFIG): $(BK_RELINK_LIBOBJ)
+	$(LINK.c) -Xlinker -r -nostdlib -o $@ $(BK_RELINK_LIBOBJ2) $(BK_RELINKLIBS)
 endif
 
 
@@ -133,12 +140,15 @@ endif
 # vpath search may find installed version of static library that isn't quite
 # up to date.  So make sure that new files get all dependencies.
 $(filter %.a,$(BK_LARGE_LIB)): $(BK_LARGE_LIBOBJ)
+ifeq ($(BK_WANT_LIBTOOL),true)
+	@echo 1>&2 'Use of ".a" for libraries is deprecated; use "$$(LIBEXT)"'
+endif
 	@if [ -f $@ ]; then \
 	  echo $(AR) $(ARFLAGS) $@ $?; \
-	  $(AR) $(ARFLAGS) $@ $?; \
+	  $(AR) $(ARFLAGS) $@ $(BK_LARGE_LIBOBJ2); \
 	else \
 	  echo $(AR) $(ARFLAGS) $@ $^; \
-	  $(AR) $(ARFLAGS) $@ $^; \
+	  $(AR) $(ARFLAGS) $@ $(BK_LARGE_LIBOBJ2); \
 	fi
 	$(RANLIB) $@
 
@@ -171,19 +181,17 @@ $(filter %.a,$(BK_LARGE_LIB)): $(BK_LARGE_LIBOBJ)
 ifeq ($(BK_WANT_LIBTOOL),true)
 $(filter %.la,$(BK_LARGE_LIB)): $(BK_LARGE_LIBOBJ)
 	-@$(MKDIR) $(BK_INSTALLRDIR) >/dev/null 2>&1
-	{ $(LIBTOOL_LINK) $(LINK.c) $(LT_LDFLAGS) -o $@ $^ $(LT_LDLIBS)	\
-	   -rpath $(BK_INSTALLRPATH) -no-undefined ||			\
+	$(LIBTOOL_LINK) $(LINK.c) $(LT_LDFLAGS) -o $@ $^ $(LT_LDLIBS)	\
+	 -rpath $(BK_INSTALLRPATH) -no-undefined ||			\
 	  $(LIBTOOL_LINK) $(LINK.c) $(LT_LDFLAGS) -o $@ $^ $(LT_LDLIBS)	\
-	   -rpath $(BK_INSTALLRPATH); E=$$?; } 2>&1			\
-	 | grep -v '\.so: undefined'; exit $$E
+	   -rpath $(BK_INSTALLRPATH)
 
 $(BK_LARGE_MODULE): $(BK_LARGE_LIBOBJ)
 	-@$(MKDIR) $(BK_INSTALLRDIR) >/dev/null 2>&1
-	{ $(LIBTOOL_LINK) $(LINK.c) $(LT_M_LDFLAGS) -o $@ $^ $(LT_LDLIBS) \
-	   -rpath $(BK_INSTALLRPATH) -no-undefined ||			  \
+	$(LIBTOOL_LINK) $(LINK.c) $(LT_M_LDFLAGS) -o $@ $^ $(LT_LDLIBS) \
+	 -rpath $(BK_INSTALLRPATH) -no-undefined ||			  \
 	  $(LIBTOOL_LINK) $(LINK.c) $(LT_M_LDFLAGS) -o $@ $^ $(LT_LDLIBS) \
-	    -rpath $(BK_INSTALLRPATH); E=$$?; } 2>&1			  \
-	 | grep -v '\.so: undefined'; exit $$E
+	   -rpath $(BK_INSTALLRPATH)
 else
 $(BK_LARGE_MODULE): $(BK_LARGE_LIBOBJ)
 	@if [ -f $@ ]; then \

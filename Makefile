@@ -23,14 +23,14 @@ endif
 ################################################################
 
 autoconf:
-	/usr/local/bin/autoconf -Wall
+	/usr/local/bin/autoconf -Wcross -Wsyntax
 
 clean nuke:
 	rm -f $(OSFILE) confdefs.h config.cache config.status config.log \
 	 $(filter-out Make%,$(GENFILES)) libtool .timestamp
 
 %.status: ./%ure
-	./configure --disable-fast-install
+	./configure $(CONFIGURE_ARGS)
 	@-chmod +x $(filter %.sh %.pl,$(GENFILES))
 	echo "$(OSNAME)" > $(OSFILE) && : > .timestamp
 

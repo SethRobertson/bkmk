@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.143 2003/05/27 05:22:27 ldog Exp $
+# $Id: Make.variables,v 1.144 2003/06/03 03:28:13 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -45,11 +45,11 @@ BKMKVAR_VAR_CORRECT=true
 export BK_INSTALLRDIR BK_INSTALLPATH BKMKVAR_VAR_CORRECT
 endif # BKMKVAR_VAR_CORRECT
 
-# Provide safe default so that LD_LIBRARY_PATH will be used
-# If BK_INSTALLRPATH is "installdir" use the default install directory
-# If BK_INSTALLRPATH is some other value, use that
+# If BK_INSTALLRPATH is "installdir" or unset use the default directory
+# (this is a safe default for systems supporting DT_RUNPATH ELF tag; other
+# systems should set it to /lib in Make.${OSNAME}-pre) (see <WARNING/> below).
 ifndef BK_INSTALLRPATH
-BK_INSTALLRPATH=/Use/LD_LIBRARY_PATH/Instead/Of/Hardcoded/Paths/Silly/Linux/Libtool/Grr/Grr/Grr
+BK_INSTALLRPATH=$(BK_INSTALLRDIR)
 else # BK_INSTALLRPATH
 ifeq ($(BK_INSTALLRPATH),installdir)
 BK_INSTALLRPATH=$(BK_INSTALLRDIR)
@@ -80,8 +80,10 @@ BK_ALL_LAST_DIRS=$(BK_EXECUTABLE_DIRS) $(BK_LAST_DIRS)
 BK_ALL_SUBDIR=$(BK_ALL_FIRST_DIRS) $(BK_SUBDIR) $(BK_ALL_LAST_DIRS)
 
 ifeq ($(BK_WANT_STATIC), true)
-# Sigh.. libtool *claims* to support both a -static and a --all-static link mode argument,
-# but it does not (or at least ours does not).
+# Libtool claims to support both a -static and an --all-static link mode
+# argument, but it did not work (for us) with libtool-1.4.2.  This may have
+# changed with libtool-1.5, or there may be (have been) something about the way
+# we invoked it (especially with those hacky perl scripts mangling things).
 BK_WANT_LIBTOOL=false
 endif # BK_WANT_STATIC
 
@@ -142,7 +144,7 @@ LT_M_LDFLAGS=-module -avoid-version
 
 ifeq ($(BK_WANT_LIBTOOL), true)
 LIBTOOL_COMPILE=$(LIBTOOL) --mode=compile
-LIBTOOL_LINK=$(LIBTOOL) --mode=$(LINKMODE)
+LIBTOOL_LINK=$(LIBTOOL) --mode=link
 LIBTOOL_INSTALL=$(LIBTOOL) --mode=install --quiet
 else # BK_WANT_LIBTOOL
 LIBTOOL_COMPILE=
@@ -152,75 +154,38 @@ BK_INSTALLRPATH=$(BK_INSTALLRDIR)
 endif # BK_WANT_LIBTOOL
 
 #
-# <WARNING>If $(BK_INSTALLRDIR) != $(BK_INSTALLRPATH), libtool support gets
-# quite hairy.  When doing a "production" install, with embedded rpath
-# different from the install directory, libtool install gets fussy and
-# fails (on library installs) if it can't locate library dependencies in the
-# embedded runpath (where they may not yet, or ever, be installed).  When
-# installing programs, when libtool is unable to find the libraries in the
-# embedded runpath, it installs the script wrappers instead of relinking.
+# <WARNING>If $(BK_INSTALLRDIR) != $(BK_INSTALLRPATH) (i.e. a "production"
+# build), path hardcoding gets tricky.  The supported libtool way of handling
+# this is for the install directory to include the RPATH directory as a final
+# component, (e.g. if RPATH is /usr/local/lib, the install directory could be
+# /home/demo/src/tmp/usr/local/lib, but not /home/demo/src/INSTALL/lib).
 #
-# To prevent these problems, after running libtool -mode link on programs, we
-# edit the wrapper scripts to prevent libtool from (a) complaining that libtool
-# libraries that are dependencies of the program are not installed in the
-# embedded runpath directory, or (b) appending the install directory into the
-# native executable runpath (this latter is a side-effect of the editing we
-# perform on installed libtool archives, described below).
+# Previously, in order to prevent the embedded RPATH from overriding the
+# LD_LIBRARY_PATH environment variable, we used a spurious RPATH, namely /Use/
+# LD_LIBRARY_PATH/Instead/Of/Hardcoded/Paths/Silly/Linux/Libtool/Grr/Grr/Grr.
+# Not surprisingly, this was never a final component of the install directory.
+# Now that we discovered the magic incantation (see comments at end of ticket
+# #375) to force use of DT_RUNPATH, which is searched *after* LD_LIBRARY_PATH,
+# rather than DT_RPATH, which comes before, we no longer need to use such an
+# absurd path, and can use /lib instead, which is the usual final component,
+# and conveniently does not exist on *BSD, where DT_RUNPATH is not recognized
+# by the runtime linker.  (On Mac OS X, the environment variable always takes
+# precedence over the embedded paths, so it doesn't matter if /lib exists.)
 #
-# After running libtool -mode install on libraries or modules, we modify any
-# dependencies on libtool libraries in the embedded runpath directory so that
-# libtool looks in the install directory instead; for libraries (but not
-# modules) we also set the libtool idea of the embedded runpath to the install
-# directory.  (The system native shared libraries still have the embedded
-# runpath - only the libtool library scripts are modified.)
-#
-# For these tricks to work, relinking must always be performed at install time
-# (by default, this only happens for program files, or when there are
-# dependencies on uninstalled libtool libraries, we force libtool to always
-# relink when installing, by using a special mode called 'prelink'; it works
-# just like --mode=link except that it forces relinking when --mode=install).
-# Furthermore, when relinking libraries/modules, we need to override the
-# use of libtool library dependencies' (edited) idea of their locations with
-# the command line -rpath; both this and the prelink hack are implemented as
-# local mods to ltmain.sh.
-#
-# This really is quite a mess, but is simpler (and more robust in the face of
-# libtool upgrades) than extensive reworking of libtool to handle the case
-# where you want to install things with a standard RPATH, but can't put any
-# files there.</WARNING>
+# When we used the spurious RPATH, we had to take matters into our own hands,
+# and there were a set of hairy perl scripts that ran at module/library install
+# time and program link time to keep this all straight (mostly; there was at
+# least one problem with them - see ticket #998).  Life is simpler now, and
+# we merely need to enforce the libtool-supported restriction.</WARNING>
 #
 
-ifeq ($(BK_INSTALLRDIR),$(BK_INSTALLRPATH))
-LINKMODE=link
-EDIT_LT_PROGLINK=:
-EDIT_LT_LIBINSTALL=:
-EDIT_LT_MODINSTALL=:
-else # BK_INSTALLRDIR==BK_INSTALLRPATH
-LINKMODE=prelink
-EDIT_LT_PROGLINK=\
-	$(PERL) -pi -e " binmode ARGV; \
-	  s|\S*(/[^/\s]*\.la)|$(BK_INSTALLRDIR)\1|g \
-	    if (/notinst_deplibs=/); \
-	  s|([,])(/n/[^/]+)?$(BK_INSTALLRDIR)|\1$(BK_INSTALLRPATH)|g \
-	    if (/^relink_command=/);" $@
-# <TODO bugid="998">The next two edit lines DTWT (do the wrong thing) when
-# there's a .la libtool archive in the target INSTALLRPATH that is not part of
-# the build (e.g. /usr/local/lib/libxml2.la).  This is unusual, and can be
-# worked around by deleting the .la file from the target INSTALLRPATH (libtool
-# doesn't require .la files for installed libraries).  The real fix would be to
-# enhance the perl scripts to verify that the .la exists in INSTALLRDIR before
-# rewriting the dependency_libs line, but that's a lot more work.</TODO>
-EDIT_LT_LIBINSTALL=\
-	$(PERL) -pi -e " binmode ARGV; \
-	  s|$(BK_INSTALLRPATH)(/[^ ]*\.la)|$(BK_INSTALLRDIR)\1|g \
-	    if (/^dependency_libs=/); \
-	  s|libdir='$(BK_INSTALLRPATH)'|libdir='$(BK_INSTALLRDIR)'| \
-	    if (/^libdir=/);" $(BK_INSTALLRDIR)/$(^F)
-EDIT_LT_MODINSTALL=\
-	$(PERL) -pi -e " binmode ARGV; \
-	  s|$(BK_INSTALLRPATH)(/[^ ]*\.la)|$(BK_INSTALLRDIR)\1|g \
-	    if (/^dependency_libs=/);" $(BK_INSTALLRDIR)/$(^F)
-endif # BK_INSTALLRDIR==BK_INSTALLRPATH
+ifneq ($(BK_INSTALLRDIR),$(BK_INSTALLRPATH))
+LIBTOOL_INSTALL_TEST=\
+ case $(BK_INSTALLRDIR) in *$(BK_INSTALLRPATH)) echo OK;; esac
+ifneq ($(shell $(LIBTOOL_INSTALL_TEST)),OK)
+$(error BK_INSTALLDIR must end with $(BK_INSTALLRPATH))
+endif
+endif
 
 ######################################################################
 # Java stuff
@@ -467,17 +432,18 @@ LT_LDLIBS+=$(INSURE_LIBS)
 endif # BK_USING_INSURE==true
 
 ################################################################
-#
-# WARNING -- INSURE++ really really loaths static linking now. (use at your own risk)
-#
-ifeq ($(BK_WANT_STATIC),true)
-LDFLAGS+=$(LINK_STATIC_FLAG)
-endif # BK_WANT_STATIC
+# standard compilation/linking variables
 
 CFLAGS=$(COPTDEBUG)
 CPPFLAGS=$(BK_ALLINCS) $(BK_ALLDEFINES)
 LDFLAGS+=$(BK_ALLLDS)
 LDLIBS=$(BK_ALLLIBS)
+
+# WARNING: INSURE++ really loathes static linking now. (use at your own risk)
+ifeq ($(BK_WANT_STATIC),true)
+LDFLAGS+=$(LINK_STATIC_FLAG)
+LDLIBS+=$(BK_STATIC_LIBS)
+endif # BK_WANT_STATIC
 
 OBJEXT=.$(OBJEXT_CONFIG)
 ifeq ($(strip $(EXEEXT_CONFIG)),)
@@ -560,8 +526,8 @@ BK_DEFINES+=-DUSING_DMALLOC -DDMALLOC_FUNC_CHECK
 endif # BK_USING_DMALLOC
 
 ifeq ($(BK_USING_INSURE),true)
-# it's not called insight any more; use auto-defined __INSURE__
-# Except that it is *not* defined, I have no idea why.
+# It's not called Insight any more; use auto-defined __INSURE__
+# (Except that it is *not* defined, James has no idea why.)
 BK_DEFINES+=-D__INSURE__
 CC=$(INSURE)
 endif # BK_USING_INSURE
@@ -576,7 +542,7 @@ OS_SEARCHPATH=/usr/local/lib /usr/lib /usr/local/gnu/lib
 BK_ALLDEFINES=$(LOCAL_DEFINES) $(GROUP_DEFINES) $(PKG_DEFINES) $(BK_DEFINES) $(OS_DEFINES)
 BK_ALLINCS=$(LOCAL_INCS) $(GROUP_INCS) $(PKG_INCS) $(BK_INCS) $(OS_INCS)
 BK_ALLLDS=$(LOCAL_LDS) $(GROUP_LDS) $(PKG_LDS) $(BK_LDS) $(OS_LDS) $(INSURE_LDS)
-# The insure debug libs are alledgedly supposed to go last.
+# The insure debug libs are allegedly supposed to go last.
 BK_ALLLIBS=$(LOCAL_LIBS) $(GROUP_LIBS) $(PKG_LIBS) $(BK_LIBS) $(PTHREAD_LIBS) $(OS_LIBS) $(AC_LIBS) $(INSURE_DEBUG_LIBS) $(INSURE_LIBS)
 BK_LIBDIR=$(OS_SEARCHPATH) $(patsubst -L%,%,$(filter -L%,$(BK_ALLLDS)))
 BK_RELINKLIBS=$(LOCAL_RELINK_LIBS) $(GROUP_RELINK_LIBS) $(PKG_RELINK_LIBS) $(BK_RELINK_LIBS) $(OS_RELINK_LIBS)
@@ -590,7 +556,7 @@ ETAGS=etags
 
 ######################################################################
 # These are built in to the shell, so you don't need to use them, but
-# they are defined for the use of the excessively paranoid
+# they are defined for the use of the excessively paranoid.
 CD=cd
 ECHO=echo
 
