@@ -1,5 +1,5 @@
 /*				-*- C -*-
- * $Id: libbk_autoconf.h.in,v 1.21 2002/10/16 04:39:49 seth Exp $
+ * $Id: libbk_autoconf.h.in,v 1.22 2002/10/17 21:15:52 jtt Exp $
  *
  * ++Copyright LIBBK++
  *
@@ -39,6 +39,7 @@
 #undef TIME_WITH_SYS_TIME
 #undef HAVE_NET_ETHERNET_H
 #undef HAVE_NETINET_IF_ETHER_H
+#undef HAVE_PATHS_H
 
 #undef HAVE_IN_ADDR_T
 #undef HAVE_SOCKADDR_SA_LEN

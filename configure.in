@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.46 2002/10/16 04:39:49 seth Exp $
+dnl $Id: configure.in,v 1.47 2002/10/17 21:15:52 jtt Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.46 $)dnl
+AC_REVISION($Revision: 1.47 $)dnl
 AC_INIT(Make.bkvariables)
 AC_CONFIG_AUX_DIR(acaux)
 
@@ -52,6 +52,8 @@ AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PATH_PROG(PWDPROG, pawd, pwd)
 
+AC_CHECK_HEADERS(paths.h)
+
 # test for oracle
 echo $ECHO_N "checking for Oracle... $ECHO_C" >&6
 if test x${ORACLE_HOME} = x; then
@@ -76,7 +78,7 @@ AC_PROG_LIBTOOL
 AC_C__FUNC__
 AC_CONSTRUCTORS
 AC_SYS_LARGEFILE
-AC_CHECK_HEADERS(net/ethernet.h netinet/if_ether.h)
+AC_CHECK_HEADERS(net/ethernet.h netinet/if_ether.h paths.h)
 AC_SA_LEN
 AC_FUNC_INET_PTON
 
