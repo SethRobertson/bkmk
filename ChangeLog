@@ -1,3 +1,21 @@
+2003-06-06  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.variables (LIBTOOL_LINK): do this quietly to avoid overflowing 
+	xemacs regex stack
+
+2003-06-04  James Tanis  <jtt@hawking.StevesRUs.sysdetect.com>
+
+	* configure.in, configure: merge from jtt-featurevalue-cache
+
+2003-06-03  Seth Robertson  <seth@hawking.StevesRUs.sysdetect.com>
+
+	* Make.variables: Allow compilation [if not operation] w/o
+	pthreads.  No libtool and bkssl as well...
+
+2003-06-03  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.production: make .a and relink rules work in non-libtool case
+
 2003-06-03  Brian Lindauer  <lindauer@malkmus.sysdetect.com>
 
 	* Make.variables: SSL_LIB_PATH, SSL_INC_PATH, and WANT_SSL.

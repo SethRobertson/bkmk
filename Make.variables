@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.146 2003/06/04 00:36:30 lindauer Exp $
+# $Id: Make.variables,v 1.147 2003/06/06 16:54:36 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -162,7 +162,7 @@ LT_M_LDFLAGS=-module -avoid-version
 
 ifeq ($(BK_WANT_LIBTOOL), true)
 LIBTOOL_COMPILE=$(LIBTOOL) --mode=compile
-LIBTOOL_LINK=$(LIBTOOL) --mode=link
+LIBTOOL_LINK=$(LIBTOOL) --mode=link --quiet
 LIBTOOL_INSTALL=$(LIBTOOL) --mode=install --quiet
 else # BK_WANT_LIBTOOL
 LIBTOOL_COMPILE=
