@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.bkvariables,v 1.24 2002/04/26 20:11:26 dupuy Exp $
+# $Id: Make.bkvariables,v 1.25 2002/04/26 20:15:00 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -28,7 +28,7 @@ ifneq ($(BKMK_VAR_CORRECT),true)
 
 BKMK_VAR_CORRECT = true
 BK_ARCHNAME = $(shell uname -s | tr / - )-$(shell uname -r | sed 's/ .*//')-$(shell uname -m | tr / - )
-BK_OSNAME = $(shell uname -s | tr / - | sed 's/_.*//')-$(shell uname -r | sed 's/\(\.[^.()-]*\)\..*/\1/')
+BK_OSNAME = $(shell uname -s | tr / - | sed 's/_.*//')-$(shell uname -r | sed 's/\(\.[^.()-]*\)[-.].*/\1/')
 
 BK_OSFILE=.config_os_type
 BKMK_OSFILE=$(BKMKDIR)/$(BK_OSFILE)
