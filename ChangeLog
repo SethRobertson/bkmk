@@ -1,3 +1,15 @@
+2002-01-11  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.variables (INSTALL_INCFLAGS): Cygwin install can't handle -p
+	when desired mode is 444 [read-only] so omit -p on Cygwin
+	
+	* Make.bkvariables (BK_OSNAME): CYGWIN_98-4.10-1.3.5(0.47/3/2) ->
+	CYGWIN-1.3
+
+	* configure.in: check for inet_pton function indicating INET6 support
+
+	* libbk_autoconf.h.in (HAVE_inet_pton): conditional test for HAVE_INET6
+
 2002-01-09  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.variables (BK_BKJUNK): remove generated .jar files for clean
