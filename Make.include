@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.include,v 1.20 2002/09/25 15:54:54 dupuy Exp $
+# $Id: Make.include,v 1.21 2003/01/24 07:07:16 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -49,6 +49,10 @@ endif
 
 ifneq ($(strip $(WANT_ORACLE)),)
 BK_WANT_ORACLE=$(WANT_ORACLE)
+endif
+
+ifneq ($(strip $(WANT_POSTGRES)),)
+BK_WANT_POSTGRES=$(WANT_POSTGRES)
 endif
 
 ifneq ($(findstring true,$(WANT_GPROF)$(USING_GPROF)),)
