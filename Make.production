@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.production,v 1.62 2003/07/24 22:59:40 dupuy Exp $
+# $Id: Make.production,v 1.63 2003/07/30 21:25:12 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -211,6 +211,8 @@ endif
 # Java production
 #
 
+ifneq ($(strip $(BK_JAVADIR)),)
+
 # Prevent make from deleting intermediate java and properties symlinks
 .PRECIOUS: $(BK_JAVADIR)/$(BK_JAVA_PKG)/%
 
@@ -328,3 +330,4 @@ $(BK_JAVA_JAR): $(BK_JAVADIR)/$(BK_JAVA_MF) \
 jtest-%: %.ctp
 	$(JTEST) -gtp $(GROUPTOP)/$(PKGSUBDIR).gtp -ctp $< \
 	 $(JTESTOUT) -detail_report_ascii $*.err > /dev/null 2>&1
+endif

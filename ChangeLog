@@ -1,3 +1,7 @@
+2003-07-30  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.production: omit Java productions if BK_JAVADIR undefined: #1810
+
 2003-07-24  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.production ($(BK_JAVA_JAR)): generate index, if possible
