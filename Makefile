@@ -1,3 +1,5 @@
+include Make.config
+
 OSFILE=.config_os_type
 OSNAME = $(shell uname -s | tr / - | sed 's/_.*//')-$(shell uname -r | sed 's/\(\.[^.()-]*\)[-.].*/\1/')
 
@@ -31,11 +33,12 @@ clean nuke:
 
 %.status: ./%ure
 	./configure --disable-fast-install
-	echo "$(OSNAME)" > $(OSFILE) && touch .timestamp
+	echo "$(OSNAME)" > $(OSFILE) && $(TOUCH) .timestamp
 
 .timestamp: *.in config.status
-	@./config.status && touch $@
+	@./config.status && $(TOUCH) $@
 
 config.status: acaux/config.* acaux/ltmain.sh
+
 
 .PHONY: default autoconf clean nuke

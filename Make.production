@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.production,v 1.51 2002/11/12 18:14:49 dupuy Exp $
+# $Id: Make.production,v 1.52 2002/11/26 00:47:12 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -264,7 +264,7 @@ $(BK_JAVA_JAR): $(BK_JAVADIR)/$(BK_JAVA_MF) \
 # doesn't exist. "-run_only static_DBC" runs only the Design by Contract rules
 # (just a few) so that we don't waste much time when generating the .ctp file
 %.ctp: $(BK_JAVADIR)/$(BK_JAVA_PKG)/%.class
-	@if [ -f $@ ]; then touch $@; else \
+	@if [ -f $@ ]; then $(TOUCH) $@; else \
 	$(JTEST) -nogui -gtp $(GROUPTOP)/$(PKGSUBDIR).gtp -ctp_new $@ \
 	  -class_name $(BK_JAVA_PKGDOT).$* -cp "$(BK_JAVA_TESTCP)" \
 	  -silent -run_only static_DBC > /dev/null 2>&1 \

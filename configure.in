@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.66 2002/11/21 22:56:14 jtt Exp $
+dnl $Id: configure.in,v 1.67 2002/11/26 00:47:13 jtt Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.66 $)dnl
+AC_REVISION($Revision: 1.67 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
@@ -36,6 +36,7 @@ AC_PROG_YACC
 AC_PROG_CPP
 AC_PROG_CXXCPP
 AC_PROG_CC_C_O
+AC_PROG_AWK
 
 AC_C_ALIGN_FUNCTIONS
 
@@ -139,6 +140,7 @@ AC_DEV_FD
 AC_PATH_PROG(RM, rm)
 AC_PATH_PROG(FALSE, false)
 AC_PATH_PROG(TRUE, true)
+AC_PATH_PROG(TOUCH, touch)
 AC_PATH_PROG(CP, cp)
 AC_PATH_PROGS(MV, mv cp, $FALSE)
 AC_PATH_PROG(MKDIR, mkdir, $FALSE)
