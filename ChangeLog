@@ -1,3 +1,9 @@
+2002-05-13  James Tanis  <jtt@saint.sysdetect.com>
+
+	* Make.production ($(filter %.la,$(BK_LARGE_LIB))): Need to create
+	install directory before libtool tries to install into it.o
+	($(BK_LARGE_MODULE)): Ditto.
+
 2002-05-13  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.targets (install): need dependency on BK_SIMPLE_SCRIPTS, too
