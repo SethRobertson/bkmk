@@ -1,3 +1,9 @@
+2002-10-08  Matt Miller  <matt@sysdetect.com>
+
+	* Make.variables (BK_JAVA_HELP_PDF): build help pdf
+
+	* Make.targets (actual_install): build help pdf
+
 2002-10-04  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.variables (GCCHWOPT): break out machine-dependent options
