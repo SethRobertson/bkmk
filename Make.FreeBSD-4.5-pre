@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.OpenBSD-2.9-pre,v 1.7 2002/04/03 01:21:58 seth Exp $
+# $Id: Make.FreeBSD-4.5-pre,v 1.1 2002/04/03 01:21:58 seth Exp $
 #
 # ++Copyright LIBBK++
 #

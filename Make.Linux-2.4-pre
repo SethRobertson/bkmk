@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.OpenBSD-2.9-pre,v 1.7 2002/04/03 01:21:58 seth Exp $
+# $Id: Make.Linux-2.4-pre,v 1.1 2002/04/03 01:21:58 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -17,6 +17,4 @@
 # OS-specific Variables
 #
 
-OS_INCS=-I/usr/local/include
-OS_LDS=-L/usr/local/lib
-OS_LIBS=
+LIBINTL=DELETE

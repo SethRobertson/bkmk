@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.66 2002/04/03 00:58:38 jtt Exp $
+# $Id: Make.variables,v 1.67 2002/04/03 01:21:58 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -195,13 +195,18 @@ LIB44BSD=#-l44bsd
 DBM_LIBS=-ldb
 TERMINAL_LIBS=-ltermcap
 MATH_LIBS=-lm
+ifeq (${LIBINTL},DELETE)
+LIBINTL=
+else
+LIBINTL=-lintl
+endif
 
 # BK issues
 ifneq ($(NO_STDBKCCSTUFF),true)
 BK_DEFINES+= $(RESOLVER_DEFINES)
-BK_INCS= $(RESOLVER_INCLUDES) -I/usr/local/include
-BK_LDS= $(RESOLVER_LDS) -L/usr/local/lib
-BK_LIBS= -lbk -ldict -lfsma -lpq -lpopt $(LIBRESOLVER) $(MATH_LIBS)
+BK_INCS= $(RESOLVER_INCLUDES)
+BK_LDS= $(RESOLVER_LDS)
+BK_LIBS= -lbk -ldict -lfsma -lpq -lpopt $(LIBINTL) $(LIBRESOLVER) $(MATH_LIBS)
 endif # NO_STDBKCCSTUFF
 
 # C
