@@ -1,3 +1,9 @@
+2002-09-25  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.include (BK_WANT_ORACLE): set false if you hate Oracle
+
+	* Make.variables (BK_DEFINES): don't add HAVE_ORACLE if not wanted
+
 2002-09-24  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* configure.in: guess at ORACLE_HOME if not set; verify correctness

@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.105 2002/09/18 21:26:09 jtt Exp $
+# $Id: Make.variables,v 1.106 2002/09/25 15:54:54 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -428,7 +428,9 @@ top_builddir=$(BKMKDIR)
 endif # !BK_WANT_LIBTOOL
 
 ifeq ($(HAVE_ORACLE), true)
+ifneq ($(BK_WANT_ORACLE), false)
 BK_DEFINES += -DHAVE_ORACLE
+endif
 endif
 
 ifeq ($(BK_USING_GPROF),true)
