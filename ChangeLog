@@ -1,3 +1,9 @@
+2004-03-15  Seth Robertson  <seth@pearl.sysdetect.com>
+
+	* Make.targets (BK_SUBDIRRULE): Allow certain targets (like tags)
+	to not fail if the subdirectories fail.  Of course, deferred
+	failure would be best, but I am not greedy here.
+
 2004-02-02  James Tanis  <jtt@buscemi.sysdetect.com>
 
 	* Make.override (BK_USING_GPROF): For some reason gprof isn't

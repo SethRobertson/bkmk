@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.targets,v 1.98 2003/12/29 20:02:16 jtt Exp $
+# $Id: Make.targets,v 1.99 2004/03/16 01:31:57 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -34,11 +34,14 @@ endif
 ifeq ($(strip $(BK_ALL_SUBDIR)),)
 BK_SUBDIRRULE= # No sub-directories
 else # BK_SUBDIR
+ifeq ($(strip $(BK_SUBDIRSHORTCUT)),)
+BK_SUBDIRSHORTCUT=false
+endif #!BK_SUBDIRSHORTCUT
 BK_SUBDIRRULE=@								     \
 	for d in $(BK_ALL_SUBDIR); do					     \
 	 if [ -f $$d/GNUmakefile -o					     \
 	     \( -f $$d/Makefile -a ! -f $$d/GNUmakefile.in \) ]; then	     \
-	  PWD=$$PWD/$$d $(MAKE) -C $$d $@ ||				     \
+	  PWD=$$PWD/$$d $(MAKE) -C $$d $@ || $(BK_SUBDIRSHORTCUT) ||	     \
 	   { ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; } \
 	 fi;								     \
 	done; exit $$ERR
@@ -403,10 +406,10 @@ nukectags::
 # path, as that is what [ec]tags sees and uses to compute relative pathnames.
 # <TRICKY>Use "-quotes around TAGOUT so that `-quotes are eval'd here.</TRICKY>
 etags:: nukeetags
-	$(MAKE) 'TAGCMD=$(ETAGS)' "TAGOUT=`/bin/pwd`/TAGS" subtags
+	$(MAKE) 'BK_SUBDIRSHORTCUT=true' 'TAGCMD=$(ETAGS)' "TAGOUT=`/bin/pwd`/TAGS" subtags
 
 ctags:: nukectags
-	$(MAKE) 'TAGCMD=$(CTAGS)' "TAGOUT=`/bin/pwd`/tags" subtags
+	$(MAKE) 'BK_SUBDIRSHORTCUT=true' 'TAGCMD=$(CTAGS)' "TAGOUT=`/bin/pwd`/tags" subtags
 
 tags:: etags
 
