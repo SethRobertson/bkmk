@@ -7,9 +7,9 @@
 ## BAKA
 $BAKAHDR = <<EOF;
 #if !defined(lint) && !defined(__INSURE__)
-static char libbk__rcsid[] = "\$Id\$";
-static char libbk__copyright[] = "Copyright (c) 2002";
-static char libbk__contact[] = "<projectbaka\@baka.org>";
+static const char libbk__rcsid[] = "\$Id\$";
+static const char libbk__copyright[] = "Copyright (c) 2002";
+static const char libbk__contact[] = "<projectbaka\@baka.org>";
 #endif /* not lint */
 EOF
 
