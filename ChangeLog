@@ -1,3 +1,7 @@
+2004-07-30  James Tanis  <jtt@buscemi.sysdetect.com>
+
+	* configure.in: Test if install supports -p.
+
 2004-07-30  James Tanis  <jtt@fort.tanis.org>
 
 	* Make.bkvariables (FD_DEV): tee /dev/fd/2 2>/dev/null does not do

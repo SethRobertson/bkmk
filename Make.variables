@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.190 2004/07/16 00:24:15 dupuy Exp $
+# $Id: Make.variables,v 1.191 2004/07/30 19:32:30 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -160,7 +160,7 @@ else # on CygWin, install -p on read-only files fails
 INSTALL_INCFLAGS=-m 444
 endif
 INSTALL_LIBFLAGS=$(INSTALL_OTHERFLAGS)
-INSTALL_OTHERFLAGS=-p -m 664
+INSTALL_OTHERFLAGS=$(INSTALL_PRESERVE) -m 664
 
 
 # Yacc
