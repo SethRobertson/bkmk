@@ -1,8 +1,9 @@
 .config_os_type
 .timestamp
 Make.config
-confdefs.h
-config.cache
-config.log
-config.status
+confcache*
+confdef*
+config.*
+conftest.*
+lex.yy.c
 libbk_autoconf.h

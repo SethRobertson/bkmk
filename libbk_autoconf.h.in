@@ -1,5 +1,5 @@
 /*				-*- C -*-
- * $Id: libbk_autoconf.h.in,v 1.3 2002/01/11 10:06:05 dupuy Exp $
+ * $Id: libbk_autoconf.h.in,v 1.4 2002/01/15 18:02:04 dupuy Exp $
  *
  * ++Copyright LIBBK++
  *
@@ -25,9 +25,23 @@
 #undef HAVE_NETINET_IF_ETHER_H
 #undef HAVE_inet_pton
 
+/// Search path separator for PATH in shell commands
+#define PATH_SEPARATOR ":"
 
 #if defined(_WIN32) && !defined(__CYGWIN32__)
-#define BK_MINGW32 1		///< 1 if Win32 system but not using CygWin
+/// defined 1 if Win32 system but not using CygWin
+#define BK_MINGW32 1
+#define BK_PATH_SEPARATOR ";"
+#else
+/// Search path separator for PATH environment variable
+#define BK_PATH_SEPARATOR PATH_SEPARATOR
+#endif
+
+#if defined(_WIN32)
+#define BK_SYSPATH_SEPARATOR ";"
+#else
+/// Search path separator for environment variables other than PATH
+#define BK_SYSPATH_SEPARATOR ":"
 #endif
 
 #endif /* _libbk_autoconf_h_ */

@@ -1,5 +1,5 @@
 #
-# $Id: configure.in,v 1.12 2002/01/11 10:06:05 dupuy Exp $
+# $Id: configure.in,v 1.13 2002/01/15 18:02:04 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -15,7 +15,7 @@
 #
 # Production rules--convert "source" to "targets"
 #
-AC_REVISION($Revision: 1.12 $)dnl
+AC_REVISION($Revision: 1.13 $)dnl
 AC_INIT(Make.bkvariables)
 AC_CONFIG_AUX_DIR(acaux)
 
@@ -31,9 +31,6 @@ if test "$CC" "!=" "gcc"; then
    echo "You have been warned."
    echo
 fi
-
-AC_CHECK_HEADERS(net/ethernet.h netinet/if_ether.h)
-AC_CHECK_FUNCS(inet_pton)
 
 AC_PROG_CXX
 AC_PROG_LEX
@@ -69,6 +66,10 @@ AC_PATH_PROGS(BROWSER,browser netscape konqueror mozilla iexplore.exe lynx,
 	      $FALSE, $PATH:/cygdrive/c/progra~1/intern~1)
 
 AC_PATH_PROG(AR,ar)
+
+AC_CHECK_HEADERS(net/ethernet.h netinet/if_ether.h)
+AC_CHECK_FUNCS(inet_pton)
+AC_DEFINE_UNQUOTED(PATH_SEPARATOR, "$PATH_SEPARATOR")
 
 AC_CONFIG_HEADER(libbk_autoconf.h)
 

@@ -1,3 +1,13 @@
+2002-01-15  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* configure.in: set PATH_SEPARATOR in config header
+
+	* libbk_autoconf.h.in (PATH_SEPARATOR): from autoconf
+	(BK_PATH_SEPARATOR): from autoconf, except if MINGW32
+	(BK_SYSPATH_SEPARATOR): hardcoded by system type
+
+	* .cvsignore: ignore configure-generated temporary files
+
 2002-01-11  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.variables (INSTALL_INCFLAGS): Cygwin install can't handle -p
