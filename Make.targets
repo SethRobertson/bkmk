@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.targets,v 1.93 2003/10/08 04:26:16 dupuy Exp $
+# $Id: Make.targets,v 1.94 2003/10/09 21:48:19 zz Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -486,7 +486,7 @@ $(BK_INSTALLDOCDIR)/doxygen/Doxyfile:
 # database.
 doxygen: $(BK_INSTALLDOCDIR)/doxygen/Doxyfile
 	-@$(ECHO) "Rebuilding doxygen database in $(BK_INSTALLDOCDIR)/doxygen"
-	$(RM) -rf $(BK_INSTALLDOCDIR)/doxygen/[a-z]*
+	$(RM) -r $(BK_INSTALLDOCDIR)/doxygen/[a-z]*
 	$(DOXYGEN) $(BK_INSTALLDOCDIR)/doxygen/Doxyfile \
 	 > $(BK_INSTALLDOCDIR)/doxygen/.lastbuild 2>&1
 
