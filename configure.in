@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.61 2002/11/18 22:06:46 dupuy Exp $
+dnl $Id: configure.in,v 1.62 2002/11/18 23:01:05 dupuy Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.61 $)dnl
+AC_REVISION($Revision: 1.62 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
@@ -114,7 +114,7 @@ dnl Use AC_SEARCH_LIBS() function, but don't update $LIBS if pthreads is found
 saved_LIBS=$LIBS
 AC_CHECK_LIB([pthread],[pthread_create],[HAVE_PTHREADS=true],[HAVE_PTHREADS=false])
 AC_SUBST(HAVE_PTHREADS)
-LIBS=$HOLD_LIBS
+LIBS=$saved_LIBS
 
 AC_SEARCH_LIBS([gethostbyname2],[resolv],AC_DEFINE(HAVE_GETHOSTBYNAME2))
 
