@@ -1,3 +1,11 @@
+2002-09-13  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.production: remove dependencies on JAVA directories to avoid
+	unnecessary JAR regeneration
+	(.SUFFIXES): avoid stupid recursion on images dependencies
+
+	* Make.targets (.PHONY): add all, actual_install to phony targets
+
 2002-09-05  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.include (BK_WANT_HELP): set if WANT_HELP is non-empty

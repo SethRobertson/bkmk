@@ -1,6 +1,6 @@
 # -*- makefile -*-
 # 
-# $Id: Make.targets,v 1.65 2002/09/07 21:45:25 dupuy Exp $
+# $Id: Make.targets,v 1.66 2002/09/13 19:04:40 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -465,6 +465,7 @@ $(BK_REALTOP)/bkmk/.timestamp:
 #
 # Prevent targets from being files
 #
-.PHONY : DEFAULT default nuke clean neat depend nukedepend dotdepend \
-	build install nukeetags nukectags etags ctags tags subtags preprocess \
+.PHONY : DEFAULT all default nuke clean neat depend nukedepend dotdepend \
+	build install actual_install \
+	nukeetags nukectags etags ctags tags subtags preprocess \
 	doxygen viewdox test help

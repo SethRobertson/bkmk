@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.production,v 1.47 2002/08/25 20:19:53 seth Exp $
+# $Id: Make.production,v 1.48 2002/09/13 19:04:40 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -205,23 +205,29 @@ $(subst .class,.cl%ss,$(BK_JAVA_PKG_TCLASS)): \
 	@echo $(JAVAC) $(JAVACFLAGS) -cp "$(BK_JAVA_CPATH)" $(BK_JAVA_TEST)
 	@$(JAVAC) $(JAVACFLAGS) -classpath "$(BK_JAVA_TESTCP)" $^
 
-$(BK_JAVADIR)/$(BK_JAVA_PKG)/%: % $(BK_JAVADIR)/$(BK_JAVA_PKG)/.
+$(BK_JAVADIR)/$(BK_JAVA_PKG)/%: %
+	@$(MKDIR) $(BK_JAVADIR)/$(BK_JAVA_PKG)
 	@$(LN_S) -f $(PWD)/$< $@
 	@test ! -L $@ && test ! $@ -ef $< 2>/dev/null && chmod -w $@ || true
 
-$(BK_JAVADIR)/%: $(GROUPTOP)/$(LOCALE)/% $(BK_JAVADIR)/.
+$(BK_JAVADIR)/%: $(GROUPTOP)/$(LOCALE)/%
+	@$(MKDIR) $(BK_JAVADIR)
 	@$(LN_S) -f $(PWD)/$< $@
 	@test ! -L $@ && test ! $@ -ef $< 2>/dev/null && chmod -w $@ || true
 
-$(BK_JAVADIR)/%: $(GROUPTOP)/% $(patsubst %,$(BK_JAVADIR)/%/.,$(IMAGES))
+.SUFFIXES: .png .jpg .jpeg .gif
+
+$(BK_JAVADIR)/%: $(GROUPTOP)/%
+	@$(MKDIR) $(BK_JAVADIR)
 	@$(LN_S) -f $(PWD)/$< $@
 	@test ! -L $@ && test ! $@ -ef $< 2>/dev/null && chmod -w $@ || true
 
-$(BK_JAVADIR)/%.MF: %.MF $(BK_JAVADIR)/.
+$(BK_JAVADIR)/%.MF: %.MF
+	@$(MKDIR) $(BK_JAVADIR)/$(BK_JAVA_PKG)
 	@$(LN_S) -f $(PWD)/$< $@
 	@test ! -L $@ && test ! $@ -ef $< 2>/dev/null && chmod -w $@ || true
 
-$(BK_JAVA_JAR): $(BK_JAVADIR)/$(BK_JAVA_PKG)/. $(BK_JAVADIR)/$(BK_JAVA_MF) \
+$(BK_JAVA_JAR): $(BK_JAVADIR)/$(BK_JAVA_MF) \
 		$(BK_JAVA_PKG_SRC) $(BK_JAVA_PKG_CLASS) \
 		$(BK_JAVA_PKG_AUX) $(BK_JAVA_PKG_LOCALE) $(BK_JAVA_PKG_IMAGES)
 	@echo $(JAR) $(JARFLAGS) $@ $(BK_JAVA_MF) ...
