@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.53 2004/09/22 07:38:01 dupuy Exp $
+# $Id: aclocal.m4,v 1.54 2005/01/27 08:13:37 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -554,22 +554,54 @@ fi
 
 # AC_DEV_FD
 # -----------------
-# Determine whether /dev/fd/ is a directory allowing you to reopen file
-# descriptors.  BSD and Solaris implement this with character devices, which
-# works with file descriptors that are sockets, unlinked files, etc. but Linux,
-# for some reason, implements this as a directory of symbolic links, which
-# don't work with sockets, unlinked files, etc.  You can test for basic /dev/fd
-# support with #ifdef HAVE_DEV_FD, and for true /dev/fd support with #if.
+# Determine if /dev/fd/ is a directory allowing you to reopen file descriptors.
 #
+# You can test for basic /dev/fd support with #ifdef HAVE_DEV_FD; the
+# definition of HAVE_DEV_FD; the value of HAVE_DEV_FD will vary depending on
+# the implementation.
+#
+# The original /dev/fd/ was implemented with a fixed set of character devices
+# that would dup() the appropriate fd when opened; this allows open() with any
+# file descriptor, but stat() and readdir("/dev/fd") aren't useful. For such
+# systems HAVE_DEV_FD == 1.
+#
+# Some systems only support /dev/{stdin,stdout,stderr} - notably, BSD with
+# devfs only has /dev/fd/[012].  On such systems HAVE_DEV_FD will not be
+# defined, due to the limitation to the first three file descriptors.
+#
+# Later implementations, such as Plan 9, Linux kernels up to 1.3, and the (BSD)
+# fdescfs filesystem, implement /dev/fd/ (or /proc/self/fd) as a virtual
+# directory with only the actual descriptors, also turning stat() calls into
+# the corresponding fstat(). For such systems HAVE_DEV_FD == 2.
+#
+# Linux 1.3 and later kernels, for some reason, implement it with a virtual
+# directory of symbolic links that don't allow open() for sockets, unlinked
+# files or files (notably the ttys of setuid processes) whose permissions don't
+# allow the current user to access them.  Although the open() support is
+# semi-broken, stat() and readdir("/dev/fd") are useful, and lstat() can
+# actually be used to see read-write status of the descriptor. For such systems
+# HAVE_DEV_FD == 0, due to the broken semantics for open().
+#
+# NOTE: be very sure to use /bin/sh (or at least /bin/test) when testing this
+# module, since some shells (notably bash) are "clever" about the filenames
+# /dev/fd/* and handle them specially in their builtin test function, making it
+# appear that virtual directory support exists when it actually does not.
+
 AC_DEFUN([AC_DEV_FD],
 [AC_CACHE_CHECK([for /dev/fd/ file descriptor support],
                 [ac_cv_dev_fd],
  [AC_TRY_RUN([int main() {exit(0);}],
-   [if test -r /dev/fd/0; then
-      if test -c /dev/fd/31; then
-	ac_cv_dev_fd='character device'
+   [if test -w /dev/fd/1 >/dev/null; then
+      if (test -c /dev/fd/9 9>&-) 9>/dev/null; then
+	ac_cv_dev_fd='character devices'
+      elif test -c /dev/fd/2 2>&-; then
+	ac_cv_dev_fd='stdin/out/err devices'
+      elif test -L /dev/fd/0 < /dev/null; then
+	ac_cv_dev_fd='symbolic link directory'
+      elif test -d /dev/fd/9 9</; then
+	ac_cv_dev_fd='virtual directory'
       else
-	ac_cv_dev_fd='symbolic link'
+	ac_cv_dev_fd='unknown'
       fi
     else
       ac_cv_dev_fd='no'
@@ -577,11 +609,13 @@ AC_DEFUN([AC_DEV_FD],
 	     [AC_MSG_WARN([something is very broken with ac_try_run])],
 	     [ac_cv_dev_fd='cross-compilation assumes not'])])
  AH_VERBATIM(HAVE_DEV_FD,
-[/* Defined 0 if /dev/fd/0 is symlink, 1 if true device, else undefined. */
+[/* 0 if /dev/fd/* are symlinks, 1 if chardevs, 2 if inodes, else undefined. */
 @%:@undef HAVE_DEV_FD])dnl
 case "$ac_cv_dev_fd" in
   symb*) AC_DEFINE(HAVE_DEV_FD, 0) ;;
   char*) AC_DEFINE(HAVE_DEV_FD, 1) ;;
+  virt*) AC_DEFINE(HAVE_DEV_FD, 2) ;;
+  std*) AC_MSG_WARN([only /dev/std* support; with devfs, need fdescfs mount]);;
 esac
 ])# AC_DEV_FD
 

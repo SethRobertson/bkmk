@@ -1,3 +1,8 @@
+2005-01-27  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* aclocal.m4 (AC_DEV_FD): rework to distinguish fdescfd-style /dev/fd/
+	and ensure that no dependencies on compilation environment screw us
+	
 2005-01-11  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.targets: exclude CVS directories from replication, along with a

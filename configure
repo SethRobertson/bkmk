@@ -27402,11 +27402,17 @@ if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
   ac_status=$?
   echo "$as_me:$LINENO: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
-  if test -r /dev/fd/0; then
-      if test -c /dev/fd/31; then
-	ac_cv_dev_fd='character device'
+  if test -w /dev/fd/1 >/dev/null; then
+      if (test -c /dev/fd/9 9>&-) 9>/dev/null; then
+	ac_cv_dev_fd='character devices'
+      elif test -c /dev/fd/2 2>&-; then
+	ac_cv_dev_fd='stdin/out/err devices'
+      elif test -L /dev/fd/0 < /dev/null; then
+	ac_cv_dev_fd='symbolic link directory'
+      elif test -d /dev/fd/9 9</; then
+	ac_cv_dev_fd='virtual directory'
       else
-	ac_cv_dev_fd='symbolic link'
+	ac_cv_dev_fd='unknown'
       fi
     else
       ac_cv_dev_fd='no'
@@ -27435,6 +27441,12 @@ _ACEOF
 #define HAVE_DEV_FD 1
 _ACEOF
  ;;
+  virt*) cat >>confdefs.h <<\_ACEOF
+#define HAVE_DEV_FD 2
+_ACEOF
+ ;;
+  std*) { echo "$as_me:$LINENO: WARNING: only /dev/std* support; with devfs, need fdescfs mount" >&5
+echo "$as_me: WARNING: only /dev/std* support; with devfs, need fdescfs mount" >&2;};;
 esac
 
 echo "$as_me:$LINENO: checking for /proc/ process status" >&5
