@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.28 2002/11/14 05:00:42 dupuy Exp $
+# $Id: aclocal.m4,v 1.29 2002/11/19 22:27:40 lindauer Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -262,6 +262,41 @@ AC_DEFUN([AC_SA_LEN],
   fi
  fi
 ])# AC_SA_LEN
+
+
+#
+# The BSD and Solaris versions of IN6_IS_ADDR_MULTICAST take a pointer to
+# a struct in6_addr.  The Linux version takes the s6_addr from the 
+# struct in6_addr.  Figure out which version we have.
+#
+# AC_IN6_MULTICAST
+# ---------
+AC_DEFUN([AC_IN6_MULTICAST],
+[AC_CACHE_CHECK(whether IN6_IS_ADDR_MULTICAST takes an s6_addr, ac_cv_multicast_test_takes_s6_addr,
+  [AC_TRY_COMPILE(
+    [#include <netinet/in.h>
+    ],
+    [struct in6_addr in; IN6_IS_ADDR_MULTICAST(in.s6_addr); return(0)],
+    ac_cv_multicast_test_takes_s6_addr=yes,
+    ac_cv_multicast_test_takes_s6_addr=no)
+  ])
+  if test $ac_cv_multicast_test_takes_s6_addr = yes; then
+    AC_DEFINE(IN6_MULTICAST_TAKES_S6_ADDR)
+  else
+    AC_CACHE_CHECK(whether IN6_IS_ADDR_MULTICAST takes a struct in6_addr ptr, ac_cv_multicast_test_takes_in6_addr,
+      [AC_TRY_COMPILE(
+        [#include <netinet/in.h>
+        ],
+        [struct in6_addr in; IN6_IS_ADDR_MULTICAST(&in); return(0);],
+        ac_cv_multicast_test_takes_in6_addr=yes,
+        ac_cv_multicast_test_takes_in6_addr=no)
+      ])
+    if test $ac_cv_multicast_test_takes_in6_addr=yes; then
+      AC_DEFINE(IN6_MULTICAST_TAKES_IN6_ADDR)
+    fi
+  fi
+])
+
 
 
 # AC_STACKDIRECTION

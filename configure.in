@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.62 2002/11/18 23:01:05 dupuy Exp $
+dnl $Id: configure.in,v 1.63 2002/11/19 22:27:40 lindauer Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.62 $)dnl
+AC_REVISION($Revision: 1.63 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
@@ -93,6 +93,7 @@ AC_CHECK_HEADERS(sys/capability.h)
 AC_SA_LEN
 AC_INADDR_T
 AC_FUNC_INET_PTON
+AC_IN6_MULTICAST
 
 AC_FUNC_MKTIME
 if test $ac_cv_func_working_mktime = no; then
