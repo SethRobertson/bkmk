@@ -1,4 +1,4 @@
-# $Id: Make.variables,v 1.8 2001/06/19 03:12:12 jtt Exp $
+# $Id: Make.variables,v 1.9 2001/06/19 03:19:27 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -30,7 +30,7 @@ ifneq ($(BK_CONFIG_OS_TYPE),$(BK_OSNAME))
 # tty. BTW: Note the use of "rm". Since we are on an configured arch., this
 # could technically fail, but it's pretty unlikely.
 #
-BK_DUMMY:=$(shell (cd $(BK_BKMK_DIR); rm config.cache; ./configure; echo "$(BK_OSNAME)" > .config_os_type)>/dev/tty)
+BK_DUMMY:=$(shell (cd $(BK_BKMK_DIR); rm config.cache; ./configure; echo "$(BK_OSNAME)" > .config_os_type)2>/dev/null >/dev/tty)
 endif
 #
 ################################################################
