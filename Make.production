@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.production,v 1.42 2002/07/26 07:32:13 dupuy Exp $
+# $Id: Make.production,v 1.43 2002/07/29 18:58:38 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -77,6 +77,7 @@ Make%:
 # we do in Make.targets; see the WARNING there for more details.</WARNING>
 #
 
+ifeq ($(BK_WANT_LIBTOOL),true)
 EDIT_LT_PROGLINK=\
 	if [ $(BK_INSTALLRDIR) != $(BK_INSTALLRPATH) ]; then \
 	  $(PERL) -pi -e " \
@@ -85,10 +86,14 @@ EDIT_LT_PROGLINK=\
 	    s|([,])$(BK_INSTALLRDIR)|\1$(BK_INSTALLRPATH)|g \
 	      if (/^relink_command=/);"  $@; \
 	fi
+else
+EDIT_LT_PROGLINK=
+endif
 
 #
 # Simple program production
 #
+ifeq ($(BK_WANT_LIBTOOL),true)
 ifeq ($(BK_USING_INSURE),true)
 # Insure++ often generates exceedingly bogus errors when it compiles and links
 # in a single command, so make the dependency on the object file and link that.
@@ -100,7 +105,18 @@ $(BK_SIMPLE_INTERNALPROGS) $(BK_SIMPLE_PROGS): %: %.c $(filter -l%,$(BK_ALLLIBS)
 	$(LTLD) $(LINK.c) $(LT_LDFLAGS) -o $@ $@.c $(LDLIBS) -rpath $(BK_INSTALLRPATH)
 	@$(EDIT_LT_PROGLINK)
 endif
-
+else
+ifeq ($(BK_USING_INSURE),true)
+# Insure++ often generates exceedingly bogus errors when it compiles and links
+# in a single command, so make the dependency on the object file and link that.
+$(BK_SIMPLE_INTERNALPROGS) $(BK_SIMPLE_PROGS): %: %$(OBJEXT) $(filter -l%,$(BK_ALLLIBS))
+# [may not need rpath for insure-linked programs; let's see if it helps]
+	$(LTLD) $(LINK.c) $(LT_LDFLAGS) -o $@ $@$(OBJEXT) $(LDLIBS)
+else
+$(BK_SIMPLE_INTERNALPROGS) $(BK_SIMPLE_PROGS): %: %.c $(filter -l%,$(BK_ALLLIBS))
+	$(LTLD) $(LINK.c) $(LT_LDFLAGS) -o $@ $@.c $(LDLIBS)
+endif
+endif
 #
 # Larger program production
 #
@@ -108,9 +124,14 @@ BK_LARGE_OBJ:=$(patsubst %.c,%$(OBJEXT),$(BK_LARGE_SRC))
 BK_LARGE_OBJ:=$(patsubst %.y,%.tab$(OBJEXT),$(BK_LARGE_OBJ))
 BK_LARGE_OBJ:=$(patsubst %.l,%$(OBJEXT),$(BK_LARGE_OBJ))
 
+ifeq ($(BK_WANT_LIBTOOL),true)
 $(BK_LARGE_INTERNALPROG) $(BK_LARGE_PROG): $(BK_LARGE_OBJ) $(filter -l%,$(BK_ALLLIBS))
 	$(LTLD) $(LINK.c) $(LT_LDFLAGS) -o $@ $(BK_LARGE_OBJ) $(LDLIBS) -rpath $(BK_INSTALLRPATH)
 	@$(EDIT_LT_PROGLINK)
+else
+$(BK_LARGE_INTERNALPROG) $(BK_LARGE_PROG): $(BK_LARGE_OBJ) $(filter -l%,$(BK_ALLLIBS))
+	$(LTLD) $(LINK.c) $(LT_LDFLAGS) -o $@ $(BK_LARGE_OBJ) $(LDLIBS)
+endif
 
 #
 # Large library production
