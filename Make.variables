@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.34 2001/12/06 01:01:50 dupuy Exp $
+# $Id: Make.variables,v 1.35 2001/12/06 07:10:56 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -32,8 +32,8 @@ BK_NEATSTUFF=$(BK_LOCALJUNK) $(BK_GROUPJUNK) $(BK_PKGJUNK) $(BK_BKJUNK) $(BK_STD
 BK_CLEANSTUFF=$(BK_NEATSTUFF) $(BK_LOCALCLEANJUNK) $(BK_GROUPCLEANJUNK) $(BK_PKGCLEANJUNK) $(BK_BKCLEANJUNK)
 BK_NUKESTUFF=$(BK_CLEANSTUFF) $(BK_NUKEJUNK) $(BK_LOCALNUKEJUNK) $(BK_GROUPNUKEJUNK) $(BK_PKGNUKEJUNK) $(BK_BKNUKEJUNK)
 BK_BKJUNK=$(BK_SIMPLE_PROGS) $(BK_LARGE_PROG) $(BK_LARGE_LIB) $(BK_SIMPLE_INTERNALPROGS) $(BK_LARGE_INTERNALPROG) $(BK_LARGE_INTERNALLIB)
-BK_STDJUNK=*.o *.a core tca.log tca.map .inslog _1001.out a.out mon.out *.core *.class
-BK_BKCLEANJUNK=.depend tags TAGS
+BK_STDJUNK=*.o *.a core tca.log tca.map .inslog _1001.out a.out mon.out *.core *.class *.err
+BK_BKCLEANJUNK=.depend tags TAGS *.rpt
 BK_BKNUKEJUNK=.\\\#* \\\#* *.rej *.orig *~
 
 
@@ -121,15 +121,19 @@ BK_JAVA_MF:=$(patsubst %.jar,%.MF,$(BK_JAVA_JAR))
 # Jtest stuff
 JTEST=/usr/local/parasoft/bin/jtest
 
+JTESTERR={ $(SED) -n '/^ERRORS/,/^Class Metrics:/p' $*.err && false; }
+
 ifeq ($(DISPLAY),)
 JTESTOUT=-nogui
 endif
 ifeq ($(JTESTUI),)
 JTESTOUT=-nogui
 endif
-# don't be nuking generated .ctp files when user may have tweaked them
+
 ifeq ($(JTESTOUT),)
-.PRECIOUS: .ctp
+JTESTERR=true
+# don't be nuking generated .ctp files when user may have tweaked them
+.PRECIOUS: %.ctp
 endif
 
 BK_JAVA_JTEST:=$(patsubst %.java,%.rpt,$(BK_JAVA_SRC))

@@ -1,3 +1,12 @@
+2001-12-06  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.production (%.rpt): use JTESTERR for -nogui error extraction
+
+	* Make.variables (.PRECIOUS): add % to make %.ctp precious if
+	jtest gui is used
+	(BK_STDJUNK,BK_CLEANJUNK): get rid of *.err, *.rpt
+	(JTESTERR): ignore *.err file if JTESTUI=true
+
 2001-12-05  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.targets (jtest): new target, linked to test if java present

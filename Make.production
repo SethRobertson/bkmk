@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.production,v 1.16 2001/12/06 01:01:50 dupuy Exp $
+# $Id: Make.production,v 1.17 2001/12/06 07:10:56 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -145,5 +145,5 @@ $(BK_JAVA_JAR): $(BK_JAVADIR)/$(BK_JAVA_PKG)/. $(BK_JAVADIR)/$(BK_JAVA_MF) \
 	  -nogui -detail_report_html $*.htm > /dev/null 2>&1 \
 	 || $(JTEST) -gtp $(GROUPTOP)/$(PKGSUBDIR).gtp -ctp $< -silent \
 	     $(JTESTOUT) -detail_report_ascii $*.err > /dev/null 2>&1 \
-	 || { sed -n '/^ERRORS/,/^Class Metrics:/p' $*.err && false ; }
+	 || $(JTESTERR)
 	@mv $*.htm $@
