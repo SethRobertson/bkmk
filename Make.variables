@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.55 2002/02/06 15:05:01 jtt Exp $
+# $Id: Make.variables,v 1.56 2002/02/07 22:31:09 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -196,7 +196,7 @@ ifneq ($(NO_STDBKCCSTUFF),true)
 BK_DEFINES= $(RESOLVER_DEFINES)
 BK_INCS= $(RESOLVER_INCLUDES)
 BK_LDS= $(RESOLVER_LDS)
-BK_LIBS= -lbk -ldict -lfsma -lpq -lpopt $(LIBRESOLVER)
+BK_LIBS= -lbk -ldict -lfsma -lpq -lpopt $(LIBRESOLVER) $(MATH_LIBS)
 endif # NO_STDBKCCSTUFF
 
 # C

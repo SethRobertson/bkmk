@@ -1,3 +1,7 @@
+2002-02-07  James Tanis  <jtt@saint.sysdetect.com>
+
+	* Make.variables (BK_LDS): Add math.
+
 2002-02-06  larry ogrodnek  <ldog@sysdetect.com>
 
 	* Make.targets: BK_WANT_C=false will disable all C targets.
