@@ -1,6 +1,6 @@
 # -*- makefile -*-
 # 
-# $Id: Make.targets,v 1.51 2002/07/15 18:31:25 dupuy Exp $
+# $Id: Make.targets,v 1.52 2002/07/24 21:16:09 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -250,10 +250,10 @@ ifneq ($(strip $(BK_INSTALLLIBDIR)),)
 ifneq ($(strip $(BK_LARGE_LIB)),)
 ifneq ($(filter %.la,$(BK_LARGE_LIB)),)
 	@if [ $^ != $(BK_INSTALLRPATH)/$(^F) ]; then \
-	  echo $(MKDIR) $(BK_INSTALLRPATH); \
-	  $(MKDIR) $(BK_INSTALLRPATH); \
-	  echo $(LIBTOOL_INSTALL) $(INSTALL) $(INSTALL_LIBFLAGS) $^ $(BK_INSTALLRPATH); \
-	  $(LIBTOOL_INSTALL) $(INSTALL) $(INSTALL_LIBFLAGS) $^ $(BK_INSTALLRPATH); \
+	  echo $(MKDIR) $(BK_INSTALLRPATH_MKDIR); \
+	  $(MKDIR) $(BK_INSTALLRPATH_MKDIR) >/dev/null 2>&1; \
+	  echo $(LIBTOOL_INSTALL) $(INSTALL) $(INSTALL_LIBFLAGS) $^ $(BK_INSTALLRPATH_INSTALL); \
+	  $(LIBTOOL_INSTALL) $(INSTALL) $(INSTALL_LIBFLAGS) $^ $(BK_INSTALLRPATH_INSTALL); \
 	fi
 else # non-libtool installation without absolute path
 	@if [ $^ != $(BK_INSTALLLIBDIR)/$(^F) ]; then \
@@ -269,8 +269,8 @@ endif # BK_INSTALLLIBDIR
 actual_install:: $(BK_LARGE_MODULE)
 ifneq ($(strip $(BK_INSTALLLIBDIR)),)
 ifneq ($(strip $(BK_LARGE_MODULE)),)
-	$(MKDIR) $(BK_INSTALLRPATH)
-	$(LIBTOOL_INSTALL) $(INSTALL) $(INSTALL_LIBFLAGS) $^ $(BK_INSTALLRPATH)
+	-@$(MKDIR) $(BK_INSTALLRPATH_MKDIR) >/dev/null 2>&1
+	$(LIBTOOL_INSTALL) $(INSTALL) $(INSTALL_LIBFLAGS) $^ $(BK_INSTALLRPATH_INSTALL)
 endif # BK_LARGE_MODULE
 endif # BK_INSTALLLIBDIR
 

@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.production,v 1.39 2002/07/13 04:40:51 jtt Exp $
+# $Id: Make.production,v 1.40 2002/07/24 21:16:09 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -65,7 +65,7 @@ $(BK_SIMPLE_INTERNALPROGS) $(BK_SIMPLE_PROGS): %: %$(OBJEXT) $(filter -l%,$(BK_A
 	$(LTLD) $(LINK.c) $(LT_LDFLAGS) -o $@ $@$(OBJEXT) $(LDLIBS)
 else
 $(BK_SIMPLE_INTERNALPROGS) $(BK_SIMPLE_PROGS): %: %.c $(filter -l%,$(BK_ALLLIBS))
-	$(LTLD) $(LINK.c) $(LT_LDFLAGS) -o $@ $@.c $(LDLIBS)
+	$(LTLD) $(LINK.c) $(LT_LDFLAGS) -o $@ $@.c $(LDLIBS) -rpath $(BK_INSTALLRPATH_LINKPROG)
 endif
 
 #
@@ -102,14 +102,14 @@ $(filter %.a,$(BK_LARGE_LIB)): $(BK_LARGE_LIBOBJ)
 # libs that will get included in the generated shared library.
 ifeq ($(BK_WANT_LIBTOOL),true)
 $(filter %.la,$(BK_LARGE_LIB)): $(BK_LARGE_LIBOBJ)
-	-@$(MKDIR) $(BK_INSTALLRPATH) >/dev/null 2>&1
+	-@$(MKDIR) $(BK_INSTALLRPATH_MKDIR) >/dev/null 2>&1
 	$(LIBTOOL_LINK) $(LINK.c) $(LT_LDFLAGS) -o $@ $^ $(LT_LDLIBS) \
-	 -rpath $(BK_INSTALLRPATH)
+	 -rpath $(BK_INSTALLRPATH_LINKLIB)
 
 $(BK_LARGE_MODULE): $(BK_LARGE_LIBOBJ)
-	-@$(MKDIR) $(BK_INSTALLRPATH) >/dev/null 2>&1
+	-@$(MKDIR) $(BK_INSTALLRPATH_MKDIR) >/dev/null 2>&1
 	$(LIBTOOL_LINK) $(LINK.c) $(LT_M_LDFLAGS) -o $@ $^ $(LT_LDLIBS) \
-	 -rpath $(BK_INSTALLRPATH)
+	 -rpath $(BK_INSTALLRPATH_LINKPROG)
 
 else
 $(BK_LARGE_MODULE): $(BK_LARGE_LIBOBJ)
