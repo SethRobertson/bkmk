@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.35 2002/07/26 07:32:13 dupuy Exp $
+dnl $Id: configure.in,v 1.36 2002/08/23 20:42:18 lindauer Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.35 $)dnl
+AC_REVISION($Revision: 1.36 $)dnl
 AC_INIT(Make.bkvariables)
 AC_CONFIG_AUX_DIR(acaux)
 
@@ -42,6 +42,16 @@ AC_PROG_CC_C_O
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PATH_PROG(PWDPROG, pawd, pwd)
+
+# test for oracle
+if test x${ORACLE_HOME} = x; then
+  export HAVE_ORACLE=false
+else
+  AC_DEFINE(HAVE_ORACLE)
+  export HAVE_ORACLE=true
+  AC_SUBST(ORACLE_HOME)
+fi
+AC_SUBST(HAVE_ORACLE)
 
 AC_LIBTOOL_WIN32_DLL
 AC_LIBTOOL_DLOPEN

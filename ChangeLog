@@ -1,3 +1,9 @@
+2002-08-23  Brian Lindauer  <lindauer@malkmus.sysdetect.com>
+
+	* Make.include: Add optional Make.postconfig
+
+	* configure.in: Add oracle tests
+
 2002-08-22  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.variables (GCC_VERSION, COMPILER_DEBUG): use appropriate	gcc

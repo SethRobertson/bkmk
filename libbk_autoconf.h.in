@@ -1,5 +1,5 @@
 /*				-*- C -*-
- * $Id: libbk_autoconf.h.in,v 1.15 2002/07/24 08:00:23 dupuy Exp $
+ * $Id: libbk_autoconf.h.in,v 1.16 2002/08/23 20:42:18 lindauer Exp $
  *
  * ++Copyright LIBBK++
  *
@@ -49,6 +49,7 @@
 #undef HAVE_GETTEXT
 #undef MKTIME_HAS_BUGS
 #undef HAVE_ALLOCA
+#undef HAVE_ORACLE
 
 #undef STACK_DIRECTION
 
