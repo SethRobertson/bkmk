@@ -1,5 +1,5 @@
 /*				-*- C -*-
- * $Id: libbk_autoconf.h.in,v 1.38 2003/04/16 11:28:18 dupuy Exp $
+ * $Id: libbk_autoconf.h.in,v 1.39 2003/04/16 14:43:25 dupuy Exp $
  *
  * ++Copyright LIBBK++
  *
@@ -59,7 +59,7 @@
 #undef HAVE_IEEEFP_H
 #undef HAVE_ALLOCA_H
 #undef HAVE_NET_ETHERNET_H
-#undef HAVE_NETINET_IF_ETHER_H
+#undef HAVE_NETINET_ETHER_H
 #undef HAVE_SYS_CAPABILITY_H
 
 #undef HAVE_IN_ADDR_T

@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.75 2003/04/16 11:28:18 dupuy Exp $
+dnl $Id: configure.in,v 1.76 2003/04/16 14:43:25 dupuy Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.75 $)dnl
+AC_REVISION($Revision: 1.76 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([Make.bkvariables])
 AC_CONFIG_AUX_DIR(acaux)
@@ -83,7 +83,7 @@ AC_C__FUNC__
 AC_CONSTRUCTORS
 AC_SYS_LARGEFILE
 AC_CHECK_HEADERS(paths.h ieeefp.h alloca.h)
-AC_CHECK_HEADERS(net/ethernet.h netinet/if_ether.h)
+AC_CHECK_HEADERS(net/ethernet.h netinet/ether.h)
 AC_CHECK_HEADERS(sys/capability.h)
 AC_SA_LEN
 AC_IN_ADDR_T

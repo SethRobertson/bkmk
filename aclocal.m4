@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.33 2003/04/16 11:28:18 dupuy Exp $
+# $Id: aclocal.m4,v 1.34 2003/04/16 14:43:25 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -557,7 +557,7 @@ esac
 
 
 #
-# ACX_PTHREAD 1.7 (last modified: 2002-09-17)
+# ACX_PTHREAD 1.7 (last modified: 2002-09-17) [with local modifications]
 #
 # Steven G. Johnson <stevenj@alum.mit.edu> and Alejandro Forero Cuervo
 # <bachue@bachue.com>
@@ -603,7 +603,8 @@ fi
 # C compiler flags, and other items are library names, except for "none"
 # which indicates that we try without any flags at all.
 
-acx_pthread_flags="pthreads none -Kthread -kthread lthread -pthread -pthreads -mthreads pthread --thread-safe -mt"
+# [[moved pthread up from end of list for SysD Linux use]]
+acx_pthread_flags="pthreads none -Kthread -kthread lthread pthread -pthread -pthreads -mthreads --thread-safe -mt"
 
 # The ordering *is* (sometimes) important.  Some notes on the
 # individual items follow:
@@ -614,6 +615,7 @@ acx_pthread_flags="pthreads none -Kthread -kthread lthread -pthread -pthreads -m
 # -Kthread: Sequent (threads in libc, but -Kthread needed for pthread.h)
 # -kthread: FreeBSD kernel threads (preferred to -pthread since SMP-able)
 # lthread: LinuxThreads port on FreeBSD (also preferred to -pthread)
+# pthread: Linux, etcetera [[moved up from end of list for SysD Linux use]]
 # -pthread: Linux/gcc (kernel threads), BSD/gcc (userland threads)
 # -pthreads: Solaris/gcc
 # -mthreads: Mingw32/gcc, Lynx/gcc

@@ -1,5 +1,14 @@
 2003-04-16  Alexander Dupuy  <dupuy@sysdetect.com>
 
+	* libbk_autoconf.h.in (HAVE_NETINET_ETHER_H): use this symbol
+
+	* configure.in: use netinet/ether.h on Linux, as it has more functions
+
+	* aclocal.m4 (ACX_PTHREAD): modify search order so that -lpthread
+	library [Linux] is preferred to -pthread gcc option [Linux/BSD];
+	this allows us to distinguish Linux from BSD [where special -lc/-lc_r
+	handling is needed]
+	
 	* configure.in: use ACX_PTHREAD
 
 	* Make.variables (BK_DEFINES, CFLAGS, CC_CONFIG): get pthreads settings
