@@ -1,4 +1,4 @@
-# $Id: Make.variables,v 1.19 2001/10/04 05:01:32 dupuy Exp $
+# $Id: Make.variables,v 1.20 2001/10/04 05:08:10 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -47,7 +47,7 @@ _BK_MAN8=$(filter %.8,$(BK_MAN))
 RRM=$(RM_CONFIG) -rf
 RM=$(RM_CONFIG) -f
 MKDEP=$(CPP) -M $(CPPFLAGS)
-MKDIR=$(MKDIR_CONFIG)
+MKDIR=$(MKDIR_CONFIG) -p
 
 # Install (GNU or BSD)
 INSTALL_BINFLAGS=-m 775
