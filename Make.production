@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.production,v 1.23 2002/01/04 19:41:50 dupuy Exp $
+# $Id: Make.production,v 1.24 2002/01/04 19:48:53 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -74,10 +74,15 @@ BK_LARGE_LIBOBJ:=$(patsubst %.c,%.o,$(BK_LARGE_LIBSRC))
 BK_LARGE_LIBOBJ:=$(patsubst %.y,%.tab.o,$(BK_LARGE_LIBOBJ))
 BK_LARGE_LIBOBJ:=$(patsubst %.l,%.o,$(BK_LARGE_LIBOBJ))
 
+# Even if target doesn't exist, $? may not contain all dependencies since
+# vpath search may find installed version of static library that isn't quite
+# up to date.  So make sure that new files get all dependencies.
 $(BK_LARGE_LIB): $(BK_LARGE_LIBOBJ)
-	if [ -f $@ ]; then \
+	@if [ -f $@ ]; then \
+	  echo $(AR) $(ARFLAGS) $@ $?; \
 	  $(AR) $(ARFLAGS) $@ $?; \
 	else \
+	  echo $(AR) $(ARFLAGS) $@ $^; \
 	  $(AR) $(ARFLAGS) $@ $^; \
 	fi
 	$(RANLIB) $@
