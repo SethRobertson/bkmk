@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.GNUmakefile,v 1.29 2004/12/29 21:15:46 jtt Exp $
+# $Id: Make.GNUmakefile,v 1.30 2005/01/07 03:38:24 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -94,11 +94,15 @@ distclean distclean-generic distclean-am::
 	  || test -f Makefile && $(MAKE) -k -f Makefile $@
 
 ifneq ($(strip $(WANT_SUBDIRBUILD)),false)
-CONFIGCMD=cd $(ARCH) && ../configure --prefix=$$INSTBASE $(CONFIGOPTS)
-CONFIGOPTS=--cache-file=../$(BKMKDIR)/config.cache
+CONFIGCMD=cd $(ARCH) && ../configure --prefix=$$INSTBASE $(CACHE_FILE) $(BKMK_CONFIGOPTS) 
+ifneq ($(WANT_CONFIG_CACHE),false)
+CACHE_FILE=--cache-file=../$(BKMKDIR)/config.cache
+endif
 else
-CONFIGCMD=./configure --prefix=$$INSTBASE $(CONFIGOPTS)
-CONFIGOPTS=--cache-file=$(BKMKDIR)/config.cache
+CONFIGCMD=./configure --prefix=$$INSTBASE $(CACHE_FILE) $(BKMK_CONFIGOPTS)
+ifneq ($(WANT_CONFIG_CACHE),false)
+CACHE_FILE=--cache-file=$(BKMKDIR)/config.cache
+endif
 endif
 
 $(CONFIGURED):: configure
@@ -147,3 +151,4 @@ endif
 $(BKMKDIR)/Make.$(BK_OSNAME)-pre:
 $(BKMKDIR)/Make.$(BK_OSNAME)-post:
 $(GROUPTOP)/$(PKGTOP)/.user-variables:
+
