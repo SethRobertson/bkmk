@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.51 2002/01/31 21:13:31 seth Exp $
+# $Id: Make.variables,v 1.52 2002/01/31 22:13:17 ldog Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -95,7 +95,7 @@ LEXLIBS=-lfl
 
 ######################################################################
 # Java stuff
-JAVACFLAGS=
+JAVACFLAGS=$(USER_JAVAC_FLAGS)
 JARFLAGS=-cfm
 
 BK_JAVA_CPATH=$(subst :,$(PATH_SEPARATOR),$(BK_JAVADIR):$(BK_JAVA_CP))
