@@ -1,4 +1,4 @@
-# $Id: Make.targets,v 1.18 2001/11/08 22:33:10 seth Exp $
+# $Id: Make.targets,v 1.19 2001/11/13 14:51:13 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -175,7 +175,7 @@ subtags:: $(BK_SIMPLE_CSRC) $(BK_LARGE_CSRC) $(BK_LARGE_LIBCSRC) $(BK_LOCAL_CSRC
 	$(BK_SUBDIRRULE)
 
 $(BK_INSTALLDOCDIR)/doxygen/Doxyfile:
-	@	if [ "X$(BK_INSTALLDOCDIR)" == "X" ]; \
+	@	if [ "X$(BK_INSTALLDOCDIR)" = "X" ]; \
 		then \
 			echo "You must first set \$$BK_INSTALLDOCDIR in your make environment (most likely Make.preinstall)"; exit 1;\
 		fi
