@@ -1,6 +1,6 @@
 # -*- makefile -*-
 # 
-# $Id: Make.targets,v 1.25 2001/12/06 18:16:41 dupuy Exp $
+# $Id: Make.targets,v 1.26 2001/12/11 00:04:39 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -206,15 +206,24 @@ endif # BK_JAVA_SRC
 # Doxygen support
 #
 $(BK_INSTALLDOCDIR)/doxygen/Doxyfile:
-	@	if [ "X$(BK_INSTALLDOCDIR)" = "X" ]; \
-		then \
-			echo "You must first set \$$BK_INSTALLDOCDIR in your make environment (most likely Make.preinstall)"; exit 1;\
-		fi
-	-@	$(MKDIR) $(BK_INSTALLDOCDIR)/doxygen 2>/dev/null; \
-		$(DOXYGEN) -g $(BK_INSTALLDOCDIR)/doxygen/Doxyfile;	 \
-		$(MV) $(BK_INSTALLDOCDIR)/doxygen/Doxyfile $(BK_INSTALLDOCDIR)/doxygen/Doxyfile.orig && \
-		${SED} -e "s%^PROJECT_NAME[ \t]*=%PROJECT_NAME=${BK_PKGNAME}%" -e "s%^OUTPUT_DIRECTORY[ \t]\*=%OUTPUT_DIRECTORY=${BK_INSTALLDOCDIR}/doxygen%" -e "s%^INPUT[ \t]*=%INPUT=${BK_REALTOP}%" -e 's%^FILE_PATTERNS[ \t]*=%FILE_PATTERNS= \*.[chyls]%' -e 's%^RECURSIVE[ \t]*=[ \t]*NO%RECURSIVE=YES%' -e 's%^EXTRACT_STATIC[ \t]*=[ \t]*NO%EXTRACT_STATIC=YES%'< ${BK_INSTALLDOCDIR}/doxygen/Doxyfile.orig > ${BK_INSTALLDOCDIR}/doxygen/Doxyfile  && \
-		$(ECHO) "I have created ${BK_INSTALLDOCDIR}/doxygen/Doxyfile and attempted to give it some sane values. You should verify these" \
+	@if [ "" = "$(BK_INSTALLDOCDIR)" ]; then \
+	  echo "\$$BK_INSTALLDOCDIR not set in Make.preinstall"; exit 1;\
+	fi
+	-@$(MKDIR) $(BK_INSTALLDOCDIR)/doxygen 2>/dev/null && \
+	 { cd $(BK_INSTALLDOCDIR)/doxygen; \
+	   $(DOXYGEN) -g;	 \
+	   $(MV) Doxyfile Doxyfile.orig && \
+	   ${SED} -e '/^PROJECT_NAME/s%=.*%= ${BK_PKGNAME}%' \
+		  -e '/^OUTPUT_DIR/s%=.*%= ${BK_INSTALLDOCDIR}/doxygen%' \
+		  -e '/^INPUT[ \t]/s%=.*%= ${BK_REALTOP}%' \
+		  -e '/^FILE_PATTERNS/s%=.*%= *.[chyls] *.java%' \
+		  -e '/^RECURSIVE[ \t]/s%=.*%= YES%' \
+		  -e '/^EXTRACT_STATIC/s%=.*%= YES%' \
+		  -e '/^JAVADOC_AUTOBRIEF/s%=.*%= YES%' \
+		  -e '/^ALPHABETICAL_INDEX/s%=.*%= YES%' \
+		< Doxyfile.orig > Doxyfile && \
+	   $(ECHO) 'Please verify ${BK_INSTALLDOCDIR}/doxygen/Doxyfile'; \
+	 }
 
 # Since this target depends not just on its configuration file (Doxyfile)
 # but also on the *entire* source distribution which it covers, we just
@@ -224,14 +233,14 @@ $(BK_INSTALLDOCDIR)/doxygen/Doxyfile:
 # the user to type "make doxygen" from time to time in order to update his
 # database.
 doxygen: $(BK_INSTALLDOCDIR)/doxygen/Doxyfile
-	-@ $(ECHO) "Rebuilding oxygen database in $(BK_INSTALLDOCDIR)/doxygen" 
-	-@ 	$(CD) $(BK_INSTALLDOCDIR)/doxygen && \
-		$(RM) -rf [a-z]* && \
-		$(DOXYGEN) ./Doxyfile > .lastbuild 2>&1
+	-@$(ECHO) "Rebuilding doxygen database in $(BK_INSTALLDOCDIR)/doxygen" 
+	$(RM) -rf $(BK_INSTALLDOCDIR)/doxygen/[a-z]*
+	$(DOXYGEN) $(BK_INSTALLDOCDIR)/doxygen/Doxyfile \
+	 > $(BK_INSTALLDOCDIR)/doxygen/.lastbuild 2>&1
 
 viewdox: doxygen
-	-@ 	$(ECHO) "Starting $(BROWSER)...." && \
-	 	$(BROWSER) $(BK_INSTALLDOCDIR)/doxygen/html/index.html
+	-@$(ECHO) "Starting $(BROWSER)...." && \
+	   $(BROWSER) $(BK_INSTALLDOCDIR)/doxygen/html/index.html
 
 #
 # Prevent targets from being files

@@ -1,3 +1,7 @@
+2001-12-10  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.targets (doxygen): Add Java support
+
 2001-12-06  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.variables (JTESTERR): use sed to format error lines for emacs
