@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.include,v 1.26 2003/03/26 16:46:05 jtt Exp $
+# $Id: Make.include,v 1.27 2003/04/16 16:58:40 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -80,7 +80,7 @@ ifneq ($(findstring true,$(WANT_GPROF)$(USING_GPROF)),)
 BK_USING_GPROF=true
 override BK_USING_PROF=false
 override BK_WANT_LIBTOOL=false
-override BK_WANT_STATIC=false
+override BK_WANT_STATIC=true
 else
 ifneq ($(findstring true,$(WANT_PROF)$(USING_PROF)),)
 BK_USING_PROF=true
