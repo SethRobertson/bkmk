@@ -1,5 +1,5 @@
 /*				-*- C -*-
- * $Id: libbk_autoconf.h.in,v 1.34 2002/11/21 01:08:58 dupuy Exp $
+ * $Id: libbk_autoconf.h.in,v 1.35 2003/01/23 21:47:49 dupuy Exp $
  *
  * ++Copyright LIBBK++
  *
@@ -21,7 +21,7 @@
 #ifndef _libbk_autoconf_h_
 #define _libbk_autoconf_h_
 
-// <TODO>This file really should be generated with autoheader</TODO>
+// <TODO bugid="999">This file should be generated with autoheader</TODO>
 
 /*
  * <TRICKY>This file is processed by sed, and requires that all autoconf'd

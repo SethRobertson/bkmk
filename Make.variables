@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.126 2003/01/21 20:27:57 jtt Exp $
+# $Id: Make.variables,v 1.127 2003/01/23 21:47:49 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -211,9 +211,9 @@ EDIT_LT_PROGLINK=\
 	    if (/notinst_deplibs=/); \
 	  s|([,])(/n/[^/]+)?$(BK_INSTALLRDIR)|\1$(BK_INSTALLRPATH)|g \
 	    if (/^relink_command=/);" $@
-# <TODO>Currently, the next two edit lines DTWT (do the wrong thing) when there
-# is a .la libtool archive in the target INSTALLRPATH that is not part of the
-# build (e.g. /usr/local/lib/libxml2.la).  This is pretty unusual, and can be
+# <TODO bugid="998">The next two edit lines DTWT (do the wrong thing) when
+# there's a .la libtool archive in the target INSTALLRPATH that is not part of
+# the build (e.g. /usr/local/lib/libxml2.la).  This is unusual, and can be
 # worked around by deleting the .la file from the target INSTALLRPATH (libtool
 # doesn't require .la files for installed libraries).  The real fix would be to
 # enhance the perl scripts to verify that the .la exists in INSTALLRDIR before
