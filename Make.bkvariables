@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.bkvariables,v 1.43 2003/08/27 15:51:14 jtt Exp $
+# $Id: Make.bkvariables,v 1.44 2003/08/27 16:55:17 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -118,7 +118,7 @@ endif # BK_CONFIG_OS_TYPE != BK_OSNAME
 
 # Verify that $PWD points to the right place, since not all applications
 # maintain this (e.g. emacs)
-PWD:=$(shell $(BKMKDIR)/getcwd.sh)
+PWD:=$(shell $(BKMKDIR)/getcwd.sh 2>/dev/null)
 
 #
 ##################################################
@@ -131,7 +131,7 @@ endif # BKMK_VAR_CORRECT
 # Some older versions of GNU make appear to actively nuke PWD
 # (presumably since it may not always be correct)
 ifeq ($(strip $(PWD)),)
-PWD:=$(shell $(BKMKDIR)/getcwd.sh || { . $(BKMKDIR)/getcwd.sh.in; getcwd; })
+PWD:=$(shell $(BKMKDIR)/getcwd.sh 2>/dev/null|| { . $(BKMKDIR)/getcwd.sh.in; getcwd; })
 endif
 
 

@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.targets,v 1.90 2003/08/20 18:23:06 jtt Exp $
+# $Id: Make.targets,v 1.91 2003/08/27 16:55:17 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -408,7 +408,7 @@ subtags:: $(BK_SIMPLE_CSRC) $(BK_LARGE_CSRC) $(BK_LARGE_LIBCSRC) $(BK_LOCAL_CSRC
 #
 USERXREFRC=$(HOME)/.xrefrc
 TMPXREFRC=/tmp/$(shell basename $(USERXREFRC)).$USER.bkmk-tmp
-ALTPWD=$(shell . $(BKMKDIR)/getcwd.sh; pawd `/bin/pwd`)
+ALTPWD=$(shell . $(BKMKDIR)/getcwd.sh 2>/dev/null; pawd `/bin/pwd`)
 xref::
 	@echo "Regenerating $(USERXREFRC) for $(PWD)";
 	@$(PERL) -ne '/BEGIN\sBK\-GEN\:\s$$ENV{PWD}/ && ($$cut=1); print unless ($$cut == 1); /END\sBK\-GEN\:\s$$ENV{PWD}/ && ($$cut=0);' $(USERXREFRC) > $(TMPXREFRC) && cat $(TMPXREFRC) > $(USERXREFRC) && rm $(TMPXREFRC)
