@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.targets,v 1.102 2005/01/11 21:52:06 dupuy Exp $
+# $Id: Make.targets,v 1.103 2005/01/25 08:15:02 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -264,6 +264,7 @@ ifeq ($(strip $(BK_WANT_C)),false)
 BK_LARGE_LIB=
 BK_LARGE_MODULE=
 BK_SIMPLE_PROGS=
+BK_SIMPLE_INTERNALPROGS=
 BK_LARGE_PROG=
 BK_PUBLIC_INC=
 BK_MAN=
