@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.188 2004/07/08 04:40:11 lindauer Exp $
+# $Id: Make.variables,v 1.189 2004/07/09 20:11:57 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -174,8 +174,8 @@ LEXLIBS=-lfl
 
 # Libtool
 LT_CFLAGS=
-LT_LDFLAGS+=-avoid-version
-LT_M_LDFLAGS+=-module -avoid-version
+LT_LDFLAGS+=-avoid-version -no-undefined
+LT_M_LDFLAGS+=-module -avoid-version -no-undefined
 
 ifeq ($(BK_WANT_LIBTOOL), true)
 LIBTOOL_COMPILE=$(LIBTOOL) --mode=compile

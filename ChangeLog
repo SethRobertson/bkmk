@@ -1,3 +1,9 @@
+2004-07-09  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Make.variables (LT_LDFLAGS, LT_M_LDFLAGS): add -no-undefined
+
+	* Make.production (BK_LARGE_MODULE): only build with -no-undefined
+
 2004-07-08  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* bk.conf.in (SHLIBEXT, MODULEXT): get autoconf'ed extensions

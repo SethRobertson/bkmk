@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.production,v 1.65 2004/07/08 04:40:11 lindauer Exp $
+# $Id: Make.production,v 1.66 2004/07/09 20:11:57 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -174,27 +174,20 @@ endif
 #
 # Finally, in order to get warnings about undefined variables in modules and
 # shared libraries (to confirm that LT_LDLIBS is complete) we run libtool with
-# -no-undefined; however, this generates some errors due to dependencies on the
-# worker program and aggregation plugin module, so we repeat without
-# -no-undefined (effectively, these are warnings).
-#
-# <TODO bugid="1309">Fix those undefined errors, add -no-undefined to
-# LT_LDFLAGS and LT_M_LDFLAGS, and clean up these rules.</TODO>
+# -no-undefined (in LT_LDFLAGS/LT_M_LDFLAGS).  NOTE: These are now errors, not
+# just warnings.  If you need to disable them temporarily, or for a particular
+# module, you can override the definitions of LT_LDFLAGS/LT_M_LDFLAGS.
 #
 ifeq ($(BK_WANT_LIBTOOL),true)
 $(filter %.la,$(BK_LARGE_LIB)): $(BK_LARGE_LIBOBJ)
 	-@$(MKDIR) $(BK_INSTALLRDIR) >/dev/null 2>&1
-	$(LIBTOOL_LINK) $(LINK.c) $(LT_LDFLAGS) -o $@ $^ $(LT_LDLIBS)	\
-	 -rpath $(BK_INSTALLRPATH) -no-undefined $(BK_EXTERNAL_RPATH) || \
-	  $(LIBTOOL_LINK) $(LINK.c) $(LT_LDFLAGS) -o $@ $^ $(LT_LDLIBS)	\
-	   -rpath $(BK_INSTALLRPATH) $(BK_EXTERNAL_RPATH)
+	$(LIBTOOL_LINK) $(LINK.c) $(LT_LDFLAGS) -o $@ $^ $(LT_LDLIBS) \
+	 -rpath $(BK_INSTALLRPATH) $(BK_EXTERNAL_RPATH)
 
 $(BK_LARGE_MODULE): $(BK_LARGE_LIBOBJ)
 	-@$(MKDIR) $(BK_INSTALLRDIR) >/dev/null 2>&1
 	$(LIBTOOL_LINK) $(LINK.c) $(LT_M_LDFLAGS) -o $@ $^ $(LT_LDLIBS) \
-	 -rpath $(BK_INSTALLRPATH) -no-undefined ||			  \
-	  $(LIBTOOL_LINK) $(LINK.c) $(LT_M_LDFLAGS) -o $@ $^ $(LT_LDLIBS) \
-	   -rpath $(BK_INSTALLRPATH)
+	 -rpath $(BK_INSTALLRPATH)
 else
 $(BK_LARGE_MODULE): $(BK_LARGE_LIBOBJ)
 	@if [ -f $@ ]; then \
