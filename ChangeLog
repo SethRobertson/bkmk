@@ -1,3 +1,7 @@
+2003-12-06  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* Makefile (MAKECMDGOALS): avoid gripes about argument to $(word)
+
 2003-12-02  James Tanis  <jtt@pearl.sysdetect.com>
 
 	* aclocal.m4 (AC_SECOND_CONNECT_TO_REFUSED_PORT): If the

@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.28 2003/12/07 01:36:37 dupuy Exp $
+# $Id: Makefile,v 1.29 2003/12/07 01:47:49 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -42,6 +42,10 @@ autoconf:
 clean:
 	rm -f $(OSFILE) confdefs.h config.cache config.status config.log \
 	 $(filter-out Make%,$(GENFILES)) libtool .timestamp
+
+ifeq ($(strip $(MAKECMDGOALS)),)
+MAKECMDGOALS:=default
+endif
 
 ifeq ($(strip $(BK_CMDGOALS)),)
 BK_CMDGOALS:=$(MAKECMDGOALS)
