@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.166 2003/07/10 03:19:42 seth Exp $
+# $Id: Make.variables,v 1.167 2003/07/11 19:30:05 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -461,7 +461,7 @@ endif # COMPILER_NAME=gcc
 
 else # BK_USING_INSURE==true
 COPTDEBUG=-g
-# Yes for some reason, according to the Insure folks, this should be repated
+# Yes for some reason, according to the Insure folks, this should be repeated
 ifeq ($(BK_USING_INSURE_DEBUG), true)
 INSURE_DEBUG_LIBS=-Zvm -Zvm -Zvm
 endif
