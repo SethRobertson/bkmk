@@ -1,4 +1,4 @@
-# $Id: Make.targets,v 1.5 2001/06/18 21:59:42 seth Exp $
+# $Id: Make.targets,v 1.6 2001/06/18 22:21:05 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -104,7 +104,7 @@ ifneq ($(strip $(BK_INSTALLLIBDIR)),)
 ifneq ($(strip $(BK_LARGE_LIB)),)
 	$(MKDIR) $(BK_INSTALLLIBDIR)
 	$(INSTALL) $(INSTALL_OTHERFLAGS) $(BK_LARGE_LIB) $(BK_INSTALLLIBDIR)
-	$(RANLIB) $@
+	$(RANLIB) $(BK_LARGE_LIB)
 endif # BK_LARGE_LIB
 endif # BK_INSTALLLIBDIR
 ifneq ($(strip $(BK_INSTALLINCDIR)),)
@@ -121,10 +121,6 @@ endif # BK_DATAFILES
 endif # BK_INSTALLDATADIR
 ifneq ($(strip $(BK_INSTALLMANDIR)),)
 ifneq ($(strip $(BK_MAN)),)
-_BK_MAN1=$(filter %.1,$(BK_MAN))
-_BK_MAN3=$(filter %.3,$(BK_MAN))
-_BK_MAN5=$(filter %.5,$(BK_MAN))
-_BK_MAN8=$(filter %.8,$(BK_MAN))
 ifneq ($(strip $(_BK_MAN1)),)
 	$(MKDIR) $(BK_INSTALLMANDIR)/man1
 	$(INSTALL) $(INSTALL_OTHERFLAGS) $(_BK_MAN1) $(BK_INSTALLMANDIR)/man1
