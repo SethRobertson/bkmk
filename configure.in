@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.28 2002/05/20 15:51:58 jtt Exp $
+dnl $Id: configure.in,v 1.29 2002/05/20 18:26:29 dupuy Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.28 $)dnl
+AC_REVISION($Revision: 1.29 $)dnl
 AC_INIT(Make.bkvariables)
 AC_CONFIG_AUX_DIR(acaux)
 
@@ -61,6 +61,7 @@ AC_CHECK_FUNCS(ntohll memrchr strndup strnlen strverscmp)
 AC_CHECK_FUNCS(strptime gmtime_r timegm)
 AC_FUNC_STRFTIME
 AC_STACKDIRECTION
+AC_FUNC_ALLOCA
 
 AC_PATH_PROG(RM,rm)
 AC_PATH_PROG(FALSE,false)
@@ -92,6 +93,5 @@ AC_PATH_PROG(AR,ar)
 AC_DEFINE_UNQUOTED(PATH_SEPARATOR, "$PATH_SEPARATOR")
 
 AC_CONFIG_HEADER(libbk_autoconf.h)
-AC_FUNC_ALLOCA
 
 AC_OUTPUT(Make.config)
