@@ -1,5 +1,7 @@
 2001-12-06  Alexander Dupuy  <dupuy@sysdetect.com>
 
+	* Make.variables (JTESTERR): use sed to format error lines for emacs
+
 	* Make.targets (BK_SUBDIRRULE): keep going through subdirectories
 	even after failure if -k specified
 

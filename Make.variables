@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.37 2001/12/06 18:16:41 dupuy Exp $
+# $Id: Make.variables,v 1.38 2001/12/06 18:49:31 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -120,7 +120,8 @@ BK_JAVA_MF:=$(patsubst %.jar,%.MF,$(BK_JAVA_JAR))
 # Jtest stuff
 JTEST=/usr/local/parasoft/bin/jtest
 
-JTESTERR={ $(SED) -n '/^ERRORS/,/^Class Metrics:/p' $*.err && false; }
+JTESTERR={ $(SED) -n -e 's/^\[\([^,]*\), line \([0-9]*\)\]/\1:\2:/' \
+		     -e '/^ERRORS/,/^Class Metrics:/p' $*.err && false; }
 
 ifeq ($(DISPLAY),)
 JTESTOUT=-nogui
