@@ -1,5 +1,5 @@
 ######################################################################
-# $Id: ex.pkg.Make.preinclude,v 1.4 2002/04/05 21:45:07 matt Exp $
+# $Id: ex.pkg.Make.preinclude,v 1.5 2002/07/16 19:37:29 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -14,9 +14,10 @@
 #
 # Foo package meta Make.preinclude
 #
+
 BK_JAVADIR=$(GROUPTOP)/$(PKGTOP)/JAVA
 
-BK_INSTALLBASE=$(GROUPTOP)/$(PKGTOP)/.install
+BK_INSTALLBASE=$(GROUPTOP)/$(PKGTOP)/INSTALL
 
 BK_INSTALLPROGDIR=$(BK_INSTALLBASE)/bin
 BK_INSTALLLIBDIR=$(BK_INSTALLBASE)/lib
