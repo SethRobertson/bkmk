@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.179 2003/12/25 06:26:12 seth Exp $
+# $Id: Make.variables,v 1.180 2003/12/29 19:42:53 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -657,12 +657,6 @@ RELATIVIZE='								   \
 
 BK_INSTALLRELLIBS:=$(shell $(PERL) -e $(RELATIVIZE) $(PWD) $(BK_INSTALLLIBDIR))
 
-# -l library search path
-vpath %.a $(GROUPTOP)/lib $(GROUPTOP)/lib/.libs
-vpath %.a $(GROUPTOP)/ssl
-vpath %.a $(BK_INSTALLRELLIBS) $(BK_LIBDIR)
-vpath %$(LIBEXT) $(GROUPTOP)/lib $(BK_INSTALLRELLIBS) $(BK_LIBDIR)
-
 ######################################################################
 # This works almost perfectly, except that this is evaluated
 # *IMMEDIATELY* and thus requires all of these variables to be already
@@ -670,7 +664,7 @@ vpath %$(LIBEXT) $(GROUPTOP)/lib $(BK_INSTALLRELLIBS) $(BK_LIBDIR)
 # typically/always defined later.  Grr.  Otherwise we could nuke the
 # previous vpath defintions.
 #
-BK_VPATH_A=$(shell $(PERL) -e '@F = split(/\s+/,"$(LDFLAGS)"); foreach $$n (@F) { next unless ($$n =~ s/-L//); print "$$n "; print "$$n/.libs "; }')
+BK_VPATH_A=$(shell $(PERL) -e '@F = split(/\s+/,"$(LDFLAGS)"); foreach $$n (@F) { next unless ($$n =~ s/-L//); print "$$n "; print "$$n/.libs "; }') $(GROUPTOP)/lib $(GROUPTOP)/lib/.libs $(BK_INSTALLRELLIBS) $(BK_LIBDIR)
 vpath %.a $(BK_VPATH_A)
 vpath %$(LIBEXT) $(BK_VPATH_A)
 
