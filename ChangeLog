@@ -1,3 +1,11 @@
+2002-03-25  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* aclocal.m4 (AC_STACKDIRECTION): get system stack direction
+
+	* configure.in: use AC_STACKDIRECTION
+
+	* libbk_autoconf.h.in: get definition of stack direction
+
 2002-03-22  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* configure.in: add AC_SYS_LARGEFILE to get large file defines

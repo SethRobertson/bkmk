@@ -1,5 +1,5 @@
 /*				-*- C -*-
- * $Id: libbk_autoconf.h.in,v 1.10 2002/03/22 06:26:08 dupuy Exp $
+ * $Id: libbk_autoconf.h.in,v 1.11 2002/03/25 22:57:39 dupuy Exp $
  *
  * ++Copyright LIBBK++
  *
@@ -44,6 +44,8 @@
 #undef HAVE_TIMEGM
 #undef HAVE_STRFTIME
 #undef MKTIME_HAS_BUGS
+
+#undef STACK_DIRECTION
 
 // value of _FILE_OFFSET_BITS needed for large files
 #undef _FILE_OFFSET_BITS

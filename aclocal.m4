@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.4 2002/02/22 06:12:21 dupuy Exp $
+# $Id: aclocal.m4,v 1.5 2002/03/25 22:57:39 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -145,6 +145,45 @@ AC_DEFUN([AC_SA_LEN],
   fi
  fi
 ])# AC_SA_LEN
+
+# AC_STACKDIRECTION
+# -----------------
+AC_DEFUN([AC_STACKDIRECTION],
+[AC_CACHE_CHECK([stack direction for C],
+               [ac_cv_c_stack_direction],
+[AC_RUN_IFELSE([AC_LANG_SOURCE(
+[int
+find_stack_direction ()
+{
+  static char *addr = 0;
+  auto char dummy;
+  if (addr == 0)
+    {
+      addr = &dummy;
+      return find_stack_direction ();
+    }
+  else
+    return (&dummy > addr) ? 1 : -1;
+}
+
+int
+main ()
+{
+  exit (find_stack_direction () < 0);
+}])],
+               [ac_cv_c_stack_direction=1],
+               [ac_cv_c_stack_direction=-1],
+               [ac_cv_c_stack_direction=0])])
+AH_VERBATIM([STACK_DIRECTION],
+[/* Define if you know the
+   direction of stack growth for your system; otherwise it will be
+   automatically deduced at run-time.
+        STACK_DIRECTION > 0 => grows toward higher addresses
+        STACK_DIRECTION < 0 => grows toward lower addresses
+        STACK_DIRECTION = 0 => direction of growth unknown */
+@%:@undef STACK_DIRECTION])dnl
+AC_DEFINE_UNQUOTED(STACK_DIRECTION, $ac_cv_c_stack_direction)
+])# AC_STACKDIRECTION
 
 #
 # Remainder of the file is incorporated verbatim from libtool.m4
