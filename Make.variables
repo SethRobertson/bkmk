@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.142 2003/05/16 22:59:25 seth Exp $
+# $Id: Make.variables,v 1.143 2003/05/27 05:22:27 ldog Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -224,7 +224,7 @@ endif # BK_INSTALLRDIR==BK_INSTALLRPATH
 
 ######################################################################
 # Java stuff
-JAVACFLAGS=$(USER_JAVAC_FLAGS) -g
+JAVACFLAGS=$(USER_JAVAC_FLAGS) -g 
 JARFLAGS=-cfm
 #JARFLAGS=-cifm causes the following Java exception
 #java.io.IOException: invalid header field
@@ -348,6 +348,7 @@ BK_LDS= $(RESOLVER_LDS)
 BK_LIBS= -lbk -ldict -lfsma -lpqueue -lpopt $(LIBRESOLVER) $(BK_LIBM) $(COMPRESS_LIBS)
 
 LT_LDLIBS+= $(AC_LIBS)
+
 
 endif # NO_STDBKCCSTUFF
 
