@@ -1,0 +1,11 @@
+#!/bin/sh -
+#
+# This program forces re-configure-ation of bkmk by running make clean in bkmk
+# with the hope that if changes to bkmk stuff are made, re-running configure
+# will do the right thing.
+
+if [ -d bkmk ]; then		# being run from meta-module
+  cd bkmk
+fi
+
+make clean

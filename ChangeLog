@@ -1,3 +1,8 @@
+2001-12-05  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* force: CVS Update.prog script to run whenever bkmk or top-level
+	cvs update performed [does make clean in bkmk]
+
 2001-12-04  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.production: use BK_JAVA_CPATH and CURDIR in Java rules
