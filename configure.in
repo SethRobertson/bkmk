@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.22 2002/03/06 19:08:37 dupuy Exp $
+dnl $Id: configure.in,v 1.23 2002/03/22 06:26:08 dupuy Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.22 $)dnl
+AC_REVISION($Revision: 1.23 $)dnl
 AC_INIT(Make.bkvariables)
 AC_CONFIG_AUX_DIR(acaux)
 
@@ -48,6 +48,7 @@ AC_PROG_LIBTOOL
 
 AC_C__FUNC__
 AC_CONSTRUCTORS
+AC_SYS_LARGEFILE
 AC_CHECK_HEADERS(net/ethernet.h netinet/if_ether.h)
 AC_SA_LEN
 AC_FUNC_INET_PTON

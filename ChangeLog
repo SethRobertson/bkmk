@@ -1,3 +1,9 @@
+2002-03-22  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* configure.in: add AC_SYS_LARGEFILE to get large file defines
+
+	* libbk_autoconf.h.in (_FILE_OFFSET_BITS, _LARGE_FILES): autoconf'ed
+
 2002-03-20  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.targets (depend): generate dependencies with $(OBJEXT)

@@ -1,5 +1,5 @@
 /*				-*- C -*-
- * $Id: libbk_autoconf.h.in,v 1.9 2002/03/19 16:06:21 dupuy Exp $
+ * $Id: libbk_autoconf.h.in,v 1.10 2002/03/22 06:26:08 dupuy Exp $
  *
  * ++Copyright LIBBK++
  *
@@ -45,6 +45,11 @@
 #undef HAVE_STRFTIME
 #undef MKTIME_HAS_BUGS
 
+// value of _FILE_OFFSET_BITS needed for large files
+#undef _FILE_OFFSET_BITS
+
+// if _LARGE_FILES needed for large files
+#undef _LARGE_FILES
 
 /// Search path separator for PATH in shell commands
 #define PATH_SEPARATOR ":"
