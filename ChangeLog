@@ -1,3 +1,7 @@
+2001-11-29  larry ogrodnek  <ldog@sysdetect.com>
+
+	* Make.production (BK_JAVA_ICLASS): support for internal classes.
+
 2001-11-28  James Tanis  <jtt@winwood.sysdetect.com>
 
 	* Make.variables (COPTDEBUG+): Turn off optimization when INSIGHT
