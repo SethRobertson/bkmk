@@ -1,4 +1,4 @@
-# $Id: Make.variables,v 1.21 2001/10/25 01:00:53 seth Exp $
+# $Id: Make.variables,v 1.22 2001/11/06 00:24:44 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -141,6 +141,14 @@ BK_LIBDIR=$(OS_SEARCHPATH) $(patsubst -L%,%,$(filter -L%,$(BK_ALLLDS)))
 CTAGS=ctags
 ETAGS=etags
 
+
+######################################################################
+# Doxygen XXX autoconf this
+DOXYGEN=doxygen
+SED=sed
+MV=mv
+ECHO=echo
+CD=cd
 
 ######################################################################
 # BUILD directory independence

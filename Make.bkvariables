@@ -1,4 +1,4 @@
-# $Id: Make.bkvariables,v 1.4 2001/06/20 18:12:41 seth Exp $
+# $Id: Make.bkvariables,v 1.5 2001/11/06 00:24:44 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -46,6 +46,7 @@ endif # BK_CONFIG_OS_TYPE != BK_OSNAME
 endif # BKMK_VAR_CORRECT
 
 # Discover where the true (e.g. non-BUILD indirectory) group and package locations are
+BK_REALTOP:=$(shell cd $(GROUPTOP)/$(PKGTOP) && pwd)
 BK_BUILDTOP:=$(shell test -L $(GROUPTOP)/$(PKGTOP)/bkmk/Make.include && echo ../../ )
 BK_TRUEGROUPTOP=$(BK_BUILDTOP)$(GROUPTOP)
 BK_TRUEPKGTOP=$(TRUEGROUPTOP)/$(PKGTOP)
