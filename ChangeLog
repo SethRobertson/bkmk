@@ -1,8 +1,11 @@
 2003-10-27  Alexander Dupuy  <dupuy@sysdetect.com>
 
+	* Makefile (nuke): only remove Make.config if "nuke" is the last goal
+
 	* Make.bkvariables (NORMALIZE): centralize all perl-based normalization
 
 	* Make.variables: NORMALIZE definition moved to Make.bkvariables
+	(NORMALIZE*): use ' quoting for paranoia/safety against `/$
 
 2003-10-24  Alexander Dupuy  <dupuy@sysdetect.com>
 
@@ -10,7 +13,7 @@
 
 	* Make.targets (BK_SUBDIRRULE): prevent unconfigured postgres failures
 
-2003-10-08  James Tanis  <jtt@pearl.StevesRUs.sysdetect.com>
+2003-10-08  James Tanis  <jtt@sysdetect.com>
 
 	* Make.targets: ${RM} includes -f in its definition
 
@@ -173,11 +176,11 @@
 	* Make.variables (LIBTOOL_LINK): do this quietly to avoid overflowing
 	xemacs regex stack
 
-2003-06-04  James Tanis  <jtt@hawking.StevesRUs.sysdetect.com>
+2003-06-04  James Tanis  <jtt@sysdetect.com>
 
 	* configure.in, configure: merge from jtt-featurevalue-cache
 
-2003-06-03  Seth Robertson  <seth@hawking.StevesRUs.sysdetect.com>
+2003-06-03  Seth Robertson  <seth@sysdetect.com>
 
 	* Make.variables: Allow compilation [if not operation] w/o
 	pthreads.  No libtool and bkssl as well...
@@ -377,7 +380,7 @@
 
 	* chcopy.pl: update for 2003, and 2004, and 2005, ... etc.
 
-2003-03-04  Matt Miller  <matt@hawking.StevesRUs.sysdetect.com>
+2003-03-04  Matt Miller  <matt@sysdetect.com>
 
 	* configure.in, configure, Make.config.in, Make.targets:
 	Xref support.  I *think* I got the autoconf stuff right. :)
@@ -387,7 +390,7 @@
 	* Make.include: Just say no to libxml namespace pollution where it
 	is not necessary
 
-2003-02-11  Seth Robertson  <seth@hawking.StevesRUs.sysdetect.com>
+2003-02-11  Seth Robertson  <seth@sysdetect.com>
 
 	* Make.targets: Run tags over include files as well
 
@@ -404,7 +407,7 @@
 	* Make.targets: Ticket #1018: don't run make in a subdirectory
 	without a makefile
 
-2003-02-03  James Tanis  <jtt@hawking.StevesRUs.sysdetect.com>
+2003-02-03  James Tanis  <jtt@sysdetect.com>
 
 	* Make.include, Make.variables: Rationalize .user-variables stuff
 

@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.25 2003/09/15 14:25:05 dupuy Exp $
+# $Id: Makefile,v 1.26 2003/10/27 23:46:46 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -39,12 +39,14 @@ endif
 autoconf:
 	/usr/local/bin/autoconf -Wcross -Wsyntax
 
-clean nuke::
+clean:
 	rm -f $(OSFILE) confdefs.h config.cache config.status config.log \
 	 $(filter-out Make%,$(GENFILES)) libtool .timestamp
 
-nuke::
-	rm -f $(GENFILES)
+nuke: clean
+ifeq ($(word $(words $(MAKECMDGOALS)),$(MAKECMDGOALS)),nuke)
+	  rm -f $(filter Make%,$(GENFILES))
+endif
 
 %.status: ./%ure
 	./configure --config-cache $(CONFIGURE_ARGS)
