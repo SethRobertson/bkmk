@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.production,v 1.32 2002/01/30 23:58:08 dupuy Exp $
+# $Id: Make.production,v 1.33 2002/01/31 17:35:09 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -101,10 +101,11 @@ $(filter %.a,$(BK_LARGE_LIB)): $(BK_LARGE_LIBOBJ)
 # don't use $(LDLIBS) in libtool links, as it may contain static/convenience
 # libs that will get included in the generated shared library.
 $(filter %.la,$(BK_LARGE_LIB)): $(BK_LARGE_LIBOBJ)
-	$(LIBTOOL) $(LINK.c) -o $@ $^
+	$(LIBTOOL) $(LINK.c) -o $@ $^ $(LTLDLIBS) \
+	 -avoid-version -rpath $(BK_INSTALLRPATH)
 
 $(BK_LARGE_MODULE): $(BK_LARGE_LIBOBJ)
-	$(LIBTOOL) $(LINK.c) -o $@ $^ \
+	$(LIBTOOL) $(LINK.c) -o $@ $^ $(LTLDLIBS) \
 	 -avoid-version -module -rpath $(BK_INSTALLRPATH)
 
 #

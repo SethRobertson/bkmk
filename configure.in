@@ -1,21 +1,21 @@
-#
-# $Id: configure.in,v 1.16 2002/01/30 23:58:08 dupuy Exp $
-#
-# ++Copyright LIBBK++
-#
-# Copyright (c) 2001 The Authors.  All rights reserved.
-#
-# This source code is licensed to you under the terms of the file
-# LICENSE.TXT in this release for further details.
-#
-# Mail <projectbaka@baka.org> for further information
-#
-# --Copyright LIBBK--
-#
-#
-# Autoconf configuration
-#
-AC_REVISION($Revision: 1.16 $)dnl
+dnl
+dnl $Id: configure.in,v 1.17 2002/01/31 17:35:09 dupuy Exp $
+dnl
+dnl ++Copyright LIBBK++
+dnl
+dnl Copyright (c) 2001 The Authors.  All rights reserved.
+dnl
+dnl This source code is licensed to you under the terms of the file
+dnl LICENSE.TXT in this release for further details.
+dnl
+dnl Mail <projectbaka@baka.org> for further information
+dnl
+dnl --Copyright LIBBK--
+dnl
+dnl
+dnl Autoconf configuration
+dnl
+AC_REVISION($Revision: 1.17 $)dnl
 AC_INIT(Make.bkvariables)
 AC_CONFIG_AUX_DIR(acaux)
 
