@@ -60,7 +60,7 @@ PROGRAM=ltmain.sh
 PACKAGE=libtool
 VERSION=1.5
 TIMESTAMP=" (1.7 2003/08/13 14:55:23)"
-TIMESTAMP="$TIMESTAMP [$Revision: 1.19 $]"
+TIMESTAMP="$TIMESTAMP [$Revision: 1.20 $]"
 
 default_mode=
 help="Try \`$progname --help' for more information."
@@ -1982,9 +1982,10 @@ EOF
 	  continue
 	  ;;
 	esac # case $deplib
-	if test "$found" = yes || test -f "$lib"; then :
-	elif test -f "$inst_prefix_dir$lib"; then
+	# always prefer libraries in $inst_prefix_dir, if they exist
+	if test -f "$inst_prefix_dir$lib"; then
 	  lib="$inst_prefix_dir$lib"
+	elif test "$found" = yes || test -f "$lib"; then :
 	else
 	  $echo "$modename: cannot find the library \`$lib'" 1>&2
 	  exit 1
