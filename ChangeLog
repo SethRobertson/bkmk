@@ -1,3 +1,10 @@
+2003-12-25  Seth Robertson  <seth@now.baka.org>
+
+	* Make.variables (BK_VPATH_A): Set up an automatic vpath %.a
+	determination script.  Works great except the vpath is evaluated
+	immediately upon definition, and the LDFLAGS variable is typically
+	not fully specify until AFTERWARDS.  Grr.
+
 2003-12-06  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Makefile (MAKECMDGOALS): avoid gripes about argument to $(word)
@@ -18,10 +25,10 @@
 
 	* configure.in: get SHLIBPATH_VAR #define, subst config for bk.conf;
 	move minimize_path shell function into aclocal.m4
-	
+
 	* aclocal.m4 (AC_LIBTOOL_SYS_DYNAMIC_LINKER): minimize_path moved here
 	from configure.in; simplified and reduced for loops to case switches
-	
+
 2003-11-21  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.targets (etags, ctags): '-quotes deferred `-quotes; use "-quotes
@@ -51,7 +58,7 @@
 
 	* Make.include: add support for WANT_SHIT_FROM_LDOG_AND_ALEX=false
 	[i.e. set WANT_HELP=false if javahelp not properly installed]
-	
+
 2003-10-29  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.bkvariables (BK_CMDGOALS): set this automatically if not already
@@ -65,7 +72,7 @@
 	* Make.variables: NORMALIZE definition moved to Make.bkvariables
 	(NORMALIZE*): use ' quoting for paranoia/safety against `/$
 	[why would anybody ever want to have a directory name like awb-1.0.1?]
-	
+
 2003-10-27  James Tanis  <jtt@sysdetect.com>
 
 	* Make.bkvariables, Make.variables: Proposed fixes for making
@@ -113,10 +120,10 @@
 
 	* Make.variables: handle absolute BK_INSTALLBASE correctly
 	(BK_SSL_RPATH): for production RPATH build to use BK_INSTALLRPATH
-	
+
 	* acaux/ltmain.sh: compute install prefix correctly even if system
 	shared libraries are present in final install destination [-rpath]
-	
+
 2003-09-29  James Tanis  <jtt@pearl.sysdetect.com>
 
 	* Make.variables (GROUP_LIBS+): Make libbkssl part of BK_LIBS if
