@@ -1,5 +1,5 @@
 #! /bin/sh
-# $Id: os-name.sh,v 1.8 2004/09/29 17:58:24 dupuy Exp $
+# $Id: os-name.sh,v 1.9 2004/11/29 20:25:24 dupuy Exp $
 #
 # ++Copyright SYSDETECT++
 #
@@ -44,9 +44,13 @@ fi
 
 for REL in /etc/*-release /etc/issue
 do
+  case $REL in
+    */fedora-*) E="-e s/Core/CoreLinux/" ;;
+    *) unset E ;;
+  esac
   if [ -f "$REL" ]; then
     sed -e 's/release//' -e 's/ \([0-9][0-9.]*\).*/-\1/' -e 's/ //g' -e '3q' \
-     < $REL | grep Linux && exit
+     $E < $REL | grep Linux && exit
   fi
 done
 
