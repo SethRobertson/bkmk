@@ -2,13 +2,22 @@
 
 	* Make.variables: SSL_LIB_PATH, SSL_INC_PATH, and WANT_SSL.
 
+2003-06-03  Alexander Dupuy  <dupuy@sysdetect.com>
+
+	* acaux/ltmain.sh: make $inst_prefix_dir really work for deplibs
+
+	* Make.bkvariables: allow ${CONFIGURE_ARGS} on cmdline to work
+
+	* Make.*BSD-*-pre (BK_INSTALLRPATH): safe rpath on systems where
+	LD_LIBRARY_PATH doesn't override rpath
+
 2003-06-02  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* configure.in: AC_ENABLE_PATHENV to prefer LD_LIBRARY_PATH over -rpath
 
 	* acaux/ltmain.sh: nuke --mode=prelink KLUDGE; comment Darwin KLUDGE
 	not in libtool-1.5 [we can put it back in if it is still needed]
-	
+
 	* aclocal.m4: merged from libtool with --enable-pathenv support;
 	fix getcwd hacks to work with libtool-1.5 macros
 
@@ -33,7 +42,7 @@
 
 2003-05-24  Brian Lindauer  <lindauer@malkmus.sysdetect.com>
 
-	* configure.in: Check for libssl (OpenSSL).
+	* configure.in: Check for libssl [OpenSSL]
 
 2003-05-23  Seth Robertson  <seth@startide.sysdetect.com>
 
@@ -150,8 +159,8 @@
 
 2003-03-26  James Tanis  <jtt@saint.sysdetect.com>
 
-	* Make.include (BK_USING_GPROF): override libtool (false) and
-	static (true) when using gprof.
+	* Make.include (BK_USING_GPROF): override libtool [false] and
+	static [true] when using gprof.
 
 2003-03-25  Alexander Dupuy  <dupuy@sysdetect.com>
 
@@ -297,9 +306,9 @@
 
 2002-10-16  Matt Miller  <matt@sysdetect.com>
 
-	* Make.targets (nuke clean): remove $(BK_JAVA_HELP_{JAR,PDF}) when
+	* Make.targets (nuke, clean): remove $(BK_JAVA_HELP_{JAR, PDF}) when
 	cleaning or nuking.
-	add dependencies for $(BK_JAVA_HELP_PDF).
+	add dependencies for ${BK_JAVA_HELP_PDF}.
 
 2002-10-16  Seth Robertson  <seth@yeah.baka.org>
 
@@ -310,7 +319,7 @@
 2002-10-09  James Tanis  <jtt@hawking.sysdetect.com>
 
 	* aclocal.m4: (AC_SECOND_CONNECT_TO_REFUSED_PORT) Macro to
-	determine errno of *second* connect(2) call on a socket which was
+	determine errno of *second* connect() call on a socket which was
 	refused.
 
 	* configure.in (CFLAGS): Do AC_SECOND_CONNECT_TO_REFUSED_PORT.
@@ -343,7 +352,7 @@
 
 2002-09-08  Seth Robertson  <seth@yeah.baka.org>
 
-	* Make.bkvariables (PWD): Some versions of make appear to actively NUKE PWD.
+	* Make.bkvariables (PWD): Some make versions seem to actively nuke PWD.
 
 2002-09-25  Alexander Dupuy  <dupuy@sysdetect.com>
 
@@ -378,7 +387,7 @@
 
 2002-09-03  Seth Robertson  <seth@startide.sysdetect.com>
 
-	* Make.bkvariables (PWD): Ensure (once) that PWD really is PWD.
+	* Make.bkvariables (PWD): Ensure [once] that PWD really is PWD.
 	Stupid emacs.
 
 2002-09-03  Alexander Dupuy  <dupuy@sysdetect.com>
@@ -400,13 +409,12 @@
 	* Make.variables (BK_INSTALLRPATH): BK_INSTALLRPATH is hardcoded in
 	programs and libraries and will override runtime specification of
 	library search path.  This is bad.  Provide a safe default and allow
-	people to specify other behavior (including the old default behavior
-	with the use of "installdir" as BK_INSTALLRPATH).
+	people to specify other behavior [including the old default behavior
+	with the use of "installdir" as BK_INSTALLRPATH].
 
-	* Make.targets ($(BK_REALTOP)/bkmk/.timestamp): Target to rebuild
+	* Make.targets (${BK_REALTOP}/bkmk/.timestamp): Target to rebuild
 	bkmk configuration if missing.
-
-	(default install actual_install): Check for missing bkmk
+	(default, install, actual_install): Check for missing bkmk
 	configuration.
 
 	* Makefile (OSFILE/OSNAME): Build these variables here instead of
@@ -414,14 +422,14 @@
 
 	* Make.targets (install): For unification between shared and
 	non-shared library builds, always build targets via actual_install
-	instead of mostly via actual_install (even for shared library
-	builds)
+	instead of mostly via actual_install [even for shared library
+	builds]
 
 2002-08-25  Seth Robertson  <seth@winwood.sysdetect.com>
 
-        * Make.*: Many many performance changes (make overhead now cut to
-	4/5ths of previous level) and normalization to normal make
-	standards where they was a bizarre reassignment (PWD/CURDIR).
+        * Make.*: Many many performance changes [make overhead now cut to
+	4/5ths of previous level] and normalization to normal make
+	standards where there was a bizarre reassignment [PWD/CURDIR].
 
 	* Make.include: Exerpt BK_USER_VARIABLE discovery to
 	Make.bkvariables.  Move inclusion of file until after it
@@ -431,15 +439,15 @@
 
 	* Make.variables: Add protected area which only runs one per make
 	invocation instead of once per directory.  In this area, set
-	$(PWD) to be normalized so that self and all descendants get clean
+	${PWD} to be normalized so that self and all descendants get clean
 	path.  Obviously perform PWD->PWDPROG and CURDIR->PWD changes.
 	Set BK_INSTALLRDIR and BK_INSTALLPATH once for everyone [and have
-	them use $(PWD) instead of `$(PWDPROG)`]
+	them use ${PWD} instead of `${PWDPROG}`]
 
-	* Make.config.in (PWDPROG): Make by default uses $(PWD) to mean
+	* Make.config.in (PWDPROG): Make by default uses ${PWD} to mean
 	same as shell does.  Thus, for better compatability we should
-	rename path-to-pwd-program to $(PWDPROG).  Not that I see any
-	reason why you need to use it, given $(PWD).
+	rename path-to-pwd-program to ${PWDPROG}.  Not that I see any
+	reason why you need to use it, given ${PWD}.
 
 	* Make.targets: Implement PWD->PWDPROG and CURDIR->PWD changes as
 	described elsewhere.
@@ -450,16 +458,16 @@
 
 2002-08-23  Seth Robertson  <seth@winwood.sysdetect.com>
 
-	* Make.bkvariables: Improve make overhead by way over 50% (cut
-	time in more than half) by actually following through on saving
+	* Make.bkvariables: Improve make overhead by way over 50% [cut
+	time in more than half] by actually following through on saving
 	ARCH and OS information instead of reparsing at least once per
 	directory, and moving true path TOP determination to protected
 	area.
 
 	* Make.include: Remove 'postconfig' hack, since you can generally
 	accomplish the same thing by simply putting the stuff *after* the
-	bkmk includes (and generally when you cannot trivially do so,
-	there is a fairly simple workaround).
+	bkmk includes [and generally when you cannot trivially do so,
+	there is a fairly simple workaround\.
 
 	* configure.in (CFLAGS): Autoconfig gcc warning variables
 	instead of test which runs for EVERY SUBDIRECTORY!.
@@ -627,7 +635,8 @@
 
 2002-04-02  Seth Robertson  <seth@startide.sysdetect.com>
 
-	* Make.variables: Add /usr/local to standard paths.  Add -lintl to standard library.
+	* Make.variables: Add /usr/local to standard paths.  Add -lintl to
+	standard library.
 
 2002-03-29  Seth Robertson  <seth@winwood.sysdetect.com>
 
@@ -761,7 +770,8 @@
 
 2002-02-05  James Tanis  <jtt@saint.sysdetect.com>
 
-	* Make.variables (COPTDEBUG+): Remove omit-frame-pointer if debug on. Kills gdb.
+	* Make.variables (COPTDEBUG+): Remove omit-frame-pointer if debug
+	on. Kills gdb.
 
 	* Make.targets: Provide mechanism for overriding default target.
 
@@ -1231,8 +1241,8 @@
 
 2001-06-20  Seth Robertson  <seth@yeah.baka.org>
 
-	* Make.bkvariables: Move autoconfigure stuff into Make.bkvariables which
-	has once-only support and otherwise deals with arch stuff.
+	* Make.bkvariables: Move autoconfigure stuff into Make.bkvariables
+	which has once-only support and otherwise deals with arch stuff.
 
 	* Make.variables: Support to use configured discovered compiler
 	names and other programs.
