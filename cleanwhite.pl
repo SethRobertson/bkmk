@@ -18,7 +18,7 @@ while (<>)
 {
   if (/[ \t]+$/)
   {
-    if (/\\[ \t]+$/ || $ARGV =~ /\.MF/)
+    if (/\\[ \t]+$/ || $ARGV =~ /\.MF/ || $ARGV =~ /\.gif/)
     {
       # Don't nuke backslash-quoted (or other magic) whitespace
     }
