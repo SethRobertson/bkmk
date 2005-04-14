@@ -1,0 +1,31 @@
+# -*- makefile -*-
+#
+# $Id: Make.Linux-2.4-post,v 1.2 2005/04/14 22:57:34 jtt Exp $
+#
+# ++Copyright LIBBK++
+#
+# Copyright (c) 2003 The Authors. All rights reserved.
+#
+# This source code is licensed to you under the terms of the file
+# LICENSE.TXT in this release for further details.
+#
+# Mail <projectbaka@baka.org> for further information
+#
+# --Copyright LIBBK--
+#
+#
+# OS-specific Variables
+#
+
+# This is a rather heavy handed way of solving the static build problem on
+# RH9, but since this is not really a supported platform and static bulids
+# are (no longer) required for Insure (which is the really the reason we
+# build on RH9 at all any more), I'm not too concerned about a little
+# grotesqueness here.
+ifeq ($(shell if grep -q 'release 9' /etc/redhat-release 2>/dev/null; then echo T; fi),T)
+ifeq ($(BK_WANT_STATIC),true)
+OS_LDS=-L /usr/kerberos/lib 
+OS_LIBS=-lkrb5 -lk5crypto -lcom_err
+JTT=jtt
+endif
+endif
