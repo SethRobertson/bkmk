@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.121 2005/02/02 23:02:32 lindauer Exp $
+dnl $Id: configure.in,v 1.122 2005/04/23 17:51:55 dupuy Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,9 +15,9 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.121 $)dnl
+AC_REVISION($Revision: 1.122 $)dnl
 AC_INIT
-AC_CONFIG_SRCDIR([Make.bkvariables])
+AC_CONFIG_SRCDIR([libbk_autoconf.h.in])
 AC_CONFIG_AUX_DIR(acaux)
 
 echo
