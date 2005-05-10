@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.201 2005/02/16 23:53:58 seth Exp $
+# $Id: Make.variables,v 1.202 2005/05/10 17:24:45 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -394,13 +394,14 @@ ifeq ($(COMPILER_NAME),gcc)
 
 GCC_VERSION:=$(shell $(CC_CONFIG) --version | $(AWK) ' NR==1 { print $$3 }')
 
-# don't eliminate inline warnings
-# make them work, remove them, or tweak the inliner settings (SEE
-# COMPILER_INLINER LIMIT)
+# Don't eliminate inline warnings; make them work, remove them, or tweak the
+# inliner settings (see compiler_inliner limit)
 #
-# Believe it or not, expr handles > 3.4.2 "properly". Kinda bizzare, but useful.
+# <TODO>Although it may appear that expr handles 3.4.3 >= 3.4.2 "properly" it
+# is just doing a string comparison, and gets 3.10.5 >= 3.4.2 wrong.  This
+# should use something that does semi-numeric version comparison.</TODO>
 #
-ifeq ($(shell $(EXPR) $(GCC_VERSION) '>=' '3.4.2'),1)
+ifeq ($(shell $(EXPR) '$(GCC_VERSION)' '>=' '3.4.2'),1)
 LARGE_FUNCTION_INSNS=--param large-function-insns=10000
 endif
 
