@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.targets,v 1.105 2005/05/02 06:31:36 seth Exp $
+# $Id: Make.targets,v 1.106 2005/08/10 21:21:32 lindauer Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -37,7 +37,7 @@ else # BK_SUBDIR
 ifeq ($(strip $(BK_SUBDIRSHORTCUT)),)
 BK_SUBDIRSHORTCUT=false
 endif #!BK_SUBDIRSHORTCUT
-BK_SUBDIRRULE=								     \
+BK_SUBDIRRULE=@								     \
 	for d in $(BK_ALL_SUBDIR) strict_sh_fodder; do			     \
 	 if [ $$d = "strict_sh_fodder" ]; then				     \
 		continue;						     \
