@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.targets,v 1.106 2005/08/10 21:21:32 lindauer Exp $
+# $Id: Make.targets,v 1.107 2005/08/10 21:26:29 lindauer Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -207,7 +207,7 @@ else
 install:: install-first install-normal install-last
 
 install-first:
-	for d in $(BK_ALL_FIRST_DIRS) strict_sh_fodder;		      \
+	@for d in $(BK_ALL_FIRST_DIRS) strict_sh_fodder;		      \
 	do								      \
 	  if [ $$d = "strict_sh_fodder" ]; then				      \
 		continue;						      \
