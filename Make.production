@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.production,v 1.66 2004/07/09 20:11:57 dupuy Exp $
+# $Id: Make.production,v 1.67 2005/08/22 23:34:22 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -63,6 +63,9 @@ endif
 
 %.tab.c %.tab.h: %.y
 	$(YACC) $(YFLAGS) $<
+
+%.gz: %
+	$(GZIP) -c $< > $@
 
 #
 # Simple program production

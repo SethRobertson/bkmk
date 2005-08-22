@@ -1,3 +1,9 @@
+2005-08-22  James Tanis  <jtt@cheviot.sysdetect.com>
+
+	* Make.variables (BK_BKJUNK): Add $(BK_ZIPPED_FILES) to BK_BKJUNK
+
+	* Make.production (%.gz): Add gzip suffix rule.
+
 2005-01-31  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Makefile, Make.variables, Make.bkvariables (OSNAME, BK_OSNAME):
