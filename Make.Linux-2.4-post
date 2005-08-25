@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.Linux-2.4-post,v 1.2 2005/04/14 22:57:34 jtt Exp $
+# $Id: Make.Linux-2.4-post,v 1.3 2005/08/25 16:13:49 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -18,7 +18,7 @@
 #
 
 # This is a rather heavy handed way of solving the static build problem on
-# RH9, but since this is not really a supported platform and static bulids
+# RH9, but since this is not really a supported platform and static builds
 # are (no longer) required for Insure (which is the really the reason we
 # build on RH9 at all any more), I'm not too concerned about a little
 # grotesqueness here.
