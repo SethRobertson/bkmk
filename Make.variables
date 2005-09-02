@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.203 2005/08/22 23:34:22 jtt Exp $
+# $Id: Make.variables,v 1.204 2005/09/02 17:13:46 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -416,6 +416,10 @@ endif
 ifneq ($(BK_NO_STRICT_PROTOTYPES),true)
 COMPILER_DEBUG+=-Wstrict-prototypes
 endif
+
+ifneq ($(NO_POINTER_SIGN_WARN),)
+COMPILER_DEBUG+=-Wno-pointer-sign
+endif # NO_POINTER_SIGN_WARN
 
 # raise the default instruction limit for the inliner so that some of
 # our bigger functions will be inlined. changing this value may affect

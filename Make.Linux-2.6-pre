@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.Linux-2.6-pre,v 1.10 2005/02/09 01:32:25 seth Exp $
+# $Id: Make.Linux-2.6-pre,v 1.11 2005/09/02 17:13:45 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -20,11 +20,11 @@
 #ifneq ($(BKMK_LINUX_26_VAR_CORRECT),true)
 #override BKMK_LINUX_26_VAR_CORRECT = true
 
-ifeq ($(shell if ( grep -q "Fedora Core release 3" /etc/fedora-release 2>/dev/null || grep -q "Gentoo Base System" /etc/gentoo-release 2>/dev/null ) && [ -f /usr/lib/libssl.so -o -f /usr/lib64/libssl.so ]; then echo OK; fi), OK)
+ifeq ($(shell if ( grep -q "Fedora Core release" /etc/fedora-release 2>/dev/null || grep -q "Gentoo Base System" /etc/gentoo-release 2>/dev/null ) && [ -f /usr/lib/libssl.so -o -f /usr/lib64/libssl.so ]; then echo OK; fi), OK)
 OPERATING_SYSTEM_OPENSSL_OK=true
 endif
 
-ifeq ($(shell if ( grep -q "Fedora Core release 3" /etc/fedora-release 2>/dev/null || grep -q "Gentoo Base System" /etc/gentoo-release 2>/dev/null ) && [ -f /usr/lib/libxml2.so -o -f /usr/lib64/libxml2.so ]; then echo OK; fi), OK)
+ifeq ($(shell if ( grep -q "Fedora Core release" /etc/fedora-release 2>/dev/null || grep -q "Gentoo Base System" /etc/gentoo-release 2>/dev/null ) && [ -f /usr/lib/libxml2.so -o -f /usr/lib64/libxml2.so ]; then echo OK; fi), OK)
 OPERATING_SYSTEM_XML2_OK=true
 endif
 
@@ -40,6 +40,6 @@ endif
 endif
 
 # Breaks perlmods in some unknown and unknowable way
-#export OS_LDS OPERATING_SYSTEM_XML2_OK OPERATING_SYSTEM_OPENSLL_OK BKMK_LINUX_26_VAR_CORRECT
+#export OS_LDS OPERATING_SYSTEM_XML2_OK OPERATING_SYSTEM_OPENSSL_OK BKMK_LINUX_26_VAR_CORRECT
 
 #endif # BKMK_LINUX_26_VAR_CORRECT

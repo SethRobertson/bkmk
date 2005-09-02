@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.54 2005/01/27 08:13:37 dupuy Exp $
+# $Id: aclocal.m4,v 1.55 2005/09/02 17:13:46 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -62,7 +62,7 @@ AC_DEFUN([AC_CONSTRUCTORS],
 
 
 # AC_C_ALIGN_FUNCTIONS
-# ---------------
+# --------------------
 # GCC versions < 2.96 don't recognize -falign-functions, only -malign-functions
 # GCC versions >= 3.0 deprecate -malign-functions
 #
@@ -88,8 +88,29 @@ AC_DEFUN([AC_C_ALIGN_FUNCTIONS],
 ])# AC_C_ALIGN_FUNCTIONS
 
 
+# AC_C_NO_POINTER_SIGN
+# --------------------
+# Check if gcc supports (requires) -Wno-pointer-sign
+#
+AC_DEFUN([AC_C_NO_POINTER_SIGN],dnl
+[ac_saved_cflags=$CFLAGS
+ CFLAGS="-Wno-pointer-sign"
+ AC_CACHE_CHECK([if -Wno-pointer-sign is supported], ac_c_no_pointer_sign,
+ [AC_TRY_COMPILE([],[int f() { return 0; }],
+ [ ac_c_no_pointer_sign=yes; ],[ ac_c_no_pointer_sign=no; ])
+
+ if test "$ac_c_no_pointer_sign" = "yes"
+ then
+    NO_POINTER_SIGN_WARN=-Wno-pointer-sign
+    AC_SUBST(NO_POINTER_SIGN_WARN)
+ fi
+ ])
+ CFLAGS=$ac_saved_cflags
+])# AC_C_NO_POINTER_SIGN
+
+
 # BK_C_SIG_BRAINDAMAGE
-# --------
+# ---------N-----------
 # Check if gcc is brain dead in how it handles passing SIG_IGN/DFL as functions
 #
 AC_DEFUN([BK_C_SIG_BRAINDAMAGE],dnl
@@ -142,7 +163,7 @@ fi
 
 
 # AC_C__FUNC__
-# ----------
+# ------------
 # C 99 has an implicit local variable __func__ (a constant string) and several
 # C 89 compilers (notably GCC) have __FUNCTION__ and/or __PRETTY_FUNCTION__
 # names that work in similar ways (PRETTY does C++ name demangling).
@@ -178,7 +199,7 @@ AC_DEFUN([AC_C__FUNC__],
 
 
 # AC_IN_ADDR_T
-# ---------------------------------
+# ------------
 # This macro determines if in_addr_t is defined or not.
 #
 AC_DEFUN([AC_IN_ADDR_T], [AC_CACHE_CHECK([for in_addr_t typedef], ac_inaddr_t_defined,
@@ -214,7 +235,7 @@ AC_DEFUN([AC_SOCKLEN_T],dnl
 
 
 # AC_FUNC_INET_PTON
-# ----------------
+# -----------------
 # This macro determines if the inet_pton function is supported, and which
 # libraries (if any) need to be linked to get it.
 #
@@ -228,7 +249,7 @@ LIBS="-lnsl $LIBS"])])dnl
 
 
 # AC_FUNC_GETTEXT
-# ----------------
+# ---------------
 # This macro determines if the gettext function is supported, and which
 # libraries (if any) need to be linked to get it.
 #
@@ -283,7 +304,7 @@ AC_DEFUN([AC_SA_LEN],
 
 
 # AC_IN6_MULTICAST
-# ---------
+# ----------------
 # The BSD and Solaris versions of IN6_IS_ADDR_MULTICAST take a pointer to
 # a struct in6_addr.  The Linux version takes the s6_addr from the
 # struct in6_addr.  Figure out which version we have.
@@ -360,7 +381,7 @@ AC_DEFINE_UNQUOTED(STACK_DIRECTION, $ac_cv_c_stack_direction)
 
 
 # AC_TIME_MAX
-# -----------------
+# -----------
 # Determine the ANSI limit.h constant that expresses the maximum time_t.
 #
 AC_DEFUN([AC_TIME_MAX],
@@ -553,7 +574,7 @@ fi
 
 
 # AC_DEV_FD
-# -----------------
+# ---------
 # Determine if /dev/fd/ is a directory allowing you to reopen file descriptors.
 #
 # You can test for basic /dev/fd support with #ifdef HAVE_DEV_FD; the
@@ -621,7 +642,7 @@ esac
 
 
 # AC_PROCFS
-# -----------------
+# ---------
 # Determine whether /proc/ is a directory allowing you to read process status.
 # Linux, BSD, and SVR4 implement this differently.
 #

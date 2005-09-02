@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.Linux-2.4-post,v 1.3 2005/08/25 16:13:49 dupuy Exp $
+# $Id: Make.Linux-2.4-post,v 1.4 2005/09/02 17:13:45 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -26,6 +26,5 @@ ifeq ($(shell if grep -q 'release 9' /etc/redhat-release 2>/dev/null; then echo 
 ifeq ($(BK_WANT_STATIC),true)
 OS_LDS=-L /usr/kerberos/lib 
 OS_LIBS=-lkrb5 -lk5crypto -lcom_err
-JTT=jtt
 endif
 endif

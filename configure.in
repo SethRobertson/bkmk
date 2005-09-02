@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.122 2005/04/23 17:51:55 dupuy Exp $
+dnl $Id: configure.in,v 1.123 2005/09/02 17:13:46 dupuy Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.122 $)dnl
+AC_REVISION($Revision: 1.123 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([libbk_autoconf.h.in])
 AC_CONFIG_AUX_DIR(acaux)
@@ -74,6 +74,7 @@ fi
 AC_SUBST(HAVE_PROJ_POSTGRES)
 
 AC_C_ALIGN_FUNCTIONS
+AC_C_NO_POINTER_SIGN
 
 AC_CHECK_SIZEOF(int)
 AC_CHECK_SIZEOF(long)
