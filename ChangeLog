@@ -1,3 +1,11 @@
+2005-09-02  Alexander Dupuy  <alex.dupuy@counterstorm.com>
+
+	* aclocal.m4 (AC_C_NO_POINTER_SIGN): check for ggc-4 -Wno-pointer-sign
+
+	* Make.config.in (NO_POINTER_SIGN_WARN): use autoconfig to set make var
+
+	* Make.variables (COMPILER_DEBUG+): use -Wno-pointer-sign if available
+
 2005-08-22  James Tanis  <jtt@cheviot.sysdetect.com>
 
 	* Make.variables (BK_BKJUNK): Add $(BK_ZIPPED_FILES) to BK_BKJUNK
