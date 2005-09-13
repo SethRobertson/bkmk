@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.204 2005/09/02 17:13:46 dupuy Exp $
+# $Id: Make.variables,v 1.205 2005/09/13 14:05:42 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -331,8 +331,10 @@ TERMINAL_LIBS=-ltermcap
 
 ifeq ($(BK_USING_GPROF),true)
 BK_LIBM=-lm_p
+BK_LIBUTIL=-lutil_p
 else
 BK_LIBM=$(LIBM)
+BK_LIBUTIL=-lutil
 endif
 
 COMPRESS_LIBS=-lz
@@ -350,6 +352,9 @@ GROUP_LIBS+= -lbkssl
 endif
 
 BK_LIBS+= -lbkxml -lbk -ldict -lfsma -lpqueue -lpopt $(LIBRESOLVER) $(BK_LIBM) $(COMPRESS_LIBS)
+
+AC_LIBS:=$(patsubst -lm,$(BK_LIBM),$(AC_LIBS))
+AC_LIBS:=$(patsubst -lutil,$(BK_LIBUTIL),$(AC_LIBS))
 
 LT_LDLIBS+= $(AC_LIBS)
 
