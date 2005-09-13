@@ -198,19 +198,14 @@ else
   as_expr=false
 fi
 
-rm -f conf$$ conf$$.exe conf$$.lnk conf$$.file
+rm -f conf$$ conf$$.exe conf$$.file
 echo >conf$$.file
 if ln -s conf$$.file conf$$ 2>/dev/null; then
   # We could just check for DJGPP; but this test a) works b) is more generic
   # and c) will remain valid once DJGPP supports symlinks (DJGPP 2.04).
-  # This also detects Cygwin-emulated symlinks and falls back to hard links
-  # (which are emulated by cp -p on filesystems that do not support them).
   if test -f conf$$.exe; then
     # Don't use ln at all; we don't have any links
     as_ln_s='cp -p'
-  elif test -f conf$$.lnk; then
-    # Don't use ln -s; only Cygwin tools (and Explorer) follow symbolic links
-    as_ln_s='ln'
   else
     as_ln_s='ln -s'
   fi
@@ -219,7 +214,7 @@ elif ln conf$$.file conf$$ 2>/dev/null; then
 else
   as_ln_s='cp -p'
 fi
-rm -f conf$$ conf$$.exe conf$$.lnk conf$$.file
+rm -f conf$$ conf$$.exe conf$$.file
 
 if mkdir -p . 2>/dev/null; then
   as_mkdir_p=:
@@ -228,30 +223,7 @@ else
   as_mkdir_p=false
 fi
 
-# Find out how to test for executable files. Don't use a zero-byte file,
-# as systems may use methods other than mode bits to determine executability.
-cat >conf$$.file <<_ASEOF
-#! /bin/sh
-exit 0
-_ASEOF
-chmod +x conf$$.file
-cat >conf$$.exe <<_ASEOF
-This is not an executable magic number, it is a free data file!
-_ASEOF
-if ./conf$$.file >/dev/null 2>&1 && \
-    test -x conf$$.file >/dev/null 2>&1 && \
-    test ! -x conf$$.exe >/dev/null; then
-  as_executable_p2="test -x"
-else
-  as_executable_p2=":"
-fi
-if test -f conf$$.file >/dev/null 2>&1; then
-  as_executable_p="test -f"
-else
-  { echo "$as_me: error: cannot check whether a file is executable on this system" >&2
-   { (exit 1); exit 1; }; }
-fi
-rm -f conf$$.file conf$$.exe
+as_executable_p="test -f"
 
 # Sed expression to map a string onto a valid CPP name.
 as_tr_cpp="eval sed 'y%*$as_cr_letters%P$as_cr_LETTERS%;s%[^_$as_cr_alnum]%_%g'"
@@ -492,7 +464,7 @@ ac_includes_default="\
 # include <unistd.h>
 #endif"
 
-ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT CXX CXXFLAGS ac_ct_CXX LEX LEXLIB LEX_OUTPUT_ROOT YACC CPP CXXCPP AWK build build_cpu build_vendor build_os host host_cpu host_vendor host_os LIBM HAVE_LIBSSL HAVE_LIBCRYPT HAVE_LIBCRYPTO HAVE_PROJ_POSTGRES ALIGN_FUNCTIONS_SWITCH NO_POINTER_SIGN_WARN EGREP HAVE_OVERZEALOUS_CHAR_SUBSCRIPT BK_SPECIAL_DEBUG BK_NO_STRICT_PROTOTYPES INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA LN_S PAWD ECHO AR ac_ct_AR RANLIB ac_ct_RANLIB STRIP ac_ct_STRIP DLLTOOL ac_ct_DLLTOOL AS ac_ct_AS OBJDUMP ac_ct_OBJDUMP F77 FFLAGS ac_ct_F77 LIBTOOL shlibpath_var shlibext modulext lt_prog_compiler_static LIBOBJS PTHREAD_CC PTHREAD_LIBS PTHREAD_CFLAGS HAVE_PTHREADS ALLOCA TRUE FALSE TEST RM TOUCH CP MV MKDIR LS GTAR TAR GZIP CVS UNAME CHMOD JOIN FMT CAT BASENAME SED PERL GREP FIND SORT UNIQ XARGS TEE EXPR XML2CONFIG BGCC PARASOFT INSURE JTEST JAVAC JAR JAVADOC JHINDEXER DOXYGEN HAVE_DOT BROWSER XREF HEAD ORACLE_HOME HAVE_ORACLE INSTALL_PRESERVE LTLIBOBJS'
+ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT CXX CXXFLAGS ac_ct_CXX LEX LEXLIB LEX_OUTPUT_ROOT YACC CPP CXXCPP AWK build build_cpu build_vendor build_os host host_cpu host_vendor host_os LIBM HAVE_LIBSSL HAVE_LIBCRYPT HAVE_LIBCRYPTO HAVE_PROJ_POSTGRES ALIGN_FUNCTIONS_SWITCH NO_POINTER_SIGN_WARN EGREP HAVE_OVERZEALOUS_CHAR_SUBSCRIPT BK_SPECIAL_DEBUG BK_NO_STRICT_PROTOTYPES INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA LN_S PAWD ECHO AR ac_ct_AR RANLIB ac_ct_RANLIB STRIP ac_ct_STRIP DLLTOOL ac_ct_DLLTOOL AS ac_ct_AS OBJDUMP ac_ct_OBJDUMP F77 FFLAGS ac_ct_F77 LIBTOOL shlibpath_var shlibext modulext lt_prog_compiler_static LIBOBJS PTHREAD_CC PTHREAD_LIBS PTHREAD_CFLAGS HAVE_PTHREADS PROFILED_LIBS ALLOCA TRUE FALSE TEST RM TOUCH CP MV MKDIR LS GTAR TAR GZIP CVS UNAME CHMOD JOIN FMT CAT BASENAME SED PERL GREP FIND SORT UNIQ XARGS TEE EXPR XML2CONFIG BGCC PARASOFT INSURE JTEST JAVAC JAR JAVADOC JHINDEXER DOXYGEN HAVE_DOT BROWSER XREF HEAD ORACLE_HOME HAVE_ORACLE INSTALL_PRESERVE LTLIBOBJS'
 ac_subst_files=''
 
 # Initialize some variables set by options.
@@ -1576,7 +1548,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_prog_CC="${ac_tool_prefix}gcc"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -1614,7 +1586,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_prog_ac_ct_CC="gcc"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -1656,7 +1628,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_prog_CC="${ac_tool_prefix}cc"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -1694,7 +1666,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_prog_ac_ct_CC="cc"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -1737,7 +1709,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     if test "$as_dir/$ac_word$ac_exec_ext" = "/usr/ucb/cc"; then
        ac_prog_rejected=yes
        continue
@@ -1793,7 +1765,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_prog_CC="$ac_tool_prefix$ac_prog"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -1835,7 +1807,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_prog_ac_ct_CC="$ac_prog"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -2486,7 +2458,7 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 if test "$CC" "!=" "gcc"; then
-  { echo "$as_me:$LINENO: WARNING: Attempting to compile without gcc may be painful" >&5
+   { echo "$as_me:$LINENO: WARNING: Attempting to compile without gcc may be painful" >&5
 echo "$as_me: WARNING: Attempting to compile without gcc may be painful" >&2;}
 fi
 
@@ -2514,7 +2486,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_prog_CXX="$ac_tool_prefix$ac_prog"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -2556,7 +2528,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_prog_ac_ct_CXX="$ac_prog"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -2864,7 +2836,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_prog_LEX="$ac_prog"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -3138,7 +3110,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_prog_YACC="$ac_prog"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -3733,7 +3705,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_prog_AWK="$ac_prog"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -6925,7 +6897,7 @@ case $as_dir/ in
     # by default.
     for ac_prog in ginstall scoinst install; do
       for ac_exec_ext in '' $ac_executable_extensions; do
-	if $as_executable_p "$as_dir/$ac_prog$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_prog$ac_exec_ext"; then
+	if $as_executable_p "$as_dir/$ac_prog$ac_exec_ext"; then
 	  if test $ac_prog = install &&
 	    grep dspmsg "$as_dir/$ac_prog$ac_exec_ext" >/dev/null 2>&1; then
 	    # AIX install.  It has an incompatible calling convention.
@@ -6997,7 +6969,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_PAWD="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -7592,7 +7564,7 @@ ia64-*-hpux*)
   ;;
 *-*-irix6*)
   # Find out which ABI we are using.
-  echo '#line 7595 "configure"' > conftest.$ac_ext
+  echo '#line 7567 "configure"' > conftest.$ac_ext
   if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
@@ -7766,7 +7738,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_prog_DLLTOOL="${ac_tool_prefix}dlltool"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -7804,7 +7776,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_prog_ac_ct_DLLTOOL="dlltool"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -7846,7 +7818,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_prog_AS="${ac_tool_prefix}as"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -7884,7 +7856,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_prog_ac_ct_AS="as"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -7926,7 +7898,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_prog_OBJDUMP="${ac_tool_prefix}objdump"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -7964,7 +7936,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_prog_ac_ct_OBJDUMP="objdump"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -8170,7 +8142,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_prog_F77="$ac_tool_prefix$ac_prog"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -8212,7 +8184,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_prog_ac_ct_F77="$ac_prog"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -8239,7 +8211,7 @@ fi
 
 
 # Provide some information about the compiler.
-echo "$as_me:8242:" \
+echo "$as_me:8214:" \
      "checking for Fortran 77 compiler version" >&5
 ac_compiler=`set X $ac_compile; echo $2`
 { (eval echo "$as_me:$LINENO: \"$ac_compiler --version </dev/null >&5\"") >&5
@@ -8735,7 +8707,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_prog_AR="${ac_tool_prefix}ar"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -8773,7 +8745,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_prog_ac_ct_AR="ar"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -8815,7 +8787,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_prog_RANLIB="${ac_tool_prefix}ranlib"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -8853,7 +8825,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_prog_ac_ct_RANLIB="ranlib"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -8895,7 +8867,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_prog_STRIP="${ac_tool_prefix}strip"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -8933,7 +8905,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_prog_ac_ct_STRIP="strip"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -9274,11 +9246,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:9277: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:9249: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:9281: \$? = $ac_status" >&5
+   echo "$as_me:9253: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -9506,11 +9478,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:9509: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:9481: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:9513: \$? = $ac_status" >&5
+   echo "$as_me:9485: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -9573,11 +9545,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:9576: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:9548: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:9580: \$? = $ac_status" >&5
+   echo "$as_me:9552: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -11794,7 +11766,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 11797 "configure"
+#line 11769 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -11892,7 +11864,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 11895 "configure"
+#line 11867 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -14132,11 +14104,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:14135: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:14107: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:14139: \$? = $ac_status" >&5
+   echo "$as_me:14111: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -14199,11 +14171,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:14202: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:14174: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:14206: \$? = $ac_status" >&5
+   echo "$as_me:14178: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -15630,7 +15602,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 15633 "configure"
+#line 15605 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -15728,7 +15700,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 15731 "configure"
+#line 15703 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -16561,11 +16533,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:16564: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:16536: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:16568: \$? = $ac_status" >&5
+   echo "$as_me:16540: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -16628,11 +16600,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:16631: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:16603: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:16635: \$? = $ac_status" >&5
+   echo "$as_me:16607: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -18708,11 +18680,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:18711: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:18683: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:18715: \$? = $ac_status" >&5
+   echo "$as_me:18687: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -18940,11 +18912,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:18943: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:18915: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:18947: \$? = $ac_status" >&5
+   echo "$as_me:18919: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -19007,11 +18979,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:19010: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:18982: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:19014: \$? = $ac_status" >&5
+   echo "$as_me:18986: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -21228,7 +21200,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 21231 "configure"
+#line 21203 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -21326,7 +21298,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 21329 "configure"
+#line 21301 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -26754,7 +26726,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_prog_PTHREAD_CC="cc_r"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -27478,6 +27450,40 @@ done
 
 
 fi
+
+
+PROFILED_LIBS=""
+libprof_src="/tmp/libprof$$.c"
+echo 'main(){}' > $libprof_src
+
+
+for profiled_lib in 		\
+	     BrokenLocale	\
+	     anl		\
+	     c			\
+	     crypt		\
+	     dl			\
+	     m			\
+	     nsl		\
+	     pthread		\
+	     resolv		\
+	     rpcsvc		\
+	     rt			\
+	     util
+     do
+	echo "$as_me:$LINENO: checking for existence of lib${profiled_lib}_p" >&5
+echo $ECHO_N "checking for existence of lib${profiled_lib}_p... $ECHO_C" >&6
+	if $CC -o /dev/null $libprof_src -l${profiled_lib}_p >&5 2>&1
+	then
+		PROFILED_LIBS="$PROFILED_LIBS -l${profiled_lib}"
+		echo "$as_me:$LINENO: result: yes" >&5
+echo "${ECHO_T}yes" >&6
+	else
+		echo "$as_me:$LINENO: result: no" >&5
+echo "${ECHO_T}no" >&6
+	fi
+done
+rm -f $libprof_src
 
 
 
@@ -29351,7 +29357,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_TRUE="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -29390,7 +29396,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_FALSE="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -29429,7 +29435,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_TEST="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -29469,7 +29475,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_RM="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -29508,7 +29514,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_TOUCH="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -29547,7 +29553,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_CP="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -29588,7 +29594,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_MV="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -29631,7 +29637,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_MKDIR="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -29671,7 +29677,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_LS="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -29711,7 +29717,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_GTAR="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -29753,7 +29759,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_TAR="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -29796,7 +29802,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_GZIP="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -29836,7 +29842,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_CVS="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -29876,7 +29882,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_UNAME="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -29916,7 +29922,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_CHMOD="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -29956,7 +29962,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_JOIN="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -29996,7 +30002,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_FMT="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -30037,7 +30043,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_CAT="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -30077,7 +30083,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_BASENAME="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -30118,7 +30124,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_SED="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -30160,7 +30166,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_PERL="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -30200,7 +30206,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_GREP="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -30240,7 +30246,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_FIND="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -30280,7 +30286,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_SORT="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -30320,7 +30326,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_UNIQ="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -30360,7 +30366,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_XARGS="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -30400,7 +30406,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_EGREP="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -30440,7 +30446,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_TEE="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -30480,7 +30486,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_EXPR="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -30521,7 +30527,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_AR="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -30561,7 +30567,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_XML2CONFIG="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -30604,7 +30610,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_BGCC="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -30661,7 +30667,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_INSURE="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -30702,7 +30708,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_JTEST="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -30748,7 +30754,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_JAVAC="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -30789,7 +30795,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_JAR="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -30830,7 +30836,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_JAVADOC="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -30872,7 +30878,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_JHINDEXER="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -30913,7 +30919,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_DOXYGEN="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -30951,7 +30957,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_prog_HAVE_DOT="YES"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -30992,7 +30998,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_BROWSER="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -31036,7 +31042,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_XREF="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -31076,7 +31082,7 @@ do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
   for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p2 "$as_dir/$ac_word$ac_exec_ext"; then
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
     ac_cv_path_HEAD="$as_dir/$ac_word$ac_exec_ext"
     echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
@@ -31490,19 +31496,14 @@ else
   as_expr=false
 fi
 
-rm -f conf$$ conf$$.exe conf$$.lnk conf$$.file
+rm -f conf$$ conf$$.exe conf$$.file
 echo >conf$$.file
 if ln -s conf$$.file conf$$ 2>/dev/null; then
   # We could just check for DJGPP; but this test a) works b) is more generic
   # and c) will remain valid once DJGPP supports symlinks (DJGPP 2.04).
-  # This also detects Cygwin-emulated symlinks and falls back to hard links
-  # (which are emulated by cp -p on filesystems that do not support them).
   if test -f conf$$.exe; then
     # Don't use ln at all; we don't have any links
     as_ln_s='cp -p'
-  elif test -f conf$$.lnk; then
-    # Don't use ln -s; only Cygwin tools (and Explorer) follow symbolic links
-    as_ln_s='ln'
   else
     as_ln_s='ln -s'
   fi
@@ -31511,7 +31512,7 @@ elif ln conf$$.file conf$$ 2>/dev/null; then
 else
   as_ln_s='cp -p'
 fi
-rm -f conf$$ conf$$.exe conf$$.lnk conf$$.file
+rm -f conf$$ conf$$.exe conf$$.file
 
 if mkdir -p . 2>/dev/null; then
   as_mkdir_p=:
@@ -31520,31 +31521,7 @@ else
   as_mkdir_p=false
 fi
 
-# Find out how to test for executable files. Don't use a zero-byte file,
-# as systems may use methods other than mode bits to determine executability.
-cat >conf$$.file <<_ASEOF
-#! /bin/sh
-exit 0
-_ASEOF
-chmod +x conf$$.file
-cat >conf$$.exe <<_ASEOF
-This is not an executable magic number, it is a free data file!
-_ASEOF
-if ./conf$$.file >/dev/null 2>&1 && \
-    test -x conf$$.file >/dev/null 2>&1 && \
-    test ! -x conf$$.exe >/dev/null; then
-  as_executable_p2="test -x"
-else
-  as_executable_p2=":"
-fi
-if test -f conf$$.file >/dev/null 2>&1; then
-  as_executable_p="test -f"
-else
-  { { echo "$as_me:$LINENO: error: cannot check whether a file is executable on this system" >&5
-echo "$as_me: error: cannot check whether a file is executable on this system" >&2;}
-   { (exit 1); exit 1; }; }
-fi
-rm -f conf$$.file conf$$.exe
+as_executable_p="test -f"
 
 # Sed expression to map a string onto a valid CPP name.
 as_tr_cpp="eval sed 'y%*$as_cr_letters%P$as_cr_LETTERS%;s%[^_$as_cr_alnum]%_%g'"
@@ -31894,6 +31871,7 @@ s,@PTHREAD_CC@,$PTHREAD_CC,;t t
 s,@PTHREAD_LIBS@,$PTHREAD_LIBS,;t t
 s,@PTHREAD_CFLAGS@,$PTHREAD_CFLAGS,;t t
 s,@HAVE_PTHREADS@,$HAVE_PTHREADS,;t t
+s,@PROFILED_LIBS@,$PROFILED_LIBS,;t t
 s,@ALLOCA@,$ALLOCA,;t t
 s,@TRUE@,$TRUE,;t t
 s,@FALSE@,$FALSE,;t t

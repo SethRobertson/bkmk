@@ -1,3 +1,10 @@
+2005-09-13  James Tanis  <jtt@cheviot.sysdetect.com>
+
+	* configure.in: Look for profiled libraries.
+
+	* Make.variables: Suppress duplicate libraries on final lib
+	line. Replace std libs with profiled versions if profiling.
+
 2005-09-02  Alexander Dupuy  <alex.dupuy@counterstorm.com>
 
 	* aclocal.m4 (AC_C_NO_POINTER_SIGN): check for ggc-4 -Wno-pointer-sign

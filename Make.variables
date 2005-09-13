@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.206 2005/09/13 17:38:49 jtt Exp $
+# $Id: Make.variables,v 1.207 2005/09/13 20:56:30 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -329,14 +329,6 @@ LIB44BSD=#-l44bsd
 DBM_LIBS=-ldb
 TERMINAL_LIBS=-ltermcap
 
-ifeq ($(BK_USING_GPROF),true)
-BK_LIBM=-lm_p
-BK_LIBUTIL=-lutil_p
-else
-BK_LIBM=$(LIBM)
-BK_LIBUTIL=-lutil
-endif
-
 COMPRESS_LIBS=-lz
 
 # BK issues
@@ -353,11 +345,7 @@ endif
 
 BK_LIBS+= -lbkxml -lbk -ldict -lfsma -lpqueue -lpopt $(LIBRESOLVER) $(BK_LIBM) $(COMPRESS_LIBS)
 
-AC_LIBS:=$(patsubst -lm,$(BK_LIBM),$(AC_LIBS))
-AC_LIBS:=$(patsubst -lutil,$(BK_LIBUTIL),$(AC_LIBS))
-
 LT_LDLIBS+= $(AC_LIBS)
-
 
 endif # NO_STDBKCCSTUFF
 
@@ -569,28 +557,15 @@ BK_DEFINES += -DNO_POSTGRES
 endif
 
 ifeq ($(BK_USING_GPROF),true)
-BK_LIBCRYPT := -lcrypt_p
-# <TODO>-ldl is a Linuxism; should be autoconf'ed</TODO>
-BK_LIBDL := -ldl_p
+PROFILING=true
 CFLAGS += -pg
-OS_LIBS += -lc_p
-else
-ifeq ($(strip $(HAVE_LIBCRYPT)), true)
-BK_LIBCRYPT := -lcrypt
-else
-ifeq ($(strip $(HAVE_LIBCRYPTO)), true)
-BK_LIBCRYPT := -lcrypto
-else
-BK_LIBCRYPT :=
-endif # HAVE_LIBCRYPTO = true
-endif # HAVE_LIBCRYPT = true
-BK_LIBDL := -ldl
+# We will add -lc_p to the lib line later to make sure it goes last
 endif # BK_USING_GPROF
 
 ifeq ($(BK_USING_PROF),true)
+PROFILING=true
 CFLAGS += -p
-# This isn't *strictly* an OS lib, but it's close enough
-OS_LIBS += -lc_p
+# We will add -lc_p to the lib line later to make sure it goes last
 endif # BK_USING_PROF
 
 #
@@ -605,11 +580,11 @@ else
 CC_CONFIG= $(PTHREAD_CC)
 endif
 
-ifeq ($(BK_USING_GPROF),true)
-ifeq ($(PTHREAD_LIBS),-lpthread)
-PTHREAD_LIBS=-lpthread_p
-endif
-endif
+#ifeq ($(BK_USING_GPROF),true)
+#ifeq ($(PTHREAD_LIBS),-lpthread)
+#PTHREAD_LIBS=-lpthread_p
+#endif
+#endif
 
 LT_LDFLAGS += $(PTHREAD_CFLAGS)
 LT_M_LDFLAGS += $(PTHREAD_CFLAGS)
@@ -705,7 +680,14 @@ BK_ALLLDS=$(LOCAL_LDS) $(GROUP_LDS) $(PKG_LDS) $(BK_LDS) $(INSTALL_LDS) $(OS_LDS
 # The insure debug libs are allegedly supposed to go last.
 BK_TMP_ALLLIBS=$(LOCAL_LIBS) $(GROUP_LIBS) $(PKG_LIBS) $(BK_LIBS) $(PTHREAD_LIBS) $(OS_LIBS) $(AC_LIBS) $(INSURE_DEBUG_LIBS) $(INSURE_LIBS)
 REMOVE_DUP_LIBS='foreach $$lib (reverse(@ARGV)){ if (!exists($$r{$$lib})){ unshift @libs, $$lib; $$r{$$lib}=1;}} print "" . join(" ", @libs) . "\n";'
+
+ifeq ($(PROFILING),true)
+NO_DUPS = $(shell $(PERL) -e  $(REMOVE_DUP_LIBS) -- $(BK_TMP_ALLLIBS))
+BK_ALLLIBS=$(shell $(PERL) -e 'foreach $$profiled_lib (split(/\s+/, $$ARGV[0])){ $$ARGV[1] =~ s/$$profiled_lib\b/$${profiled_lib}_p/;} print "$$ARGV[1]\n";' -- "$(PROFILED_LIBS)" "$(NO_DUPS)") -lc_p
+else
 BK_ALLLIBS = $(shell $(PERL) -e  $(REMOVE_DUP_LIBS) -- $(BK_TMP_ALLLIBS))
+endif
+
 BK_LIBDIR=$(OS_SEARCHPATH) $(patsubst -L%,%,$(filter -L%,$(BK_ALLLDS)))
 BK_RELINKLIBS=$(LOCAL_RELINK_LIBS) $(GROUP_RELINK_LIBS) $(PKG_RELINK_LIBS) $(BK_RELINK_LIBS) $(OS_RELINK_LIBS)
 
