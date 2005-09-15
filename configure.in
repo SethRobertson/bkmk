@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.127 2005/09/13 20:56:28 jtt Exp $
+dnl $Id: configure.in,v 1.128 2005/09/15 00:02:49 jtt Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.127 $)dnl
+AC_REVISION($Revision: 1.128 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([libbk_autoconf.h.in])
 AC_CONFIG_AUX_DIR(acaux)
@@ -46,25 +46,15 @@ AC_CHECK_LIB(m, pow)
 AC_CHECK_LIBM
 AC_SUBST(LIBM)
 
-AC_CHECK_LIB(ssl, SSL_CTX_new, HAVE_LIBSSL=true, HAVE_LIBSSL=false)
-if test "$HAVE_LIBSSL" "=" "true"
+AC_CHECK_LIB(dl,dlopen)
+AC_CHECK_LIB(crypt,crypt)
+AC_CHECK_LIB(crypto,CRYPTO_free)
+AC_CHECK_LIB(ssl,SSL_CTX_new, /bin/true, /bin/true)
+if test "$ac_cv_lib_ssl_SSL_CTX_new" = yes
 then
-  AC_DEFINE(HAVE_LIBSSL)
+	AC_SUBST(HAVE_LIBSSL,true)
 fi
-AC_SUBST(HAVE_LIBSSL)
 
-AC_CHECK_LIB(crypt, crypt, HAVE_LIBCRYPT=true, HAVE_LIBCRYPT=false)
-if test "$HAVE_LIBCRYPT" "=" "true"
-then
-  AC_DEFINE(HAVE_LIBCRYPT)
-fi
-AC_SUBST(HAVE_LIBCRYPT)
-AC_CHECK_LIB(crypto, crypt, HAVE_LIBCRYPTO=true, HAVE_LIBCRYPTO=false)
-if test "$HAVE_LIBCRYPT" "=" "true"
-then
-  AC_DEFINE(HAVE_LIBCRYPTO)
-fi
-AC_SUBST(HAVE_LIBCRYPTO)
 
 AC_CHECK_FILE(/proj/postgres, HAVE_PROJ_POSTGRES=true, HAVE_PROJ_POSTGRES=false)
 if test "$HAVE_PROJ_POSTGRES" "=" "true"

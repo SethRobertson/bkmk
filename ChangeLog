@@ -1,3 +1,10 @@
+2005-09-14  James Tanis  <jtt@cheviot.sysdetect.com>
+
+	* configure.in: Make sure that all needed libs are searched for
+	and included in AC_LIBS.
+
+	* Make.config.in (PTHREAD_CC): Remove never used defines.
+
 2005-09-13  James Tanis  <jtt@cheviot.sysdetect.com>
 
 	* configure.in: Look for profiled libraries.
