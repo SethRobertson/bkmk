@@ -1,3 +1,7 @@
+2005-09-29  Alex Dupuy  <alex.dupuy@counterstorm.com>
+
+	* Make.GNUmakefile (clean, nuke): rm autom4te.cache as well
+
 2005-09-14  James Tanis  <jtt@cheviot.sysdetect.com>
 
 	* configure.in: Make sure that all needed libs are searched for
@@ -22,9 +26,85 @@
 
 2005-08-22  James Tanis  <jtt@cheviot.sysdetect.com>
 
-	* Make.variables (BK_BKJUNK): Add $(BK_ZIPPED_FILES) to BK_BKJUNK
+	* Make.variables (BK_BKJUNK): Add BK_ZIPPED_FILES to BK_BKJUNK
 
 	* Make.production (%.gz): Add gzip suffix rule.
+
+2005-08-10  Brian Lindauer  <lindauer@counterstorm.com>
+
+	* Make.targets: Don't print shell commands [missing @]
+
+2005-05-10  Alex Dupuy  <alex.dupuy@counterstorm.com>
+
+	* Make.variables: expr is not as clever as Seth thinks it is; also
+	avoid expr syntax errors when GCC_VERSION isn't defined for some
+	reason [make nuke and/or arch change]
+
+2005-05-02  Seth Robertson  <seth@counterstorm.com>
+
+	* Make.targets: Allow postgres to be cleaner
+
+2005-04-14  James Tanis  <jtt@counterstorm.com>
+
+	* Make.Linux-2.4-post: RH9 static build fix rollup
+
+	* Make.Linux-2.4-post: New file.
+
+	* Make.Linux-2.4-post:
+	Solve the RH9 static build problem in a somewhat heavy handed way, but
+	after all this is RH9.
+
+2005-02-16  Seth Robertson  <seth@counterstorm.com>
+
+	* Make.variables: Remove redundant cflags
+
+2005-02-09  Seth Robertson  <seth@counterstorm.com>
+
+	* Make.GNUmakefile: Prevent bro from using make parallelism job server
+
+	* Make.GNUmakefile, Make.Linux-2.6-pre, Make.variables, Makefile: Allow
+	building in 32 bit mode on 64 bit platform [except for perl and python
+	plugins, which are controlled by respective versions]
+
+2005-02-08  Seth Robertson  <seth@counterstorm.com>
+
+	* Make.Linux-2.6-pre: OpenSSL fixes
+
+2005-02-07  Seth Robertson  <seth@counterstorm.com>
+
+	* os-name.sh: Add architecture in os-name for platform identification
+
+2005-02-07  James Tanis  <jtt@counterstorm.com>
+
+	* Make.Linux-2.6-pre: put openssl back in for a moment
+
+2005-02-07  Seth Robertson  <seth@counterstorm.com>
+
+	* Make.GNUmakefile: Prevent double-clean problem; get rid of more trash
+
+2005-02-06  Seth Robertson  <seth@counterstorm.com>
+
+	* Make.Linux-2.6-pre: 64 bit OS-ssl support
+
+2005-02-04  Seth Robertson  <seth@counterstorm.com>
+
+	* Make.Linux-2.6-pre: Only compile openssl if we are not on FC3 or
+	Gentoo.  Also, activate limited form of sysd-licensing; discard errors
+
+2005-02-04  James Tanis  <jtt@counterstorm.com>
+
+	* Make.variables: split install merge
+
+2005-02-03  James Tanis  <jtt@counterstorm.com>
+
+	* Make.variables: Remove remaining occurences of /usr/antura; Make
+	value of ANTURA_HOME derive from *single source* in awb/Makefile.pre
+	except for ~awb/antura-dist/install
+
+2005-02-02  Brian Lindauer  <lindauer@counterstorm.com>
+
+	* configure.in, Make.config.in, configure:
+	Don't try to include /proj/postgres if it doesn't exist.
 
 2005-01-31  Alexander Dupuy  <dupuy@sysdetect.com>
 

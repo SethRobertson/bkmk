@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.GNUmakefile,v 1.36 2005/02/09 22:37:39 seth Exp $
+# $Id: Make.GNUmakefile,v 1.37 2005/09/29 17:32:19 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -88,7 +88,7 @@ neat: clean
 
 ifneq ($(strip $(WANT_SUBDIRBUILD)),false)
 clean nuke:: distclean distclean-generic
-	$(RM_CONFIG) -rf $(ARCH)
+	$(RM_CONFIG) -rf $(ARCH) autom4te.cache
 
 clean::
 	@if test -f $(ARCH)/Makefile && cd $(ARCH); then $(MAKE) $(STUPIDSUBMAKEOPTS) $@; fi
