@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.GNUmakefile,v 1.37 2005/09/29 17:32:19 dupuy Exp $
+# $Id: Make.GNUmakefile,v 1.38 2005/10/05 18:58:18 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -135,6 +135,7 @@ endif
 	    '') INSTBASE='$(INSTBASE)' ;;				      \
 	  esac;								      \
 	fi;								      \
+	$(ECHO) "$(CONFIGCMD)" &&					      \
 	$(CONFIGCMD) &&							      \
 	if [ -n "$$DESTDIR" ]; then					      \
 	  echo DESTDIR=$$DESTDIR					      \
