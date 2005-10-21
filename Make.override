@@ -80,6 +80,11 @@ BK_USING_INSURE=true
 ifeq ($(WANT_NO_MALLOC_WRAP),true)
 BK_NO_MALLOC_WRAP=true
 endif
+# At long last, Insure++ 7.0.4 (and, we assume, greater) gets realloc right.
+ifneq ($(shell $(INSURE)  --version 2>&1 | $(PERL) -ne '@r=split(/\./, (split)[2]); print "BAD\n" if (($$r[0] < 7) || ($$r[2] < 4));'),BAD)
+BK_NO_MALLOC_WRAP=true
+endif
+
 ifneq ($(findstring true,$(WANT_INSURE_DEBUG)),)
 BK_USING_INSURE_DEBUG=true
 endif
