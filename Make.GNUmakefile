@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.GNUmakefile,v 1.38 2005/10/05 18:58:18 jtt Exp $
+# $Id: Make.GNUmakefile,v 1.39 2005/10/25 20:28:20 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -30,12 +30,16 @@ else
 CONFIGURED:=config.status
 endif
 
+-include $(GROUPTOP)/$(PKGTOP)/.user-variables
+
 include $(BKMKDIR)/Make.bkvariables
 -include $(BKMKDIR)/Make.$(BK_OSNAME)-pre
 include $(BKMKDIR)/Make.config
 include $(BKMKDIR)/Make.override
 include $(BKMKDIR)/Make.variables
 -include $(BKMKDIR)/Make.$(BK_OSNAME)-post
+
+export BK_USING_INSURE INSURE
 
 # make INSTBASE normalized absolute path
 BK_GETCWD= . $(BKMKDIR)/getcwd.sh 2>/dev/null || . $(BKMKDIR)/getcwd.sh.in
@@ -60,8 +64,6 @@ else
 endif
 
 include $(PKGTOP)/Make.include
-
--include $(GROUPTOP)/$(PKGTOP)/.user-variables
 
 ifeq ($(BK_BUILD_32BIT_ON_64),true)
 CC = gcc -m32
