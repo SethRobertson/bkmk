@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.128 2005/09/15 00:02:49 jtt Exp $
+dnl $Id: configure.in,v 1.129 2005/10/26 21:20:27 jtt Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.128 $)dnl
+AC_REVISION($Revision: 1.129 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([libbk_autoconf.h.in])
 AC_CONFIG_AUX_DIR(acaux)
@@ -70,6 +70,7 @@ AC_CHECK_SIZEOF(int)
 AC_CHECK_SIZEOF(long)
 AC_CHECK_SIZEOF(long long)
 AC_CHECK_SIZEOF(void *)
+AC_CHECK_SIZEOF(time_t)
 
 if test "$ac_cv_prog_ac_ct_CC" = "gcc"
 then

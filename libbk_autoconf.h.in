@@ -1,5 +1,5 @@
 /*				-*- C -*-
- * $Id: libbk_autoconf.h.in,v 1.57 2004/07/13 19:18:30 dupuy Exp $
+ * $Id: libbk_autoconf.h.in,v 1.58 2005/10/26 21:20:27 jtt Exp $
  *
  * ++Copyright LIBBK++
  *
@@ -43,6 +43,13 @@
 #undef SIZEOF_QUAD_T
 #undef SIZEOF_OFF_T
 #undef SIZEOF_VOID_P
+#undef SIZEOF_TIME_T
+
+#if (SIZEOF_TIME_T == 4)
+#define UNSIGNED_TIME_T u_int32_t
+#else
+#define UNSIGNED_TIME_T u_int64_t
+#endif
 
 #undef HAVE__FUNC__
 #undef HAVE__PRETTY_FUNCTION__
