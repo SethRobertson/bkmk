@@ -1,3 +1,7 @@
+2006-03-30  Alex Dupuy  <alex.dupuy@counterstorm.com>
+
+	* chcopy.pl: #6989: SysD -> CounterStorm, LIBBK -> BAKA
+
 2005-09-29  Alex Dupuy  <alex.dupuy@counterstorm.com>
 
 	* Make.GNUmakefile (clean, nuke): rm autom4te.cache as well

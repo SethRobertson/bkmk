@@ -1,9 +1,9 @@
 #! /usr/bin/perl -i.bak
-# $Id: chcopy.pl,v 1.13 2003/09/05 18:41:27 seth Exp $
+# $Id: chcopy.pl,v 1.14 2006/03/31 00:08:49 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
-# Copyright (c) 2003 The Authors. All rights reserved.
+# Copyright © 2001-2003,2006 The Authors. All rights reserved.
 #
 # This source code is licensed to you under the terms of the file
 # LICENSE.TXT in this release for further details.
@@ -13,8 +13,10 @@
 # --Copyright LIBBK--
 #
 #
-# <TODO>This script should be enhanced to maintain existing copyright dates,
-# as well as choice of Baka vs. SysD copyright notices</TODO>
+# <TODO>This script should be enhanced to maintain existing copyright dates, or
+# better yet, generate them from CVS history of non-trivial changes.  It would
+# also be useful to auto-detect file encoding (ISO-8859-1 or UTF-8?) so that ©
+# is encoded properly (for now, assume 8859-1 as it is unambiguous).</TODO>
 
 $YEAR = 1900 + (localtime time)[5];
 
@@ -23,66 +25,70 @@ $YEAR = 1900 + (localtime time)[5];
 $BAKAHDR = <<EOF;
 #if !defined(lint)
 static const char libbk__rcsid[] = "\$Id\$";
-static const char libbk__copyright[] = "Copyright (c) $YEAR";
+static const char libbk__copyright[] = "Copyright © $YEAR";
 static const char libbk__contact[] = "<projectbaka\@baka.org>";
 #endif /* not lint */
 EOF
 
 $BAKAPROD = <<EOF;
-++Copyright LIBBK++
+++Copyright BAKA++
 
-Copyright (c) $YEAR The Authors. All rights reserved.
+Copyright © $YEAR The Authors. All rights reserved.
 
 This source code is licensed to you under the terms of the file
 LICENSE.TXT in this release for further details.
 
-Mail <projectbaka\@baka.org> for further information
+Send e-mail to <projectbaka\@baka.org> for further information.
 
-- -Copyright LIBBK- -
+- -Copyright BAKA- -
 EOF
 
 ######################################################################
-## System Detection
-$SYSDHDR = <<EOF;
+## CounterStorm
+$CSHDR = <<EOF;
 #if !defined(lint)
-static const char sysd__rcsid[] = "\$Id\$";
-static const char sysd__copyright[] = "Copyright (c) $YEAR System Detection";
-static const char sysd__contact[] = "System Detection <support\@sysd.com>";
+static const char cs__rcsid[] = "\$Id\$";
+static const char cs__copyright[] = "Copyright © $YEAR CounterStorm, Inc.";
+static const char cs__contact[] = "CounterStorm <support\@counterstorm.com>";
 #endif /* not lint */
 EOF
 
-$SYSDPROD = <<EOF;
-++Copyright SYSDETECT++
+$CSPROD = <<EOF;
+++Copyright COUNTERSTORM++
 
-Copyright (c) $YEAR System Detection.  All rights reserved.
+Copyright © $YEAR CounterStorm, Inc.  All rights reserved.
 
-THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF SYSTEM DETECTION.
+THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF COUNTERSTORM, INC.
 The copyright notice above does not evidence any actual
 or intended publication of such source code.
 
-Only properly authorized employees and contractors of System Detection
-are authorized to view, possess, to otherwise use this file.
+Only properly authorized employees and contractors of CounterStorm, Inc.
+are authorized to view, possess, or otherwise use this file.
 
-System Detection
-5 West 19th Street Floor 2K
-New York, NY 10011-4240
+CounterStorm, Inc.
+15 West 26th Street 7th Floor
+New York, NY 10010-1002
 
 +1 212 206 1900
-<support\@sysd.com>
+<support\@counterstorm.com>
 
-- -Copyright SYSDETECT- -
+- -Copyright COUNTERSTORM- -
 EOF
 
 
 require "getopts.pl";
 
-$prod = 1;
+$prod = -1;
 
-do Getopts('b');
+do Getopts('bc');
 
 if ($opt_b)
 {
   $prod = 0;
+}
+if ($opt_c)
+{
+  $prod = 1;
 }
 
 $q1 = '\#if \!defined\(lint\)';
@@ -91,11 +97,13 @@ $q2 = '\#endif \/\* not lint \*\/';
 while (<>)
 {
   # Header stuff
-  # (Only try header stuff if first line)
+  # (Only try header stuff for first five lines)
   if ($. < 5 && /^$q1/)
   {
     while (<>)
     {
+      $prod = 0 if ($prod < 0 && (/bk__/ || /libbk__/));
+      $prod = 1 if ($prod < 0 && (/cs__/ || /sysd__/));
       if (/^$q2$/)
       {
 	last;
@@ -103,7 +111,8 @@ while (<>)
     }
     if ($prod)
     {
-      print $SYSDHDR;
+      $prod = 1;		# ignore inconsistent copyright below
+      print $CSHDR;
     }
     else
     {
@@ -118,9 +127,11 @@ while (<>)
   }
 
   # Copyright
-  if (/(.*)\+\+Copyright\ .*\+\+/)
+  if (/(.*)\+\+Copyright\ (.*)\+\+/)
   {
     $PREFIX=$1;
+    $prod = 0 if ($prod < 0 && $2 =~ /(BAKA|LIBBK)/);
+    $prod = 1 if ($prod < 0 && $2 =~ /(COUNTERSTORM|SYSDETECT)/);
     while (<>)
     {
       if (/\-\s?\-Copyright\ .*\-\s?\-/)
@@ -130,7 +141,7 @@ while (<>)
     }
     if ($prod)
     {
-      pprint($PREFIX,$SYSDPROD);
+      pprint($PREFIX,$CSPROD);
     }
     else
     {
