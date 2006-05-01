@@ -1,5 +1,5 @@
 #! /bin/sh
-# $Id: os-name.sh,v 1.10 2005/02/07 21:48:35 seth Exp $
+# $Id: os-name.sh,v 1.11 2006/05/01 20:15:09 seth Exp $
 #
 # ++Copyright SYSDETECT++
 #
@@ -32,7 +32,7 @@ case `uname -s` in
 esac
 
 if [ -f /etc/debian_version ]; then
-  sed -e 's/^/DebianLinux-/' /etc/debian_version
+  sed -e 's/^/DebianLinux-/' -e 's:/:-:g' /etc/debian_version
   exit
 elif [ -f /etc/slackware-version ]; then
   sed -e 's/^\([0-9]*.[0-9]*\).*/SlackwareLinux-\1/' /etc/slackware-version
