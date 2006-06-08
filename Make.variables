@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.207 2005/09/13 20:56:30 jtt Exp $
+# $Id: Make.variables,v 1.208 2006/06/08 18:02:44 lindauer Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -444,27 +444,27 @@ endif
 ALIGN_FUNCTIONS=4
 
 ifneq ($(findstring -i386,$(BK_ARCHNAME)),)
-GCCHWOPT+= -mcpu=i686 -march=i686
+GCCHWOPT+= -march=i686
 endif
 ifneq ($(findstring -i686,$(BK_ARCHNAME)),)
-GCCHWOPT+= -mcpu=i686 -march=i686
+GCCHWOPT+= -march=i686
 endif
 ifneq ($(findstring -x86_64,$(BK_ARCHNAME)),)
 # settings for 32-bit compatibility
-#GCCHWOPT+= -m32 -mcpu=i686 -march=i686
+#GCCHWOPT+= -m32 -march=i686
 # settings for EMT64
-#GCCHWOPT+= -mcpu=nocona -march=nocona
+#GCCHWOPT+= -march=nocona
 # settings for AMD64
-GCCHWOPT+= -mcpu=opteron -march=opteron
+GCCHWOPT+= -march=opteron
 endif
 ifneq ($(findstring -sun4,$(BK_ARCHNAME)),)
 # reasonable settings for 32-bit mode
-GCCHWOPT+= -m32 -mcpu=v8 -mtune=supersparc
+GCCHWOPT+= -m32 -mtune=supersparc
 endif
 ifneq ($(findstring -sun4u,$(BK_ARCHNAME)),)
 # reasonable settings for 64-bit mode
 ALIGN_FUNCTIONS=32
-GCCHWOPT+= -m64 -mcpu=ultrasparc
+GCCHWOPT+= -m64 -mtune=ultrasparc
 endif
 
 ifneq ($(BK_NO_OPT),true)
