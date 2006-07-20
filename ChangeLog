@@ -1,3 +1,7 @@
+2006-07-20  Alex Dupuy  <alex.dupuy@counterstorm.com>
+
+	* Make.Linux-2.6-pre: #7825: note systems with snort installed
+
 2006-03-30  Alex Dupuy  <alex.dupuy@counterstorm.com>
 
 	* chcopy.pl: #6989: SysD -> CounterStorm, LIBBK -> BAKA

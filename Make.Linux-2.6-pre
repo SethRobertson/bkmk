@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.Linux-2.6-pre,v 1.12 2006/04/14 22:58:34 lindauer Exp $
+# $Id: Make.Linux-2.6-pre,v 1.13 2006/07/20 08:16:00 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -26,6 +26,10 @@ endif
 
 ifeq ($(shell if ( grep -q "Fedora Core release" /etc/fedora-release 2>/dev/null || grep -q "Gentoo Base System" /etc/gentoo-release 2>/dev/null || grep -q "Ubuntu" /etc/lsb-release 2>/dev/null ) && [ -f /usr/lib/libxml2.so -o -f /usr/lib64/libxml2.so ]; then echo OK; fi), OK)
 OPERATING_SYSTEM_XML2_OK=true
+endif
+
+ifeq ($(shell if [ -d /etc/snort -a -x /usr/sbin/snort ]; then echo OK; fi), OK)
+OPERATING_SYSTEM_SNORT_OK=true
 endif
 
 # Is not searched by default under all circumstances for some stupid reason

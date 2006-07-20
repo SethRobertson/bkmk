@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.targets,v 1.107 2005/08/10 21:26:29 lindauer Exp $
+# $Id: Make.targets,v 1.108 2006/07/20 08:16:00 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -43,7 +43,7 @@ BK_SUBDIRRULE=@								     \
 		continue;						     \
 	 fi;								     \
 	 if [ ! -f $$d/GNUmakefile -a \( ! -f $$d/Makefile -o		     \
-	      -f $$d/GNUmakefile.in \) -a -f "$$d/${SpecialConfigure}" -a     \
+	      -f $$d/GNUmakefile.in \) -a -f "$$d/${SpecialConfigure}" -a    \
 	      -x "$$d/${SpecialConfigure}" ] ; then			     \
 	  CFLAGS="$(CFLAGS)" CC="$(CC)" BK_INSTALLBASE="$(BK_INSTALLDIR)"    \
 	   $$d/${SpecialConfigure} ||					     \
