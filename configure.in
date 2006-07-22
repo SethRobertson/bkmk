@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.129 2005/10/26 21:20:27 jtt Exp $
+dnl $Id: configure.in,v 1.130 2006/07/22 08:38:20 jtt Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.129 $)dnl
+AC_REVISION($Revision: 1.130 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([libbk_autoconf.h.in])
 AC_CONFIG_AUX_DIR(acaux)
@@ -53,6 +53,12 @@ AC_CHECK_LIB(ssl,SSL_CTX_new, /bin/true, /bin/true)
 if test "$ac_cv_lib_ssl_SSL_CTX_new" = yes
 then
 	AC_SUBST(HAVE_LIBSSL,true)
+fi
+
+AC_CHECK_LIB(krb5support, krb5int_pthread_loaded, /bin/true, /bin/true)
+if test "$ac_cv_lib_krb5support_krb5int_pthread_loaded" = yes
+then
+	AC_SUBST(HAVE_KRB5SUPPORT,true)
 fi
 
 
