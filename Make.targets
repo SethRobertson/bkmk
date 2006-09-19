@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.targets,v 1.108 2006/07/20 08:16:00 dupuy Exp $
+# $Id: Make.targets,v 1.109 2006/09/19 15:30:36 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -43,7 +43,7 @@ BK_SUBDIRRULE=@								     \
 		continue;						     \
 	 fi;								     \
 	 if [ ! -f $$d/GNUmakefile -a \( ! -f $$d/Makefile -o		     \
-	      -f $$d/GNUmakefile.in \) -a -f "$$d/${SpecialConfigure}" -a    \
+	      -f $$d/GNUmakefile.in \) -a -f "$$d/${SpecialConfigure}" -a     \
 	      -x "$$d/${SpecialConfigure}" ] ; then			     \
 	  CFLAGS="$(CFLAGS)" CC="$(CC)" BK_INSTALLBASE="$(BK_INSTALLDIR)"    \
 	   $$d/${SpecialConfigure} ||					     \
@@ -318,14 +318,16 @@ $(BK_INSTALLRDIR)/$(notdir $(BK_LARGE_LIB)): $(BK_LARGE_LIB)
 ifneq ($(strip $(BK_INSTALLLIBDIR)),)
 ifneq ($(strip $(BK_LARGE_LIB)),)
 ifneq ($(filter %.la,$(BK_LARGE_LIB)),)
-	@if [ $^ != $(BK_INSTALLRDIR)/$(^F) ]; then \
+ifneq ($(BK_INSTALLRDIR),$(BK_INSTALLLIBDIR))
+	@if [ "$^" != "$(addprefix $(BK_INSTALLRDIR),$(^F))" ]; then \
 	  echo $(MKDIR) $(BK_INSTALLRDIR); \
 	  $(MKDIR) $(BK_INSTALLRDIR) >/dev/null 2>&1; \
 	  echo $(LIBTOOL_INSTALL) $(INSTALL) $(INSTALL_LIBFLAGS) $^ $(BK_INSTALLRDIR); \
 	  $(LIBTOOL_INSTALL) $(INSTALL) $(INSTALL_LIBFLAGS) $^ $(BK_INSTALLRDIR); \
 	fi
+endif
 else # non-libtool installation without absolute path
-	@if [ $^ != $(BK_INSTALLLIBDIR)/$(^F) ]; then \
+	@if [ "$^" != "$(addprefix $(BK_INSTALLLIBDIR),$(^F))" ]; then \
 	  echo $(MKDIR) $(BK_INSTALLLIBDIR); \
 	  $(MKDIR) $(BK_INSTALLLIBDIR); \
 	  echo $(INSTALL) $(INSTALL_LIBFLAGS) $^ $(BK_INSTALLLIBDIR); \
