@@ -1,7 +1,12 @@
 2006-09-19  Alexander Dupuy  <alex.dupuy@counterstorm.com>
 
-	* Make.targets (actual_install): avoid '[' test errors for bk build
-
+	* Make.targets (actual_install): avoid '[' test errors for bk build;
+	deal with VPATH insanity where make considers install source and target
+	to be "the same file as" each other, and uses install target with link
+	source files (dozens of .lo files) forcing us to implement both phases
+	in one rule.  this only happens when installing directly into an
+	absolute RPATH appearing in the vpath commands (e.g. /usr/local/lib).
+	
 2006-07-22  James Tanis  <jtt@counterstorm.com>
 
 	* Make.config.in, configure*: WANT_STATIC=true gcc 4.1.1 fixes

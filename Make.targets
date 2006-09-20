@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.targets,v 1.110 2006/09/19 18:30:50 dupuy Exp $
+# $Id: Make.targets,v 1.111 2006/09/20 01:08:18 dupuy Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -43,7 +43,7 @@ BK_SUBDIRRULE=@								     \
 		continue;						     \
 	 fi;								     \
 	 if [ ! -f $$d/GNUmakefile -a \( ! -f $$d/Makefile -o		     \
-	      -f $$d/GNUmakefile.in \) -a -f "$$d/${SpecialConfigure}" -a     \
+	      -f $$d/GNUmakefile.in \) -a -f "$$d/${SpecialConfigure}" -a    \
 	      -x "$$d/${SpecialConfigure}" ] ; then			     \
 	  CFLAGS="$(CFLAGS)" CC="$(CC)" BK_INSTALLBASE="$(BK_INSTALLDIR)"    \
 	   $$d/${SpecialConfigure} ||					     \
@@ -318,25 +318,30 @@ $(BK_INSTALLRDIR)/$(notdir $(BK_LARGE_LIB)): $(BK_LARGE_LIB)
 ifneq ($(strip $(BK_INSTALLLIBDIR)),)
 ifneq ($(strip $(BK_LARGE_LIB)),)
 ifneq ($(filter %.la,$(BK_LARGE_LIB)),)
-ifeq ($(BK_INSTALLRDIR),$(BK_INSTALLLIBDIR))
 	-@$(MKDIR) $(BK_INSTALLRDIR) >/dev/null 2>&1
-	$(LIBTOOL_LINK) $(LINK.c) $(LT_LDFLAGS) -o $(@F) $^ $(LT_LDLIBS) \
-	 -rpath $(BK_INSTALLRPATH) $(BK_EXTERNAL_RPATH)
-	$(LIBTOOL_INSTALL) $(INSTALL) $(INSTALL_LIBFLAGS) $(@F) $(BK_INSTALLRDIR)
-else
-	@if [ "$^" != "$(addprefix $(BK_INSTALLRDIR),$(^F))" ]; then \
-	  echo $(MKDIR) $(BK_INSTALLRDIR); \
-	  $(MKDIR) $(BK_INSTALLRDIR) >/dev/null 2>&1; \
-	  echo $(LIBTOOL_INSTALL) $(INSTALL) $(INSTALL_LIBFLAGS) $^ $(BK_INSTALLRDIR); \
-	  $(LIBTOOL_INSTALL) $(INSTALL) $(INSTALL_LIBFLAGS) $^ $(BK_INSTALLRDIR); \
+	@# deal with VPATH insanity; this may need to link before installing if
+	@# make considers the link target "the same file as" the install target
+	@# and uses this rule only (ignoring the one in Make.production).
+	@case "$^" in							    \
+	  *.la) L="$^" ;;						    \
+	  *) echo $(LIBTOOL_LINK) $(LINK.c) $(LT_LDFLAGS) -o $(@F) $^	    \
+	       $(LT_LDLIBS) -rpath $(BK_INSTALLRPATH) $(BK_EXTERNAL_RPATH); \
+	     $(LIBTOOL_LINK) $(LINK.c) $(LT_LDFLAGS) -o $(@F) $^	    \
+	       $(LT_LDLIBS) -rpath $(BK_INSTALLRPATH) $(BK_EXTERNAL_RPATH); \
+	     L="$(@F)" ;;						    \
+	esac; 								    \
+	if [ "$^" != "$(addprefix $(BK_INSTALLRDIR)/,$(^F))" ]; then	    \
+	  echo $(LIBTOOL_INSTALL) $(INSTALL) $(INSTALL_LIBFLAGS) $$L	    \
+	    $(BK_INSTALLRDIR);						    \
+	  $(LIBTOOL_INSTALL) $(INSTALL) $(INSTALL_LIBFLAGS) $$L		    \
+	    $(BK_INSTALLRDIR);						    \
 	fi
-endif
 else # non-libtool installation without absolute path
-	@if [ "$^" != "$(addprefix $(BK_INSTALLLIBDIR),$(^F))" ]; then \
-	  echo $(MKDIR) $(BK_INSTALLLIBDIR); \
-	  $(MKDIR) $(BK_INSTALLLIBDIR); \
-	  echo $(INSTALL) $(INSTALL_LIBFLAGS) $^ $(BK_INSTALLLIBDIR); \
-	  $(INSTALL) $(INSTALL_LIBFLAGS) $^ $(BK_INSTALLLIBDIR); \
+	@if [ "$^" != "$(addprefix $(BK_INSTALLLIBDIR)/,$(^F))" ]; then \
+	  echo $(MKDIR) $(BK_INSTALLLIBDIR);			       \
+	  $(MKDIR) $(BK_INSTALLLIBDIR);				       \
+	  echo $(INSTALL) $(INSTALL_LIBFLAGS) $^ $(BK_INSTALLLIBDIR);  \
+	  $(INSTALL) $(INSTALL_LIBFLAGS) $^ $(BK_INSTALLLIBDIR);       \
 	fi
 endif
 endif # BK_LARGE_LIB
