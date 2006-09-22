@@ -1,5 +1,5 @@
 #! /bin/sh
-# $Id: os-name.sh,v 1.11 2006/05/01 20:15:09 seth Exp $
+# $Id: os-name.sh,v 1.12 2006/09/22 15:48:40 dupuy Exp $
 #
 # ++Copyright SYSDETECT++
 #
@@ -45,7 +45,18 @@ fi
 for REL in /etc/*-release /etc/issue
 do
   case $REL in
-    */fedora-*) E="-e s/Core/CoreLinux/" ;;
+    */lsb-release)
+      # use lsb_release if present
+      DIST_ID=`lsb_release -is 2>/dev/null`
+      if [ -n "$DIST_ID" ]; then
+	REL_ID=`lsb_release -rs`
+	echo ${DIST_ID}Linux-${REL_ID}-`uname -m`
+	exit
+      else
+	continue
+      fi
+      ;;
+    */fedora-release) E="-e s/Core/CoreLinux/" ;;
     *) unset E ;;
   esac
   if [ -f "$REL" ]; then

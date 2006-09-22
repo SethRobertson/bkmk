@@ -1,3 +1,7 @@
+2006-09-22  Alex Dupuy  <alex.dupuy@counterstorm.com>
+
+	* os-name.sh: use (and prefer) lsb_release for release information
+
 2006-09-19  Alexander Dupuy  <alex.dupuy@counterstorm.com>
 
 	* Make.targets (actual_install): avoid '[' test errors for bk build;
