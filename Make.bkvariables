@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.bkvariables,v 1.59 2005/02/09 22:38:43 seth Exp $
+# $Id: Make.bkvariables,v 1.60 2006/10/30 19:55:40 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -218,4 +218,8 @@ BK_INSTALLPERLDIR=$(BK_INSTALLBASE)/perl
 endif
 ifeq ($(strip $(BK_REPLICATEDIR)),)
 BK_REPLICATEDIR=$(BK_INSTALLBASE)/$(shell $(BASENAME) $(PWD))
+endif
+
+ifeq ($(BK_WANT_OINKMASTER),)
+BK_WANT_OINKMASTER=true
 endif

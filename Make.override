@@ -103,3 +103,7 @@ endif
 endif
 endif
 
+ifneq ($(WANT_OINKMASTER),)
+BK_WANT_OINKMASTER=$(WANT_OINKMASTER)
+endif
+
