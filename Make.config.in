@@ -1,4 +1,4 @@
-# $Id: Make.config.in,v 1.61 2006/07/22 08:38:19 jtt Exp $
+# $Id: Make.config.in,v 1.62 2007/01/20 00:08:59 lindauer Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -44,6 +44,9 @@ SED=@SED@
 GREP=@GREP@
 PERL=@PERL@
 DOXYGEN=@DOXYGEN@
+OINKMASTER=@OINKMASTER@
+ADDSID=@ADDSID@
+CREATE_SIDMAP=@CREATE_SIDMAP@
 HAVE_DOT=@HAVE_DOT@
 BROWSER=@BROWSER@
 TEST=@TEST@

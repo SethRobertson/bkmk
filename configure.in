@@ -1,5 +1,5 @@
 dnl
-dnl $Id: configure.in,v 1.130 2006/07/22 08:38:20 jtt Exp $
+dnl $Id: configure.in,v 1.131 2007/01/20 00:08:59 lindauer Exp $
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -15,7 +15,7 @@ dnl
 dnl
 dnl Autoconf configuration
 dnl
-AC_REVISION($Revision: 1.130 $)dnl
+AC_REVISION($Revision: 1.131 $)dnl
 AC_INIT
 AC_CONFIG_SRCDIR([libbk_autoconf.h.in])
 AC_CONFIG_AUX_DIR(acaux)
@@ -315,6 +315,10 @@ AC_PATH_PROG(XREF, xref, $FALSE)
 AC_PATH_PROG(HEAD, head, $FALSE)
 
 AC_CHECK_FILES(/proc/net/route)
+
+AC_PATH_PROGS(OINKMASTER, [oinkmaster.pl oinkmaster], $FALSE, [/usr/bin:/usr/sbin])
+AC_PATH_PROG(ADDSID, addsid.pl, $FALSE, [/usr/bin:/usr/share/oinkmaster])
+AC_PATH_PROG(CREATE_SIDMAP, create-sidmap.pl, $FALSE, [/usr/bin:/usr/share/oinkmaster])
 
 if test "$ac_cv_search_gethostbyname2" = "no"
 then
