@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.209 2006/07/12 17:52:15 dupuy Exp $
+# $Id: Make.variables,v 1.210 2007/02/20 23:42:51 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -412,7 +412,9 @@ COMPILER_DEBUG+=-Wchar-subscripts
 endif
 
 ifneq ($(BK_NO_STRICT_PROTOTYPES),true)
+ifneq ($(WANT_NO_STRICT_PROTOTYPES),true)
 COMPILER_DEBUG+=-Wstrict-prototypes
+endif
 endif
 
 ifneq ($(NO_POINTER_SIGN_WARN),)
