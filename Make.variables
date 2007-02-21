@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.210 2007/02/20 23:42:51 jtt Exp $
+# $Id: Make.variables,v 1.211 2007/02/21 19:05:52 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -69,14 +69,14 @@ BK_WANT_STATIC=true
 endif # !BK_WANT_LIBTOOL
 
 # SSL Stuff
-BK_USING_SSL = true
+BK_USING_SSL=true
 
-ifeq ($(strip $(WANT_SSL)), false)
-BK_USING_SSL = false
+ifeq ($(strip $(WANT_SSL)),false)
+BK_USING_SSL=false
 endif # WANT_SSL == false
 
-ifneq ($(strip $(HAVE_LIBSSL)), true)
-BK_USING_SSL = false
+ifneq ($(strip $(HAVE_LIBSSL)),true)
+BK_USING_SSL=false
 endif # HAVE_LIBSSL != true
 
 ifdef SSL_INC_PATH
@@ -329,7 +329,10 @@ LIB44BSD=#-l44bsd
 DBM_LIBS=-ldb
 TERMINAL_LIBS=-ltermcap
 
+ifneq ($(strip $(WANT_LIBZ)),false)
+# Are we actually even using this?
 COMPRESS_LIBS=-lz
+endif
 
 # BK issues
 ifneq ($(NO_STDBKCCSTUFF),true)
@@ -343,10 +346,14 @@ ifneq ($(strip $(BK_USING_SSL)),false)
 GROUP_LIBS+= -lbkssl
 endif
 
+ifneq ($(strip $(WANT_BK_XML)),false)
+BK_LIBS+= -lbkxml
+endif
+
 # <TODO bugid="8057">it's possible that not all of  -ldict -lfsma -lpqueue need
 # to be present for shared library linking, as they can be dependencies of libbk
 # but macros that result in direct calls may complicate or prevent this.</TODO>
-BK_LIBS+= -lbkxml -lbk -ldict -lfsma -lpqueue -lpopt $(LIBRESOLVER) $(BK_LIBM) $(COMPRESS_LIBS)
+BK_LIBS+= -lbk -ldict -lfsma -lpqueue -lpopt $(LIBRESOLVER) $(BK_LIBM) $(COMPRESS_LIBS)
 
 # <TODO bugid="8057">strip -lutil/-lcrypt/-lcrypto from the global LT_LDLIBS
 # and add it to the specific libraries (e.g. libbk) that need them.</TODO>
