@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.211 2007/02/21 19:05:52 jtt Exp $
+# $Id: Make.variables,v 1.212 2007/02/21 20:28:10 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -353,7 +353,7 @@ endif
 # <TODO bugid="8057">it's possible that not all of  -ldict -lfsma -lpqueue need
 # to be present for shared library linking, as they can be dependencies of libbk
 # but macros that result in direct calls may complicate or prevent this.</TODO>
-BK_LIBS+= -lbk -ldict -lfsma -lpqueue -lpopt $(LIBRESOLVER) $(BK_LIBM) $(COMPRESS_LIBS)
+BK_LIBS+= -lbk -ldict -lfsma -lpqueue -lpopt $(LIBRESOLVER)  $(COMPRESS_LIBS)
 
 # <TODO bugid="8057">strip -lutil/-lcrypt/-lcrypto from the global LT_LDLIBS
 # and add it to the specific libraries (e.g. libbk) that need them.</TODO>
