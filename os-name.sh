@@ -1,5 +1,5 @@
 #! /bin/sh
-# $Id: os-name.sh,v 1.12 2006/09/22 15:48:40 dupuy Exp $
+# $Id: os-name.sh,v 1.13 2007/03/21 00:37:53 seth Exp $
 #
 # ++Copyright SYSDETECT++
 #
@@ -36,6 +36,10 @@ if [ -f /etc/debian_version ]; then
   exit
 elif [ -f /etc/slackware-version ]; then
   sed -e 's/^\([0-9]*.[0-9]*\).*/SlackwareLinux-\1/' /etc/slackware-version
+  exit
+elif [ -f /etc/SuSE-release ]; then
+  echo SuSE`uname -s` `uname -r | sed -e 's/-.*//'` \
+   | sed -e 's/ /-/' -e 's/ //g'
   exit
 elif [ -f /etc/gentoo-release ]; then
   sed -e '/^Gentoo /s/.* \([0-9][0-9.]*\)/GentooLinux-\1/' /etc/gentoo-release
