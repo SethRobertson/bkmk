@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.212 2007/02/21 20:28:10 jtt Exp $
+# $Id: Make.variables,v 1.213 2007/03/21 00:41:27 seth Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -410,7 +410,9 @@ ifeq ($(shell $(EXPR) '$(GCC_VERSION)' '>=' '3.4.2'),1)
 LARGE_FUNCTION_INSNS=--param large-function-insns=10000
 endif
 
+ifneq ($(BK_GCC_INLINE_CHECK_IS_STUPID),very)
 GCC_INLINE_CHECK=-Winline $(LARGE_FUNCTION_INSNS)
+endif
 
 COMPILER_DEBUG+=-Wmissing-prototypes -Wcomment -Wformat -Wimplicit -Wmain -Wmultichar -Wswitch -Wshadow -Wtrigraphs $(GCC_INLINE_CHECK) $(COMPILER_DEBUG_ERROR)
 
@@ -433,11 +435,16 @@ endif # NO_POINTER_SIGN_WARN
 # code bloat, but hey, they _are_ inlined functions...
 # NB: this only works with gcc 3.3+, but is ignored otherwise. these
 # problems exisited in prior versions but warnings weren't issued
+ifeq ($(COMPILER_INLINE_LIMIT),)
 COMPILER_INLINE_LIMIT=1200
+endif # NO COMPILER_INLINE_LIMIT
 
 # options for gcc only
 ifeq ($(CC_CONFIG),gcc)
-COMPILER_DEBUG+=-Wreturn-type -Wpointer-arith -finline-limit=$(COMPILER_INLINE_LIMIT)
+COMPILER_DEBUG+=-Wreturn-type -Wpointer-arith
+ifneq ($(COMPILER_INLINE_LIMIT),nosupport)
+COMPILER_DEBUG+=-finline-limit=$(COMPILER_INLINE_LIMIT)
+endif # COMPILER_INLINE_LIMIT
 endif # CC_CONFIG=gcc
 
 COMPILER_DEBUG+=$(BK_SPECIAL_DEBUG)
