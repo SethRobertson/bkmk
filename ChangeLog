@@ -1,3 +1,38 @@
+2007-10-10  Alexander Dupuy  <alex.dupuy@counterstorm.com>
+
+	* chcopy.pl: #6989: compute years from CVS logs (trunk commits);
+	preserve existing (c)/© in UTF-8/8859-1/whatever; update with current
+	temporary address
+	
+2007-09-22  James Tanis  <jtt@counterstorm.com>
+
+	* Make.Linux-2.6-pre: Fedora has removed 'Core' from it's name
+
+2007-03-21  Seth Robertson  <seth@counterstorm.com>
+
+	* Make.variables: Allow deletion of -Winline check, allow removal
+	of compiler inline limit
+
+	* os-name.sh: Add SuSE release name
+
+2007-02-21  James Tanis  <jtt@countertorm.com>
+
+	* Make.variables: $(BK_LIBM) is now obsolete (autoconfed).
+	Yeah, I was suprised too.
+
+	* Make.variables: All user to selectively *not* compile in several baka
+	features.  Have ssm choose not to compile in several baka features.
+
+2007-02-20  James Tanis  <jtt@countertorm.com>
+
+	* Make.variables: Allow user to refuse use of strict-prototypes
+	[frickin' 3rd party software...]
+
+2007-01-20  Brian Lindauer  <lindauer@counterstorm.com>
+
+	* Make.config.in, configure, configure.in:
+	autoconf for oinkmaster to support (k)ubuntu 'make release'.
+
 2006-09-22  Alex Dupuy  <alex.dupuy@counterstorm.com>
 
 	* os-name.sh: use (and prefer) lsb_release for release information

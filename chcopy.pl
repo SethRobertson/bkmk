@@ -1,9 +1,9 @@
 #! /usr/bin/perl -i.bak
-# $Id: chcopy.pl,v 1.15 2006/03/31 00:36:17 dupuy Exp $
+# $Id: chcopy.pl,v 1.16 2007/10/10 05:56:56 dupuy Exp $
 #
 # ++Copyright BAKA++
 #
-# Copyright © 2001-2003,2006 The Authors. All rights reserved.
+# Copyright © 2001-2003,2006,2007 The Authors. All rights reserved.
 #
 # This source code is licensed to you under the terms of the file
 # LICENSE.TXT in this release for further details.
@@ -13,48 +13,48 @@
 # - -Copyright BAKA- -
 #
 #
-# <TODO>This script should be enhanced to maintain existing copyright dates, or
-# better yet, generate them from CVS history of non-trivial changes.  It would
-# also be useful to auto-detect file encoding (ISO-8859-1 or UTF-8?) so that ©
-# is encoded properly (for now, assume 8859-1 as it is unambiguous).</TODO>
-
-$YEAR = 1900 + (localtime time)[5];
+# <TODO>Should auto-detect file encoding (ISO-8859-1 or UTF-8?) so that ©
+# is encoded properly (now defaults to UTF-8, but uses existing symbol).</TODO>
+#
+# <TODO>Should determine current branch and compute years from commits on that
+# branch and on trunk before that branch (now always uses trunk commits).</TODO>
+#
 
 ######################################################################
 ## BAKA
-($BAKAHDR = <<EOF) =~ s/^\|//gm;
+($BAKAHDR = <<'EOF') =~ s/^\|//gm;
 |#if !defined(lint)
-|static const char libbk__rcsid[] = "\$Id\$";
-|static const char libbk__copyright[] = "Copyright © $YEAR";
-|static const char libbk__contact[] = "<projectbaka\@baka.org>";
+|static const char libbk__rcsid[] = "$Id: chcopy.pl,v 1.16 2007/10/10 05:56:56 dupuy Exp $";
+|static const char libbk__copyright[] = "Copyright (c) YEARS";
+|static const char libbk__contact[] = "<projectbaka@baka.org>";
 |#endif /* not lint */
 EOF
 
-($BAKAPROD = "++"."Copyright BAKA++\n".<<EOF) =~ s/^\|//gm;
+($BAKAPROD = "++"."Copyright BAKA++\n".<<'EOF') =~ s/^\|//gm;
 |
-|Copyright © $YEAR The Authors. All rights reserved.
+|Copyright (c) YEARS The Authors. All rights reserved.
 |
 |This source code is licensed to you under the terms of the file
 |LICENSE.TXT in this release for further details.
 |
-|Send e-mail to <projectbaka\@baka.org> for further information.
+|Send e-mail to <projectbaka@baka.org> for further information.
 |
 |- -Copyright BAKA- -
 EOF
 
 ######################################################################
 ## CounterStorm
-($CSHDR = <<EOF) =~ s/^\|//gm;
+($CSHDR = <<'EOF') =~ s/^\|//gm;
 |#if !defined(lint)
-|static const char cs__rcsid[] = "\$Id\$";
-|static const char cs__copyright[] = "Copyright © $YEAR CounterStorm, Inc.";
-|static const char cs__contact[] = "CounterStorm <support\@counterstorm.com>";
+|static const char cs__rcsid[] = "$Id: chcopy.pl,v 1.16 2007/10/10 05:56:56 dupuy Exp $";
+|static const char cs__copyright[] = "Copyright (c) YEARS CounterStorm, Inc.";
+|static const char cs__contact[] = "CounterStorm <support@counterstorm.com>";
 |#endif /* not lint */
 EOF
 
-($CSPROD =  "++"."Copyright COUNTERSTORM++\n".<<EOF) =~ s/^\|//gm;
+($CSPROD =  "++"."Copyright COUNTERSTORM++\n".<<'EOF') =~ s/^\|//gm;
 |
-|Copyright © $YEAR CounterStorm, Inc.  All rights reserved.
+|Copyright (c) YEARS CounterStorm, Inc.  All rights reserved.
 |
 |THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF COUNTERSTORM, INC.
 |The copyright notice above does not evidence any actual
@@ -64,11 +64,11 @@ EOF
 |are authorized to view, possess, or otherwise use this file.
 |
 |CounterStorm, Inc.
-|15 West 26th Street 7th Floor
-|New York, NY 10010-1002
-|
+|7400 Beaufont Springs Drive, Suite 300
+|Richmond, VA 23225-5519
+|+1 804 672 4478
 |+1 212 206 1900
-|<support\@counterstorm.com>
+|<support@counterstorm.com>
 |
 |- -Copyright COUNTERSTORM- -
 EOF
@@ -94,12 +94,101 @@ $q2 = '\#endif \/\* not lint \*\/';
 
 while (<>)
 {
+  if (!defined($YEARS))
+  {
+    if ($ARGV ne '-')
+    {
+      $ARGV =~ m=(.*/)?(.*)=;
+      $dir = $1;
+      $file = $2;
+      if (-d ($dir . 'CVS'))
+      {
+	@log = `cvs log -N -r1.1: $ARGV`;
+      }
+      elsif (-f ($dir . 'RCS/' . $file . ',v') || -f ($ARGV . ',v'))
+      {
+	@log = `rlog -N -r1.1: $ARGV`;
+      }
+      # generate hash of significant years, ignoring small or marked changes
+      %sigyears = ();
+      foreach $_ (@log)
+      {
+	# extract year from log entry
+	if (m=^date: (\d{4})=)
+	{
+	  $year = $1;
+	  # ignore non-initial commits with < 10 inserted or deleted lines
+	  undef $year if (m=lines: \+(\d+) \-(\d+)= && $1 < 10 && $2 < 10);
+	  # always insert initial commit year, regardless of comments
+	  $sigyears{$year} = 1 unless (m=lines:=);
+        }
+	elsif (defined($year))
+	{
+	  # ignore if first line of commit message has has "chcopy" or "trivial"
+	  $sigyears{$year} = 1 unless (/(CHCOPY|[Tt]rivial)/);
+	  undef $year;
+	}
+      }
+      # convert list of years to comma-separated ranges (e.g. 2001,2003-2007)
+      @years = sort(keys %sigyears);
+      $YEARS = '';
+      $i = 0;
+      while ($i <= $#years)
+      {
+	if ($i == 0)
+	{			# enter first year immediately
+	  $YEARS = $lastyear = $years[$i];
+	}
+	elsif ($i == $#years)
+	{			# for final entry in array, always enter year
+	  if ($years[$i-1] + 1 == $years[$i])
+	  {			# if final entry is previous + 1, collapse
+	    if ($years[$i-1] == $lastyear)
+	    {			# if previous was already entered, use comma
+	      $YEARS .= ",$years[$i]";
+	    }
+	    else
+	    {			# use range for multiple sequential years
+	      $YEARS .= "-$years[$i]";
+	    }
+	  }
+	  else
+	  {			# if final entry not previous + 1, enter both
+	    if ($lastyear + 1 == $years[$i-1])
+	    {			# if previous == last entered + 1, use comma
+	      $YEARS .= ",$years[$i-1]";
+	    }
+	    elsif ($lastyear != $years[$i-1])
+	    {			# use range for multiple sequential years
+	      $YEARS .= "-$years[$i-1]";
+	    }
+	    $YEARS .= ",$years[$i]";
+	  }
+	}
+	elsif ($lastyear == $years[$i-1] && $lastyear + 1 != $years[$i])
+	{			# intermediate entry; singleton or range start
+	  $YEARS .= ",$years[$i]";
+	  $lastyear = $years[$i];
+	}
+	elsif ($years[$i-1] + 1 != $years[$i])
+	{			# intermediate entry; range end
+	  $YEARS .= "-$years[$i-1],$years[$i]";
+	  $lastyear = $years[$i];
+	}
+	$i++;
+      }
+    }
+    $YEARS = 1900 + (localtime time)[5] if ($YEARS eq '');
+  }
+
   # Header stuff
   # (Only try header stuff for first five lines)
   if ($. < 5 && /^$q1/)
   {
+    $csymbol = chr(194) . chr(169); # UTF-8 encoding of © copyright symbol
     while (<>)
     {
+      $csymbol = $1 if (/copyright ([^\s]{1,3}) \d{4}/i);
       $prod = 0 if ($prod < 0 && (/bk__/ || /libbk__/));
       $prod = 1 if ($prod < 0 && (/cs__/ || /sysd__/));
       if (/^$q2$/)
@@ -110,18 +199,22 @@ while (<>)
     if ($prod)
     {
       $prod = 1;		# ignore inconsistent copyright below
-      print $CSHDR;
+      $hdr = $CSHDR;
     }
     else
     {
-      print $BAKAHDR;
+      $hdr = $BAKAHDR;
     }
+    $hdr =~ s/YEARS/$YEARS/g;
+    $hdr =~ s/\(c\)/$csymbol/g;
+    print $hdr;
     next;
   }
 
   if (eof)
   {
     close(ARGV);
+    undef $YEARS;
   }
 
   # Copyright
@@ -130,8 +223,10 @@ while (<>)
     $PREFIX=$1;
     $prod = 0 if ($prod < 0 && $2 =~ /(BAKA|LIBBK)/);
     $prod = 1 if ($prod < 0 && $2 =~ /(COUNTERSTORM|SYSDETECT)/);
+    $csymbol = chr(194) . chr(169); # UTF-8 encoding of © copyright symbol
     while (<>)
     {
+      $csymbol = $1 if (/copyright ([^\s]{1,3}) \d{4}/i);
       if (/\-\s?\-Copyright\ .*\-\s?\-/)
       {
 	last;
@@ -139,12 +234,15 @@ while (<>)
     }
     if ($prod)
     {
-      pprint($PREFIX,$CSPROD);
+      $prod = $CSPROD;
     }
     else
     {
-      pprint($PREFIX,$BAKAPROD);
+      $prod = $BAKAPROD;
     }
+    $prod =~ s/YEARS/$YEARS/g;
+    $prod =~ s/\(c\)/$csymbol/g;
+    pprint($PREFIX,$prod);
     next;
   }
   print;
