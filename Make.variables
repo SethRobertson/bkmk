@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.214 2008/03/31 16:12:46 jtt Exp $
+# $Id: Make.variables,v 1.215 2008/03/31 18:28:01 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -524,6 +524,7 @@ INSURE_DEBUG_LIBS=-Zvm -Zvm -Zvm
 endif
 INSURE_LDS=-L$(PARASOFT)/lib
 #INSURE_LIBS=-linsure
+INSURE_LIBS=-Zsl
 LT_LDLIBS+=$(INSURE_LIBS)
 endif # BK_USING_INSURE==true
 
@@ -628,7 +629,8 @@ endif # BK_USING_DMALLOC
 ifeq ($(BK_USING_INSURE),true)
 # It's not called Insight any more; use auto-defined __INSURE__
 # (Except that it is *not* defined, James has no idea why.)
-BK_DEFINES+=-D__INSURE__
+# (and now it seems like it is again)
+#BK_DEFINES+=-D__INSURE__
 ifeq ($(BK_NO_MALLOC_WRAP),true)
 BK_DEFINES+=-DBK_NO_MALLOC_WRAP
 endif
