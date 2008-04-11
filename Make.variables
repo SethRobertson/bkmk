@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.215 2008/03/31 18:28:01 jtt Exp $
+# $Id: Make.variables,v 1.216 2008/04/11 05:53:23 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -343,7 +343,9 @@ BK_LDS= $(RESOLVER_LDS)
 BK_LIBS=
 
 ifneq ($(strip $(BK_USING_SSL)),false)
-GROUP_LIBS+= -lbkssl
+LIBBKSSL=-lbkssl
+else
+BK_DEFINES+= -DNO_SSL
 endif
 
 ifneq ($(strip $(WANT_BK_XML)),false)
@@ -353,7 +355,7 @@ endif
 # <TODO bugid="8057">it's possible that not all of  -ldict -lfsma -lpqueue need
 # to be present for shared library linking, as they can be dependencies of libbk
 # but macros that result in direct calls may complicate or prevent this.</TODO>
-BK_LIBS+= -lbk -ldict -lfsma -lpqueue -lpopt $(LIBRESOLVER)  $(COMPRESS_LIBS)
+BK_LIBS+= -lbk $(LIBBKSSL) -ldict -lfsma -lpqueue -lpopt $(LIBRESOLVER)  $(COMPRESS_LIBS)
 
 # <TODO bugid="8057">strip -lutil/-lcrypt/-lcrypto from the global LT_LDLIBS
 # and add it to the specific libraries (e.g. libbk) that need them.</TODO>
