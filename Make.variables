@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.216 2008/04/11 05:53:23 jtt Exp $
+# $Id: Make.variables,v 1.217 2008/04/16 21:56:55 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -638,6 +638,12 @@ BK_DEFINES+=-DBK_NO_MALLOC_WRAP
 endif
 CC=$(INSURE)
 endif # BK_USING_INSURE
+
+# We now have a circular dependency which Insure can't deal with. So add
+# another libbk (at the end) instance to resolve it.
+ifneq ($(strip $(BK_USING_INSURE)),false)
+LDLIBS+=-lbk
+endif
 
 
 ifeq ($(BK_NO_USER_SHARED_LIBS),true)
