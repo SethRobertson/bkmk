@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.Linux-2.6-pre,v 1.14 2007/09/22 01:47:55 jtt Exp $
+# $Id: Make.Linux-2.6-pre,v 1.15 2008/06/18 18:00:43 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -41,6 +41,14 @@ else
 ifeq ($(shell uname -m),x86_64)
 OS_LDS=-L/usr/lib -L/lib
 endif
+endif
+
+ifeq ($(shell if grep -q "Fedora release 9" /etc/fedora-release 2>/dev/null; then echo OK; fi), OK)
+# Fedora release 9 (which don't really support anyway) has a bug where macros written for the pthread.h don't pass the intense checking that we turn on. This will likely be fixed and this should be removed. Or even better...
+# 
+# <TODO> Autoconf this </TODO>
+#
+COMPILER_DEBUG += -Wno-empty-body
 endif
 
 # Breaks perlmods in some unknown and unknowable way
