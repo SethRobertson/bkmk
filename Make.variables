@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# $Id: Make.variables,v 1.217 2008/04/16 21:56:55 jtt Exp $
+# $Id: Make.variables,v 1.218 2008/07/14 19:34:41 jtt Exp $
 #
 # ++Copyright LIBBK++
 #
@@ -343,7 +343,7 @@ BK_LDS= $(RESOLVER_LDS)
 BK_LIBS=
 
 ifneq ($(strip $(BK_USING_SSL)),false)
-LIBBKSSL=-lbkssl
+LIBBKSSL=-lbkssl -lssl
 else
 BK_DEFINES+= -DNO_SSL
 endif
