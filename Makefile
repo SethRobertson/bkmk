@@ -37,7 +37,7 @@ endif
 ################################################################
 
 autoconf:
-	/usr/local/bin/autoconf -Wcross -Wsyntax
+	autoconf -Wcross -Wsyntax
 
 clean:
 	rm -f $(OSFILE) confdefs.h config.cache config.status config.log \
