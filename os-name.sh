@@ -46,10 +46,10 @@ elif [ -f /etc/gentoo-release ]; then
   exit
 fi
 
-for REL in /etc/*-release /etc/issue
+for REL in /etc/lsb-release.d /etc/*-release /etc/issue
 do
   case $REL in
-    */lsb-release)
+    */lsb-release*)
       # use lsb_release if present
       DIST_ID=`lsb_release -is 2>/dev/null`
       if [ -n "$DIST_ID" ]; then
