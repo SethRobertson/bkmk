@@ -1,16 +1,16 @@
 #! /usr/bin/perl -i.bak
 # $Id: chcopy.pl,v 1.16 2007/10/10 05:56:56 dupuy Exp $
 #
-# ++Copyright BAKA++
+# ++Copyright LIBBK++
 #
 # Copyright © 2001-2003,2006-2008 The Authors. All rights reserved.
 #
 # This source code is licensed to you under the terms of the file
 # LICENSE.TXT in this release for further details.
 #
-# Send e-mail to <projectbaka@baka.org> for further information.
+# Mail <projectbaka@baka.org> for further information
 #
-# - -Copyright BAKA- -
+# --Copyright LIBBK--
 #
 #
 # <TODO>Should auto-detect file encoding (ISO-8859-1 or UTF-8?) so that ©
@@ -126,7 +126,7 @@ while (<>)
       }
       if ($git_dir)
       {
-        $git_dir =~ m=(.*)/.git=;
+	$git_dir =~ m=(.*)/.git=;
 	$d = "--git-dir=$git_dir --work-tree=$1";
 	@glog = `git $d log --numstat --pretty=tformat:'date: %ai%n%s' -- $gfile`;
 	@log = ();
@@ -170,7 +170,7 @@ while (<>)
 	  undef $year if (m=lines: \+(\d+) \-(\d+)= && $1 < 10 && $2 < 10);
 	  # always insert initial commit year, regardless of comments
 	  $sigyears{$year} = 1 unless (m=lines:=);
-        }
+	}
 	elsif (defined($year))
 	{
 	  # ignore if first line of commit message has has "chcopy" or "trivial"
