@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# $Id: find_user_var.pl,v 1.5 2003/09/05 18:41:27 seth Exp $
+# 
 #
 # ++Copyright LIBBK++
 #

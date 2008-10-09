@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.31 2005/02/09 01:32:25 seth Exp $
+# 
 #
 # ++Copyright LIBBK++
 #

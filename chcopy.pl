@@ -1,5 +1,5 @@
 #! /usr/bin/perl -i.bak
-# $Id: chcopy.pl,v 1.16 2007/10/10 05:56:56 dupuy Exp $
+# 
 #
 # ++Copyright LIBBK++
 #
@@ -24,7 +24,6 @@
 ## BAKA
 ($BAKAHDR = <<'EOF') =~ s/^\|//gm;
 |#if !defined(lint)
-|static const char libbk__rcsid[] = "$Id$";
 |static const char libbk__copyright[] = "Copyright (c) YEARS";
 |static const char libbk__contact[] = "<projectbaka@baka.org>";
 |#endif /* not lint */
@@ -46,9 +45,8 @@ EOF
 ## Trusted CS
 ($CSHDR = <<'EOF') =~ s/^\|//gm;
 |#if !defined(lint)
-|static const char cs__rcsid[] = "$Id$";
-|static const char cs__copyright[] = "Copyright (c) YEARS Trusted Computer Solutions, Inc.";
-|static const char cs__contact[] = "Trusted Computer Solutions <support@trustedcs.com>";
+|static const char cs__copyright[] = "Copyright (c) YEARS CounterStorm, Inc.";
+|static const char cs__contact[] = "CounterStorm <support@counterstorm.com>";
 |#endif /* not lint */
 EOF
 

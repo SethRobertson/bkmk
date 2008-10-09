@@ -1,5 +1,5 @@
 #
-# $Id: aclocal.m4,v 1.55 2005/09/02 17:13:46 dupuy Exp $
+# 
 #
 # ++Copyright LIBBK++
 #

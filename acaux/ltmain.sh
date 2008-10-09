@@ -60,7 +60,7 @@ PROGRAM=ltmain.sh
 PACKAGE=libtool
 VERSION=1.5
 TIMESTAMP=" (1.9 2004/06/17 21:41:22)"
-TIMESTAMP="$TIMESTAMP [$Revision: 1.22 $]"
+TIMESTAMP="$TIMESTAMP []"
 
 default_mode=
 help="Try \`$progname --help' for more information."

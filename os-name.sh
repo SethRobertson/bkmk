@@ -1,5 +1,5 @@
 #! /bin/sh
-# $Id: os-name.sh,v 1.13 2007/03/21 00:37:53 seth Exp $
+# 
 #
 # ++Copyright LIBBK++
 #
