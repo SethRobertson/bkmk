@@ -101,7 +101,56 @@ while (<>)
       $ARGV =~ m=(.*/)?(.*)=;
       $dir = $1;
       $file = $2;
-      if (-d ($dir . 'CVS'))
+      $git_dir = $dir . '.git';
+      $gfile = $file;
+    git_dir:
+      while (1)
+      {
+	last git_dir if (-d $git_dir);
+
+	if ($git_dir =~ m=[^/]/=)
+	{
+	  $git_dir =~ s=([^/]+/+)\.git$=.git=;
+	  $gfile = $1 . $gfile;
+	  next;
+	}
+	if ($git_dir =~ m=^/=)
+	{
+	  undef $git_dir;
+	  last git_dir;
+	}
+
+	$pwd = `pwd`;
+	chomp $pwd;
+	$git_dir = $pwd . "/$git_dir";
+      }
+      if ($git_dir)
+      {
+        $git_dir =~ m=(.*)/.git=;
+	$d = "--git-dir=$git_dir --work-tree=$1";
+	@glog = `git $d log --numstat --pretty=tformat:'date: %ai%n%s' -- $gfile`;
+	@log = ();
+	foreach $_ (@glog)
+	{
+	  if (/^date/)
+	  {
+	    $line = $_;
+	    chomp $line;
+	  }
+	  elsif (!$msg)
+	  {
+	    $msg = $_;
+	    chomp $msg;
+	  }
+	  elsif (!/^$/)	  {
+	    s/([\d-]\d*)\s+([\d-]\d*).*/ lines: +$1 -$2/;
+	    push @log, $line . $_;
+	    push @log, $msg;
+	    undef $msg
+	  }
+	}
+      }
+      elsif (-d ($dir . 'CVS'))
       {
 	@log = `cvs log -N -r1.1: $ARGV`;
       }
