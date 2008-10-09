@@ -45,12 +45,12 @@ EOF
 ## Trusted CS
 ($CSHDR = <<'EOF') =~ s/^\|//gm;
 |#if !defined(lint)
-|static const char cs__copyright[] = "Copyright (c) YEARS CounterStorm, Inc.";
-|static const char cs__contact[] = "CounterStorm <support@counterstorm.com>";
+|static const char cs__copyright[] = "Copyright (c) YEARS Trusted Computer Solutions, Inc.";
+|static const char cs__contact[] = "Trusted Computer Solutions <support@trustedcs.com>";
 |#endif /* not lint */
 EOF
 
-($CSPROD =  "++"."Copyright TRUSTEDCS ++\n".<<'EOF') =~ s/^\|//gm;
+($CSPROD =  "++"."Copyright TRUSTEDCS++\n".<<'EOF') =~ s/^\|//gm;
 |
 |Copyright (c) YEARS Trusted Computer Solutions, Inc.  All rights reserved.
 |
