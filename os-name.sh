@@ -1,25 +1,16 @@
 #! /bin/sh
 # $Id: os-name.sh,v 1.13 2007/03/21 00:37:53 seth Exp $
 #
-# ++Copyright SYSDETECT++
+# ++Copyright LIBBK++
 #
-# Copyright (c) 2003 System Detection.  All rights reserved.
+# Copyright (c) 2003 The Authors. All rights reserved.
 #
-# THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF SYSTEM DETECTION.
-# The copyright notice above does not evidence any actual
-# or intended publication of such source code.
+# This source code is licensed to you under the terms of the file
+# LICENSE.TXT in this release for further details.
 #
-# Only properly authorized employees and contractors of System Detection
-# are authorized to view, possess, to otherwise use this file.
+# Mail <projectbaka@baka.org> for further information
 #
-# System Detection
-# 5 West 19th Street Floor 2K
-# New York, NY 10011-4240
-#
-# +1 212 206 1900
-# <support@sysd.com>
-#
-# --Copyright SYSDETECT--
+# --Copyright LIBBK--
 #
 
 case `uname -s` in
