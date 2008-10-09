@@ -3,7 +3,7 @@
 #
 # ++Copyright BAKA++
 #
-# Copyright © 2001-2003,2006,2007 The Authors. All rights reserved.
+# Copyright © 2001-2003,2006-2008 The Authors. All rights reserved.
 #
 # This source code is licensed to you under the terms of the file
 # LICENSE.TXT in this release for further details.
@@ -24,7 +24,7 @@
 ## BAKA
 ($BAKAHDR = <<'EOF') =~ s/^\|//gm;
 |#if !defined(lint)
-|static const char libbk__rcsid[] = "$Id: chcopy.pl,v 1.16 2007/10/10 05:56:56 dupuy Exp $";
+|static const char libbk__rcsid[] = "$Id$";
 |static const char libbk__copyright[] = "Copyright (c) YEARS";
 |static const char libbk__contact[] = "<projectbaka@baka.org>";
 |#endif /* not lint */
@@ -43,34 +43,34 @@ EOF
 EOF
 
 ######################################################################
-## CounterStorm
+## Trusted CS
 ($CSHDR = <<'EOF') =~ s/^\|//gm;
 |#if !defined(lint)
-|static const char cs__rcsid[] = "$Id: chcopy.pl,v 1.16 2007/10/10 05:56:56 dupuy Exp $";
-|static const char cs__copyright[] = "Copyright (c) YEARS CounterStorm, Inc.";
-|static const char cs__contact[] = "CounterStorm <support@counterstorm.com>";
+|static const char cs__rcsid[] = "$Id$";
+|static const char cs__copyright[] = "Copyright (c) YEARS Trusted Computer Solutions, Inc.";
+|static const char cs__contact[] = "Trusted Computer Solutions <support@trustedcs.com>";
 |#endif /* not lint */
 EOF
 
-($CSPROD =  "++"."Copyright COUNTERSTORM++\n".<<'EOF') =~ s/^\|//gm;
+($CSPROD =  "++"."Copyright TRUSTEDCS ++\n".<<'EOF') =~ s/^\|//gm;
 |
-|Copyright (c) YEARS CounterStorm, Inc.  All rights reserved.
+|Copyright (c) YEARS Trusted Computer Solutions, Inc.  All rights reserved.
 |
-|THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF COUNTERSTORM, INC.
+|THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF TRUSTED COMPUTER SOLUTIONS, INC.
 |The copyright notice above does not evidence any actual
 |or intended publication of such source code.
 |
-|Only properly authorized employees and contractors of CounterStorm, Inc.
-|are authorized to view, possess, or otherwise use this file.
+|Only properly authorized employees and contractors of Trusted Computer
+|Solutions, Inc. are authorized to view, possess, or otherwise use this file.
 |
-|CounterStorm, Inc.
-|7400 Beaufont Springs Drive, Suite 300
-|Richmond, VA 23225-5519
-|+1 804 672 4478
-|+1 212 206 1900
-|<support@counterstorm.com>
+|Trusted Computer Solutions
+|2350 Corporate Park Drive, Suite 500
+|Herndon, VA  20171-4848
+| (866) 230-1307
+|+1-703-318-7134
+|<support@trustedcs.com>
 |
-|- -Copyright COUNTERSTORM- -
+|- -Copyright TRUSTEDCS- -
 EOF
 
 
@@ -271,7 +271,7 @@ while (<>)
   {
     $PREFIX=$1;
     $prod = 0 if ($prod < 0 && $2 =~ /(BAKA|LIBBK)/);
-    $prod = 1 if ($prod < 0 && $2 =~ /(COUNTERSTORM|SYSDETECT)/);
+    $prod = 1 if ($prod < 0 && $2 =~ /(TRUSTEDCS|COUNTERSTORM|SYSDETECT)/);
     $csymbol = chr(194) . chr(169); # UTF-8 encoding of © copyright symbol
     while (<>)
     {
