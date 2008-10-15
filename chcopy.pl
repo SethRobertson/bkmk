@@ -246,6 +246,7 @@ while (<>)
 	last;
       }
     }
+    die "Did not find terminator $q2 in $ARGV\n" unless (/^$q2$/);
     if ($prod)
     {
       $prod = 1;		# ignore inconsistent copyright below
@@ -272,6 +273,7 @@ while (<>)
   {
     $PREFIX=$1;
     $POSTFIX=$3;
+    $TYPE=$2;
     $prod = 0 if ($prod < 0 && $2 =~ /(BAKA|LIBBK)/);
     $prod = 1 if ($prod < 0 && $2 =~ /(TRUSTEDCS|TCS COMMERCIAL|COUNTERSTORM|SYSDETECT)/);
     $csymbol = chr(194) . chr(169); # UTF-8 encoding of © copyright symbol
@@ -283,6 +285,7 @@ while (<>)
 	last;
       }
     }
+    die "Did not find terminator --Copyright $2-- in $ARGV" unless (/\-\s?\-Copyright\ .*\-\s?\-/);
     if ($prod)
     {
       $prod = $CSPROD;
