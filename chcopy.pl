@@ -1,5 +1,5 @@
 #! /usr/bin/perl -i.bak
-# 
+#
 #
 # ++Copyright LIBBK++
 #
@@ -46,29 +46,32 @@ EOF
 ($CSHDR = <<'EOF') =~ s/^\|//gm;
 |#if !defined(lint)
 |static const char tcs__copyright[] = "Copyright (c) YEARS TCS Commercial, Inc.";
-|static const char tcs__contact[] = "TCS Commercial, Inc. <CounterStorm@TrustedCS.com>";
+|static const char tcs__contact[] = "TCS Commercial, Inc. <cs-support@TrustedCS.com>";
 |#endif /* not lint */
 EOF
 
-($CSPROD =  "++"."Copyright TRUSTEDCS++\n".<<'EOF') =~ s/^\|//gm;
+($CSPROD =  "++"."Copyright TCS COMMERCIAL++\n".<<'EOF') =~ s/^\|//gm;
 |
-|Copyright (c) YEARS Trusted Computer Solutions, Inc.  All rights reserved.
+|Copyright (c) YEARS Trusted Computer Solutions Commercial, Inc.  All
+|rights reserved.
 |
-|THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF TRUSTED COMPUTER SOLUTIONS, INC.
-|The copyright notice above does not evidence any actual
-|or intended publication of such source code.
+|THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF TRUSTED COMPUTER
+|SOLUTIONS COMMERCIAL, INC.  The copyright notice above does not
+|evidence any actual or intended publication of such source code.
 |
-|Only properly authorized employees and contractors of Trusted Computer
-|Solutions, Inc. are authorized to view, possess, or otherwise use this file.
+|Only properly authorized employees and contractors of Trusted
+|Computer Solutions Commercial, Inc. are authorized to view, possess,
+|or otherwise use this file.
 |
 |Trusted Computer Solutions
 |2350 Corporate Park Drive, Suite 500
 |Herndon, VA  20171-4848
-| (866) 230-1307
-|+1-703-318-7134
-|<support@trustedcs.com>
 |
-|- -Copyright TRUSTEDCS- -
+|+1 866 230 1307
+|+1 703 318 7134
+|<cs-support@trustedcs.com>
+|
+|- -Copyright TCS COMMERCIAL- -
 EOF
 
 
@@ -265,11 +268,12 @@ while (<>)
   }
 
   # Copyright
-  if (/(.*)\+\+Copyright\ (.*)\+\+/)
+  if (/(.*)\+\+Copyright\ (.*)\+\+(.*)/)
   {
     $PREFIX=$1;
+    $POSTFIX=$3;
     $prod = 0 if ($prod < 0 && $2 =~ /(BAKA|LIBBK)/);
-    $prod = 1 if ($prod < 0 && $2 =~ /(TRUSTEDCS|COUNTERSTORM|SYSDETECT)/);
+    $prod = 1 if ($prod < 0 && $2 =~ /(TRUSTEDCS|TCS COMMERCIAL|COUNTERSTORM|SYSDETECT)/);
     $csymbol = chr(194) . chr(169); # UTF-8 encoding of © copyright symbol
     while (<>)
     {
@@ -289,7 +293,7 @@ while (<>)
     }
     $prod =~ s/YEARS/$YEARS/g;
     $prod =~ s/\(c\)/$csymbol/g;
-    pprint($PREFIX,$prod);
+    pprint($PREFIX,$prod,$POSTFIX);
     next;
   }
   print;
@@ -297,14 +301,14 @@ while (<>)
 
 
 
-sub pprint($$)
+sub pprint($$$)
 {
-  my ($prefix,$string) = @_;
+  my ($prefix,$string,$postfix) = @_;
   my (@lines);
   my ($output);
 
   @lines = split(/\n/,$string);
-  $output = sprintf("%s",$prefix.join("\n$prefix",@lines)."\n");
+  $output = sprintf("%s",$prefix.join("$postfix\n$prefix",@lines)."$postfix\n");
   $output =~ s/[ \t]+$//mg;
   print $output;
 }
