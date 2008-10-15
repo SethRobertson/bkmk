@@ -1,3 +1,65 @@
+2008-10-10  Alexander Dupuy  <adupuy@trustedcs.com>
+
+	* Make.Linux-2.6-pre: Fedora >= 7 fix (no longer Fedora Core)
+
+2008-10-10  Alexander Dupuy  <adupuy@trustedcs.com>
+
+	* chcopy.pl: Remove $Id$ strings and extraneous space after
+	TRUSTEDCS in marker
+
+2008-10-10  James Tanis  <jtt@tanis.org>
+
+	* Make.Linux-2.6-pre: CentOS fix
+
+2008-10-09  Alexander Dupuy  <adupuy@trustedcs.com>
+
+	* chcopy.pl: Updated with plausible Trusted Computer Solutions
+	copyright notice.  Now also generates empty $Id$ strings, without
+	irrelevant chcopy.pl info; whatever we decide to do about embedded
+	$Id$ in compiled C code can be implemented by changing it here and
+	then running this on the awb tree.
+
+	* chcopy.pl:  now git-aware
+	chcopy.pl can get git commit logs even for paths in another repository,
+	or even be run from outside any repository at all
+
+2008-10-08  Alexander Dupuy  <adupuy@trustedcs.com>
+
+	* os-name.sh: recognize Fedora >= 7 style /etc/lsb-release.d and
+	use lsb_release
+
+2008-10-04  Seth Robertson  <srobertson@trustedcs.com>
+
+	* .gitignore: Another missing global gitignore (.*~)
+
+2008-10-04  Seth Robertson  <srobertson@counterstorm.com>
+
+	* configure.in, Make.config.in, Makefile: Add final git patches
+
+	* .gitignore: Add global and other previously implicit .gitignores
+
+	* .cvsignore: Stage4-gitify - move .cvsignore to .gitignore for master
+
+2008-07-14  James Tanis  <jtt@counterstorm.com>
+
+	* Make.variables: Fix for nightly builds
+
+2008-06-18  James Tanis  <jtt@counterstorm.com>
+
+	* Make.Linux-2.6-pre: Mostly Fedora 9/GCC-4.3.0 fixes
+
+2008-04-16  James Tanis  <jtt@counterstorm.com>
+
+	* Make.variables: Insure fixes
+
+2008-04-11  James Tanis  <jtt@counterstorm.com>
+
+	* Make.variables: SSL refactoring
+
+2008-03-31  James Tanis  <jtt@counterstorm.com>
+
+	* Make.production, Make.variables: more insure changes
+
 2007-10-10  Alexander Dupuy  <alex.dupuy@counterstorm.com>
 
 	* chcopy.pl: #6989: compute years from CVS logs (trunk commits);
