@@ -1,3 +1,7 @@
+2008-10-15  Alexander Dupuy  <alex.dupuy@counterstorm.com>
+
+	* chcopy.pl: © TCS Commercial, Inc. per George; use tcs__ static prefix
+
 2008-10-10  Alexander Dupuy  <adupuy@trustedcs.com>
 
 	* Make.Linux-2.6-pre: Fedora >= 7 fix (no longer Fedora Core)

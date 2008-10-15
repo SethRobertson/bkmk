@@ -45,8 +45,8 @@ EOF
 ## Trusted CS
 ($CSHDR = <<'EOF') =~ s/^\|//gm;
 |#if !defined(lint)
-|static const char cs__copyright[] = "Copyright (c) YEARS Trusted Computer Solutions, Inc.";
-|static const char cs__contact[] = "Trusted Computer Solutions <support@trustedcs.com>";
+|static const char tcs__copyright[] = "Copyright (c) YEARS TCS Commercial, Inc.";
+|static const char tcs__contact[] = "TCS Commercial, Inc. <CounterStorm@TrustedCS.com>";
 |#endif /* not lint */
 EOF
 
@@ -237,7 +237,7 @@ while (<>)
     {
       $csymbol = $1 if (/copyright ([^\s]{1,3}) \d{4}/i);
       $prod = 0 if ($prod < 0 && (/bk__/ || /libbk__/));
-      $prod = 1 if ($prod < 0 && (/cs__/ || /sysd__/));
+      $prod = 1 if ($prod < 0 && (/tcs__/ || /cs__/ || /sysd__/));
       if (/^$q2$/)
       {
 	last;
