@@ -70,7 +70,7 @@ EOF
 ($CSHDR = <<'EOF') =~ s/^\|//gm;
 |#if !defined(lint)
 |static const char tcs__copyright[] = "Copyright (c) YEARS TCS Commercial, Inc.";
-|static const char tcs__contact[] = "TCS Commercial, Inc. <cs-support@TrustedCS.com>";
+|static const char tcs__contact[] = "TCS Commercial, Inc. <cssupport@TrustedCS.com>";
 |#endif /* not lint */
 EOF
 
@@ -93,7 +93,7 @@ EOF
 |
 |+1 866 230 1307
 |+1 703 318 7134
-|<cs-support@trustedcs.com>
+|<cssupport@trustedcs.com>
 |
 |- -Copyright TCS COMMERCIAL- -
 EOF
