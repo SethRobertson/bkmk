@@ -83,9 +83,8 @@ EOF
 |The copyright notice above does not evidence any actual or intended
 |publication of such source code.
 |
-|Only properly authorized employees and contractors of Trusted
-|Computer Solutions Commercial, Inc. are authorized to view, possess,
-|or otherwise use this file.
+|Only properly authorized employees and contractors of TCS COMMERCIAL,
+|INC.  are authorized to view, possess, or otherwise use this file.
 |
 |TCS Commercial, Inc
 |2350 Corporate Park Drive
@@ -107,11 +106,11 @@ GetOptions(\%OPTIONS, 'b|use-baka-copyright', 'c|use-commercial-copyright', 'l|u
 my ($prod_override);
 if ($OPTIONS{'b'})
 {
-  $prod_override = 0;
+  $prod_override = 1;
 }
 if ($OPTIONS{'c'})
 {
-  $prod_override = 1;
+  $prod_override = 2;
 }
 
 my $q1 = '\#if \!defined\(lint\)';
@@ -121,7 +120,7 @@ my $csymbol = "(c)";
 # UTF-8 copyright symbol
 $csymbol = chr(194) . chr(169) if ($OPTIONS{'u'});
 # Latin-1 copyright symbol
-$csymbol = chr(251) if ($OPTIONS{'l'});
+$csymbol = chr(0251) if ($OPTIONS{'l'});
 # Ascii copyright symbol
 
 my ($last_ARGV) = $ARGV;
@@ -285,19 +284,19 @@ while (<>)
     my ($hdr);
     while (<>)
     {
-      $prod_cpp = 0 if ($prod_cpp < 0 && (/bk__/ || /libbk__/));
-      $prod_cpp = 1 if ($prod_cpp < 0 && (/tcs__/ || /cs__/ || /sysd__/));
+      $prod_cpp = 1 if (!defined($prod_cpp) && (/bk__/ || /libbk__/));
+      $prod_cpp = 2 if (!defined($prod_cpp) && (/tcs__/ || /cs__/ || /sysd__/));
       if (/^$q2$/)
       {
 	last;
       }
     }
     die "Did not find terminator $q2 in $ARGV\n" unless (/^$q2$/);
-    if ($prod_cpp == 1)
+    if ($prod_cpp == 2)
     {
       $hdr = $CSHDR;
     }
-    elsif ($prod_cpp == 0)
+    elsif ($prod_cpp == 1)
     {
       $hdr = $BAKAHDR;
     }
@@ -323,8 +322,8 @@ while (<>)
     my $PREFIX=$1;
     my $POSTFIX=$3;
     my $TYPE=$2;
-    $prod_license = 0 if ($prod_license < 0 && $TYPE =~ /(BAKA|LIBBK)/);
-    $prod_license = 1 if ($prod_license < 0 && $TYPE =~ /(TRUSTEDCS|TCS COMMERCIAL|COUNTERSTORM|SYSDETECT)/);
+    $prod_license = 1 if (!defined($prod_license) && $TYPE =~ /(BAKA|LIBBK)/);
+    $prod_license = 2 if (!defined($prod_license) && $TYPE =~ /(TRUSTEDCS|TCS COMMERCIAL|COUNTERSTORM|SYSDETECT)/);
 
     while (<>)
     {
@@ -336,11 +335,11 @@ while (<>)
     die "Did not find terminator --"."Copyright $TYPE-- in $ARGV" unless (/\-\s?\-Copyright\ .*\-\s?\-/);
 
     my ($prod);
-    if ($prod_license == 1)
+    if ($prod_license == 2)
     {
       $prod = $CSPROD;
     }
-    elsif ($prod_license == 0)
+    elsif ($prod_license == 1)
     {
       $prod = $BAKAPROD;
     }
@@ -356,3 +355,5 @@ while (<>)
   }
   print;
 }
+
+print STDERR "When you commit use the word 'CHCOPY' in the first line of the commit message\n";
