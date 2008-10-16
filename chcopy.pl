@@ -98,10 +98,10 @@ EOF
 |- -Copyright TCS COMMERCIAL- -
 EOF
 
-my($USAGE) = "Usage: $0: [--use-baka-copyright|b] [--use-commercial-copyright|c] [--use-latin-copyright-symbol|l] [--use-utf8-copyright-symbol|u] <files>...\n";
+my($USAGE) = "Usage: $0: [--use-baka-copyright|b] [--use-commercial-copyright|c] <[--use-ascii-copyright-symbol|a] [--use-latin-copyright-symbol|l] [--use-utf8-copyright-symbol|u]> <files>...\n";
 my(%OPTIONS);
 Getopt::Long::Configure("bundling", "no_ignore_case", "no_auto_abbrev", "no_getopt_compat", "require_order");
-GetOptions(\%OPTIONS, 'b|use-baka-copyright', 'c|use-commercial-copyright', 'l|use-latin-copyright-symbol', 'u|use-utf8-copyright-symbol') || die $USAGE;
+GetOptions(\%OPTIONS, 'b|use-baka-copyright', 'c|use-commercial-copyright', 'l|use-latin-copyright-symbol', 'u|use-utf8-copyright-symbol', 'a|use-ascii-copyright-symbol') || die $USAGE;
 
 my ($prod_override);
 if ($OPTIONS{'b'})
@@ -116,12 +116,16 @@ if ($OPTIONS{'c'})
 my $q1 = '\#if \!defined\(lint\)';
 my $q2 = '\#endif \/\* not lint \*\/';
 
+my ($csymbol);
+
 # ASCII copyright symbol
-my $csymbol = "(c)";
+$csymbol = "(c)" if ($OPTIONS{'a'});
 # Latin-1 copyright symbol
 $csymbol = chr(169) if ($OPTIONS{'l'});
 # UTF-8 copyright symbol
 $csymbol = chr(194) . chr(169) if ($OPTIONS{'u'});
+
+die "Must select an ASCII, Latin-1, or UTF-8 copyright symbol\n\n$USAGE" unless ($csymbol);
 
 my ($last_ARGV) = $ARGV;
 my ($prod_cpp) = $prod_override;
