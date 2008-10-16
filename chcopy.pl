@@ -1,4 +1,4 @@
-#! /usr/bin/perl -i.bak
+#!/usr/bin/perl -i.bak
 #
 #
 # ++Copyright LIBBK++
@@ -8,7 +8,7 @@
 # This source code is licensed to you under the terms of the file
 # LICENSE.TXT in this release for further details.
 #
-# Mail <projectbaka@baka.org> for further information
+# Send e-mail to <projectbaka@baka.org> for further information.
 #
 # --Copyright LIBBK--
 #
@@ -19,6 +19,30 @@
 # <TODO>Should determine current branch and compute years from commits on that
 # branch and on trunk before that branch (now always uses trunk commits).</TODO>
 #
+use strict;
+use warnings;
+no warnings "uninitialized";
+use Getopt::Long;
+
+
+
+
+sub pprint($$$)
+{
+  my ($prefix,$string,$postfix) = @_;
+  my (@lines);
+  my ($output);
+
+  @lines = split(/\n/,$string);
+  $output = sprintf("%s",$prefix.join("$postfix\n$prefix",@lines)."$postfix\n");
+  $output =~ s/[ \t]+$//mg;
+  print $output;
+}
+
+
+
+
+my ($BAKAHDR,$BAKAPROD,$CSHDR,$CSPROD);
 
 ######################################################################
 ## BAKA
@@ -75,43 +99,56 @@ EOF
 |- -Copyright TCS COMMERCIAL- -
 EOF
 
+my($USAGE) = "Usage: $0: [--use-baka-copyright|b] [--use-commercial-copyright|c] [--use-latin-copyright-symbol|l] [--use-utf8-copyright-symbol|u] <files>...\n";
+my(%OPTIONS);
+Getopt::Long::Configure("bundling", "no_ignore_case", "no_auto_abbrev", "no_getopt_compat", "require_order");
+GetOptions(\%OPTIONS, 'b|use-baka-copyright', 'c|use-commercial-copyright', 'l|use-latin-copyright-symbol', 'u|use-utf8-copyright-symbol') || die $USAGE;
 
-require "getopts.pl";
-
-$prod = -1;
-
-do Getopts('bclu');
-
-if ($opt_b)
+my ($prod_override);
+if ($OPTIONS{'b'})
 {
-  $prod = 0;
+  $prod_override = 0;
 }
-if ($opt_c)
+if ($OPTIONS{'c'})
 {
-  $prod = 1;
+  $prod_override = 1;
 }
 
-$q1 = '\#if \!defined\(lint\)';
-$q2 = '\#endif \/\* not lint \*\/';
+my $q1 = '\#if \!defined\(lint\)';
+my $q2 = '\#endif \/\* not lint \*\/';
 
-$csymbol = "(c)";
+my $csymbol = "(c)";
 # UTF-8 copyright symbol
 $csymbol = chr(194) . chr(169) if ($OPTIONS{'u'});
 # Latin-1 copyright symbol
 $csymbol = chr(251) if ($OPTIONS{'l'});
 # Ascii copyright symbol
 
+my ($last_ARGV) = $ARGV;
+my ($prod_cpp) = $prod_override;
+my ($prod_license) = $prod_override;
+my ($YEARS);
+
 while (<>)
 {
+  if ($ARGV ne $last_ARGV)
+  {
+    $prod_cpp = $prod_override;
+    $prod_license = $prod_override;
+    $last_ARGV = $ARGV;
+    undef($YEARS);
+  }
+
   if (!defined($YEARS))
   {
+    my @log = ();
     if ($ARGV ne '-')
     {
       $ARGV =~ m=(.*/)?(.*)=;
-      $dir = $1;
-      $file = $2;
-      $git_dir = $dir . '.git';
-      $gfile = $file;
+      my $dir = $1;
+      my $file = $2;
+      my $git_dir = $dir . '.git';
+      my $gfile = $file;
     git_dir:
       while (1)
       {
@@ -129,16 +166,16 @@ while (<>)
 	  last git_dir;
 	}
 
-	$pwd = `pwd`;
+	my $pwd = `pwd`;
 	chomp $pwd;
 	$git_dir = $pwd . "/$git_dir";
       }
       if ($git_dir)
       {
 	$git_dir =~ m=(.*)/.git=;
-	$d = "--git-dir=$git_dir --work-tree=$1";
-	@glog = `git $d log --numstat --pretty=tformat:'date: %ai%n%s' -- $gfile`;
-	@log = ();
+	my $d = "--git-dir=$git_dir --work-tree=$1";
+	my @glog = `git $d log --numstat --pretty=tformat:'date: %ai%n%s' -- $gfile`;
+	my ($line,$msg);
 	foreach $_ (@glog)
 	{
 	  if (/^date/)
@@ -168,7 +205,8 @@ while (<>)
 	@log = `rlog -N -r1.1: $ARGV`;
       }
       # generate hash of significant years, ignoring small or marked changes
-      %sigyears = ();
+      my %sigyears = ();
+      my ($year);
       foreach $_ (@log)
       {
 	# extract year from log entry
@@ -188,9 +226,10 @@ while (<>)
 	}
       }
       # convert list of years to comma-separated ranges (e.g. 2001,2003-2007)
-      @years = sort(keys %sigyears);
+      my @years = sort(keys %sigyears);
       $YEARS = '';
-      $i = 0;
+      my ($lastyear);
+      my $i = 0;
       while ($i <= $#years)
       {
 	if ($i == 0)
@@ -243,24 +282,28 @@ while (<>)
   # (Only try header stuff for first five lines)
   if ($. < 5 && /^$q1/)
   {
+    my ($hdr);
     while (<>)
     {
-      $prod = 0 if ($prod < 0 && (/bk__/ || /libbk__/));
-      $prod = 1 if ($prod < 0 && (/tcs__/ || /cs__/ || /sysd__/));
+      $prod_cpp = 0 if ($prod_cpp < 0 && (/bk__/ || /libbk__/));
+      $prod_cpp = 1 if ($prod_cpp < 0 && (/tcs__/ || /cs__/ || /sysd__/));
       if (/^$q2$/)
       {
 	last;
       }
     }
     die "Did not find terminator $q2 in $ARGV\n" unless (/^$q2$/);
-    if ($prod)
+    if ($prod_cpp == 1)
     {
-      $prod = 1;		# ignore inconsistent copyright below
       $hdr = $CSHDR;
+    }
+    elsif ($prod_cpp == 0)
+    {
+      $hdr = $BAKAHDR;
     }
     else
     {
-      $hdr = $BAKAHDR;
+      die "Unknown cpp-style copyright in $ARGV";
     }
     $hdr =~ s/YEARS/$YEARS/g;
     $hdr =~ s/\(c\)/$csymbol/g;
@@ -277,11 +320,12 @@ while (<>)
   # Copyright
   if (/(.*)\+\+Copyright\ (.*)\+\+(.*)/)
   {
-    $PREFIX=$1;
-    $POSTFIX=$3;
-    $TYPE=$2;
-    $prod = 0 if ($prod < 0 && $2 =~ /(BAKA|LIBBK)/);
-    $prod = 1 if ($prod < 0 && $2 =~ /(TRUSTEDCS|TCS COMMERCIAL|COUNTERSTORM|SYSDETECT)/);
+    my $PREFIX=$1;
+    my $POSTFIX=$3;
+    my $TYPE=$2;
+    $prod_license = 0 if ($prod_license < 0 && $TYPE =~ /(BAKA|LIBBK)/);
+    $prod_license = 1 if ($prod_license < 0 && $TYPE =~ /(TRUSTEDCS|TCS COMMERCIAL|COUNTERSTORM|SYSDETECT)/);
+
     while (<>)
     {
       if (/\-\s?\-Copyright\ .*\-\s?\-/)
@@ -289,33 +333,26 @@ while (<>)
 	last;
       }
     }
-    die "Did not find terminator --Copyright $2-- in $ARGV" unless (/\-\s?\-Copyright\ .*\-\s?\-/);
-    if ($prod)
+    die "Did not find terminator --"."Copyright $TYPE-- in $ARGV" unless (/\-\s?\-Copyright\ .*\-\s?\-/);
+
+    my ($prod);
+    if ($prod_license == 1)
     {
       $prod = $CSPROD;
     }
-    else
+    elsif ($prod_license == 0)
     {
       $prod = $BAKAPROD;
     }
+    else
+    {
+      die "Unknown ++"."Copyright $TYPE++ style license";
+    }
+
     $prod =~ s/YEARS/$YEARS/g;
     $prod =~ s/\(c\)/$csymbol/g;
     pprint($PREFIX,$prod,$POSTFIX);
     next;
   }
   print;
-}
-
-
-
-sub pprint($$$)
-{
-  my ($prefix,$string,$postfix) = @_;
-  my (@lines);
-  my ($output);
-
-  @lines = split(/\n/,$string);
-  $output = sprintf("%s",$prefix.join("$postfix\n$prefix",@lines)."$postfix\n");
-  $output =~ s/[ \t]+$//mg;
-  print $output;
 }
