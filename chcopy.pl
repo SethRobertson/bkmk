@@ -52,8 +52,8 @@ EOF
 
 ($CSPROD =  "++"."Copyright TCS COMMERCIAL++\n".<<'EOF') =~ s/^\|//gm;
 |
-|Copyright (c) YEARS Trusted Computer Solutions Commercial, Inc.  All
-|rights reserved.
+|Copyright (c) YEARS Trusted Computer Solutions Commercial, Inc.
+|All rights reserved.
 |
 |THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF TRUSTED COMPUTER
 |SOLUTIONS COMMERCIAL, INC.  The copyright notice above does not
