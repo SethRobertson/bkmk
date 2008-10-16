@@ -84,7 +84,7 @@ EOF
 |publication of such source code.
 |
 |Only properly authorized employees and contractors of TCS COMMERCIAL,
-|INC.  are authorized to view, possess, or otherwise use this file.
+|INC. are authorized to view, possess, or otherwise use this file.
 |
 |TCS Commercial, Inc
 |2350 Corporate Park Drive
@@ -116,12 +116,12 @@ if ($OPTIONS{'c'})
 my $q1 = '\#if \!defined\(lint\)';
 my $q2 = '\#endif \/\* not lint \*\/';
 
+# ASCII copyright symbol
 my $csymbol = "(c)";
+# Latin-1 copyright symbol
+$csymbol = chr(169) if ($OPTIONS{'l'});
 # UTF-8 copyright symbol
 $csymbol = chr(194) . chr(169) if ($OPTIONS{'u'});
-# Latin-1 copyright symbol
-$csymbol = chr(0251) if ($OPTIONS{'l'});
-# Ascii copyright symbol
 
 my ($last_ARGV) = $ARGV;
 my ($prod_cpp) = $prod_override;
