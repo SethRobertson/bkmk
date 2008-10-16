@@ -52,19 +52,20 @@ EOF
 
 ($CSPROD =  "++"."Copyright TCS COMMERCIAL++\n".<<'EOF') =~ s/^\|//gm;
 |
-|Copyright (c) YEARS Trusted Computer Solutions Commercial, Inc.
+|Copyright (c) YEARS TCS Commercial, Inc.
 |All rights reserved.
 |
-|THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF TRUSTED COMPUTER
-|SOLUTIONS COMMERCIAL, INC.  The copyright notice above does not
-|evidence any actual or intended publication of such source code.
+|THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF TCS COMMERCIAL, INC.
+|The copyright notice above does not evidence any actual or intended
+|publication of such source code.
 |
 |Only properly authorized employees and contractors of Trusted
 |Computer Solutions Commercial, Inc. are authorized to view, possess,
 |or otherwise use this file.
 |
-|Trusted Computer Solutions
-|2350 Corporate Park Drive, Suite 500
+|TCS Commercial, Inc
+|2350 Corporate Park Drive
+|Suite 500
 |Herndon, VA  20171-4848
 |
 |+1 866 230 1307
@@ -79,7 +80,7 @@ require "getopts.pl";
 
 $prod = -1;
 
-do Getopts('bc');
+do Getopts('bclu');
 
 if ($opt_b)
 {
@@ -92,6 +93,13 @@ if ($opt_c)
 
 $q1 = '\#if \!defined\(lint\)';
 $q2 = '\#endif \/\* not lint \*\/';
+
+$csymbol = "(c)";
+# UTF-8 copyright symbol
+$csymbol = chr(194) . chr(169) if ($OPTIONS{'u'});
+# Latin-1 copyright symbol
+$csymbol = chr(251) if ($OPTIONS{'l'});
+# Ascii copyright symbol
 
 while (<>)
 {
@@ -235,10 +243,8 @@ while (<>)
   # (Only try header stuff for first five lines)
   if ($. < 5 && /^$q1/)
   {
-    $csymbol = chr(194) . chr(169); # UTF-8 encoding of © copyright symbol
     while (<>)
     {
-      $csymbol = $1 if (/copyright ([^\s]{1,3}) \d{4}/i);
       $prod = 0 if ($prod < 0 && (/bk__/ || /libbk__/));
       $prod = 1 if ($prod < 0 && (/tcs__/ || /cs__/ || /sysd__/));
       if (/^$q2$/)
@@ -276,10 +282,8 @@ while (<>)
     $TYPE=$2;
     $prod = 0 if ($prod < 0 && $2 =~ /(BAKA|LIBBK)/);
     $prod = 1 if ($prod < 0 && $2 =~ /(TRUSTEDCS|TCS COMMERCIAL|COUNTERSTORM|SYSDETECT)/);
-    $csymbol = chr(194) . chr(169); # UTF-8 encoding of © copyright symbol
     while (<>)
     {
-      $csymbol = $1 if (/copyright ([^\s]{1,3}) \d{4}/i);
       if (/\-\s?\-Copyright\ .*\-\s?\-/)
       {
 	last;
