@@ -1,5 +1,5 @@
 #
-# 
+#
 #
 # ++Copyright LIBBK++
 #
@@ -30,11 +30,11 @@ AC_DEFUN([AC_CONSTRUCTORS],
    static int x = 1;
    __attribute__((__constructor__)) reset() { x = 0; }
    int main() { return x; }],
-        ac_cv_have_constructor_attribute=yes,
-        ac_cv_have_constructor_attribute=no,
+	ac_cv_have_constructor_attribute=yes,
+	ac_cv_have_constructor_attribute=no,
   [AC_TRY_COMPILE([void __attribute__((__constructor__))foo(void);], ,
-        ac_cv_have_constructor_attribute=yes,
-        ac_cv_have_constructor_attribute=no)
+	ac_cv_have_constructor_attribute=yes,
+	ac_cv_have_constructor_attribute=no)
   ])
  ])
  if test $ac_cv_have_constructor_attribute = yes; then
@@ -45,13 +45,13 @@ AC_DEFUN([AC_CONSTRUCTORS],
     static int x = 1;
     #pragma init(reset)
     reset() { x = 0; } int main() { return x; }],
-        ac_cv_have_init_pragma=yes,
-        ac_cv_have_init_pragma=no,
+	ac_cv_have_init_pragma=yes,
+	ac_cv_have_init_pragma=no,
    [AC_TRY_COMPILE([
      #pragma init(foo)
      ], ,
-        ac_cv_have_init_pragma=yes,
-        ac_cv_have_init_pragma=no)
+	ac_cv_have_init_pragma=yes,
+	ac_cv_have_init_pragma=no)
    ])
   ])
   if test $ac_cv_have_init_pragma = yes; then
@@ -75,11 +75,11 @@ AC_DEFUN([AC_C_ALIGN_FUNCTIONS],
  AC_CACHE_CHECK([for function alignment switch],
 		[ac_cv_align_functions_switch],
  [AC_TRY_COMPILE([],[int f() { return 0; }],
-        ac_cv_align_functions_switch=-falign-functions,
+	ac_cv_align_functions_switch=-falign-functions,
    CFLAGS="-malign-functions=4"
    [AC_TRY_COMPILE([],[int f() { return 0; }],
-        ac_cv_align_functions_switch=-malign-functions,
-        ac_cv_align_functions_switch=)
+	ac_cv_align_functions_switch=-malign-functions,
+	ac_cv_align_functions_switch=)
    ])
  ])
  ALIGN_FUNCTIONS_SWITCH=$ac_cv_align_functions_switch
@@ -243,7 +243,7 @@ AC_DEFUN([AC_FUNC_INET_PTON],
 [AC_CHECK_FUNCS(inet_pton, [],
 [# inet_pton is in -lnsl on Solaris
 AC_CHECK_LIB(nsl, inet_pton,
-             [AC_DEFINE(HAVE_INET_PTON)
+	     [AC_DEFINE(HAVE_INET_PTON)
 LIBS="-lnsl $LIBS"])])dnl
 ])# AC_FUNC_INET_PTON
 
@@ -259,7 +259,7 @@ AC_DEFUN([AC_FUNC_GETTEXT],
 ac_gettext_LIBS=$LIBS
 LIBS="-L/usr/local/lib $LIBS"
 AC_CHECK_LIB(intl, gettext,
-             [AC_DEFINE(HAVE_GETTEXT)
+	     [AC_DEFINE(HAVE_GETTEXT)
 LIBS="$LIBS -lintl"
 AC_CHECK_LIB(iconv, main, LIBS="$LIBS -liconv")], LIBS=$ac_gettext_LIBS)])dnl
 ])# AC_FUNC_GETTEXT
@@ -278,8 +278,8 @@ AC_DEFUN([AC_SA_LEN],
    #include <sys/types.h>
    #include <sys/socket.h>],[
    extern struct sockaddr *ps; return ps->sa_len;],
-        ac_cv_have_sockaddr_sa_len=yes,
-        ac_cv_have_sockaddr_sa_len=no)
+	ac_cv_have_sockaddr_sa_len=yes,
+	ac_cv_have_sockaddr_sa_len=no)
  ])
  if test $ac_cv_have_sockaddr_sa_len = yes; then
   AC_DEFINE(HAVE_SOCKADDR_SA_LEN)
@@ -293,8 +293,8 @@ AC_DEFUN([AC_SA_LEN],
     #error SA_LEN is not a macro
     #endif
     return SA_LEN(ps);],
-        ac_cv_have_sa_len_macro=yes,
-        ac_cv_have_sa_len_macro=no)
+	ac_cv_have_sa_len_macro=yes,
+	ac_cv_have_sa_len_macro=no)
   ])
   if test $ac_cv_have_sa_len_macro = yes; then
    AC_DEFINE(HAVE_SA_LEN_MACRO)
@@ -325,11 +325,11 @@ AC_DEFUN([AC_IN6_MULTICAST],
     AC_CACHE_CHECK([whether IN6_IS_ADDR_MULTICAST takes a struct in6_addr ptr],
 		   [ac_cv_multicast_test_takes_in6_addr],
       [AC_TRY_COMPILE(
-        [#include <netinet/in.h>
-        ],
-        [struct in6_addr in; IN6_IS_ADDR_MULTICAST(&in); return(0);],
-        ac_cv_multicast_test_takes_in6_addr=yes,
-        ac_cv_multicast_test_takes_in6_addr=no)
+	[#include <netinet/in.h>
+	],
+	[struct in6_addr in; IN6_IS_ADDR_MULTICAST(&in); return(0);],
+	ac_cv_multicast_test_takes_in6_addr=yes,
+	ac_cv_multicast_test_takes_in6_addr=no)
       ])
     if test $ac_cv_multicast_test_takes_in6_addr=yes; then
       AC_DEFINE(IN6_MULTICAST_TAKES_IN6_ADDR)
@@ -344,7 +344,7 @@ AC_DEFUN([AC_IN6_MULTICAST],
 #
 AC_DEFUN([AC_STACKDIRECTION],
 [AC_CACHE_CHECK([stack direction for C],
-               [ac_cv_c_stack_direction],
+	       [ac_cv_c_stack_direction],
 [AC_RUN_IFELSE([AC_LANG_SOURCE(
 [int
 find_stack_direction ()
@@ -365,16 +365,16 @@ main ()
 {
   exit (find_stack_direction () < 0);
 }])],
-               [ac_cv_c_stack_direction=1],
-               [ac_cv_c_stack_direction=-1],
-               [ac_cv_c_stack_direction=0])])
+	       [ac_cv_c_stack_direction=1],
+	       [ac_cv_c_stack_direction=-1],
+	       [ac_cv_c_stack_direction=0])])
 AH_VERBATIM([STACK_DIRECTION],
 [/* Define if you know the
    direction of stack growth for your system; otherwise it will be
    automatically deduced at run-time.
-        STACK_DIRECTION > 0 => grows toward higher addresses
-        STACK_DIRECTION < 0 => grows toward lower addresses
-        STACK_DIRECTION = 0 => direction of growth unknown */
+	STACK_DIRECTION > 0 => grows toward higher addresses
+	STACK_DIRECTION < 0 => grows toward lower addresses
+	STACK_DIRECTION = 0 => direction of growth unknown */
 @%:@undef STACK_DIRECTION])dnl
 AC_DEFINE_UNQUOTED(STACK_DIRECTION, $ac_cv_c_stack_direction)
 ])# AC_STACKDIRECTION
@@ -386,7 +386,7 @@ AC_DEFINE_UNQUOTED(STACK_DIRECTION, $ac_cv_c_stack_direction)
 #
 AC_DEFUN([AC_TIME_MAX],
 [AC_CACHE_CHECK([max time_t],
-               [ac_cv_$1],
+	       [ac_cv_$1],
 [AC_RUN_IFELSE([AC_LANG_SOURCE(
 [#define _ISOC99_SOURCE
 
@@ -473,7 +473,7 @@ fi
 #
 AC_DEFUN([AC_SECOND_CONNECT_TO_REFUSED_PORT],
 [AC_CACHE_CHECK([errno value of second connect to refused port],
-               [ac_cv_$1],
+	       [ac_cv_$1],
 [AC_RUN_IFELSE([AC_LANG_SOURCE(
 [
 #include <stdio.h>
@@ -518,7 +518,7 @@ retry:
     }
 
     ret = bind(ss, (struct sockaddr *)(&sin), sizeof(sin));
-   
+
     if ((port == 0xffff) && (ret == -1))
     {
       fprintf(stderr, "all sockets in use");
@@ -610,7 +610,7 @@ fi
 
 AC_DEFUN([AC_DEV_FD],
 [AC_CACHE_CHECK([for /dev/fd/ file descriptor support],
-                [ac_cv_dev_fd],
+		[ac_cv_dev_fd],
  [AC_TRY_RUN([int main() {exit(0);}],
    [if test -w /dev/fd/1 >/dev/null; then
       if (test -c /dev/fd/9 9>&-) 9>/dev/null; then
@@ -648,7 +648,7 @@ esac
 #
 AC_DEFUN([AC_PROCFS],
 [AC_CACHE_CHECK([for /proc/ process status],
-                [ac_cv_procfs],
+		[ac_cv_procfs],
  [AC_TRY_RUN([int main() {exit(0);}],
    [if test -d /proc; then
       if test -d /proc/self; then
@@ -703,19 +703,19 @@ acx_pthread_ok=no
 # etcetera environment variables, and if threads linking works using
 # them:
 if test x"$PTHREAD_LIBS$PTHREAD_CFLAGS" != x; then
-        save_CFLAGS="$CFLAGS"
-        CFLAGS="$CFLAGS $PTHREAD_CFLAGS"
-        save_LIBS="$LIBS"
-        LIBS="$PTHREAD_LIBS $LIBS"
-        AC_MSG_CHECKING([for pthread_join in LIBS=$PTHREAD_LIBS with CFLAGS=$PTHREAD_CFLAGS])
-        AC_TRY_LINK_FUNC(pthread_join, acx_pthread_ok=yes)
-        AC_MSG_RESULT($acx_pthread_ok)
-        if test x"$acx_pthread_ok" = xno; then
-                PTHREAD_LIBS=""
-                PTHREAD_CFLAGS=""
-        fi
-        LIBS="$save_LIBS"
-        CFLAGS="$save_CFLAGS"
+	save_CFLAGS="$CFLAGS"
+	CFLAGS="$CFLAGS $PTHREAD_CFLAGS"
+	save_LIBS="$LIBS"
+	LIBS="$PTHREAD_LIBS $LIBS"
+	AC_MSG_CHECKING([for pthread_join in LIBS=$PTHREAD_LIBS with CFLAGS=$PTHREAD_CFLAGS])
+	AC_TRY_LINK_FUNC(pthread_join, acx_pthread_ok=yes)
+	AC_MSG_RESULT($acx_pthread_ok)
+	if test x"$acx_pthread_ok" = xno; then
+		PTHREAD_LIBS=""
+		PTHREAD_CFLAGS=""
+	fi
+	LIBS="$save_LIBS"
+	CFLAGS="$save_CFLAGS"
 fi
 
 # We must check for the threads library under a number of different
@@ -750,18 +750,18 @@ acx_pthread_flags="pthreads none -Kthread -kthread lthread pthread -pthread -pth
 # --thread-safe: KAI C++
 
 case "${host_cpu}-${host_os}" in
-        *solaris*)
+	*solaris*)
 
-        # On Solaris (at least, for some versions), libc contains stubbed
-        # (non-functional) versions of the pthreads routines, so link-based
-        # tests will erroneously succeed.  (We need to link with -pthread or
-        # -lpthread.)  (The stubs are missing pthread_cleanup_push, or rather
-        # a function called by this macro, so we could check for that, but
-        # who knows whether they'll stub that too in a future libc.)  So,
-        # we'll just look for -pthreads and -lpthread first:
+	# On Solaris (at least, for some versions), libc contains stubbed
+	# (non-functional) versions of the pthreads routines, so link-based
+	# tests will erroneously succeed.  (We need to link with -pthread or
+	# -lpthread.)  (The stubs are missing pthread_cleanup_push, or rather
+	# a function called by this macro, so we could check for that, but
+	# who knows whether they'll stub that too in a future libc.)  So,
+	# we'll just look for -pthreads and -lpthread first:
 
-        acx_pthread_flags="-pthread -pthreads pthread -mt $acx_pthread_flags"
-        ;;
+	acx_pthread_flags="-pthread -pthreads pthread -mt $acx_pthread_flags"
+	;;
 
 	*darwin*)
 	# darwin doesn't have a define for PTHREAD_RWLOCK_INITIALIZER
@@ -773,94 +773,94 @@ esac
 if test x"$acx_pthread_ok" = xno; then
 for flag in $acx_pthread_flags; do
 
-        case $flag in
-                none)
-                AC_MSG_CHECKING([whether pthreads work without any flags])
-                ;;
+	case $flag in
+		none)
+		AC_MSG_CHECKING([whether pthreads work without any flags])
+		;;
 
-                -*)
-                AC_MSG_CHECKING([whether pthreads work with $flag])
-                PTHREAD_CFLAGS="$flag"
-                ;;
+		-*)
+		AC_MSG_CHECKING([whether pthreads work with $flag])
+		PTHREAD_CFLAGS="$flag"
+		;;
 
-                *)
-                AC_MSG_CHECKING([for the pthreads library -l$flag])
-                PTHREAD_LIBS="-l$flag"
-                ;;
-        esac
+		*)
+		AC_MSG_CHECKING([for the pthreads library -l$flag])
+		PTHREAD_LIBS="-l$flag"
+		;;
+	esac
 
-        save_LIBS="$LIBS"
-        save_CFLAGS="$CFLAGS"
-        LIBS="$PTHREAD_LIBS $LIBS"
-        CFLAGS="$CFLAGS $PTHREAD_CFLAGS"
+	save_LIBS="$LIBS"
+	save_CFLAGS="$CFLAGS"
+	LIBS="$PTHREAD_LIBS $LIBS"
+	CFLAGS="$CFLAGS $PTHREAD_CFLAGS"
 
-        # Check for various functions.  We must include pthread.h,
-        # since some functions may be macros.  (On the Sequent, we
-        # need a special flag -Kthread to make this header compile.)
-        # We check for pthread_join because it is in -lpthread on IRIX
-        # while pthread_create is in libc.  We check for pthread_attr_init
-        # due to DEC craziness with -lpthreads.  We check for
-        # pthread_cleanup_push because it is one of the few pthread
-        # functions on Solaris that doesn't have a non-functional libc stub.
-        # We try pthread_create on general principles.
-        AC_TRY_LINK([#include <pthread.h>],
-                    [pthread_t th; pthread_join(th, 0);
-                     pthread_attr_init(0); pthread_cleanup_push(0, 0);
-                     pthread_create(0,0,0,0); pthread_cleanup_pop(0); ],
-                    [acx_pthread_ok=yes])
+	# Check for various functions.  We must include pthread.h,
+	# since some functions may be macros.  (On the Sequent, we
+	# need a special flag -Kthread to make this header compile.)
+	# We check for pthread_join because it is in -lpthread on IRIX
+	# while pthread_create is in libc.  We check for pthread_attr_init
+	# due to DEC craziness with -lpthreads.  We check for
+	# pthread_cleanup_push because it is one of the few pthread
+	# functions on Solaris that doesn't have a non-functional libc stub.
+	# We try pthread_create on general principles.
+	AC_TRY_LINK([#include <pthread.h>],
+		    [pthread_t th; pthread_join(th, 0);
+		     pthread_attr_init(0); pthread_cleanup_push(0, 0);
+		     pthread_create(0,0,0,0); pthread_cleanup_pop(0); ],
+		    [acx_pthread_ok=yes])
 
-        AC_MSG_RESULT($acx_pthread_ok)
-        if test "x$acx_pthread_ok" = xyes; then
-                # don't restore LIBS on success; wait until very end
-                break;
-        fi
+	AC_MSG_RESULT($acx_pthread_ok)
+	if test "x$acx_pthread_ok" = xyes; then
+		# don't restore LIBS on success; wait until very end
+		break;
+	fi
 
-        LIBS="$save_LIBS"
-        CFLAGS="$save_CFLAGS"
+	LIBS="$save_LIBS"
+	CFLAGS="$save_CFLAGS"
 
-        PTHREAD_LIBS=""
-        PTHREAD_CFLAGS=""
+	PTHREAD_LIBS=""
+	PTHREAD_CFLAGS=""
 done
 fi
 
 # Various other checks:
 if test "x$acx_pthread_ok" = xyes; then
-        # Detect AIX lossage: threads are created detached by default
-        # and the JOINABLE attribute has a nonstandard name (UNDETACHED).
-        AC_MSG_CHECKING([for joinable pthread attribute])
-        AC_TRY_LINK([#include <pthread.h>],
-                    [int attr=PTHREAD_CREATE_JOINABLE;],
-                    ok=PTHREAD_CREATE_JOINABLE, ok=unknown)
-        if test x"$ok" = xunknown; then
-                AC_TRY_LINK([#include <pthread.h>],
-                            [int attr=PTHREAD_CREATE_UNDETACHED;],
-                            ok=PTHREAD_CREATE_UNDETACHED, ok=unknown)
-        fi
-        if test x"$ok" != xPTHREAD_CREATE_JOINABLE; then
-                AC_DEFINE(PTHREAD_CREATE_JOINABLE, $ok,
-                          [Define to the necessary symbol if this constant
-                           uses a non-standard name on your system.])
-        fi
-        AC_MSG_RESULT(${ok})
-        if test x"$ok" = xunknown; then
-                AC_MSG_WARN([we do not know how to create joinable pthreads])
-        fi
+	# Detect AIX lossage: threads are created detached by default
+	# and the JOINABLE attribute has a nonstandard name (UNDETACHED).
+	AC_MSG_CHECKING([for joinable pthread attribute])
+	AC_TRY_LINK([#include <pthread.h>],
+		    [int attr=PTHREAD_CREATE_JOINABLE;],
+		    ok=PTHREAD_CREATE_JOINABLE, ok=unknown)
+	if test x"$ok" = xunknown; then
+		AC_TRY_LINK([#include <pthread.h>],
+			    [int attr=PTHREAD_CREATE_UNDETACHED;],
+			    ok=PTHREAD_CREATE_UNDETACHED, ok=unknown)
+	fi
+	if test x"$ok" != xPTHREAD_CREATE_JOINABLE; then
+		AC_DEFINE(PTHREAD_CREATE_JOINABLE, $ok,
+			  [Define to the necessary symbol if this constant
+			   uses a non-standard name on your system.])
+	fi
+	AC_MSG_RESULT(${ok})
+	if test x"$ok" = xunknown; then
+		AC_MSG_WARN([we do not know how to create joinable pthreads])
+	fi
 
-        AC_MSG_CHECKING([if more special flags are required for pthreads])
-        flag=no
-        case "${host_cpu}-${host_os}" in
-                *-aix* | *-freebsd*)     flag="-D_THREAD_SAFE";;
-                *solaris* | *-osf* | *-hpux* | *-linux* ) flag="-D_REENTRANT";;
-        esac
-        AC_MSG_RESULT(${flag})
-        if test "x$flag" != xno; then
-                PTHREAD_CFLAGS="$flag $PTHREAD_CFLAGS"
-        fi
+	AC_MSG_CHECKING([if more special flags are required for pthreads])
+	flag=no
+	case "${host_cpu}-${host_os}" in
+		*-aix* | *-freebsd*)     flag="-D_THREAD_SAFE";;
+		*solaris* | *-osf* | *-hpux* | *-linux* ) flag="-D_REENTRANT";;
+	esac
+	AC_MSG_RESULT(${flag})
+	if test "x$flag" != xno; then
+		PTHREAD_CFLAGS="$flag $PTHREAD_CFLAGS"
+	fi
 
-        # More AIX lossage: must compile with cc_r
-        AC_CHECK_PROG(PTHREAD_CC, cc_r, cc_r, ${CC})
+	# More AIX lossage: must compile with cc_r
+	AC_CHECK_PROG(PTHREAD_CC, cc_r, cc_r, ${CC})
 else
-        PTHREAD_CC="$CC"
+	PTHREAD_CC="$CC"
 fi
 
 AC_SUBST(PTHREAD_LIBS)
@@ -869,12 +869,12 @@ AC_SUBST(PTHREAD_CC)
 
 # Finally, execute ACTION-IF-FOUND/ACTION-IF-NOT-FOUND:
 if test x"$acx_pthread_ok" = xyes; then
-        ifelse([$1],,AC_DEFINE(HAVE_PTHREAD,1,[Define if you have POSIX threads libraries and header files.]),[$1])
-        LIBS="$save_LIBS"
-        CFLAGS="$save_CFLAGS"
+	ifelse([$1],,AC_DEFINE(HAVE_PTHREAD,1,[Define if you have POSIX threads libraries and header files.]),[$1])
+	LIBS="$save_LIBS"
+	CFLAGS="$save_CFLAGS"
 else
-        acx_pthread_ok=no
-        $2
+	acx_pthread_ok=no
+	$2
 fi
 AC_LANG_RESTORE
 ])dnl ACX_PTHREAD
@@ -915,10 +915,10 @@ AC_LANG_RESTORE
 # -----------------------------------------------------------
 # If this macro is not defined by Autoconf, define it here.
 m4_ifdef([AC_PROVIDE_IFELSE],
-         [],
-         [m4_define([AC_PROVIDE_IFELSE],
-	         [m4_ifdef([AC_PROVIDE_$1],
-		           [$2], [$3])])])
+	 [],
+	 [m4_define([AC_PROVIDE_IFELSE],
+		 [m4_ifdef([AC_PROVIDE_$1],
+			   [$2], [$3])])])
 
 
 # AC_PROG_LIBTOOL
@@ -1401,34 +1401,34 @@ x86_64-*linux*|ppc*-*linux*|powerpc*-*linux*|s390*-*linux*|sparc*-*linux*)
     case "`/usr/bin/file conftest.o`" in
     *32-bit*)
       case $host in
-        x86_64-*linux*)
-          LD="${LD-ld} -m elf_i386"
-          ;;
-        ppc64-*linux*)
-          LD="${LD-ld} -m elf32ppclinux"
-          ;;
-        s390x-*linux*)
-          LD="${LD-ld} -m elf_s390"
-          ;;
-        sparc64-*linux*)
-          LD="${LD-ld} -m elf32_sparc"
-          ;;
+	x86_64-*linux*)
+	  LD="${LD-ld} -m elf_i386"
+	  ;;
+	ppc64-*linux*)
+	  LD="${LD-ld} -m elf32ppclinux"
+	  ;;
+	s390x-*linux*)
+	  LD="${LD-ld} -m elf_s390"
+	  ;;
+	sparc64-*linux*)
+	  LD="${LD-ld} -m elf32_sparc"
+	  ;;
       esac
       ;;
     *64-bit*)
       case $host in
-        x86_64-*linux*)
-          LD="${LD-ld} -m elf_x86_64"
-          ;;
-        ppc*-*linux*|powerpc*-*linux*)
-          LD="${LD-ld} -m elf64ppc"
-          ;;
-        s390*-*linux*)
-          LD="${LD-ld} -m elf64_s390"
-          ;;
-        sparc*-*linux*)
-          LD="${LD-ld} -m elf64_sparc"
-          ;;
+	x86_64-*linux*)
+	  LD="${LD-ld} -m elf_x86_64"
+	  ;;
+	ppc*-*linux*|powerpc*-*linux*)
+	  LD="${LD-ld} -m elf64ppc"
+	  ;;
+	s390*-*linux*)
+	  LD="${LD-ld} -m elf64_s390"
+	  ;;
+	sparc*-*linux*)
+	  LD="${LD-ld} -m elf64_sparc"
+	  ;;
       esac
       ;;
     esac
@@ -1736,7 +1736,7 @@ else
     lt_cv_dlopen_self=yes
     ])
    ;;
-   
+
   *)
     AC_CHECK_FUNC([shl_load],
 	  [lt_cv_dlopen="shl_load"],
@@ -1785,7 +1785,7 @@ else
     if test "x$lt_cv_dlopen_self" = xyes; then
       LDFLAGS="$LDFLAGS $link_static_flag"
       AC_CACHE_CHECK([whether a statically linked program can dlopen itself],
-    	  lt_cv_dlopen_self_static, [dnl
+	  lt_cv_dlopen_self_static, [dnl
 	  _LT_AC_TRY_DLOPEN_SELF(
 	    lt_cv_dlopen_self_static=yes, lt_cv_dlopen_self_static=yes,
 	    lt_cv_dlopen_self_static=no,  lt_cv_dlopen_self_static=cross)
@@ -1964,8 +1964,8 @@ else
   case $host_os in
    darwin*)
        if test -n "$STRIP" ; then
-         striplib="$STRIP -x"
-         AC_MSG_RESULT([yes])
+	 striplib="$STRIP -x"
+	 AC_MSG_RESULT([yes])
        else
   AC_MSG_RESULT([no])
 fi
@@ -1973,7 +1973,7 @@ fi
    *)
   AC_MSG_RESULT([no])
     ;;
-  esac 
+  esac
 fi
 ])# AC_LIBTOOL_SYS_LIB_STRIP
 
@@ -2170,15 +2170,15 @@ cygwin* | mingw* | pw32*)
       soname_spec='${libname}`echo ${release} | $SED -e 's/[[.]]/-/g'`${versuffix}${shared_ext}'
       sys_lib_search_path_spec=`$CC -print-search-dirs | grep "^libraries:" | $SED -e "s/^libraries://" -e "s,=/,/,g"`
       if echo "$sys_lib_search_path_spec" | [grep ';[c-zC-Z]:/' >/dev/null]; then
-        # It is most probably a Windows format PATH printed by
-        # mingw gcc, but we are running on Cygwin. Gcc prints its search
-        # path with ; separators, and with drive letters. We can handle the
-        # drive letters (cygwin fileutils understands them), so leave them,
-        # especially as we might pass files found there to a mingw objdump,
-        # which wouldn't understand a cygwinified path. Ahh.
-        sys_lib_search_path_spec=`echo "$sys_lib_search_path_spec" | $SED -e 's/;/ /g'`
+	# It is most probably a Windows format PATH printed by
+	# mingw gcc, but we are running on Cygwin. Gcc prints its search
+	# path with ; separators, and with drive letters. We can handle the
+	# drive letters (cygwin fileutils understands them), so leave them,
+	# especially as we might pass files found there to a mingw objdump,
+	# which wouldn't understand a cygwinified path. Ahh.
+	sys_lib_search_path_spec=`echo "$sys_lib_search_path_spec" | $SED -e 's/;/ /g'`
       else
-        sys_lib_search_path_spec=`echo "$sys_lib_search_path_spec" | $SED  -e "s/$PATH_SEPARATOR/ /g"`
+	sys_lib_search_path_spec=`echo "$sys_lib_search_path_spec" | $SED  -e "s/$PATH_SEPARATOR/ /g"`
       fi
       ;;
     pw32*)
@@ -2604,7 +2604,7 @@ test "$dynamic_linker" = no && can_build_shared=no
 AC_DEFUN([_LT_AC_TAGCONFIG],
 [AC_ARG_WITH([tags],
     [AC_HELP_STRING([--with-tags@<:@=TAGS@:>@],
-        [include additional configurations @<:@automatic@:>@])],
+	[include additional configurations @<:@automatic@:>@])],
     [tagnames="$withval"])
 
 if test -f "$ltmain" && test -n "$tagnames"; then
@@ -3324,7 +3324,7 @@ else
       */dev/null* | *'Invalid file or object type'*)
 	lt_cv_path_NM="$tmp_nm -B"
 	break
-        ;;
+	;;
       *)
 	case `"$tmp_nm" -p /dev/null 2>&1 | sed '1q'` in
 	*/dev/null*)
@@ -3529,7 +3529,7 @@ if test "$GCC" = no; then
 fi
 if test -n "$_LT_AC_TAGVAR(lt_prog_cc_shlib, $1)"; then
   AC_MSG_WARN([`$CC' requires `$_LT_AC_TAGVAR(lt_prog_cc_shlib, $1)' to build shared libraries])
-  if echo "$old_CC $old_CFLAGS " | grep "[[ 	]]$]_LT_AC_TAGVAR(lt_prog_cc_shlib, $1)[[[ 	]]" >/dev/null; then :
+  if echo "$old_CC $old_CFLAGS " | grep "[[	]]$]_LT_AC_TAGVAR(lt_prog_cc_shlib, $1)[[[	]]" >/dev/null; then :
   else
     AC_MSG_WARN([add `$_LT_AC_TAGVAR(lt_prog_cc_shlib, $1)' to the CC or CFLAGS env variable and reconfigure])
     _LT_AC_TAGVAR(lt_cv_prog_cc_can_build_shared, $1)=no
@@ -3611,7 +3611,7 @@ aix4*)
     _LT_AC_TAGVAR(whole_archive_flag_spec, $1)='-all_load $convenience'
     _LT_AC_TAGVAR(link_all_deplibs, $1)=yes
     fi
-    ;; 
+    ;;
 esac
 AC_MSG_RESULT([$enable_shared])
 
@@ -3942,25 +3942,25 @@ case $host_os in
       test -z ${LD_TWOLEVEL_NAMESPACE} && _LT_AC_TAGVAR(allow_undefined_flag, $1)='-flat_namespace -undefined suppress'
       ;;
     esac
-    	lt_int_apple_cc_single_mod=no
-    	output_verbose_link_cmd='echo'
-    	if $CC -dumpspecs 2>&1 | grep 'single_module' >/dev/null ; then
-    	  lt_int_apple_cc_single_mod=yes
-    	fi
-    	if test "X$lt_int_apple_cc_single_mod" = Xyes ; then
-    	  _LT_AC_TAGVAR(archive_cmds, $1)='$CC -dynamiclib -single_module $allow_undefined_flag -o $lib $libobjs $deplibs $compiler_flags -install_name $rpath/$soname $verstring'
-    	else
-        _LT_AC_TAGVAR(archive_cmds, $1)='$CC -r ${wl}-bind_at_load -keep_private_externs -nostdlib -o ${lib}-master.o $libobjs~$CC -dynamiclib $allow_undefined_flag -o $lib ${lib}-master.o $deplibs $compiler_flags -install_name $rpath/$soname $verstring'
+	lt_int_apple_cc_single_mod=no
+	output_verbose_link_cmd='echo'
+	if $CC -dumpspecs 2>&1 | grep 'single_module' >/dev/null ; then
+	  lt_int_apple_cc_single_mod=yes
+	fi
+	if test "X$lt_int_apple_cc_single_mod" = Xyes ; then
+	  _LT_AC_TAGVAR(archive_cmds, $1)='$CC -dynamiclib -single_module $allow_undefined_flag -o $lib $libobjs $deplibs $compiler_flags -install_name $rpath/$soname $verstring'
+	else
+	_LT_AC_TAGVAR(archive_cmds, $1)='$CC -r ${wl}-bind_at_load -keep_private_externs -nostdlib -o ${lib}-master.o $libobjs~$CC -dynamiclib $allow_undefined_flag -o $lib ${lib}-master.o $deplibs $compiler_flags -install_name $rpath/$soname $verstring'
       fi
       _LT_AC_TAGVAR(module_cmds, $1)='$CC -bundle ${wl}-bind_at_load $allow_undefined_flag -o $lib $libobjs $deplibs$compiler_flags'
 
     # Don't fix this by using the ld -exported_symbols_list flag, it doesn't exist in older darwin ld's
       if test "X$lt_int_apple_cc_single_mod" = Xyes ; then
-        _LT_AC_TAGVAR(archive_expsym_cmds, $1)='sed -e "s,#.*,," -e "s,^[    ]*,," -e "s,^\(..*\),_&," < $export_symbols > $output_objdir/${libname}-symbols.expsym~$CC -dynamiclib -single_module $allow_undefined_flag -o $lib $libobjs $deplibs $compiler_flags -install_name $rpath/$soname $verstring~nmedit -s $output_objdir/${libname}-symbols.expsym ${lib}'
+	_LT_AC_TAGVAR(archive_expsym_cmds, $1)='sed -e "s,#.*,," -e "s,^[    ]*,," -e "s,^\(..*\),_&," < $export_symbols > $output_objdir/${libname}-symbols.expsym~$CC -dynamiclib -single_module $allow_undefined_flag -o $lib $libobjs $deplibs $compiler_flags -install_name $rpath/$soname $verstring~nmedit -s $output_objdir/${libname}-symbols.expsym ${lib}'
       else
-        _LT_AC_TAGVAR(archive_expsym_cmds, $1)='sed -e "s,#.*,," -e "s,^[    ]*,," -e "s,^\(..*\),_&," < $export_symbols > $output_objdir/${libname}-symbols.expsym~$CC -r ${wl}-bind_at_load -keep_private_externs -nostdlib -o ${lib}-master.o $libobjs~$CC -dynamiclib $allow_undefined_flag -o $lib ${lib}-master.o $deplibs $compiler_flags -install_name $rpath/$soname $verstring~nmedit -s $output_objdir/${libname}-symbols.expsym ${lib}'
+	_LT_AC_TAGVAR(archive_expsym_cmds, $1)='sed -e "s,#.*,," -e "s,^[    ]*,," -e "s,^\(..*\),_&," < $export_symbols > $output_objdir/${libname}-symbols.expsym~$CC -r ${wl}-bind_at_load -keep_private_externs -nostdlib -o ${lib}-master.o $libobjs~$CC -dynamiclib $allow_undefined_flag -o $lib ${lib}-master.o $deplibs $compiler_flags -install_name $rpath/$soname $verstring~nmedit -s $output_objdir/${libname}-symbols.expsym ${lib}'
       fi
-        _LT_AC_TAGVAR(module_expsym_cmds, $1)='sed -e "s,#.*,," -e "s,^[    ]*,," -e "s,^\(..*\),_&," < $export_symbols > $output_objdir/${libname}-symbols.expsym~$CC -bundle $allow_undefined_flag  -o $lib $libobjs $deplibs$compiler_flags~nmedit -s $output_objdir/${libname}-symbols.expsym ${lib}'
+	_LT_AC_TAGVAR(module_expsym_cmds, $1)='sed -e "s,#.*,," -e "s,^[    ]*,," -e "s,^\(..*\),_&," < $export_symbols > $output_objdir/${libname}-symbols.expsym~$CC -bundle $allow_undefined_flag  -o $lib $libobjs $deplibs$compiler_flags~nmedit -s $output_objdir/${libname}-symbols.expsym ${lib}'
     _LT_AC_TAGVAR(hardcode_direct, $1)=no
     _LT_AC_TAGVAR(hardcode_automatic, $1)=yes
     _LT_AC_TAGVAR(hardcode_shlibpath_var, $1)=unsupported
@@ -4028,10 +4028,10 @@ case $host_os in
       ;;
     *)
       if test "$GXX" = yes; then
-        _LT_AC_TAGVAR(archive_cmds, $1)='$rm $output_objdir/$soname~$CC -shared -nostdlib -fPIC ${wl}+b ${wl}$install_libdir -o $output_objdir/$soname $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags~test $output_objdir/$soname = $lib || mv $output_objdir/$soname $lib'
+	_LT_AC_TAGVAR(archive_cmds, $1)='$rm $output_objdir/$soname~$CC -shared -nostdlib -fPIC ${wl}+b ${wl}$install_libdir -o $output_objdir/$soname $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags~test $output_objdir/$soname = $lib || mv $output_objdir/$soname $lib'
       else
-        # FIXME: insert proper C++ library support
-        _LT_AC_TAGVAR(ld_shlibs, $1)=no
+	# FIXME: insert proper C++ library support
+	_LT_AC_TAGVAR(ld_shlibs, $1)=no
       fi
       ;;
     esac
@@ -4043,15 +4043,15 @@ case $host_os in
 	_LT_AC_TAGVAR(hardcode_libdir_flag_spec, $1)='${wl}+b ${wl}$libdir'
 	_LT_AC_TAGVAR(hardcode_libdir_flag_spec_ld, $1)='+b $libdir'
 	_LT_AC_TAGVAR(hardcode_libdir_separator, $1)=:
-        ;;
+	;;
       ia64*)
 	_LT_AC_TAGVAR(hardcode_libdir_flag_spec, $1)='-L$libdir'
-        ;;
+	;;
       *)
 	_LT_AC_TAGVAR(hardcode_libdir_flag_spec, $1)='${wl}+b ${wl}$libdir'
 	_LT_AC_TAGVAR(hardcode_libdir_separator, $1)=:
 	_LT_AC_TAGVAR(export_dynamic_flag_spec, $1)='${wl}-E'
-        ;;
+	;;
       esac
     fi
     case "$host_cpu" in
@@ -4872,7 +4872,7 @@ if test -f "$ltmain"; then
   # without removal of \ escapes.
   if test -n "${ZSH_VERSION+set}" ; then
     setopt NO_GLOB_SUBST
-  fi 
+  fi
   # Now quote all the things that may contain metacharacters while being
   # careful not to overquote the AC_SUBSTed values.  We take copies of the
   # variables and quote the copies for generation of the libtool script.
@@ -4929,7 +4929,7 @@ if test -f "$ltmain"; then
     _LT_AC_TAGVAR(archive_cmds, $1) | \
     _LT_AC_TAGVAR(archive_expsym_cmds, $1) | \
     _LT_AC_TAGVAR(module_cmds, $1) | \
-    _LT_AC_TAGVAR(module_expsym_cmds, $1) | \   
+    _LT_AC_TAGVAR(module_expsym_cmds, $1) | \
     _LT_AC_TAGVAR(old_archive_from_expsyms_cmds, $1) | \
     _LT_AC_TAGVAR(export_symbols_cmds, $1) | \
     extract_expsyms_cmds | reload_cmds | finish_cmds | \
@@ -5441,7 +5441,7 @@ esac
 for ac_symprfx in "" "_"; do
 
   # Write the raw and C identifiers.
-  lt_cv_sys_global_symbol_pipe="sed -n -e 's/^.*[[ 	]]\($symcode$symcode*\)[[ 	]][[ 	]]*\($ac_symprfx\)$sympat$opt_cr$/$symxfrm/p'"
+  lt_cv_sys_global_symbol_pipe="sed -n -e 's/^.*[[	]]\($symcode$symcode*\)[[	]][[	]]*\($ac_symprfx\)$sympat$opt_cr$/$symxfrm/p'"
 
   # Check to see that the pipe works correctly.
   pipe_works=no
@@ -5929,12 +5929,12 @@ AC_MSG_CHECKING([for $compiler option to produce PIC])
 	_LT_AC_TAGVAR(lt_prog_compiler_wl, $1)='-Wl,'
 	_LT_AC_TAGVAR(lt_prog_compiler_pic, $1)='-KPIC'
 	_LT_AC_TAGVAR(lt_prog_compiler_static, $1)='-static'
-        ;;
+	;;
       ccc)
-        _LT_AC_TAGVAR(lt_prog_compiler_wl, $1)='-Wl,'
-        # All Alpha code is PIC.
-        _LT_AC_TAGVAR(lt_prog_compiler_static, $1)='-non_shared'
-        ;;
+	_LT_AC_TAGVAR(lt_prog_compiler_wl, $1)='-Wl,'
+	# All Alpha code is PIC.
+	_LT_AC_TAGVAR(lt_prog_compiler_static, $1)='-non_shared'
+	;;
       esac
       ;;
 
@@ -6060,7 +6060,7 @@ ifelse([$1],[CXX],[
   _LT_AC_TAGVAR(link_all_deplibs, $1)=unknown
   _LT_AC_TAGVAR(hardcode_automatic, $1)=no
   _LT_AC_TAGVAR(module_cmds, $1)=
-  _LT_AC_TAGVAR(module_expsym_cmds, $1)= 
+  _LT_AC_TAGVAR(module_expsym_cmds, $1)=
   _LT_AC_TAGVAR(always_export_symbols, $1)=no
   _LT_AC_TAGVAR(export_symbols_cmds, $1)='$NM $libobjs $convenience | $global_symbol_pipe | $SED '\''s/.* //'\'' | sort | uniq > $export_symbols'
   # include_expsyms should be a list of space-separated symbols to be *always*
@@ -6150,7 +6150,7 @@ EOF
       _LT_AC_TAGVAR(export_symbols_cmds, $1)='$NM $libobjs $convenience | $global_symbol_pipe | $SED -e '\''/^[[BCDGS]] /s/.* \([[^ ]]*\)/\1 DATA/'\'' | $SED -e '\''/^[[AITW]] /s/.* //'\'' | sort | uniq > $export_symbols'
 
       if $LD --help 2>&1 | grep 'auto-import' > /dev/null; then
-        _LT_AC_TAGVAR(archive_cmds, $1)='$CC -shared $libobjs $deplibs $compiler_flags -o $output_objdir/$soname ${wl}--image-base=0x10000000 ${wl}--out-implib,$lib'
+	_LT_AC_TAGVAR(archive_cmds, $1)='$CC -shared $libobjs $deplibs $compiler_flags -o $output_objdir/$soname ${wl}--image-base=0x10000000 ${wl}--out-implib,$lib'
 	# If the export-symbols file already is a .def file (1st line
 	# is EXPORTS), use it as is; otherwise, prepend...
 	_LT_AC_TAGVAR(archive_expsym_cmds, $1)='if test "x`$SED 1q $export_symbols`" = xEXPORTS; then
@@ -6219,9 +6219,9 @@ EOF
       _LT_AC_TAGVAR(export_dynamic_flag_spec, $1)='${wl}--export-dynamic'
       # ancient GNU ld didn't support --whole-archive et. al.
       if $LD --help 2>&1 | grep 'no-whole-archive' > /dev/null; then
- 	_LT_AC_TAGVAR(whole_archive_flag_spec, $1)="$wlarc"'--whole-archive$convenience '"$wlarc"'--no-whole-archive'
+	_LT_AC_TAGVAR(whole_archive_flag_spec, $1)="$wlarc"'--whole-archive$convenience '"$wlarc"'--no-whole-archive'
       else
-  	_LT_AC_TAGVAR(whole_archive_flag_spec, $1)=
+	_LT_AC_TAGVAR(whole_archive_flag_spec, $1)=
       fi
     fi
   else
@@ -6263,10 +6263,10 @@ EOF
 	# need to do runtime linking.
 	case $host_os in aix4.[[23]]|aix4.[[23]].*|aix5*)
 	  for ld_flag in $LDFLAGS; do
-  	  if (test $ld_flag = "-brtl" || test $ld_flag = "-Wl,-brtl"); then
-  	    aix_use_runtimelinking=yes
-  	    break
-  	  fi
+	  if (test $ld_flag = "-brtl" || test $ld_flag = "-Wl,-brtl"); then
+	    aix_use_runtimelinking=yes
+	    break
+	  fi
 	  done
 	esac
 
@@ -6291,34 +6291,34 @@ EOF
 	# below for broken collect2 doesn't work under 4.3+
 	  collect2name=`${CC} -print-prog-name=collect2`
 	  if test -f "$collect2name" && \
-  	   strings "$collect2name" | grep resolve_lib_name >/dev/null
+	   strings "$collect2name" | grep resolve_lib_name >/dev/null
 	  then
-  	  # We have reworked collect2
-  	  _LT_AC_TAGVAR(hardcode_direct, $1)=yes
+	  # We have reworked collect2
+	  _LT_AC_TAGVAR(hardcode_direct, $1)=yes
 	  else
-  	  # We have old collect2
-  	  _LT_AC_TAGVAR(hardcode_direct, $1)=unsupported
-  	  # It fails to find uninstalled libraries when the uninstalled
-  	  # path is not listed in the libpath.  Setting hardcode_minus_L
-  	  # to unsupported forces relinking
-  	  _LT_AC_TAGVAR(hardcode_minus_L, $1)=yes
-  	  _LT_AC_TAGVAR(hardcode_libdir_flag_spec, $1)='-L$libdir'
-  	  _LT_AC_TAGVAR(hardcode_libdir_separator, $1)=
+	  # We have old collect2
+	  _LT_AC_TAGVAR(hardcode_direct, $1)=unsupported
+	  # It fails to find uninstalled libraries when the uninstalled
+	  # path is not listed in the libpath.  Setting hardcode_minus_L
+	  # to unsupported forces relinking
+	  _LT_AC_TAGVAR(hardcode_minus_L, $1)=yes
+	  _LT_AC_TAGVAR(hardcode_libdir_flag_spec, $1)='-L$libdir'
+	  _LT_AC_TAGVAR(hardcode_libdir_separator, $1)=
 	  fi
 	esac
 	shared_flag='-shared'
       else
 	# not using gcc
 	if test "$host_cpu" = ia64; then
-  	# VisualAge C++, Version 5.5 for AIX 5L for IA-64, Beta 3 Release
-  	# chokes on -Wl,-G. The following line is correct:
+	# VisualAge C++, Version 5.5 for AIX 5L for IA-64, Beta 3 Release
+	# chokes on -Wl,-G. The following line is correct:
 	  shared_flag='-G'
 	else
-  	if test "$aix_use_runtimelinking" = yes; then
+	if test "$aix_use_runtimelinking" = yes; then
 	    shared_flag='${wl}-G'
 	  else
 	    shared_flag='${wl}-bM:SRE'
-  	fi
+	fi
 	fi
       fi
 
@@ -6406,30 +6406,30 @@ EOF
       #        cross-compilation, but unfortunately the echo tests do not
       #        yet detect zsh echo's removal of \ escapes.  Also zsh mangles
       #	       `"' quotes if we put them in here... so don't!
-    	lt_int_apple_cc_single_mod=no
-    	output_verbose_link_cmd='echo'
-    	if $CC -dumpspecs 2>&1 | grep 'single_module' >/dev/null ; then
-    	  lt_int_apple_cc_single_mod=yes
-    	fi
-    	if test "X$lt_int_apple_cc_single_mod" = Xyes ; then
-    	  _LT_AC_TAGVAR(archive_cmds, $1)='$CC -dynamiclib -single_module $allow_undefined_flag -o $lib $libobjs $deplibs $compiler_flags -install_name $rpath/$soname $verstring'
-    	else
-        _LT_AC_TAGVAR(archive_cmds, $1)='$CC -r ${wl}-bind_at_load -keep_private_externs -nostdlib -o ${lib}-master.o $libobjs~$CC -dynamiclib $allow_undefined_flag -o $lib ${lib}-master.o $deplibs $compiler_flags -install_name $rpath/$soname $verstring'
+	lt_int_apple_cc_single_mod=no
+	output_verbose_link_cmd='echo'
+	if $CC -dumpspecs 2>&1 | grep 'single_module' >/dev/null ; then
+	  lt_int_apple_cc_single_mod=yes
+	fi
+	if test "X$lt_int_apple_cc_single_mod" = Xyes ; then
+	  _LT_AC_TAGVAR(archive_cmds, $1)='$CC -dynamiclib -single_module $allow_undefined_flag -o $lib $libobjs $deplibs $compiler_flags -install_name $rpath/$soname $verstring'
+	else
+	_LT_AC_TAGVAR(archive_cmds, $1)='$CC -r ${wl}-bind_at_load -keep_private_externs -nostdlib -o ${lib}-master.o $libobjs~$CC -dynamiclib $allow_undefined_flag -o $lib ${lib}-master.o $deplibs $compiler_flags -install_name $rpath/$soname $verstring'
       fi
       _LT_AC_TAGVAR(module_cmds, $1)='$CC -bundle ${wl}-bind_at_load $allow_undefined_flag -o $lib $libobjs $deplibs$compiler_flags'
       # Don't fix this by using the ld -exported_symbols_list flag, it doesn't exist in older darwin ld's
-        if test "X$lt_int_apple_cc_single_mod" = Xyes ; then
-          _LT_AC_TAGVAR(archive_expsym_cmds, $1)='sed -e "s,#.*,," -e "s,^[    ]*,," -e "s,^\(..*\),_&," < $export_symbols > $output_objdir/${libname}-symbols.expsym~$CC -dynamiclib -single_module $allow_undefined_flag -o $lib $libobjs $deplibs $compiler_flags -install_name $rpath/$soname $verstring~nmedit -s $output_objdir/${libname}-symbols.expsym ${lib}'
-        else
-          _LT_AC_TAGVAR(archive_expsym_cmds, $1)='sed -e "s,#.*,," -e "s,^[    ]*,," -e "s,^\(..*\),_&," < $export_symbols > $output_objdir/${libname}-symbols.expsym~$CC -r ${wl}-bind_at_load -keep_private_externs -nostdlib -o ${lib}-master.o $libobjs~$CC -dynamiclib $allow_undefined_flag -o $lib ${lib}-master.o $deplibs $compiler_flags -install_name $rpath/$soname $verstring~nmedit -s $output_objdir/${libname}-symbols.expsym ${lib}'
-        fi
-          _LT_AC_TAGVAR(module_expsym_cmds, $1)='sed -e "s,#.*,," -e "s,^[    ]*,," -e "s,^\(..*\),_&," < $export_symbols > $output_objdir/${libname}-symbols.expsym~$CC -bundle $allow_undefined_flag  -o $lib $libobjs $deplibs$compiler_flags~nmedit -s $output_objdir/${libname}-symbols.expsym ${lib}'
+	if test "X$lt_int_apple_cc_single_mod" = Xyes ; then
+	  _LT_AC_TAGVAR(archive_expsym_cmds, $1)='sed -e "s,#.*,," -e "s,^[    ]*,," -e "s,^\(..*\),_&," < $export_symbols > $output_objdir/${libname}-symbols.expsym~$CC -dynamiclib -single_module $allow_undefined_flag -o $lib $libobjs $deplibs $compiler_flags -install_name $rpath/$soname $verstring~nmedit -s $output_objdir/${libname}-symbols.expsym ${lib}'
+	else
+	  _LT_AC_TAGVAR(archive_expsym_cmds, $1)='sed -e "s,#.*,," -e "s,^[    ]*,," -e "s,^\(..*\),_&," < $export_symbols > $output_objdir/${libname}-symbols.expsym~$CC -r ${wl}-bind_at_load -keep_private_externs -nostdlib -o ${lib}-master.o $libobjs~$CC -dynamiclib $allow_undefined_flag -o $lib ${lib}-master.o $deplibs $compiler_flags -install_name $rpath/$soname $verstring~nmedit -s $output_objdir/${libname}-symbols.expsym ${lib}'
+	fi
+	  _LT_AC_TAGVAR(module_expsym_cmds, $1)='sed -e "s,#.*,," -e "s,^[    ]*,," -e "s,^\(..*\),_&," < $export_symbols > $output_objdir/${libname}-symbols.expsym~$CC -bundle $allow_undefined_flag  -o $lib $libobjs $deplibs$compiler_flags~nmedit -s $output_objdir/${libname}-symbols.expsym ${lib}'
       _LT_AC_TAGVAR(hardcode_direct, $1)=no
       _LT_AC_TAGVAR(hardcode_automatic, $1)=yes
       _LT_AC_TAGVAR(hardcode_shlibpath_var, $1)=unsupported
       _LT_AC_TAGVAR(whole_archive_flag_spec, $1)='-all_load $convenience'
       _LT_AC_TAGVAR(link_all_deplibs, $1)=yes
-    fi 
+    fi
       ;;
 
     dgux*)
@@ -6643,7 +6643,7 @@ EOF
       else
 	_LT_AC_TAGVAR(archive_cmds, $1)='$LD -G${allow_undefined_flag} -h $soname -o $lib $libobjs $deplibs $linker_flags'
 	_LT_AC_TAGVAR(archive_expsym_cmds, $1)='$echo "{ global:" > $lib.exp~cat $export_symbols | $SED -e "s/\(.*\)/\1;/" >> $lib.exp~$echo "local: *; };" >> $lib.exp~
-  	$LD -G${allow_undefined_flag} -M $lib.exp -h $soname -o $lib $libobjs $deplibs $linker_flags~$rm $lib.exp'
+	$LD -G${allow_undefined_flag} -M $lib.exp -h $soname -o $lib $libobjs $deplibs $linker_flags~$rm $lib.exp'
       fi
       _LT_AC_TAGVAR(hardcode_libdir_flag_spec, $1)='-R$libdir'
       _LT_AC_TAGVAR(hardcode_shlibpath_var, $1)=no
@@ -6681,7 +6681,7 @@ EOF
 	  _LT_AC_TAGVAR(archive_cmds, $1)='$LD -G -o $lib $libobjs $deplibs $linker_flags'
 	  _LT_AC_TAGVAR(reload_cmds, $1)='$CC -r -o $output$reload_objs'
 	  _LT_AC_TAGVAR(hardcode_direct, $1)=no
-        ;;
+	;;
 	motorola)
 	  _LT_AC_TAGVAR(archive_cmds, $1)='$LD -G -h $soname -o $lib $libobjs $deplibs $linker_flags'
 	  _LT_AC_TAGVAR(hardcode_direct, $1)=no #Motorola manual says yes, but my tests say they lie
@@ -6733,7 +6733,7 @@ EOF
       # object files and a static libstdc++, better avoid it by now
       _LT_AC_TAGVAR(archive_cmds, $1)='$LD -G${allow_undefined_flag} -h $soname -o $lib $libobjs $deplibs $linker_flags'
       _LT_AC_TAGVAR(archive_expsym_cmds, $1)='$echo "{ global:" > $lib.exp~cat $export_symbols | $SED -e "s/\(.*\)/\1;/" >> $lib.exp~$echo "local: *; };" >> $lib.exp~
-  		$LD -G${allow_undefined_flag} -M $lib.exp -h $soname -o $lib $libobjs $deplibs $linker_flags~$rm $lib.exp'
+		$LD -G${allow_undefined_flag} -M $lib.exp -h $soname -o $lib $libobjs $deplibs $linker_flags~$rm $lib.exp'
       _LT_AC_TAGVAR(hardcode_libdir_flag_spec, $1)=
       _LT_AC_TAGVAR(hardcode_shlibpath_var, $1)=no
       runpath_var='LD_RUN_PATH'
@@ -6779,29 +6779,29 @@ x|xyes)
       AC_MSG_CHECKING([whether -lc should be explicitly linked in])
       $rm conftest*
       printf "$lt_simple_compile_test_code" > conftest.$ac_ext
- 
+
       if AC_TRY_EVAL(ac_compile) 2>conftest.err; then
-        soname=conftest
-        lib=conftest
-        libobjs=conftest.$ac_objext
-        deplibs=
-        wl=$_LT_AC_TAGVAR(lt_prog_compiler_wl, $1)
-        compiler_flags=-v
-        linker_flags=-v
-        verstring=
-        output_objdir=.
-        libname=conftest
-        lt_save_allow_undefined_flag=$_LT_AC_TAGVAR(allow_undefined_flag, $1)
-        _LT_AC_TAGVAR(allow_undefined_flag, $1)=
-        if AC_TRY_EVAL(_LT_AC_TAGVAR(archive_cmds, $1) 2\>\&1 \| grep \" -lc \" \>/dev/null 2\>\&1)
-        then
+	soname=conftest
+	lib=conftest
+	libobjs=conftest.$ac_objext
+	deplibs=
+	wl=$_LT_AC_TAGVAR(lt_prog_compiler_wl, $1)
+	compiler_flags=-v
+	linker_flags=-v
+	verstring=
+	output_objdir=.
+	libname=conftest
+	lt_save_allow_undefined_flag=$_LT_AC_TAGVAR(allow_undefined_flag, $1)
+	_LT_AC_TAGVAR(allow_undefined_flag, $1)=
+	if AC_TRY_EVAL(_LT_AC_TAGVAR(archive_cmds, $1) 2\>\&1 \| grep \" -lc \" \>/dev/null 2\>\&1)
+	then
 	  _LT_AC_TAGVAR(archive_cmds_need_lc, $1)=no
-        else
+	else
 	  _LT_AC_TAGVAR(archive_cmds_need_lc, $1)=yes
-        fi
-        _LT_AC_TAGVAR(allow_undefined_flag, $1)=$lt_save_allow_undefined_flag
+	fi
+	_LT_AC_TAGVAR(allow_undefined_flag, $1)=$lt_save_allow_undefined_flag
       else
-        cat conftest.err 1>&5
+	cat conftest.err 1>&5
       fi
       $rm conftest*
       AC_MSG_RESULT([$_LT_AC_TAGVAR(archive_cmds_need_lc, $1)])
@@ -6903,7 +6903,7 @@ do
   for lt_ac_prog in sed gsed; do
     for ac_exec_ext in '' $ac_executable_extensions; do
       if $as_executable_p "$as_dir/$lt_ac_prog$ac_exec_ext"; then
-        lt_ac_sed_list="$lt_ac_sed_list $as_dir/$lt_ac_prog$ac_exec_ext"
+	lt_ac_sed_list="$lt_ac_sed_list $as_dir/$lt_ac_prog$ac_exec_ext"
       fi
     done
   done

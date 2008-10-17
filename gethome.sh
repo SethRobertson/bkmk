@@ -1,7 +1,7 @@
 #! /bin/bash --norc
 #! /bin/ksh -p
 ######################################################################
-# 
+#
 #
 # ++Copyright LIBBK++
 #
@@ -65,7 +65,7 @@ gethome() {
       unset IFS
       pdir=${pdir:-.}		# empty PATH component == .
       if [ -x "$pdir/$prog" ]; then
-        prog=$pdir/$prog
+	prog=$pdir/$prog
 	break
       fi
       pdir=

@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# 
+#
 #
 # ++Copyright LIBBK++
 #
@@ -84,7 +84,7 @@ ifneq ($(BK_CONFIG_OS_TYPE),$(BK_ARCHNAME))
 # Note the use of "rm", since we can't depend on configured $(RM); this could
 # technically fail, but it's pretty unlikely.
 
-# NB: we do not bother reconfiguring if the cmd goal is one of our clean 
+# NB: we do not bother reconfiguring if the cmd goal is one of our clean
 # targets *unless* we are changing architectures in which case we need to
 # to reconfigure in order to give the target the best chance (by no means
 # guarenteed) of succeeding.

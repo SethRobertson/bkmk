@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# 
+#
 #
 # ++Copyright LIBBK++
 #
@@ -24,7 +24,7 @@
 # grotesqueness here.
 ifeq ($(shell if grep -q 'release 9' /etc/redhat-release 2>/dev/null; then echo T; fi),T)
 ifeq ($(BK_WANT_STATIC),true)
-OS_LDS=-L /usr/kerberos/lib 
+OS_LDS=-L /usr/kerberos/lib
 OS_LIBS=-lkrb5 -lk5crypto -lcom_err
 endif
 endif

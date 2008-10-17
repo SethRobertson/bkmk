@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# 
+#
 #
 # ++Copyright LIBBK++
 #
@@ -242,7 +242,7 @@ install-first:
 	  fi;								      \
 	done; exit $$ERR
 
-install-normal:						
+install-normal:
 	@for d in $(BK_SUBDIR) strict_sh_fodder;			      \
 	do								      \
 	  if [ $$d = "strict_sh_fodder" ]; then				      \
@@ -329,7 +329,7 @@ ifneq ($(filter %.la,$(BK_LARGE_LIB)),)
 	     $(LIBTOOL_LINK) $(LINK.c) $(LT_LDFLAGS) -o $(@F) $^	    \
 	       $(LT_LDLIBS) -rpath $(BK_INSTALLRPATH) $(BK_EXTERNAL_RPATH); \
 	     L="$(@F)" ;;						    \
-	esac; 								    \
+	esac;								    \
 	if [ "$^" != "$(addprefix $(BK_INSTALLRDIR)/,$(^F))" ]; then	    \
 	  echo $(LIBTOOL_INSTALL) $(INSTALL) $(INSTALL_LIBFLAGS) $$L	    \
 	    $(BK_INSTALLRDIR);						    \
@@ -568,7 +568,7 @@ viewdox: doxygen
 	  case "$(BROWSER)$$DISPLAY" in \
 	    *netscape*:*) \
 	       $(BROWSER) -remote "OpenURL(file:$(PWD)/$$URL,new-window)" \
-	        && exit 0 ;; \
+		&& exit 0 ;; \
 	  esac; \
 	  $(BROWSER) file:$(PWD)/$$URL
 

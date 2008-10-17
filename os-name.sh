@@ -1,5 +1,5 @@
 #! /bin/sh
-# 
+#
 #
 # ++Copyright LIBBK++
 #

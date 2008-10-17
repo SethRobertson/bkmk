@@ -1,5 +1,5 @@
 /*				-*- C -*-
- * 
+ *
  *
  * ++Copyright LIBBK++
  *
@@ -59,8 +59,8 @@
 
 /*
  * We always use ltdl_open now, and we call
- * the init functions ourselves.  So we 
- * don't want anybody also declaring 
+ * the init functions ourselves.  So we
+ * don't want anybody also declaring
  * constructors with pragma init.
  */
 #if 0

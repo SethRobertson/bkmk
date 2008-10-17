@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# 
+#
 #
 # ++Copyright LIBBK++
 #
@@ -24,7 +24,7 @@ while (!$done)
   $curdir_inode=(stat($pwd))[1];
 
   # infinite recursion protection (not just stepping up to /, but hard links to directories can
-  # 					kill you too).
+  #					kill you too).
   last if ($curdir_inode eq $last_inode);
 
   if (-f "$pwd/.user-variables" )

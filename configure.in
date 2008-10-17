@@ -1,5 +1,5 @@
 dnl
-dnl 
+dnl
 dnl
 dnl ++Copyright LIBBK++
 dnl
@@ -39,8 +39,8 @@ AC_PROG_CC_C_O
 AC_PROG_AWK
 
 
-# yes, this seems redundant, but we need to call CHECK_LIB so that 
-# later checks for math routines have the correct -lm options, but 
+# yes, this seems redundant, but we need to call CHECK_LIB so that
+# later checks for math routines have the correct -lm options, but
 # at the same time, the AC_CHECK_LIBM is auto-magically darwin smart
 AC_CHECK_LIB(m, pow)
 AC_CHECK_LIBM
@@ -192,7 +192,7 @@ echo 'main(){}' > $libprof_src
 dnl Add any potentially existing profiled library from any arch here. We'll figure out
 dnl which ones (if any) actually exist.
 
-for profiled_lib in 		\
+for profiled_lib in		\
 	     BrokenLocale	\
 	     anl		\
 	     c			\
@@ -213,8 +213,8 @@ for profiled_lib in 		\
 		AC_MSG_RESULT(yes)
 	else
 		AC_MSG_RESULT(no)
-	fi			 
-done	     
+	fi
+done
 rm -f $libprof_src
 AC_SUBST(PROFILED_LIBS)
 
@@ -352,7 +352,7 @@ INSTALL_FILE=/tmp/bkinstall.$$
 {
 	if : > $INSTALL_FILE ; then
 	   echo $ECHO_N "checking if install supports -p... $ECHO_C" >&6
-	   
+
 	   if $INSTALL -p $INSTALL_FILE ${INSTALL_FILE}-; then
 		 INSTALL_PRESERVE="-p"
 		 echo "${ECHO_T}yes"

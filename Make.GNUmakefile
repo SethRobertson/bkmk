@@ -1,6 +1,6 @@
 # -*- makefile -*-
 #
-# 
+#
 #
 # ++Copyright LIBBK++
 #
@@ -104,7 +104,7 @@ distclean distclean-generic distclean-am::
 	  || test -f Makefile && $(MAKE) -k -f Makefile  $(STUPIDSUBMAKEOPTS) $@
 
 ifneq ($(strip $(WANT_SUBDIRBUILD)),false)
-CONFIGCMD=cd $(ARCH) && ../configure --prefix=$$INSTBASE $(CACHE_FILE) $(CONFIGOPTS) 
+CONFIGCMD=cd $(ARCH) && ../configure --prefix=$$INSTBASE $(CACHE_FILE) $(CONFIGOPTS)
 ifneq ($(WANT_CONFIG_CACHE),false)
 CACHE_FILE=--cache-file=../$(BKMKDIR)/config.cache
 endif
@@ -162,4 +162,3 @@ endif
 $(BKMKDIR)/Make.$(BK_OSNAME)-pre:
 $(BKMKDIR)/Make.$(BK_OSNAME)-post:
 $(GROUPTOP)/$(PKGTOP)/.user-variables:
-
