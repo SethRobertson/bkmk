@@ -98,10 +98,10 @@ EOF
 |- -Copyright TCS COMMERCIAL- -
 EOF
 
-my($USAGE) = "Usage: $0: [--use-baka-copyright|b] [--use-commercial-copyright|c] <[--use-ascii-copyright-symbol|a] [--use-latin-copyright-symbol|l] [--use-utf8-copyright-symbol|u]> <files>...\n";
+my($USAGE) = "Usage: $0: [--use-baka-copyright|b] [--use-commercial-copyright|c] <--copyright-detailed|--copyright-range [--copyright-range-start=date] [--copyright-range-end]> <[--use-ascii-copyright-symbol|a] [--use-latin-copyright-symbol|l] [--use-utf8-copyright-symbol|u]> <files>...\n";
 my(%OPTIONS);
 Getopt::Long::Configure("bundling", "no_ignore_case", "no_auto_abbrev", "no_getopt_compat", "require_order");
-GetOptions(\%OPTIONS, 'b|use-baka-copyright', 'c|use-commercial-copyright', 'l|use-latin-copyright-symbol', 'u|use-utf8-copyright-symbol', 'a|use-ascii-copyright-symbol') || die $USAGE;
+GetOptions(\%OPTIONS, 'copyright-detailed', 'copyright-range', 'copyright-range-end=s', 'copyright-range-start=s', 'b|use-baka-copyright', 'c|use-commercial-copyright', 'l|use-latin-copyright-symbol', 'u|use-utf8-copyright-symbol', 'a|use-ascii-copyright-symbol') || die $USAGE;
 
 my ($prod_override);
 if ($OPTIONS{'b'})
@@ -126,6 +126,8 @@ $csymbol = chr(169) if ($OPTIONS{'l'});
 $csymbol = chr(194) . chr(169) if ($OPTIONS{'u'});
 
 die "Must select an ASCII, Latin-1, or UTF-8 copyright symbol\n\n$USAGE" unless ($csymbol);
+
+die "Must select --copyright-detailed or --copyright-range\n\n$USAGE" unless ($OPTIONS{'copyright-detailed'} xor $OPTIONS{'copyright-range'});
 
 my ($last_ARGV) = $ARGV;
 my ($prod_cpp) = $prod_override;
@@ -231,51 +233,71 @@ while (<>)
       # convert list of years to comma-separated ranges (e.g. 2001,2003-2007)
       my @years = sort(keys %sigyears);
       $YEARS = '';
-      my ($lastyear);
-      my $i = 0;
-      while ($i <= $#years)
+      if ($OPTIONS{'copyright-detailed'})
       {
-	if ($i == 0)
-	{			# enter first year immediately
-	  $YEARS = $lastyear = $years[$i];
-	}
-	elsif ($i == $#years)
-	{			# for final entry in array, always enter year
-	  if ($years[$i-1] + 1 == $years[$i])
-	  {			# if final entry is previous + 1, collapse
-	    if ($years[$i-1] == $lastyear)
-	    {			# if previous was already entered, use comma
-	      $YEARS .= ",$years[$i]";
+	my ($lastyear);
+	my $i = 0;
+	while ($i <= $#years)
+	{
+	  if ($i == 0)
+	  {			# enter first year immediately
+	    $YEARS = $lastyear = $years[$i];
+	  }
+	  elsif ($i == $#years)
+	  {			# for final entry in array, always enter year
+	    if ($years[$i-1] + 1 == $years[$i])
+	    {			# if final entry is previous + 1, collapse
+	      if ($years[$i-1] == $lastyear)
+	      {			# if previous was already entered, use comma
+		$YEARS .= ",$years[$i]";
+	      }
+	      else
+	      {			# use range for multiple sequential years
+		$YEARS .= "-$years[$i]";
+	      }
 	    }
 	    else
-	    {			# use range for multiple sequential years
-	      $YEARS .= "-$years[$i]";
+	    {			# if final entry not previous + 1, enter both
+	      if ($lastyear + 1 == $years[$i-1])
+	      {			# if previous == last entered + 1, use comma
+		$YEARS .= ",$years[$i-1]";
+	      }
+	      elsif ($lastyear != $years[$i-1])
+	      {			# use range for multiple sequential years
+		$YEARS .= "-$years[$i-1]";
+	      }
+	      $YEARS .= ",$years[$i]";
 	    }
 	  }
-	  else
-	  {			# if final entry not previous + 1, enter both
-	    if ($lastyear + 1 == $years[$i-1])
-	    {			# if previous == last entered + 1, use comma
-	      $YEARS .= ",$years[$i-1]";
-	    }
-	    elsif ($lastyear != $years[$i-1])
-	    {			# use range for multiple sequential years
-	      $YEARS .= "-$years[$i-1]";
-	    }
+	  elsif ($lastyear == $years[$i-1] && $lastyear + 1 != $years[$i])
+	  {			# intermediate entry; singleton or range start
 	    $YEARS .= ",$years[$i]";
+	    $lastyear = $years[$i];
 	  }
+	  elsif ($years[$i-1] + 1 != $years[$i])
+	  {			# intermediate entry; range end
+	    $YEARS .= "-$years[$i-1],$years[$i]";
+	    $lastyear = $years[$i];
+	  }
+	  $i++;
 	}
-	elsif ($lastyear == $years[$i-1] && $lastyear + 1 != $years[$i])
-	{			# intermediate entry; singleton or range start
-	  $YEARS .= ",$years[$i]";
-	  $lastyear = $years[$i];
+      }
+      elsif ($OPTIONS{'copyright-range'})
+      {
+	my $startyear = $OPTIONS{'copyright-range-start'} || $years[0];
+	my $endyear = $OPTIONS{'copyright-range-end'} || $years[$#years];
+	if ($startyear eq $endyear)
+	{
+	  $YEARS=$startyear;
 	}
-	elsif ($years[$i-1] + 1 != $years[$i])
-	{			# intermediate entry; range end
-	  $YEARS .= "-$years[$i-1],$years[$i]";
-	  $lastyear = $years[$i];
+	else
+	{
+	  $YEARS="$startyear-$endyear";
 	}
-	$i++;
+      }
+      else
+      {
+	die "Should have already died...copyright list";
       }
     }
     $YEARS = 1900 + (localtime time)[5] if ($YEARS eq '');
