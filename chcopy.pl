@@ -284,8 +284,8 @@ while (<>)
       }
       elsif ($OPTIONS{'copyright-range'})
       {
-	my $startyear = $OPTIONS{'copyright-range-start'} || $years[0];
-	my $endyear = $OPTIONS{'copyright-range-end'} || $years[$#years];
+	my $startyear = $OPTIONS{'copyright-range-start'} || $years[0] || 1900 + (localtime time)[5];
+	my $endyear = $OPTIONS{'copyright-range-end'} || $years[$#years] || 1900 + (localtime time)[5];
 	if ($startyear eq $endyear)
 	{
 	  $YEARS=$startyear;
