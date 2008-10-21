@@ -1,16 +1,16 @@
 #!/usr/bin/perl -i.bak
 #
 #
-# ++Copyright LIBBK++
+# ++Copyright BAKA++
 #
-# Copyright © 2001-2003,2006-2008 The Authors. All rights reserved.
+# Copyright � 2001-2008 The Authors. All rights reserved.
 #
 # This source code is licensed to you under the terms of the file
 # LICENSE.TXT in this release for further details.
 #
 # Send e-mail to <projectbaka@baka.org> for further information.
 #
-# --Copyright LIBBK--
+# - -Copyright BAKA- -
 #
 #
 # <TODO>Should auto-detect file encoding (ISO-8859-1 or UTF-8?) so that ©
