@@ -282,9 +282,9 @@ $(BK_JAVADIR)/%.MF: %.MF
 	@{ CP='$(notdir $(subst :, ,$(BK_JAVA_CP)))';		 \
 	   case $$CP in *.*) echo "Class-Path: $$CP" ;; esac;	 \
 	   echo 'Implementation-Title: $(BK_JAVA_PKGDOT)';	 \
-	   echo 'Implementation-Vendor: System Detection, Inc.'; \
+	   echo 'Implementation-Vendor: TCS Commercial, Inc.'; \
 	   echo "Implementation-Version: `date +%Y%m%d.%H%M`";	 \
-	   echo 'Specification-Vendor: System Detection, Inc.';	 \
+	   echo 'Specification-Vendor: TCS Commercial, Inc.';	 \
 	   echo 'Specification-Version: 1.1';			 \
 	 } > $@T
 	@if fmt -p </dev/null 2>/dev/null; then C=p; else C=t; fi;     \
