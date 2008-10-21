@@ -133,6 +133,8 @@ my ($last_ARGV) = $ARGV;
 my ($prod_cpp) = $prod_override;
 my ($prod_license) = $prod_override;
 my ($YEARS);
+my $pwd = `pwd`;
+chomp $pwd;
 
 while (<>)
 {
@@ -171,10 +173,17 @@ while (<>)
 	  last git_dir;
 	}
 
-	my $pwd = `pwd`;
-	chomp $pwd;
 	$git_dir = $pwd . "/$git_dir";
       }
+
+      my $qgit_dir = $git_dir;
+      $qgit_dir =~ s:/\.git$::;
+      $qgit_dir = quotemeta($qgit_dir);
+      if ($pwd =~ /^$qgit_dir/)
+      {
+	$gfile = $file;
+      }
+
       if ($git_dir)
       {
 	$git_dir =~ m=(.*)/.git=;
@@ -211,13 +220,13 @@ while (<>)
       }
       # generate hash of significant years, ignoring small or marked changes
       my %sigyears = ();
-      my ($year);
+      my ($year,$lastyear);
       foreach $_ (@log)
       {
 	# extract year from log entry
 	if (m=^date: (\d{4})=)
 	{
-	  $year = $1;
+	  $lastyear = $year = $1;
 	  # ignore non-initial commits with < 10 inserted or deleted lines
 	  undef $year if (m=lines: \+(\d+) \-(\d+)= && $1 < 10 && $2 < 10);
 	  # always insert initial commit year, regardless of comments
@@ -230,6 +239,8 @@ while (<>)
 	  undef $year;
 	}
       }
+      # Earliest year always goes in
+      $sigyears{$lastyear} = 1;
       # convert list of years to comma-separated ranges (e.g. 2001,2003-2007)
       my @years = sort(keys %sigyears);
       $YEARS = '';
