@@ -1,3 +1,50 @@
+2008-10-24  Alexander Dupuy  <alex.dupuy@counterstorm.com>
+
+	* Make.Linux-2.6-pre: RHEL okay, Red Hat 9(!) not;
+	correctly compute XML2/SSL OK for Fedora
+
+2008-10-23  James Tanis  <jtt@tanis.org>
+
+	* Make.Linux-2.6-pre: Red Hat is also an OK Linux OS
+
+2008-10-21  Seth Robertson  <srobertson@counterstorm.com>
+
+	* chcopy.pl: Bug 5134: Fix running chcopy when deep inside git
+	dir, fix short initial commit bug: git would not always produce
+	the correct date if the initial commit was under 10 lines long.
+	Wrong copyright dates if we did not find any dates
+
+2008-10-20  Seth Robertson  <srobertson@counterstorm.com>
+
+	* chcopy.pl: Bug 5134: George wants <born>-<now> as copyright date
+	range
+
+2008-10-16  Seth Robertson  <srobertson@counterstorm.com>
+
+	* chcopy.pl: Force manual selection of copyright symbol to make
+	users think
+
+2008-10-16  Alexander Dupuy  <adupuy@trustedcs.com>
+
+	* chcopy.pl: drop extra space after INC.; prefer -u to -l if both given
+
+2008-10-16  Seth Robertson  <srobertson@counterstorm.com>
+
+	* chcopy.pl: Different e-mail alias name
+	Fix notice even more to match what TCS wants, correct some minor
+	errors in my 'strict' rewrite, provide hint to people on what the
+	proper commit message should look like
+	Switch to using strict and warnings and Getopt::Long to find
+	cross-file data leakage bugs.
+	Add options for which copyright symbol you want to use, ascii,
+	Latin-1, or UTF-8.
+
+2008-10-15  Seth Robertson  <srobertson@counterstorm.com>
+
+	* chcopy.pl: Change formatting slightly
+	Warn when we destroy a file due to missing copyright terminator
+	Move closer towards what TCS might want as their copyright notice
+
 2008-10-15  Alexander Dupuy  <alex.dupuy@counterstorm.com>
 
 	* chcopy.pl: © TCS Commercial, Inc. per George; use tcs__ static prefix

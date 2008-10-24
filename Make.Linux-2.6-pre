@@ -20,11 +20,11 @@
 #ifneq ($(BKMK_LINUX_26_VAR_CORRECT),true)
 #override BKMK_LINUX_26_VAR_CORRECT = true
 
-ifeq ($(shell if ( grep -q "Fedora \(Core \)\?release" /etc/fedora-release 2>/dev/null || grep -q "Gentoo Base System" /etc/gentoo-release 2>/dev/null || grep -q "Ubuntu" /etc/lsb-release 2>/dev/null || grep -q CentOS /etc/redhat-release || grep -q "Red Hat" /etc/redhat-release ) && [ -f /usr/lib/libssl.so -o -f /usr/lib64/libssl.so ]; then echo OK; fi), OK)
+ifeq ($(shell if ( grep -Eq 'Fedora( Core)? release' /etc/fedora-release 2>/dev/null || grep -q 'Gentoo Base System' /etc/gentoo-release 2>/dev/null || grep -q 'Ubuntu' /etc/lsb-release 2>/dev/null || grep -q CentOS /etc/redhat-release || grep -q 'Red Hat Enterprise' /etc/redhat-release ) && [ -f /usr/lib/libssl.so -o -f /usr/lib64/libssl.so ]; then echo OK; fi), OK)
 OPERATING_SYSTEM_OPENSSL_OK=true
 endif
 
-ifeq ($(shell if ( grep -q "Fedora \(Core \)\? release" /etc/fedora-release 2>/dev/null || grep -q "Gentoo Base System" /etc/gentoo-release 2>/dev/null || grep -q "Ubuntu" /etc/lsb-release 2>/dev/null || grep -q CentOS /etc/redhat-release || grep -q "Red Hat" /etc/redhat-release ) && [ -f /usr/lib/libxml2.so -o -f /usr/lib64/libxml2.so ]; then echo OK; fi), OK)
+ifeq ($(shell if ( grep -Eq 'Fedora( Core)? release' /etc/fedora-release 2>/dev/null || grep -q 'Gentoo Base System' /etc/gentoo-release 2>/dev/null || grep -q 'Ubuntu' /etc/lsb-release 2>/dev/null || grep -q CentOS /etc/redhat-release || grep -q 'Red Hat Enterprise' /etc/redhat-release ) && [ -f /usr/lib/libxml2.so -o -f /usr/lib64/libxml2.so ]; then echo OK; fi), OK)
 OPERATING_SYSTEM_XML2_OK=true
 endif
 
@@ -43,7 +43,7 @@ OS_LDS=-L/usr/lib -L/lib
 endif
 endif
 
-ifeq ($(shell if grep -q "Fedora release 9" /etc/fedora-release 2>/dev/null; then echo OK; fi), OK)
+ifeq ($(shell if grep -q 'Fedora release 9' /etc/fedora-release 2>/dev/null; then echo OK; fi), OK)
 # Fedora release 9 (which don't really support anyway) has a bug where macros written for the pthread.h don't pass the intense checking that we turn on. This will likely be fixed and this should be removed. Or even better...
 #
 # <TODO> Autoconf this </TODO>
