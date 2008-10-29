@@ -17,6 +17,11 @@
 # built in $(ARCH) subdirectories using autoconf-generated configure scripts
 #
 
+# Third party libraries are frequently havens for warning messages we don't want to fix.
+ifneq ($(BK_NO_WARNINGS),false)
+BK_NO_WARNINGS=true
+endif
+
 include $(PKGTOP)/Make.preinclude
 
 GUESS=for D in . config;					\

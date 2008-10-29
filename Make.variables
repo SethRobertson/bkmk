@@ -416,6 +416,7 @@ ifneq ($(BK_GCC_INLINE_CHECK_IS_STUPID),very)
 GCC_INLINE_CHECK=-Winline $(LARGE_FUNCTION_INSNS)
 endif
 
+ifneq ($(BK_NO_WARNINGS),true)
 COMPILER_DEBUG+=-Wmissing-prototypes -Wcomment -Wformat -Wimplicit -Wmain -Wmultichar -Wswitch -Wshadow -Wtrigraphs $(GCC_INLINE_CHECK) $(COMPILER_DEBUG_ERROR)
 
 ifneq ($(HAVE_OVERZEALOUS_CHAR_SUBSCRIPT),true)
@@ -431,6 +432,7 @@ endif
 ifneq ($(NO_POINTER_SIGN_WARN),)
 COMPILER_DEBUG+=-Wno-pointer-sign
 endif # NO_POINTER_SIGN_WARN
+endif #!BK_NO_WARNINGS
 
 # raise the default instruction limit for the inliner so that some of
 # our bigger functions will be inlined. changing this value may affect
@@ -442,6 +444,7 @@ COMPILER_INLINE_LIMIT=1200
 endif # NO COMPILER_INLINE_LIMIT
 
 # options for gcc only
+ifneq ($(BK_NO_WARNINGS),true)
 ifeq ($(CC_CONFIG),gcc)
 COMPILER_DEBUG+=-Wreturn-type -Wpointer-arith
 ifneq ($(COMPILER_INLINE_LIMIT),nosupport)
@@ -450,6 +453,7 @@ endif # COMPILER_INLINE_LIMIT
 endif # CC_CONFIG=gcc
 
 COMPILER_DEBUG+=$(BK_SPECIAL_DEBUG)
+endif #!BK_NO_WARNINGS
 
 ifneq ($(NO_WERROR),true)
 COMPILER_DEBUG_ERROR=-Werror
@@ -502,7 +506,9 @@ endif # !BK_DEBUG_OPT
 endif # !BK_VALGRIND_OPT
 # gcc doesn't support -Wuninitialized without -O. And if using insure++ you
 # get it anyway.
+ifneq ($(BK_NO_WARNINGS),true)
 COMPILER_DEBUG+=-Wuninitialized
+endif #!BK_NO_WARNINGS
 COPTDEBUG+=$(GCCHWOPT)
 endif # BK_NO_OPT
 
