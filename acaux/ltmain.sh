@@ -1842,7 +1842,7 @@ EOF
 	  if test "$found" != yes; then
 	    # deplib doesn't seem to be a libtool library
 	    if test "$linkmode,$pass" = "prog,link"; then
-	      compile_deplibs="$deplib $compile_deplibs"
+	      compile_deplibs="$compile_deplibs $deplib"
 	      finalize_deplibs="$deplib $finalize_deplibs"
 	    else
 	      deplibs="$deplib $deplibs"
@@ -1872,7 +1872,7 @@ EOF
 		    test "X$ladir" = "X$lib" && ladir="."
 		    lib=$ladir/$old_library
 		    if test "$linkmode,$pass" = "prog,link"; then
-		      compile_deplibs="$deplib $compile_deplibs"
+		      compile_deplibs="$compile_deplibs $deplib"
 		      finalize_deplibs="$deplib $finalize_deplibs"
 		    else
 		      deplibs="$deplib $deplibs"
@@ -1904,7 +1904,7 @@ EOF
 	      deplibs="$deplib $deplibs"
 	      newlib_search_path="$newlib_search_path "`$echo "X$deplib" | $Xsed -e 's/^-L//'`
 	    else
-	      compile_deplibs="$deplib $compile_deplibs"
+	      compile_deplibs="$compile_deplibs $deplib"
 	      finalize_deplibs="$deplib $finalize_deplibs"
 	    fi
 	    ;;
@@ -1954,7 +1954,7 @@ EOF
 	    if test "$pass" != link; then
 	      deplibs="$deplib $deplibs"
 	    else
-	      compile_deplibs="$deplib $compile_deplibs"
+	      compile_deplibs="$compile_deplibs $deplib"
 	      finalize_deplibs="$deplib $finalize_deplibs"
 	    fi
 	    continue
@@ -1969,7 +1969,7 @@ EOF
 	      # If there is no dlopen support or we're linking statically,
 	      # we need to preload.
 	      newdlprefiles="$newdlprefiles $deplib"
-	      compile_deplibs="$deplib $compile_deplibs"
+	      compile_deplibs="$compile_deplibs $deplib"
 	      finalize_deplibs="$deplib $finalize_deplibs"
 	    else
 	      newdlfiles="$newdlfiles $deplib"
