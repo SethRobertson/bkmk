@@ -87,9 +87,11 @@ endif # BK_WANT_DEFAULT
 #
 # Get rid of stuff including stuff that might be valuable (e.g. autosave files, etc)
 #
+ifneq ($(strip $(BK_NUKE_OVERRIDE)),true)
 nuke::
 	$(BK_SUBDIRRULE)
 	$(RRM) -- $(BK_NUKESTUFF)
+endif # BK_NUKE_OVERRIDE
 
 
 # This "user discretion" rule allows you to put a local_rule:: rule in any
@@ -154,11 +156,13 @@ dotdepend .depend: $(foreach HLANG,$(BK_JAVA_HELP_LANG),$(HLANG)/Map.jhm)
 	  echo ""; \
 	done > .depend
 
+ifneq ($(strip $(BK_NUKE_OVERRIDE)),true)
 nuke::
 	for L in $(BK_JAVA_HELP_LANG); do	      \
 	  $(RM) `$(BK_INSTALLPROGDIR)/buildhelp -r $(BK_JAVA_HELP) $$L/Map.jhm`; \
 	done
 	$(RM) $(BK_JAVA_HELP_JAR) $(BK_JAVA_HELP_PDF)
+endif # BK_NUKE_OVERRIDE
 endif # BK_JAVA_HELPLANG
 endif # BK_JAVA_HELP
 endif # BK_WANT_HELP
