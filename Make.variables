@@ -110,7 +110,7 @@ BK_STDJUNK=*.o *.obj *.lo *.a *.la core tca.log tca.map .libs .inslog* _1001.out
 BK_BKCLEANJUNK=.depend tags *.rpt
 BK_BKNUKEJUNK=.\\\#* \\\#* *.rej *.orig TAGS *~
 
-BK_EXCLUDE=CVS ChangeLog Makefile Make.include Make.preinclude .git $(BK_NUKESTUFF)
+BK_EXCLUDE=CVS ChangeLog Makefile Make.include Make.preinclude .git .gitignore $(BK_NUKESTUFF)
 
 BK_ALL_FIRST_DIRS=$(BK_INCLUDE_DIRS) $(BK_FIRST_DIRS)
 BK_ALL_LAST_DIRS=$(BK_EXECUTABLE_DIRS) $(BK_LAST_DIRS)
