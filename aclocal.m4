@@ -275,8 +275,9 @@ AC_DEFUN([AC_PTHREAD_WITH_BAD_EMPTY_LOOPS],dnl
  ])
  CFLAGS=$ac_saved_flags
  if test "$ac_cv_pthreads_compiles_with_cflags" = "no"; then
-  AC_DEFINE(PTHREADS_HAS_BAD_EMPTY_LOOPS)
+	PTHREAD_WITH_BAD_EMPTY_LOOPS=true
  fi
+AC_SUBST(PTHREAD_WITH_BAD_EMPTY_LOOPS)
 ])# AC_PTHREAD_WITH_BAD_EMPTY_LOOPS
 
 
