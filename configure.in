@@ -321,6 +321,10 @@ AC_CHECK_FILES(/proc/net/route)
 AC_PATH_PROGS(OINKMASTER, [oinkmaster.pl oinkmaster], $FALSE, [/usr/bin:/usr/sbin])
 AC_PATH_PROG(ADDSID, addsid.pl, $FALSE, [/usr/bin:/usr/share/oinkmaster])
 AC_PATH_PROG(CREATE_SIDMAP, create-sidmap.pl, $FALSE, [/usr/bin:/usr/share/oinkmaster])
+AC_BARE_EMPTY_LOOPS_OK
+if test "$HAVE_PTHREADS" = "true" && test "$ac_cv_bare_empty_loops_ok" = "no"; then
+   AC_PTHREAD_WITH_BAD_EMPTY_LOOPS
+fi
 
 if test "$ac_cv_search_gethostbyname2" = "no"
 then

@@ -43,14 +43,6 @@ OS_LDS=-L/usr/lib -L/lib
 endif
 endif
 
-ifeq ($(shell if grep -q 'Fedora release 9' /etc/fedora-release 2>/dev/null; then echo OK; fi), OK)
-# Fedora release 9 (which don't really support anyway) has a bug where macros written for the pthread.h don't pass the intense checking that we turn on. This will likely be fixed and this should be removed. Or even better...
-#
-# <TODO> Autoconf this </TODO>
-#
-COMPILER_DEBUG += -Wno-empty-body
-endif
-
 # Breaks perlmods in some unknown and unknowable way
 #export OS_LDS OPERATING_SYSTEM_XML2_OK OPERATING_SYSTEM_OPENSSL_OK BKMK_LINUX_26_VAR_CORRECT
 

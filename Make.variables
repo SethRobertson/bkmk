@@ -416,6 +416,10 @@ ifneq ($(BK_GCC_INLINE_CHECK_IS_STUPID),very)
 GCC_INLINE_CHECK=-Winline $(LARGE_FUNCTION_INSNS)
 endif
 
+ifdef PTHREAD_WITH_BAD_EMPTY_LOOPS
+COMPILER_DEBUG += -Wno-empty-body
+endif
+
 ifneq ($(BK_NO_WARNINGS),true)
 COMPILER_DEBUG+=-Wmissing-prototypes -Wcomment -Wformat -Wimplicit -Wmain -Wmultichar -Wswitch -Wshadow -Wtrigraphs $(GCC_INLINE_CHECK) $(COMPILER_DEBUG_ERROR)
 

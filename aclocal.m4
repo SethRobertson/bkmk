@@ -234,6 +234,52 @@ AC_DEFUN([AC_SOCKLEN_T],dnl
 ])# AC_SOCKLEN_T
 
 
+# AC_BARE_EMPTY_LOOPS_OK
+# ------------
+# This macro determines if empty loops without braces are ok.
+#
+AC_DEFUN([AC_BARE_EMPTY_LOOPS_OK],dnl
+[ac_saved_cflags=$CFLAGS
+ CFLAGS="-W -Werror"
+ AC_CACHE_CHECK([if \"$CFLAGS\" accepts braceless empty loops], ac_cv_bare_empty_loops_ok,
+ [AC_TRY_COMPILE([],[ do; while(0); ],
+	ac_cv_bare_empty_loops_ok=yes,
+	ac_cv_bare_empty_loops_ok=no)
+ ])
+ CFLAGS=$ac_saved_flags
+ if test $ac_cv_bare_empty_loops_ok = yes; then
+  AC_DEFINE(BARE_EMPTY_LOOPS_OK)
+ fi
+])# AC_BARE_EMPTY_LOOPS_OK
+
+
+# AC_PTHREAD_HAS_BAD_EMPTY_LOOPS
+# ------------
+# This macro determines if pthread_has_bad_empty_loops is defined or not.
+#
+# This test is only needed if loops without braces are not acceptable *and*
+# you would like to preserve the empty loop check *but* you have to use
+# pthreads *and* pthread.h stil has braceless empty loops.
+#
+AC_DEFUN([AC_PTHREAD_WITH_BAD_EMPTY_LOOPS],dnl
+[ac_saved_cflags=$CFLAGS
+ CFLAGS="-W -Werror"
+ AC_CACHE_CHECK([if \"$CFLAGS\" compiles pthread.h], ac_cv_pthreads_compiles_with_cflags,
+ [AC_TRY_COMPILE([#include <pthread.h>],[
+   pthread_cleanup_push(NULL, NULL);
+   pthread_cleanup_pop(0);
+   return(0);
+],
+	ac_cv_pthreads_compiles_with_cflags=yes,
+	ac_cv_pthreads_compiles_with_cflags=no)
+ ])
+ CFLAGS=$ac_saved_flags
+ if test "$ac_cv_pthreads_compiles_with_cflags" = "no"; then
+  AC_DEFINE(PTHREADS_HAS_BAD_EMPTY_LOOPS)
+ fi
+])# AC_PTHREAD_WITH_BAD_EMPTY_LOOPS
+
+
 # AC_FUNC_INET_PTON
 # -----------------
 # This macro determines if the inet_pton function is supported, and which
