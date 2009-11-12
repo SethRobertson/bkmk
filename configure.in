@@ -55,6 +55,14 @@ then
 	AC_SUBST(HAVE_LIBSSL,true)
 fi
 
+AC_CHECK_LIB(rt,clock_gettime, /bin/true, /bin/true)
+if test "$ac_cv_lib_rt_clock_gettime" = yes
+then
+	AC_SUBST(HAVE_LIBRT,true)
+	AC_SUBST(RT_LIBS,-lrt)
+fi
+
+
 AC_CHECK_LIB(krb5support, krb5int_pthread_loaded, /bin/true, /bin/true)
 if test "$ac_cv_lib_krb5support_krb5int_pthread_loaded" = yes
 then
