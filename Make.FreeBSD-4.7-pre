@@ -4,7 +4,7 @@
 #
 # ++Copyright BAKA++
 #
-# Copyright © 2002-2008 The Authors. All rights reserved.
+# Copyright © 2002-2010 The Authors. All rights reserved.
 #
 # This source code is licensed to you under the terms of the file
 # LICENSE.TXT in this release for further details.
