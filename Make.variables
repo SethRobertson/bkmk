@@ -490,7 +490,10 @@ ifneq ($(findstring -x86_64,$(BK_ARCHNAME)),)
 # settings for EMT64
 #GCCHWOPT+= -march=nocona
 # settings for AMD64
-GCCHWOPT+= -march=opteron
+#GCCHWOPT+= -march=opteron
+# settings for EMT64 Core2 (Xeon) (Nehalem has SSE 4.2)
+# (Woodcrest 51xx CPU requires -mssse3, but only slidell has this CPU)
+GCCHWOPT+= -march=core2 -msse4.1
 endif
 ifneq ($(findstring -sun4,$(BK_ARCHNAME)),)
 # reasonable settings for 32-bit mode
