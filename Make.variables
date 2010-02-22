@@ -491,9 +491,16 @@ ifneq ($(findstring -x86_64,$(BK_ARCHNAME)),)
 #GCCHWOPT+= -march=nocona
 # settings for AMD64
 #GCCHWOPT+= -march=opteron
-# settings for EMT64 Core2 (Xeon) (Nehalem has SSE 4.2)
-# (Woodcrest 51xx CPU requires -mssse3, but only slidell has this CPU)
-GCCHWOPT+= -march=core2 -msse4.1
+# settings for EMT64 Core2 (Xeon) - will build on AMD, QEMU VM, run on latter
+GCCHWOPT+= -march=core2
+# Following are commented out for compatibility, and because RHEL5.4 gcc 4.1.2
+# does not support the -msse4.[12] tuning options (-march=core2 was backported)
+## settings for Clovertown (Dell x950 III) - SSE 4.1 but not SSE 4.2
+#GCCHWOPT+= -march=core2 -msse4.1
+## settings for Nehalem (Dell Rx10) - both SSE 4.1 and SSE 4.2
+#GCCHWOPT+= -march=core2 -msse4
+## settings for "native" architecture (requires gcc 4.3)
+#GCCHWOPT+= -march=native
 endif
 ifneq ($(findstring -sun4,$(BK_ARCHNAME)),)
 # reasonable settings for 32-bit mode
