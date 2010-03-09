@@ -87,6 +87,8 @@ override BK_WANT_LIBTOOL=false
 override BK_USING_DMALLOC=false
 override BK_USING_BOUNDS_CHECKING=false
 BK_USING_INSURE=true
+# As of gcc 4.1.2 Insure seems to be getting very confused by intense O4 optimization
+BK_NO_OPT=true
 ifeq ($(WANT_NO_MALLOC_WRAP),true)
 BK_NO_MALLOC_WRAP=true
 endif
