@@ -480,27 +480,6 @@ subtags:: $(BK_SIMPLE_CSRC) $(BK_LARGE_CSRC) $(BK_LARGE_LIBCSRC) $(BK_LOCAL_CSRC
 	$(BK_SUBDIRRULE)
 
 #
-# Xref support
-#
-USERXREFRC=$(HOME)/.xrefrc
-TMPXREFRC=/tmp/$(shell basename $(USERXREFRC)).$USER.bkmk-tmp
-ALTPWD=$(shell . $(BKMKDIR)/getcwd.sh 2>/dev/null; pawd `/bin/pwd`)
-xref::
-	@echo "Regenerating $(USERXREFRC) for $(PWD)";
-	@$(PERL) -ne '/BEGIN\sBK\-GEN\:\s$$ENV{PWD}/ && ($$cut=1); print unless ($$cut == 1); /END\sBK\-GEN\:\s$$ENV{PWD}/ && ($$cut=0);' $(USERXREFRC) > $(TMPXREFRC) && cat $(TMPXREFRC) > $(USERXREFRC) && rm $(TMPXREFRC)
-	@echo "// BEGIN BK-GEN: $(PWD)" >> $(USERXREFRC); \
-	echo "[$(PWD):$(ALTPWD):`/bin/pwd`]" >> $(USERXREFRC); \
-	echo "// dynamic listing of files to include" >> $(USERXREFRC); \
-	echo "\`$(FIND) $(PWD)/ -type f \( -name \*.[chyls] -o -name \*.java \) -not \( -path \*$(BK_JAVADIR)\* -o -path \*$$(basename $(BK_INSTALLBASE))\* \)\`" >> $(USERXREFRC); \
-	echo "-refs $(PWD)/.xrefs" >> $(USERXREFRC); \
-	echo "-refnum=100" >> $(USERXREFRC); \
-	echo "// automatically generated include directories" >> $(USERXREFRC); \
-	echo `( for f in $$($(FIND) $(PWD)/ -type f -name \*.h -not -path \*$$(basename $(BK_INSTALLBASE))\*); do echo "-I $$(dirname $$f)"; done ) | sort -u` >> $(USERXREFRC); \
-	echo "// END BK-GEN: $(PWD)" >> $(USERXREFRC);
-	@echo "$(XREF) -p $(PWD)";
-	@$(XREF) -p $(PWD) > /dev/null 2>&1
-
-#
 # Test support
 #
 ifneq ($(strip $(BK_WANT_JAVA)),false)

@@ -321,7 +321,6 @@ AC_CHECK_PROG(HAVE_DOT, dot, YES, NO)
 AC_PATH_PROGS(BROWSER, browser netscape konqueror mozilla iexplore.exe lynx,
 	      $FALSE, $PATH:/cygdrive/c/progra~1/intern~1)
 
-AC_PATH_PROG(XREF, xref, $FALSE)
 AC_PATH_PROG(HEAD, head, $FALSE)
 
 AC_CHECK_FILES(/proc/net/route)
