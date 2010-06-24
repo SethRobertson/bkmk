@@ -35,11 +35,11 @@ endif
 # Is not searched by default under all circumstances for some stupid reason
 ifneq ($(BK_BUILD_32BIT_ON_64),true)
 ifeq ($(shell uname -m),x86_64)
-OS_LDS=-L/usr/lib64 -L/lib64
+OS_LDS=-L/usr/lib64 -L/lib64 -L/usr/local/lib64
 endif
 else
 ifeq ($(shell uname -m),x86_64)
-OS_LDS=-L/usr/lib -L/lib
+OS_LDS=-L/usr/lib -L/lib -L/usr/local/lib
 endif
 endif
 
