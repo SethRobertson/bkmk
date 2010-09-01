@@ -45,7 +45,7 @@ do
       DIST_ID=`lsb_release -is 2>/dev/null`
       if [ -n "$DIST_ID" ]; then
 	REL_ID=`lsb_release -rs`
-	echo ${DIST_ID}Linux-${REL_ID}-`uname -m`
+	echo ${DIST_ID%-CounterStorm}Linux-${REL_ID}-`uname -m`
 	exit
       else
 	continue
