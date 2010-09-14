@@ -210,7 +210,7 @@ else
 
 install:: install-first install-normal install-last
 
-install-first:
+install-first::
 	@for d in $(BK_ALL_FIRST_DIRS) strict_sh_fodder;		      \
 	do								      \
 	  if [ $$d = "strict_sh_fodder" ]; then				      \
@@ -246,7 +246,7 @@ install-first:
 	  fi;								      \
 	done; exit $$ERR
 
-install-normal:
+install-normal::
 	@for d in $(BK_SUBDIR) strict_sh_fodder;			      \
 	do								      \
 	  if [ $$d = "strict_sh_fodder" ]; then				      \
@@ -266,7 +266,7 @@ install-normal:
 	  done;								      \
 	$(MAKE) actual_install && exit $$ERR
 
-install-last:
+install-last::
 	@for d in $(BK_ALL_LAST_DIRS) strict_sh_fodder;			      \
 	do								      \
 	  if [ $$d = "strict_sh_fodder" ]; then				      \
