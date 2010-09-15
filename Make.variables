@@ -733,7 +733,7 @@ BK_ALLINCS=$(LOCAL_INCS) $(GROUP_INCS) $(PKG_INCS) $(BK_INCS) $(INSTALL_INCS) $(
 
 BK_ALLLDS=$(LOCAL_LDS) $(GROUP_LDS) $(PKG_LDS) $(BK_LDS) $(INSTALL_LDS) $(OS_LDS) $(INSURE_LDS)
 # The insure debug libs are allegedly supposed to go last.
-BK_TMP_ALLLIBS=$(LOCAL_LIBS) $(GROUP_LIBS) $(PKG_LIBS) $(BK_LIBS) $(PTHREAD_LIBS) $(OS_LIBS) $(AC_LIBS) $(INSURE_DEBUG_LIBS) $(INSURE_LIBS)
+BK_TMP_ALLLIBS=$(LOCAL_LIBS) $(GROUP_LIBS) $(PKG_LIBS) $(BK_LIBS) $(PTHREAD_LIBS) $(RT_LIBS) $(OS_LIBS) $(AC_LIBS) $(INSURE_DEBUG_LIBS) $(INSURE_LIBS)
 REMOVE_DUP_LIBS='foreach $$lib (reverse(@ARGV)){ if (!exists($$r{$$lib})){ unshift @libs, $$lib; $$r{$$lib}=1;}} print "" . join(" ", @libs) . "\n";'
 
 ifeq ($(PROFILING),true)
