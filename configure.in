@@ -1,4 +1,4 @@
-dnl
+dnl To regenerate configure, run `autoconf`
 dnl
 dnl
 dnl ++Copyright BAKA++
@@ -122,6 +122,7 @@ AC_DISABLE_STATIC
 AC_LIBTOOL_WIN32_DLL
 AC_LIBTOOL_DLOPEN
 AC_PROG_LIBTOOL
+AC_CHECK_LIB(ltdl, lt_dladvise_init)
 
 AC_DEFINE_UNQUOTED(SHLIBPATH_VAR, "$shlibpath_var")
 AC_SUBST(shlibpath_var)

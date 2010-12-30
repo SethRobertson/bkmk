@@ -464,7 +464,7 @@ ac_includes_default="\
 # include <unistd.h>
 #endif"
 
-ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT CXX CXXFLAGS ac_ct_CXX LEX LEXLIB LEX_OUTPUT_ROOT YACC CPP CXXCPP AWK build build_cpu build_vendor build_os host host_cpu host_vendor host_os LIBM HAVE_LIBSSL HAVE_LIBRT RT_LIBS HAVE_KRB5SUPPORT HAVE_PROJ_POSTGRES ALIGN_FUNCTIONS_SWITCH NO_POINTER_SIGN_WARN EGREP HAVE_OVERZEALOUS_CHAR_SUBSCRIPT BK_SPECIAL_DEBUG BK_NO_STRICT_PROTOTYPES INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA LN_S PAWD ECHO AR ac_ct_AR RANLIB ac_ct_RANLIB STRIP ac_ct_STRIP DLLTOOL ac_ct_DLLTOOL AS ac_ct_AS OBJDUMP ac_ct_OBJDUMP F77 FFLAGS ac_ct_F77 LIBTOOL shlibpath_var shlibext modulext lt_prog_compiler_static LIBOBJS PTHREAD_CC PTHREAD_LIBS PTHREAD_CFLAGS HAVE_PTHREADS PROFILED_LIBS ALLOCA TRUE FALSE TEST RM TOUCH CP MV MKDIR LS GTAR TAR GZIP CVS GIT GITS UNAME CHMOD JOIN FMT CAT BASENAME SED PERL GREP FIND SORT UNIQ XARGS TEE EXPR XML2CONFIG BGCC PARASOFT INSURE JTEST JAVAC JAR JAVADOC JHINDEXER DOXYGEN HAVE_DOT BROWSER XREF HEAD OINKMASTER ADDSID CREATE_SIDMAP PTHREAD_WITH_BAD_EMPTY_LOOPS ORACLE_HOME HAVE_ORACLE INSTALL_PRESERVE LTLIBOBJS'
+ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT CXX CXXFLAGS ac_ct_CXX LEX LEXLIB LEX_OUTPUT_ROOT YACC CPP CXXCPP AWK build build_cpu build_vendor build_os host host_cpu host_vendor host_os LIBM HAVE_LIBSSL HAVE_LIBRT RT_LIBS HAVE_KRB5SUPPORT HAVE_PROJ_POSTGRES ALIGN_FUNCTIONS_SWITCH NO_POINTER_SIGN_WARN EGREP HAVE_OVERZEALOUS_CHAR_SUBSCRIPT BK_SPECIAL_DEBUG BK_NO_STRICT_PROTOTYPES INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA LN_S PAWD ECHO AR ac_ct_AR RANLIB ac_ct_RANLIB STRIP ac_ct_STRIP DLLTOOL ac_ct_DLLTOOL AS ac_ct_AS OBJDUMP ac_ct_OBJDUMP F77 FFLAGS ac_ct_F77 LIBTOOL shlibpath_var shlibext modulext lt_prog_compiler_static LIBOBJS PTHREAD_CC PTHREAD_LIBS PTHREAD_CFLAGS HAVE_PTHREADS PROFILED_LIBS ALLOCA TRUE FALSE TEST RM TOUCH CP MV MKDIR LS GTAR TAR GZIP CVS GIT GITS UNAME CHMOD JOIN FMT CAT BASENAME SED PERL GREP FIND SORT UNIQ XARGS TEE EXPR XML2CONFIG BGCC PARASOFT INSURE JTEST JAVAC JAR JAVADOC JHINDEXER DOXYGEN HAVE_DOT BROWSER HEAD OINKMASTER ADDSID CREATE_SIDMAP PTHREAD_WITH_BAD_EMPTY_LOOPS ORACLE_HOME HAVE_ORACLE INSTALL_PRESERVE LTLIBOBJS'
 ac_subst_files=''
 
 # Initialize some variables set by options.
@@ -22977,6 +22977,80 @@ LIBTOOL='$(SHELL) $(top_builddir)/libtool'
 
 
 
+echo "$as_me:$LINENO: checking for lt_dladvise_init in -lltdl" >&5
+echo $ECHO_N "checking for lt_dladvise_init in -lltdl... $ECHO_C" >&6
+if test "${ac_cv_lib_ltdl_lt_dladvise_init+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lltdl  $LIBS"
+cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+/* Override any gcc2 internal prototype to avoid an error.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+/* We use char because int might match the return type of a gcc2
+   builtin and then its argument prototype would still apply.  */
+char lt_dladvise_init ();
+int
+main ()
+{
+lt_dladvise_init ();
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  ac_cv_lib_ltdl_lt_dladvise_init=yes
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+ac_cv_lib_ltdl_lt_dladvise_init=no
+fi
+rm -f conftest.err conftest.$ac_objext \
+      conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+echo "$as_me:$LINENO: result: $ac_cv_lib_ltdl_lt_dladvise_init" >&5
+echo "${ECHO_T}$ac_cv_lib_ltdl_lt_dladvise_init" >&6
+if test $ac_cv_lib_ltdl_lt_dladvise_init = yes; then
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_LIBLTDL 1
+_ACEOF
+
+  LIBS="-lltdl $LIBS"
+
+fi
+
+
 cat >>confdefs.h <<_ACEOF
 #define SHLIBPATH_VAR "$shlibpath_var"
 _ACEOF
@@ -31736,46 +31810,6 @@ done
 test -n "$BROWSER" || BROWSER="$FALSE"
 
 
-# Extract the first word of "xref", so it can be a program name with args.
-set dummy xref; ac_word=$2
-echo "$as_me:$LINENO: checking for $ac_word" >&5
-echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6
-if test "${ac_cv_path_XREF+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-  case $XREF in
-  [\\/]* | ?:[\\/]*)
-  ac_cv_path_XREF="$XREF" # Let the user override the test with a path.
-  ;;
-  *)
-  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-for as_dir in $PATH
-do
-  IFS=$as_save_IFS
-  test -z "$as_dir" && as_dir=.
-  for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
-    ac_cv_path_XREF="$as_dir/$ac_word$ac_exec_ext"
-    echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
-    break 2
-  fi
-done
-done
-
-  test -z "$ac_cv_path_XREF" && ac_cv_path_XREF="$FALSE"
-  ;;
-esac
-fi
-XREF=$ac_cv_path_XREF
-
-if test -n "$XREF"; then
-  echo "$as_me:$LINENO: result: $XREF" >&5
-echo "${ECHO_T}$XREF" >&6
-else
-  echo "$as_me:$LINENO: result: no" >&5
-echo "${ECHO_T}no" >&6
-fi
-
 # Extract the first word of "head", so it can be a program name with args.
 set dummy head; ac_word=$2
 echo "$as_me:$LINENO: checking for $ac_word" >&5
@@ -32889,7 +32923,6 @@ s,@JHINDEXER@,$JHINDEXER,;t t
 s,@DOXYGEN@,$DOXYGEN,;t t
 s,@HAVE_DOT@,$HAVE_DOT,;t t
 s,@BROWSER@,$BROWSER,;t t
-s,@XREF@,$XREF,;t t
 s,@HEAD@,$HEAD,;t t
 s,@OINKMASTER@,$OINKMASTER,;t t
 s,@ADDSID@,$ADDSID,;t t

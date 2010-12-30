@@ -66,6 +66,7 @@
 #if 0
 #undef HAVE_PRAGMA_INIT
 #endif
+#undef HAVE_LIBLTDL
 
 #undef BK_TIME_MAX
 
