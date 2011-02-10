@@ -3,7 +3,7 @@
 #
 # ++Copyright BAKA++
 #
-# Copyright � 2001-2010 The Authors. All rights reserved.
+# Copyright © 1997-2011 The Authors. All rights reserved.
 #
 # This source code is licensed to you under the terms of the file
 # LICENSE.TXT in this release for further details.
@@ -15,9 +15,6 @@
 #
 # <TODO>Should auto-detect file encoding (ISO-8859-1 or UTF-8?) so that ©
 # is encoded properly (now defaults to UTF-8, but uses existing symbol).</TODO>
-#
-# <TODO>Should determine current branch and compute years from commits on that
-# branch and on trunk before that branch (now always uses trunk commits).</TODO>
 #
 use strict;
 use warnings;
@@ -42,7 +39,7 @@ sub pprint($$$)
 
 
 
-my ($BAKAHDR,$BAKAPROD,$CSHDR,$CSPROD);
+my ($BAKAHDR,$BAKAPROD,$CSHDR,$CSPROD,$RTCSHDR,$RTCSPROD);
 
 ######################################################################
 ## BAKA
@@ -66,7 +63,7 @@ EOF
 EOF
 
 ######################################################################
-## Trusted CS
+## Trusted CS Commercial
 ($CSHDR = <<'EOF') =~ s/^\|//gm;
 |#if !defined(lint)
 |static const char tcs__copyright[] = "Copyright (c) YEARS TCS Commercial, Inc.";
@@ -87,9 +84,9 @@ EOF
 |INC. are authorized to view, possess, or otherwise use this file.
 |
 |TCS Commercial, Inc
-|2350 Corporate Park Drive
-|Suite 500
-|Herndon, VA  20171-4848
+|12950 Worldgate Drive
+|Suite 600
+|Herndon, VA  20170-6024
 |
 |+1 866 230 1307
 |+1 703 318 7134
@@ -98,10 +95,49 @@ EOF
 |- -Copyright TCS COMMERCIAL- -
 EOF
 
-my($USAGE) = "Usage: $0: [--use-baka-copyright|b] [--use-commercial-copyright|c] <--copyright-detailed|--copyright-range [--copyright-range-start=date] [--copyright-range-end]> <[--use-ascii-copyright-symbol|a] [--use-latin-copyright-symbol|l] [--use-utf8-copyright-symbol|u]> [--cur-copyright-symbol-wins] <files>...\n";
+######################################################################
+## Raytheon Trusted CS
+($RTCSHDR = <<'EOF') =~ s/^\|//gm;
+|#if !defined(lint)
+|static const char tcs__copyright[] = "Copyright (c) YEARS Raytheon Trusted Computer Solutions, Inc.";
+|static const char tcs__contact[] = "RTCS <support@TrustedCS.com>";
+|#endif /* not lint */
+EOF
+
+($RTCSPROD =  "++"."Copyright RTCS++\n".<<'EOF') =~ s/^\|//gm;
+|
+|Copyright (c) YEARS Raytheon Trusted Computer Solutions
+|All rights reserved.
+|
+|THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF RAYTHEON TRUSTED
+|COMPUTER SOLUTIONS, INC.  The copyright notice above does not
+|evidence any actual or intended publication of such source code.
+|
+|Only properly authorized employees and contractors of RAYTHEON
+|TRUSTED COMPUTER SOLUTIONS, INC. are authorized to view,
+|possess, or otherwise use this file.
+|
+|Raytheon Trusted Computer Solutions
+|12950 Worldgate Drive
+|Suite 600
+|Herndon, VA  20170-6024
+|
+|+1 866 230 1307
+|+1 703 318 7134
+|<support@trustedcs.com>
+|
+|- -Copyright RTCS- -
+EOF
+
+my($USAGE) = "Usage: $0:
+ [--use-baka-copyright|b] [--use-commercial-copyright|c] [--use-rtcs-copyright]
+ <--copyright-detailed|--copyright-range [--copyright-range-start=date] [--copyright-range-end]>
+ [--copyright-trivial-lines=number] [--disable-trivial-message-skip]
+ <[--use-ascii-copyright-symbol|a] [--use-latin-copyright-symbol|l] [--use-utf8-copyright-symbol|u]> [--cur-copyright-symbol-wins] <files>...\n";
 my(%OPTIONS);
+$OPTIONS{'copyright-trivial-lines'}=10;
 Getopt::Long::Configure("bundling", "no_ignore_case", "no_auto_abbrev", "no_getopt_compat", "require_order");
-GetOptions(\%OPTIONS, 'copyright-detailed', 'copyright-range', 'copyright-range-end=s', 'copyright-range-start=s', 'b|use-baka-copyright', 'c|use-commercial-copyright', 'l|use-latin-copyright-symbol', 'u|use-utf8-copyright-symbol', 'a|use-ascii-copyright-symbol','cur-copyright-symbol-wins') || die $USAGE;
+GetOptions(\%OPTIONS, 'copyright-detailed', 'copyright-range', 'copyright-range-end=s', 'copyright-range-start=s', 'use-rtcs-copyright', 'b|use-baka-copyright', 'c|use-commercial-copyright', 'l|use-latin-copyright-symbol', 'u|use-utf8-copyright-symbol', 'a|use-ascii-copyright-symbol','cur-copyright-symbol-wins','copyright-trivial-lines=i','disable-trivial-message-skip') || die $USAGE;
 
 my ($prod_override);
 if ($OPTIONS{'b'})
@@ -111,6 +147,10 @@ if ($OPTIONS{'b'})
 if ($OPTIONS{'c'})
 {
   $prod_override = 2;
+}
+if ($OPTIONS{'use-rtcs-copyright'})
+{
+  $prod_override = 3;
 }
 
 my $q1 = '\#if \!defined\(lint\)';
@@ -234,14 +274,15 @@ while (<>)
 	{
 	  $lastyear = $year = $1;
 	  # ignore non-initial commits with < 10 inserted or deleted lines
-	  undef $year if (m=lines: \+(\d+) \-(\d+)= && $1 < 10 && $2 < 10);
+	  undef $year if (m=lines: \+(\d+) \-(\d+)= && $1 < $OPTIONS{'copyright-trivial-lines'} && $2 < $OPTIONS{'copyright-trivial-lines'});
 	  # always insert initial commit year, regardless of comments
 	  $sigyears{$year} = 1 unless (m=lines:=);
 	}
 	elsif (defined($year))
 	{
 	  # ignore if first line of commit message has has "chcopy" or "trivial"
-	  $sigyears{$year} = 1 unless (/(CHCOPY|[Tt]rivial)/);
+	  $sigyears{$year} = 1 unless (/CHCOPY/);
+	  $sigyears{$year} = 1 unless ($OPTIONS{'disable-trivial-message-skip'} || /[Tt]rivial/);
 	  undef $year;
 	}
       }
@@ -334,6 +375,7 @@ while (<>)
 
       $prod_cpp = 1 if (!defined($prod_cpp) && (/bk__/ || /libbk__/));
       $prod_cpp = 2 if (!defined($prod_cpp) && (/tcs__/ || /cs__/ || /sysd__/));
+      $prod_cpp = 3 if (!defined($prod_cpp) && (/rtcs__/));
       if (/^$q2$/)
       {
 	last;
@@ -347,6 +389,10 @@ while (<>)
     elsif ($prod_cpp == 1)
     {
       $hdr = $BAKAHDR;
+    }
+    elsif ($prod_cpp == 3)
+    {
+      $hdr = $RTCSHDR;
     }
     else
     {
@@ -379,6 +425,7 @@ while (<>)
     my $TYPE=$2;
     $prod_license = 1 if (!defined($prod_license) && $TYPE =~ /(BAKA|LIBBK)/);
     $prod_license = 2 if (!defined($prod_license) && $TYPE =~ /(TRUSTEDCS|TCS COMMERCIAL|COUNTERSTORM|SYSDETECT)/);
+    $prod_license = 3 if (!defined($prod_license) && $TYPE =~ /(RTCS)/);
     undef($CURCSYMBOL);
 
     while (<>)
@@ -404,6 +451,10 @@ while (<>)
     {
       $prod = $BAKAPROD;
     }
+    elsif ($prod_license == 3)
+    {
+      $prod = $RTCSPROD;
+    }
     else
     {
       die "Unknown ++"."Copyright $TYPE++ style license";
@@ -425,3 +476,142 @@ while (<>)
 }
 
 print STDERR "When you commit use the word 'CHCOPY' in the first line of the commit message\n";
+
+
+=pod
+
+=head1 NAME
+
+chcopy.pl - Update copyright notices in well formed source files
+
+=head1 SYNOPSIS
+
+chcopy.pl [--use-baka-copyright|b] [--use-commercial-copyright|c] [--use-rtcs-copyright] <--copyright-detailed|--copyright-range [--copyright-range-start=date] [--copyright-range-end]> [--copyright-trivial-lines=number] [--disable-trivial-message-skip] <[--use-ascii-copyright-symbol|a] [--use-latin-copyright-symbol|l] [--use-utf8-copyright-symbol|u]> [--cur-copyright-symbol-wins] <files>...
+
+=head1 OVERVIEW
+
+chcopy.pl updates copyright notices that it recognizes to the latest
+versions appropriate.  The text of the various licenses which it will
+substitute for recognized licenses are listed internally.  By default
+it will substitute the same class of license as is currently present
+in the file, but it can be run in a mode (--use-TYPE-copyright) where
+it will use the specified copyright syntax.  In addition to textual
+copyright notices, it also substitutes C static variable copyright, if
+present, notices—these notices compile into the end-user executable
+for visible copyright notification in the on-disk files.
+
+There is a regular expression which matches the copyright section.
+The current form currently starts with ++<class name>++ and ends with
+- -<class name>- - (the space between the - is for HTML/XML comment
+syntax reasons).
+
+The per-line prefix for the copyright section is automatically
+determined based on the existing per-line prefix, so whatever
+comment syntax on indention style needed will be used.
+
+There are multiple theories for the proper style of Copyright dates to
+be used.  Some sites like to only individually list years (or ranges
+of years) where the file actually changed (e.g. 2002,2005-2006,2010
+aka --copyright-detailed).  Other sites like to express a copyright
+from when the file was born until when the file was last modified
+(e.g. 2002-2010 aka --copyright-range).  Still others like to have the
+end copyright date be this year's date (e.g. 2002-2011 aka
+--copyright-range --copyright-range-end=2011) while others even want
+to copyright the file before the file exists to have the same
+copyright for all files (e.g. 2001-2011 --copyright-range
+--copyright-range-start=2001 --copyright-range-end=2011).  We
+obviously support all styles.
+
+However, some people even have differences on what it means by what
+year a "file actually changed" means.  For some, very small (e.g. 10)
+line changes don't count (this is the default, use
+--copyright-trivia-lines=number to set a larger or smaller number of
+lines to be defined as trivial—using no longer suppress any lines),
+for others changes explicitly marked as being trivial (presumably due
+to automated changes which have no functional purpose--perhaps company
+contact information being updated) do not count (see
+--disable-trivial-message-skip to disable this).  In all cases, the
+copyright program update process does not count towards computing the
+last copyright date change.
+
+Currently the system pulls the modification information out of the
+source code management system.  Currently RCS, CVS, and git are
+supported.
+
+The final question which many disagree on is the proper copyright
+symbol to use.  While it seems pretty clear that (C) has no legal
+standing, that also has global support whereas the fancy Latin-1
+(�) or UTF-8 (©) copyright symbols are unfortunately not supported
+by all compilers, parsers, or translators.  So you must manually
+specify which of the three symbols to use with
+--use-ascii-copyright-symbol, --use-latin-copyright-symbol, or
+--use-utf8-copyright-symbol.  However, if you have PLT problems, you
+can also specify --cur-copyright-symbol-wins so that the current
+definition will be used.
+
+When running this on a complex package where there are multiple
+branches under active development, you must run this on the files
+contained in each branch, being very careful to ensure that all
+commits, merges, and other SCM maintenance has been performed before
+the copyright changes start.  If your SCM tracks merging, you want to
+fake a merge immediately after the copyright change—fake it so that
+you can avoid tedidous and unnecessary conflict resolution.
+
+
+=head1 EXAMPLE
+
+When running these examples or varients thereof, I strongly suggest
+you request a super-lock from all developers: have them commit and
+push all changes and refrain from making other changes—just to prevent
+unnecessary conflicts.
+
+  # Update the 1.0 release branch copyrights (avoiding conflicts)
+  git checkout master
+  ## Get latest changes
+  git pull --rebase
+  ## Fully merge branch upstream, so we can avoid conflicts during copyright change
+  git merge --no-ff 1.0-release-branch
+  ## Check out branch in question
+  git checkout 1.0-release-branch
+  ## Actually update copyrights
+  find . -type f | fgrep -v .git | xargs -d'\n' \
+    chcopy.pl --cur-copyright-symbol-wins --use-utf8-copyright-symbol --copyright-range --copyright-trivial-lines=0
+  ## Commit copyright change
+  git commit -a -m "Update Copyrights via CHCOPY"
+  ## Share changes with everyton
+  git push
+  ## Fake merge to prevent copyright change clashes
+  git checkout master
+  git merge --no-ff -s ours 1.0-release-branch
+  ## Double check no changes were actually made
+  git diff HEAD HEAD^
+
+  # Update the master branch Copyrights
+  git checkout master
+  ## Check for outstanding changes
+  git status
+  ## Get latest changes
+  git pull --rebase
+  ## Actually update copyrights
+  find . -type f | fgrep -v .git | xargs -d'\n' \
+    chcopy.pl --cur-copyright-symbol-wins --use-utf8-copyright-symbol --copyright-range --copyright-trivial-lines=0
+  ## Commit copyright change
+  git commit -a -m "Update Copyrights via CHCOPY"
+  git push
+
+
+=head1 REQUIREMENTS
+
+perl 5 (probably almost any version of perl 5)
+
+rcs, cvs, or git.
+
+=head1 AUTHOR
+
+Seth Robertson
+
+=head1 COPYRIGHT
+
+Copyright © 1997-2011 Seth Robertson.  License is similar to the GNU
+Lesser General Public License version 2.1, see LICENSE.TXT for more
+details.
