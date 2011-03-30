@@ -3,7 +3,7 @@
 #
 # ++Copyright BAKA++
 #
-# Copyright (c) 2001-2011 The Authors. All rights reserved.
+# Copyright © 2001-2011 The Authors. All rights reserved.
 #
 # This source code is licensed to you under the terms of the file
 # LICENSE.TXT in this release for further details.
@@ -16,12 +16,13 @@
 # <TODO>Should auto-detect file encoding (ISO-8859-1 or UTF-8?) so that Â©
 # is encoded properly (now defaults to UTF-8, but uses existing symbol).</TODO>
 #
+# <TODO>Should determine current branch and compute years from commits on that
+# branch and on trunk before that branch (now always uses trunk commits).</TODO>
+#
 use strict;
 use warnings;
 no warnings "uninitialized";
 use Getopt::Long;
-
-
 
 
 sub pprint($$$)
@@ -38,8 +39,7 @@ sub pprint($$$)
 
 
 
-
-my ($BAKAHDR,$BAKAPROD,$CSHDR,$CSPROD,$RTCSHDR,$RTCSPROD);
+my ($BAKAHDR,$BAKAPROD,$CSHDR,$CSPROD);
 
 ######################################################################
 ## BAKA
@@ -63,27 +63,28 @@ EOF
 EOF
 
 ######################################################################
-## Trusted CS Commercial
+## Trusted CS
 ($CSHDR = <<'EOF') =~ s/^\|//gm;
 |#if !defined(lint)
-|static const char tcs__copyright[] = "Copyright (c) YEARS TCS Commercial, Inc.";
-|static const char tcs__contact[] = "TCS Commercial, Inc. <cssupport@TrustedCS.com>";
+|static const char rtcs__copyright[] = "Copyright (c) YEARS Raytheon Trusted Computer Solutions, Inc.";
+|static const char rtcs__contact[] = "Raytheon Trusted Computer Solutions, Inc. <cssupport@TrustedCS.com>";
 |#endif /* not lint */
 EOF
 
-($CSPROD =  "++"."Copyright TCS COMMERCIAL++\n".<<'EOF') =~ s/^\|//gm;
+($CSPROD =  "++"."Copyright RTCS COMMERCIAL++\n".<<'EOF') =~ s/^\|//gm;
 |
-|Copyright (c) YEARS TCS Commercial, Inc.
+|Copyright (c) YEARS Raytheon Trusted Computer Solutions, Inc.
 |All rights reserved.
 |
-|THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF TCS COMMERCIAL, INC.
-|The copyright notice above does not evidence any actual or intended
-|publication of such source code.
+|THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF RAYTHEON TRUSTED
+|COMPUTER SOLUTIONS, INC.  The copyright notice above does not
+|evidence any actual or intended publication of such source code.
 |
-|Only properly authorized employees and contractors of TCS COMMERCIAL,
-|INC. are authorized to view, possess, or otherwise use this file.
+|Only properly authorized employees and contractors of RAYTHEON
+|TRUSTED COMPUTER SOLUTIONS, INC. are authorized to view, possess, or
+|otherwise use this file.
 |
-|TCS Commercial, Inc
+|Raytheon Trusted Computer Solutions, Inc
 |12950 Worldgate Drive
 |Suite 600
 |Herndon, VA  20170-6024
@@ -92,46 +93,12 @@ EOF
 |+1 703 318 7134
 |<cssupport@trustedcs.com>
 |
-|- -Copyright TCS COMMERCIAL- -
-EOF
-
-######################################################################
-## Raytheon Trusted CS
-($RTCSHDR = <<'EOF') =~ s/^\|//gm;
-|#if !defined(lint)
-|static const char tcs__copyright[] = "Copyright (c) YEARS Raytheon Trusted Computer Solutions, Inc.";
-|static const char tcs__contact[] = "RTCS <support@TrustedCS.com>";
-|#endif /* not lint */
-EOF
-
-($RTCSPROD =  "++"."Copyright RTCS++\n".<<'EOF') =~ s/^\|//gm;
-|
-|Copyright (c) YEARS Raytheon Trusted Computer Solutions
-|All rights reserved.
-|
-|THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF RAYTHEON TRUSTED
-|COMPUTER SOLUTIONS, INC.  The copyright notice above does not
-|evidence any actual or intended publication of such source code.
-|
-|Only properly authorized employees and contractors of RAYTHEON
-|TRUSTED COMPUTER SOLUTIONS, INC. are authorized to view,
-|possess, or otherwise use this file.
-|
-|Raytheon Trusted Computer Solutions
-|12950 Worldgate Drive
-|Suite 600
-|Herndon, VA  20170-6024
-|
-|+1 866 230 1307
-|+1 703 318 7134
-|<support@trustedcs.com>
-|
-|- -Copyright RTCS- -
+|- -Copyright RTCS COMMERCIAL- -
 EOF
 
 my($USAGE) = "Usage: $0: [OPTIONS] DETAIL-OPTIONS SYMBOL-OPTION FILES...
 OPTIONS
- [-b|--use-baka-copyright|-c|--use-commercial-copyright|--use-rtcs-copyright]
+ [-b|--use-baka-copyright|-c|--use-commercial-copyright]
  [--copyright-trivial-lines=NUMBER] [--disable-trivial-message-skip]
  [--cur-copyright-symbol-wins]
 DETAIL-OPTIONS
@@ -142,9 +109,10 @@ SYMBOL-OPTION
  -l|--use-latin-copyright-symbol |
  -u|--use-utf8-copyright-symbol\n";
 my(%OPTIONS);
-$OPTIONS{'copyright-trivial-lines'}=10;
+$OPTIONS{'copyright-trivial-lines'}=5;
+
 Getopt::Long::Configure("bundling", "no_ignore_case", "no_auto_abbrev", "no_getopt_compat", "require_order");
-GetOptions(\%OPTIONS, 'copyright-detailed', 'copyright-range', 'copyright-range-end=s', 'copyright-range-start=s', 'use-rtcs-copyright', 'b|use-baka-copyright', 'c|use-commercial-copyright', 'l|use-latin-copyright-symbol', 'u|use-utf8-copyright-symbol', 'a|use-ascii-copyright-symbol','cur-copyright-symbol-wins','copyright-trivial-lines=i','disable-trivial-message-skip') || die $USAGE;
+GetOptions(\%OPTIONS, 'copyright-detailed', 'copyright-range', 'copyright-range-end=s', 'copyright-range-start=s', 'b|use-baka-copyright', 'c|use-commercial-copyright', 'l|use-latin-copyright-symbol', 'u|use-utf8-copyright-symbol', 'a|use-ascii-copyright-symbol','cur-copyright-symbol-wins','copyright-trivial-lines=i','disable-trivial-message-skip') || die $USAGE;
 
 my ($prod_override);
 if ($OPTIONS{'b'})
@@ -154,10 +122,6 @@ if ($OPTIONS{'b'})
 if ($OPTIONS{'c'})
 {
   $prod_override = 2;
-}
-if ($OPTIONS{'use-rtcs-copyright'})
-{
-  $prod_override = 3;
 }
 
 my $q1 = '\#if \!defined\(lint\)';
@@ -289,7 +253,7 @@ while (<>)
 	{
 	  # ignore if first line of commit message has has "chcopy" or "trivial"
 	  $sigyears{$year} = 1 unless (/CHCOPY/);
-	  $sigyears{$year} = 1 unless ($OPTIONS{'disable-trivial-message-skip'} || /[Tt]rivial/);
+	  $sigyears{$year} = 1 unless (OPTIONS{'disable-trivial-message-skip'} || /[Tt]rivial/);
 	  undef $year;
 	}
       }
@@ -381,8 +345,7 @@ while (<>)
       }
 
       $prod_cpp = 1 if (!defined($prod_cpp) && (/bk__/ || /libbk__/));
-      $prod_cpp = 2 if (!defined($prod_cpp) && (/tcs__/ || /cs__/ || /sysd__/));
-      $prod_cpp = 3 if (!defined($prod_cpp) && (/rtcs__/));
+      $prod_cpp = 2 if (!defined($prod_cpp) && (/rtcs__/ || /tcs__/ || /cs__/ || /sysd__/));
       if (/^$q2$/)
       {
 	last;
@@ -396,10 +359,6 @@ while (<>)
     elsif ($prod_cpp == 1)
     {
       $hdr = $BAKAHDR;
-    }
-    elsif ($prod_cpp == 3)
-    {
-      $hdr = $RTCSHDR;
     }
     else
     {
@@ -431,8 +390,7 @@ while (<>)
     my $POSTFIX=$3;
     my $TYPE=$2;
     $prod_license = 1 if (!defined($prod_license) && $TYPE =~ /(BAKA|LIBBK)/);
-    $prod_license = 2 if (!defined($prod_license) && $TYPE =~ /(TRUSTEDCS|TCS COMMERCIAL|COUNTERSTORM|SYSDETECT)/);
-    $prod_license = 3 if (!defined($prod_license) && $TYPE =~ /(RTCS)/);
+    $prod_license = 2 if (!defined($prod_license) && $TYPE =~ /(RTCS COMMERCIAL|TRUSTEDCS|TCS COMMERCIAL|COUNTERSTORM|SYSDETECT)/);
     undef($CURCSYMBOL);
 
     while (<>)
@@ -457,10 +415,6 @@ while (<>)
     elsif ($prod_license == 1)
     {
       $prod = $BAKAPROD;
-    }
-    elsif ($prod_license == 3)
-    {
-      $prod = $RTCSPROD;
     }
     else
     {
@@ -496,8 +450,7 @@ chcopy.pl - Update copyright notices in well formed source files
 chcopy.pl [OPTIONS] DETAIL-OPTIONS SYMBOL-OPTION FILES...
 
 OPTIONS
- [-b|--use-baka-copyright|-c|--use-commercial-copyright|
-  --use-rtcs-copyright]
+ [-b|--use-baka-copyright | -c|--use-commercial-copyright]
  [--copyright-trivial-lines=NUMBER] [--disable-trivial-message-skip]
  [--cur-copyright-symbol-wins]
 
@@ -591,7 +544,6 @@ your SCM tracks merging (e.g. git), you should "fake" a merge
 (e.g. git merge -s ours BRANCH) immediately after the copyright change
 are committed, so that you can avoid tedidous and unnecessary conflict
 resolution.
-
 
 =head1 EXAMPLE
 
