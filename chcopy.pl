@@ -100,7 +100,7 @@ my($USAGE) = "Usage: $0: [OPTIONS] DETAIL-OPTIONS SYMBOL-OPTION FILES...
 OPTIONS
  [-b|--use-baka-copyright|-c|--use-commercial-copyright]
  [--copyright-trivial-lines=NUMBER] [--disable-trivial-message-skip]
- [--cur-copyright-symbol-wins]
+ [--cur-copyright-symbol-wins] [--encoding-super-copyright-win]
 DETAIL-OPTIONS
  --copyright-detailed |
  --copyright-range [--copyright-range-start=DATE] [--copyright-range-end=DATE]
@@ -112,7 +112,7 @@ my(%OPTIONS);
 $OPTIONS{'copyright-trivial-lines'}=5;
 
 Getopt::Long::Configure("bundling", "no_ignore_case", "no_auto_abbrev", "no_getopt_compat", "require_order");
-GetOptions(\%OPTIONS, 'copyright-detailed', 'copyright-range', 'copyright-range-end=s', 'copyright-range-start=s', 'b|use-baka-copyright', 'c|use-commercial-copyright', 'l|use-latin-copyright-symbol', 'u|use-utf8-copyright-symbol', 'a|use-ascii-copyright-symbol','cur-copyright-symbol-wins','copyright-trivial-lines=i','disable-trivial-message-skip') || die $USAGE;
+GetOptions(\%OPTIONS, 'copyright-detailed', 'copyright-range', 'copyright-range-end=s', 'copyright-range-start=s', 'b|use-baka-copyright', 'c|use-commercial-copyright', 'l|use-latin-copyright-symbol', 'u|use-utf8-copyright-symbol', 'a|use-ascii-copyright-symbol','encoding-super-copyright-win','cur-copyright-symbol-wins','copyright-trivial-lines=i','disable-trivial-message-skip') || die $USAGE;
 
 my ($prod_override);
 if ($OPTIONS{'b'})
@@ -149,7 +149,7 @@ die "Must select --copyright-detailed or --copyright-range\n\n$USAGE" unless ($O
 my ($last_ARGV) = $ARGV;
 my ($prod_cpp) = $prod_override;
 my ($prod_license) = $prod_override;
-my ($YEARS);
+my ($YEARS,$OVERRIDE_CSYM);
 my $pwd = `pwd`;
 chomp $pwd;
 
@@ -161,6 +161,7 @@ while (<>)
     $prod_license = $prod_override;
     $last_ARGV = $ARGV;
     undef($YEARS);
+    undef($OVERRIDE_CSYM);
   }
 
   if (!defined($YEARS))
@@ -253,7 +254,7 @@ while (<>)
 	{
 	  # ignore if first line of commit message has has "chcopy" or "trivial"
 	  $sigyears{$year} = 1 unless (/CHCOPY/);
-	  $sigyears{$year} = 1 unless (OPTIONS{'disable-trivial-message-skip'} || /[Tt]rivial/);
+	  $sigyears{$year} = 1 unless ($OPTIONS{'disable-trivial-message-skip'} || /[Tt]rivial/);
 	  undef $year;
 	}
       }
@@ -332,6 +333,26 @@ while (<>)
     $YEARS = 1900 + (localtime time)[5] if ($YEARS eq '');
   }
 
+  # Header stuff--encoding detection
+  # (Only try header stuff for first five lines)
+  if ($OPTIONS{'encoding-super-copyright-win'} && $. < 5 && /^<\?xml[^>]* encoding=\"([^\"]+)\"/)
+  {
+    my ($encoding) = $1;
+
+    if ($encoding =~ /^utf-8$/i)
+    {
+      $OVERRIDE_CSYM = $utf8csymbol;
+    }
+    elsif ($encoding =~ /^iso-8859-/i)
+    {
+      $OVERRIDE_CSYM = $latin1csymbol;
+    }
+    else
+    {
+      $OVERRIDE_CSYM = $asciicsymbol;
+    }
+  }
+
   # Header stuff
   # (Only try header stuff for first five lines)
   if ($. < 5 && /^$q1/)
@@ -365,7 +386,11 @@ while (<>)
       die "Unknown cpp-style copyright in $ARGV";
     }
     $hdr =~ s/YEARS/$YEARS/g;
-    if ($OPTIONS{'cur-copyright-symbol-wins'} && defined($CURCSYMBOL))
+    if ($OPTIONS{'encoding-super-copyright-win'} && defined($OVERRIDE_CSYM))
+    {
+      $hdr =~ s/\(c\)/$OVERRIDE_CSYM/g;
+    }
+    elsif ($OPTIONS{'cur-copyright-symbol-wins'} && defined($CURCSYMBOL))
     {
       $hdr =~ s/\(c\)/$CURCSYMBOL/g;
     }
@@ -422,7 +447,11 @@ while (<>)
     }
 
     $prod =~ s/YEARS/$YEARS/g;
-    if ($OPTIONS{'cur-copyright-symbol-wins'} && defined($CURCSYMBOL))
+    if ($OPTIONS{'encoding-super-copyright-win'} && defined($OVERRIDE_CSYM))
+    {
+      $prod =~ s/\(c\)/$OVERRIDE_CSYM/g;
+    }
+    elsif ($OPTIONS{'cur-copyright-symbol-wins'} && defined($CURCSYMBOL))
     {
       $prod =~ s/\(c\)/$CURCSYMBOL/g;
     }
@@ -452,7 +481,7 @@ chcopy.pl [OPTIONS] DETAIL-OPTIONS SYMBOL-OPTION FILES...
 OPTIONS
  [-b|--use-baka-copyright | -c|--use-commercial-copyright]
  [--copyright-trivial-lines=NUMBER] [--disable-trivial-message-skip]
- [--cur-copyright-symbol-wins]
+ [--cur-copyright-symbol-wins] [--encoding-super-copyright-win]
 
 DETAIL-OPTIONS
  --copyright-detailed |
@@ -533,7 +562,9 @@ use, with --use-ascii-copyright-symbol, --use-latin-copyright-symbol,
 or --use-utf8-copyright-symbol.  If you have problems with use of
 certain encodings in certain files, you can also specify
 --cur-copyright-symbol-wins to keep the current encoding used in each
-file.
+file, or --encoding-super-copyright-win to look for a <?xml...encoding="type">
+line near the top to determine the proper encoding type and use that
+(UTF-8 will use utf-8, 8859-# will use latin, and anything else present will force ascii).
 
 When running this on a complex package where there are multiple
 branches under active development, you must run this on the files
