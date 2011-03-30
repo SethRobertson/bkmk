@@ -480,6 +480,23 @@ subtags:: $(BK_SIMPLE_CSRC) $(BK_LARGE_CSRC) $(BK_LARGE_LIBCSRC) $(BK_LOCAL_CSRC
 	$(BK_SUBDIRRULE)
 
 #
+# XML lint support
+#
+XMLLINTCHECK=--valid
+AWB_XMLLINTFILES=$(AWB_FSETFILES) $(AWB_JOBFILES) $(AWB_MODELFILES)
+
+xmllint: $(AWB_XMLLINTFILES)
+	@ERR=0;							     \
+	for X in $(AWB_XMLLINTFILES);				     \
+	do							     \
+	  if xmllint --noout $(XMLLINTCHECK) $$X; then		     \
+	    echo $$X;						     \
+	  else							     \
+	    ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) break ;; esac; \
+	  fi;							     \
+	done; exit $$ERR
+
+#
 # Test support
 #
 ifneq ($(strip $(BK_WANT_JAVA)),false)
@@ -593,4 +610,4 @@ $(BK_REALTOP)/bkmk/.timestamp:
 .PHONY : DEFAULT all default nuke clean neat depend nukedepend dotdepend \
 	build install actual_install \
 	nukeetags nukectags etags ctags tag tags subtags preprocess \
-	doxygen viewdox test help local_rule
+	xmllint doxygen viewdox test help local_rule
