@@ -3,7 +3,7 @@
 #
 # ++Copyright BAKA++
 #
-# Copyright © 1997-2011 The Authors. All rights reserved.
+# Copyright (c) 2001-2011 The Authors. All rights reserved.
 #
 # This source code is licensed to you under the terms of the file
 # LICENSE.TXT in this release for further details.
@@ -129,11 +129,18 @@ EOF
 |- -Copyright RTCS- -
 EOF
 
-my($USAGE) = "Usage: $0:
- [--use-baka-copyright|b] [--use-commercial-copyright|c] [--use-rtcs-copyright]
- <--copyright-detailed|--copyright-range [--copyright-range-start=date] [--copyright-range-end]>
- [--copyright-trivial-lines=number] [--disable-trivial-message-skip]
- <[--use-ascii-copyright-symbol|a] [--use-latin-copyright-symbol|l] [--use-utf8-copyright-symbol|u]> [--cur-copyright-symbol-wins] <files>...\n";
+my($USAGE) = "Usage: $0: [OPTIONS] DETAIL-OPTIONS SYMBOL-OPTION FILES...
+OPTIONS
+ [-b|--use-baka-copyright|-c|--use-commercial-copyright|--use-rtcs-copyright]
+ [--copyright-trivial-lines=NUMBER] [--disable-trivial-message-skip]
+ [--cur-copyright-symbol-wins]
+DETAIL-OPTIONS
+ --copyright-detailed |
+ --copyright-range [--copyright-range-start=DATE] [--copyright-range-end=DATE]
+SYMBOL-OPTION
+ -a|--use-ascii-copyright-symbol |
+ -l|--use-latin-copyright-symbol |
+ -u|--use-utf8-copyright-symbol\n";
 my(%OPTIONS);
 $OPTIONS{'copyright-trivial-lines'}=10;
 Getopt::Long::Configure("bundling", "no_ignore_case", "no_auto_abbrev", "no_getopt_compat", "require_order");
@@ -486,90 +493,118 @@ chcopy.pl - Update copyright notices in well formed source files
 
 =head1 SYNOPSIS
 
-chcopy.pl [--use-baka-copyright|b] [--use-commercial-copyright|c] [--use-rtcs-copyright] <--copyright-detailed|--copyright-range [--copyright-range-start=date] [--copyright-range-end]> [--copyright-trivial-lines=number] [--disable-trivial-message-skip] <[--use-ascii-copyright-symbol|a] [--use-latin-copyright-symbol|l] [--use-utf8-copyright-symbol|u]> [--cur-copyright-symbol-wins] <files>...
+chcopy.pl [OPTIONS] DETAIL-OPTIONS SYMBOL-OPTION FILES...
+
+OPTIONS
+ [-b|--use-baka-copyright|-c|--use-commercial-copyright|
+  --use-rtcs-copyright]
+ [--copyright-trivial-lines=NUMBER] [--disable-trivial-message-skip]
+ [--cur-copyright-symbol-wins]
+
+DETAIL-OPTIONS
+ --copyright-detailed |
+ --copyright-range [--copyright-range-start=DATE]
+  [--copyright-range-end=DATE]
+
+SYMBOL-OPTION
+ -a|--use-ascii-copyright-symbol |
+ -l|--use-latin-copyright-symbol |
+ -u|--use-utf8-copyright-symbol
 
 =head1 OVERVIEW
 
-chcopy.pl updates copyright notices that it recognizes to the latest
-versions appropriate.  The text of the various licenses which it will
-substitute for recognized licenses are listed internally.  By default
-it will substitute the same class of license as is currently present
-in the file, but it can be run in a mode (--use-TYPE-copyright) where
-it will use the specified copyright syntax.  In addition to textual
-copyright notices, it also substitutes C static variable copyright, if
-present, notices—these notices compile into the end-user executable
-for visible copyright notification in the on-disk files.
+chcopy.pl updates recognized copyright notices to the latest versions.
+The text of the various license types it recognizes are listed
+internally.  By default it substitutes the latest version of the same
+license type currently present in the file, but if a
+--use-TYPE-copyright option is given, it replaces the license with the
+TYPE (baka, commercial, rtcs) license.  In addition to textual
+(comment) copyright notices, it also substitutes C static variable
+copyright notices if present.  (These notices are compiled into
+executables for visible copyright notification in binary files.)
 
 There is a regular expression which matches the copyright section.
-The current form currently starts with ++<class name>++ and ends with
-- -<class name>- - (the space between the - is for HTML/XML comment
-syntax reasons).
+The current form currently starts with ++<TYPE>++ and ends with
+- -<TYPE>- - (the space between the - is for HTML/XML comment syntax
+reasons).
 
 The per-line prefix for the copyright section is automatically
-determined based on the existing per-line prefix, so whatever
-comment syntax on indention style needed will be used.
+determined based on the existing per-line prefix, so the current
+comment syntax or indention style will be matched.
 
-There are multiple theories for the proper style of Copyright dates to
-be used.  Some sites like to only individually list years (or ranges
-of years) where the file actually changed (e.g. 2002,2005-2006,2010
-aka --copyright-detailed).  Other sites like to express a copyright
-from when the file was born until when the file was last modified
-(e.g. 2002-2010 aka --copyright-range).  Still others like to have the
-end copyright date be this year's date (e.g. 2002-2011 aka
---copyright-range --copyright-range-end=2011) while others even want
-to copyright the file before the file exists to have the same
-copyright for all files (e.g. 2001-2011 --copyright-range
---copyright-range-start=2001 --copyright-range-end=2011).  We
-obviously support all styles.
+The previous version of the file (before any changes are made) is
+saved with a .bak extension.
 
-However, some people even have differences on what it means by what
-year a "file actually changed" means.  For some, very small (e.g. 10)
-line changes don't count (this is the default, use
---copyright-trivia-lines=number to set a larger or smaller number of
-lines to be defined as trivial—using no longer suppress any lines),
-for others changes explicitly marked as being trivial (presumably due
-to automated changes which have no functional purpose--perhaps company
-contact information being updated) do not count (see
---disable-trivial-message-skip to disable this).  In all cases, the
-copyright program update process does not count towards computing the
-last copyright date change.
+There are multiple theories for the proper style of copyright dates to
+be used.  Some prefer to list only years (or ranges of years) when the
+file actually changed (e.g. 2002,2005-2006,2010); this is selected by
+--copyright-detailed.  Others prefer to date the copyright from the
+year the file was born until it was last modified (e.g. 2002-2010);
+this is selected by --copyright-range).  Still others prefer the end
+date to be the current year (e.g. 2002-2011); this is selected by
+--copyright-range --copyright-range-end=2011.  Some even want to
+copyright the file before the file exists, to have the same copyright
+for all files (e.g. 2001-2011); this is selected by --copyright-range
+--copyright-range-start=2001 --copyright-range-end=2011.
 
-Currently the system pulls the modification information out of the
-source code management system.  Currently RCS, CVS, and git are
-supported.
+There are also different opinions on what is required for a file to
+have been modified in a given year.  For some, very small (e.g. 10 or
+fewer) line changes don't count (this is the default, use
+--copyright-trivial-lines=NUMBER to change this threshold; setting it
+to zero will cause any change to be considered non-trivial).  For
+others, changes explicitly marked as being trivial (with the word
+"trivial" or "Trivial" in the commit message) do not count; use
+--disable-trivial-message-skip to disable this.  Any changes
+committed with CHCOPY (uppercase) in the first line of the commit
+message (which you should always do when committing changes made by
+this program) will not count towards computing any copyright dates
+after the first year.
 
-The final question which many disagree on is the proper copyright
-symbol to use.  While it seems pretty clear that (C) has no legal
-standing, that also has global support whereas the fancy Latin-1
-(�) or UTF-8 (©) copyright symbols are unfortunately not supported
-by all compilers, parsers, or translators.  So you must manually
-specify which of the three symbols to use with
---use-ascii-copyright-symbol, --use-latin-copyright-symbol, or
---use-utf8-copyright-symbol.  However, if you have PLT problems, you
-can also specify --cur-copyright-symbol-wins so that the current
-definition will be used.
+Modification information is taken from the current source code
+management system: RCS, CVS, and git are supported.
+
+The final question on which many disagree on is the proper copyright
+symbol to use.  While the common use of lowercase c in parentheses -
+(c) - has no legal standing, it is also true that in many countries,
+including the US since 1976, a copyright symbol is not required to
+claim copyright.  Using the ASCII-only (c) has the advantage that it
+is the same in all encodings, and will not generate errors or warnings
+from compilers, parsers, or translators.  If you want a proper
+copyright symbol - © - the actual bytes in a file will be different
+depending on whether it is encoded with Latin-1 (ISO 8859-1) as <A9>,
+or UTF-8 as <C2 A9>.  (Note that the <A9> representation also works
+for 8859-7 (Greek), 8859-8 (Hebrew), 8859-9 (Latin-5), 8859-13
+(Latin-7), 8859-14 (Latin-8), 8859-15 (Latin-9 aka Latin0), and even
+Windows Code Page 1252.)  You must choose which symbol/encoding to
+use, with --use-ascii-copyright-symbol, --use-latin-copyright-symbol,
+or --use-utf8-copyright-symbol.  If you have problems with use of
+certain encodings in certain files, you can also specify
+--cur-copyright-symbol-wins to keep the current encoding used in each
+file.
 
 When running this on a complex package where there are multiple
 branches under active development, you must run this on the files
 contained in each branch, being very careful to ensure that all
-commits, merges, and other SCM maintenance has been performed before
-the copyright changes start.  If your SCM tracks merging, you want to
-fake a merge immediately after the copyright change—fake it so that
-you can avoid tedidous and unnecessary conflict resolution.
+commits, merges, and other source code management (SCM) maintenance
+has been completed before starting to make the copyright changes.  If
+your SCM tracks merging (e.g. git), you should "fake" a merge
+(e.g. git merge -s ours BRANCH) immediately after the copyright change
+are committed, so that you can avoid tedidous and unnecessary conflict
+resolution.
 
 
 =head1 EXAMPLE
 
-When running these examples or varients thereof, I strongly suggest
-you request a super-lock from all developers: have them commit and
-push all changes and refrain from making other changes—just to prevent
-unnecessary conflicts.
+Before running these examples or variants thereof, you should request
+a super-lock from all developers: have them commit and push all
+changes and refrain from making other changes; failing to do so may
+lead to unnecessary conflicts.
 
   # Update the 1.0 release branch copyrights (avoiding conflicts)
   git checkout master
   ## Get latest changes
   git pull --rebase
-  ## Fully merge branch upstream, so we can avoid conflicts during copyright change
+  ## Fully merge branch upstream, to avoid conflicts during copyright change
   git merge --no-ff 1.0-release-branch
   ## Check out branch in question
   git checkout 1.0-release-branch
@@ -578,7 +613,7 @@ unnecessary conflicts.
     chcopy.pl --cur-copyright-symbol-wins --use-utf8-copyright-symbol --copyright-range --copyright-trivial-lines=0
   ## Commit copyright change
   git commit -a -m "Update Copyrights via CHCOPY"
-  ## Share changes with everyton
+  ## Share changes with everyone
   git push
   ## Fake merge to prevent copyright change clashes
   git checkout master
@@ -604,7 +639,7 @@ unnecessary conflicts.
 
 perl 5 (probably almost any version of perl 5)
 
-rcs, cvs, or git.
+RCS, CVS, or git source code management.
 
 =head1 AUTHOR
 
