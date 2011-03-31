@@ -353,14 +353,16 @@ while (<>)
     {
       $OVERRIDE_CSYM = $utf8csymbol;
     }
+    my $CHARACTER_SET_CLASS = '\w:.()-'; # Source http://www.iana.org/assignments/character-sets
     if ($. < 40 && !$override_csym_final &&
-	(/(?:\<\?xml .*?|\@charset *?) encoding=(['"])(.*?)\1/ ||
-	 /^\s*(use)\s+(utf8)\s*;/ ||
-	 /^\s*(use)\s+encoding\s+(['"])(.*?)\1\s*;/ ||
-	 /^\=encoding( +)([\w-]+)/ ||
-	 /\<meta +http-equiv *= *['"]content-type['"] +content *= *(['"]).*?\bcharset=([\w-]+)\1/i))
+	(/\<\?xml [^>]*(?<= )encoding=[\'\"]?([$CHARACTER_SET_CLASS]+)/ ||	# XHTML only http://wiki.whatwg.org/wiki/FAQ#How_do_I_specify_the_character_encoding.3F
+	 /\@charset "([^\"]*)"/ ||						# CSS only http://www.w3.org/TR/CSS21/syndata.html#x57
+	 /^\s*use\s+(utf8)\s*;/ ||						# Perl only
+	 /^\s*use\s+encoding\s+[\'\"]?([$CHARACTER_SET_CLASS]+)/ ||		# Perl only
+	 /^\=encoding +([$CHARACTER_SET_CLASS]+)/ ||				# Perl (POD) only
+	 /\<meta [^>]*\bcharset=["']?([$CHARACTER_SET_CLASS]+)/i))		# X?HTML http://wiki.whatwg.org/wiki/FAQ#How_do_I_specify_the_character_encoding.3F http://blog.whatwg.org/the-road-to-html-5-character-encoding
     {
-      my ($encoding) = $2;
+      my ($encoding) = $1;
 
       $override_csym_final = 1 if ($1 eq "use");
 
