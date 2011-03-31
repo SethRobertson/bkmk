@@ -147,6 +147,14 @@ die "Must select an ASCII, Latin-1, or UTF-8 copyright symbol\n\n$USAGE" unless 
 
 die "Must select --copyright-detailed or --copyright-range\n\n$USAGE" unless ($OPTIONS{'copyright-detailed'} xor $OPTIONS{'copyright-range'});
 
+# Restore backup file if we die
+$SIG{__DIE__} = sub
+{
+  die @_ if $^S; # do nothing if die called within eval
+  rename("$ARGV.bak", "$ARGV") if ($ARGV ne '-');
+};
+
+
 my ($last_ARGV) = $ARGV;
 my ($prod_cpp) = $prod_override;
 my ($prod_license) = $prod_override;
