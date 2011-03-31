@@ -158,7 +158,7 @@ $SIG{__DIE__} = sub
 my ($last_ARGV) = $ARGV;
 my ($prod_cpp) = $prod_override;
 my ($prod_license) = $prod_override;
-my ($YEARS,$OVERRIDE_CSYM);
+my ($YEARS,$OVERRIDE_CSYM,$override_csym_final);
 my $pwd = `pwd`;
 chomp $pwd;
 
@@ -171,6 +171,7 @@ while (<>)
     $last_ARGV = $ARGV;
     undef($YEARS);
     undef($OVERRIDE_CSYM);
+    undef($override_csym_final);
   }
 
   if (!defined($YEARS))
@@ -352,11 +353,16 @@ while (<>)
     {
       $OVERRIDE_CSYM = $utf8csymbol;
     }
-    if ($. < 5 && (/(?:\<\?xml .*?|\@charset *?) encoding=(['"])(.*?)\1/ ||
-		   /^\=encoding( +)([\w-]+)/ ||
-		   /\<meta +http-equiv *= *['"]content-type['"] +content *= *(['"]).*?\bcharset=([\w-]+)\1/i))
+    if ($. < 40 && !$override_csym_final &&
+	(/(?:\<\?xml .*?|\@charset *?) encoding=(['"])(.*?)\1/ ||
+	 /^\s*(use)\s+(utf8)\s*;/ ||
+	 /^\s*(use)\s+encoding\s+(['"])(.*?)\1\s*;/ ||
+	 /^\=encoding( +)([\w-]+)/ ||
+	 /\<meta +http-equiv *= *['"]content-type['"] +content *= *(['"]).*?\bcharset=([\w-]+)\1/i))
     {
       my ($encoding) = $2;
+
+      $override_csym_final = 1 if ($1 eq "use");
 
       if ($encoding =~ /^utf-?8$/i)
       {
@@ -589,12 +595,14 @@ you can also specify --keep-copyright-symbol to keep the current
 encoding used in each file, or --match-file-encoding to look for a
 UTF-8 BOM (byte order mark, <EF BB BF>), XML encoding tag
 (<?xml...encoding="TYPE">), HTML meta tag (<meta
-http-equiv="Content-Type" content="text/html; charset=TYPE">), or Perl
-POD encoding (\n=encoding TYPE) near the top to determine the proper
-encoding type and use that (UTF-8 will use utf-8, compatible 8859-#
-will use latin, and anything else present will force ascii).  If
---keep-copyright-symbol and --match-file-encoding are both specified,
-a recognized file encpding will override the current copyright symbol.
+http-equiv="Content-Type" content="text/html; charset=TYPE">), Perl
+POD encoding (\n=encoding TYPE), or Perl 'use' pragma (use encoding
+"TYPE";) near the top to determine the proper encoding type and use
+that (UTF-8 will use utf-8, compatible 8859-# will use latin, and
+anything else present will force ascii).  If --keep-copyright-symbol
+and --match-file-encoding are both specified, a recognized file
+encpding will override the current copyright symbol.  Perl 'use'
+pragmas will take precedence over POD =encoding if both are present.
 
 When running this on a complex package where there are multiple
 branches under active development, you must run this on the files
