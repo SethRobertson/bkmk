@@ -1,9 +1,12 @@
 #!/usr/bin/perl -i.bak
+=pod
+=encoding utf8
+=cut
 #
 #
 # ++Copyright BAKA++
 #
-# Copyright � 2001-2011 The Authors. All rights reserved.
+# Copyright © 2001-2011 The Authors. All rights reserved.
 #
 # This source code is licensed to you under the terms of the file
 # LICENSE.TXT in this release for further details.
@@ -13,12 +16,10 @@
 # - -Copyright BAKA- -
 #
 #
-# <TODO>Should auto-detect file encoding (ISO-8859-1 or UTF-8?) so that ©
-# is encoded properly (now defaults to UTF-8, but uses existing symbol).</TODO>
-#
 # <TODO>Should determine current branch and compute years from commits on that
 # branch and on trunk before that branch (now always uses trunk commits).</TODO>
 #
+use bytes;
 use strict;
 use warnings;
 no warnings "uninitialized";
@@ -100,7 +101,7 @@ my($USAGE) = "Usage: $0: [OPTIONS] DETAIL-OPTIONS SYMBOL-OPTION FILES...
 OPTIONS
  [-b|--use-baka-copyright|-c|--use-commercial-copyright]
  [--copyright-trivial-lines=NUMBER] [--disable-trivial-message-skip]
- [--cur-copyright-symbol-wins] [--encoding-super-copyright-win]
+ [--keep-copyright-symbol] [--match-file-encoding]
 DETAIL-OPTIONS
  --copyright-detailed |
  --copyright-range [--copyright-range-start=DATE] [--copyright-range-end=DATE]
@@ -112,7 +113,7 @@ my(%OPTIONS);
 $OPTIONS{'copyright-trivial-lines'}=5;
 
 Getopt::Long::Configure("bundling", "no_ignore_case", "no_auto_abbrev", "no_getopt_compat", "require_order");
-GetOptions(\%OPTIONS, 'copyright-detailed', 'copyright-range', 'copyright-range-end=s', 'copyright-range-start=s', 'b|use-baka-copyright', 'c|use-commercial-copyright', 'l|use-latin-copyright-symbol', 'u|use-utf8-copyright-symbol', 'a|use-ascii-copyright-symbol','encoding-super-copyright-win','cur-copyright-symbol-wins','copyright-trivial-lines=i','disable-trivial-message-skip') || die $USAGE;
+GetOptions(\%OPTIONS, 'copyright-detailed', 'copyright-range', 'copyright-range-end=s', 'copyright-range-start=s', 'b|use-baka-copyright', 'c|use-commercial-copyright', 'l|use-latin-copyright-symbol', 'u|use-utf8-copyright-symbol', 'a|use-ascii-copyright-symbol','match-file-encoding|encoding-super-copyright-win','keep-copyright-symbol|cur-copyright-symbol-wins','copyright-trivial-lines=i','disable-trivial-message-skip') || die $USAGE;
 
 my ($prod_override);
 if ($OPTIONS{'b'})
@@ -145,6 +146,14 @@ $csymbol = $utf8csymbol if ($OPTIONS{'u'});
 die "Must select an ASCII, Latin-1, or UTF-8 copyright symbol\n\n$USAGE" unless ($csymbol);
 
 die "Must select --copyright-detailed or --copyright-range\n\n$USAGE" unless ($OPTIONS{'copyright-detailed'} xor $OPTIONS{'copyright-range'});
+
+# Restore backup file if we die
+$SIG{__DIE__} = sub
+{
+  die @_ if $^S; # do nothing if die called within eval
+  rename("$ARGV.bak", "$ARGV") if ($ARGV ne '-');
+};
+
 
 my ($last_ARGV) = $ARGV;
 my ($prod_cpp) = $prod_override;
@@ -245,7 +254,7 @@ while (<>)
 	if (m=^date: (\d{4})=)
 	{
 	  $lastyear = $year = $1;
-	  # ignore non-initial commits with < 10 inserted or deleted lines
+	  # ignore non-initial commits with < 5 inserted or deleted lines
 	  undef $year if (m=lines: \+(\d+) \-(\d+)= && $1 < $OPTIONS{'copyright-trivial-lines'} && $2 < $OPTIONS{'copyright-trivial-lines'});
 	  # always insert initial commit year, regardless of comments
 	  $sigyears{$year} = 1 unless (m=lines:=);
@@ -335,21 +344,32 @@ while (<>)
 
   # Header stuff--encoding detection
   # (Only try header stuff for first five lines)
-  if ($OPTIONS{'encoding-super-copyright-win'} && $. < 5 && /^<\?xml[^>]* encoding=\"([^\"]+)\"/)
+  if ($OPTIONS{'match-file-encoding'})
   {
-    my ($encoding) = $1;
-
-    if ($encoding =~ /^utf-8$/i)
+    # <TODO>Recognize UTF-16 or UTF-32 BOM (note: this requires not only
+    # changing the copyright symbol, but re-encoding all replacement text</TODO>
+    if ($. == 1 && /^\357\273\277/) # UTF-8 BOM
     {
       $OVERRIDE_CSYM = $utf8csymbol;
     }
-    elsif ($encoding =~ /^iso-8859-/i)
+    if ($. < 5 && (/(?:\<\?xml .*?|\@charset *?) encoding=(['"])(.*?)\1/ ||
+		   /^\=encoding( +)([\w-]+)/ ||
+		   /\<meta +http-equiv *= *['"]content-type['"] +content *= *(['"]).*?\bcharset=([\w-]+)\1/i))
     {
-      $OVERRIDE_CSYM = $latin1csymbol;
-    }
-    else
-    {
-      $OVERRIDE_CSYM = $asciicsymbol;
+      my ($encoding) = $2;
+
+      if ($encoding =~ /^utf-?8$/i)
+      {
+	$OVERRIDE_CSYM = $utf8csymbol;
+      }
+      elsif ($encoding =~ /^(iso[-_]?8859-([1789]|1[345])\b|latin[15789]|greek|hebrew|windows-1252)/i)
+      {
+	$OVERRIDE_CSYM = $latin1csymbol;
+      }
+      else
+      {
+	$OVERRIDE_CSYM = $asciicsymbol;
+      }
     }
   }
 
@@ -386,11 +406,11 @@ while (<>)
       die "Unknown cpp-style copyright in $ARGV";
     }
     $hdr =~ s/YEARS/$YEARS/g;
-    if ($OPTIONS{'encoding-super-copyright-win'} && defined($OVERRIDE_CSYM))
+    if ($OPTIONS{'match-file-encoding'} && defined($OVERRIDE_CSYM))
     {
       $hdr =~ s/\(c\)/$OVERRIDE_CSYM/g;
     }
-    elsif ($OPTIONS{'cur-copyright-symbol-wins'} && defined($CURCSYMBOL))
+    elsif ($OPTIONS{'keep-copyright-symbol'} && defined($CURCSYMBOL))
     {
       $hdr =~ s/\(c\)/$CURCSYMBOL/g;
     }
@@ -414,6 +434,8 @@ while (<>)
     my $PREFIX=$1;
     my $POSTFIX=$3;
     my $TYPE=$2;
+    # Just in case the Copyright is the first line, and there is a BOM
+    $PREFIX =~ s/^\357\273\277// if ($. == 1);
     $prod_license = 1 if (!defined($prod_license) && $TYPE =~ /(BAKA|LIBBK)/);
     $prod_license = 2 if (!defined($prod_license) && $TYPE =~ /(RTCS COMMERCIAL|TRUSTEDCS|TCS COMMERCIAL|COUNTERSTORM|SYSDETECT)/);
     undef($CURCSYMBOL);
@@ -447,11 +469,11 @@ while (<>)
     }
 
     $prod =~ s/YEARS/$YEARS/g;
-    if ($OPTIONS{'encoding-super-copyright-win'} && defined($OVERRIDE_CSYM))
+    if ($OPTIONS{'match-file-encoding'} && defined($OVERRIDE_CSYM))
     {
       $prod =~ s/\(c\)/$OVERRIDE_CSYM/g;
     }
-    elsif ($OPTIONS{'cur-copyright-symbol-wins'} && defined($CURCSYMBOL))
+    elsif ($OPTIONS{'keep-copyright-symbol'} && defined($CURCSYMBOL))
     {
       $prod =~ s/\(c\)/$CURCSYMBOL/g;
     }
@@ -481,7 +503,7 @@ chcopy.pl [OPTIONS] DETAIL-OPTIONS SYMBOL-OPTION FILES...
 OPTIONS
  [-b|--use-baka-copyright | -c|--use-commercial-copyright]
  [--copyright-trivial-lines=NUMBER] [--disable-trivial-message-skip]
- [--cur-copyright-symbol-wins] [--encoding-super-copyright-win]
+ [--keep-copyright-symbol] [--match-file-encoding]
 
 DETAIL-OPTIONS
  --copyright-detailed |
@@ -530,25 +552,26 @@ for all files (e.g. 2001-2011); this is selected by --copyright-range
 --copyright-range-start=2001 --copyright-range-end=2011.
 
 There are also different opinions on what is required for a file to
-have been modified in a given year.  For some, very small (e.g. 10 or
-fewer) line changes don't count (this is the default, use
---copyright-trivial-lines=NUMBER to change this threshold; setting it
-to zero will cause any change to be considered non-trivial).  For
-others, changes explicitly marked as being trivial (with the word
-"trivial" or "Trivial" in the commit message) do not count; use
---disable-trivial-message-skip to disable this.  Any changes
-committed with CHCOPY (uppercase) in the first line of the commit
-message (which you should always do when committing changes made by
-this program) will not count towards computing any copyright dates
-after the first year.
+have been modified in a given year.  For some, changes of only a few
+lines don't count.  The default is that only changes inserting 5 or
+more lines (or deleting 5 or more lines) count for computing
+non-initial dates; use --copyright-trivial-lines=NUMBER to change this
+threshold - setting it to zero will cause any change to be considered
+non-trivial.  For others, changes explicitly marked as being trivial
+(with the word "trivial" or "Trivial" in the commit message) do not
+count.  This is also the default; use --disable-trivial-message-skip
+to disable this.  Changes committed with CHCOPY (uppercase) in the
+first line of the commit message (which you should always do when
+committing changes made by this program) never count for computing
+non-initial copyright dates.
 
 Modification information is taken from the current source code
 management system: RCS, CVS, and git are supported.
 
 The final question on which many disagree on is the proper copyright
 symbol to use.  While the common use of lowercase c in parentheses -
-(c) - has no legal standing, it is also true that in many countries,
-including the US since 1976, a copyright symbol is not required to
+(c) - has no legal standing, it is also true that in many countries
+(including the US since 1976) a copyright symbol is not required to
 claim copyright.  Using the ASCII-only (c) has the advantage that it
 is the same in all encodings, and will not generate errors or warnings
 from compilers, parsers, or translators.  If you want a proper
@@ -559,12 +582,19 @@ for 8859-7 (Greek), 8859-8 (Hebrew), 8859-9 (Latin-5), 8859-13
 (Latin-7), 8859-14 (Latin-8), 8859-15 (Latin-9 aka Latin0), and even
 Windows Code Page 1252.)  You must choose which symbol/encoding to
 use, with --use-ascii-copyright-symbol, --use-latin-copyright-symbol,
-or --use-utf8-copyright-symbol.  If you have problems with use of
-certain encodings in certain files, you can also specify
---cur-copyright-symbol-wins to keep the current encoding used in each
-file, or --encoding-super-copyright-win to look for a <?xml...encoding="type">
-line near the top to determine the proper encoding type and use that
-(UTF-8 will use utf-8, 8859-# will use latin, and anything else present will force ascii).
+or --use-utf8-copyright-symbol.
+
+If you have problems with use of certain encodings in certain files,
+you can also specify --keep-copyright-symbol to keep the current
+encoding used in each file, or --match-file-encoding to look for a
+UTF-8 BOM (byte order mark, <EF BB BF>), XML encoding tag
+(<?xml...encoding="TYPE">), HTML meta tag (<meta
+http-equiv="Content-Type" content="text/html; charset=TYPE">), or Perl
+POD encoding (\n=encoding TYPE) near the top to determine the proper
+encoding type and use that (UTF-8 will use utf-8, compatible 8859-#
+will use latin, and anything else present will force ascii).  If
+--keep-copyright-symbol and --match-file-encoding are both specified,
+a recognized file encpding will override the current copyright symbol.
 
 When running this on a complex package where there are multiple
 branches under active development, you must run this on the files
@@ -593,7 +623,8 @@ lead to unnecessary conflicts.
   git checkout 1.0-release-branch
   ## Actually update copyrights
   find . -type f | fgrep -v .git | xargs -d'\n' \
-    chcopy.pl --cur-copyright-symbol-wins --use-utf8-copyright-symbol --copyright-range --copyright-trivial-lines=0
+    chcopy.pl -u --keep-copyright-symbol --match-file-encoding \
+      --copyright-range --copyright-trivial-lines=0
   ## Commit copyright change
   git commit -a -m "Update Copyrights via CHCOPY"
   ## Share changes with everyone
@@ -612,7 +643,8 @@ lead to unnecessary conflicts.
   git pull --rebase
   ## Actually update copyrights
   find . -type f | fgrep -v .git | xargs -d'\n' \
-    chcopy.pl --cur-copyright-symbol-wins --use-utf8-copyright-symbol --copyright-range --copyright-trivial-lines=0
+    chcopy.pl -u --keep-copyright-symbol --match-file-encoding \
+      --copyright-range --copyright-trivial-lines=0
   ## Commit copyright change
   git commit -a -m "Update Copyrights via CHCOPY"
   git push
