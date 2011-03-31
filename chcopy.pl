@@ -246,7 +246,7 @@ while (<>)
 	if (m=^date: (\d{4})=)
 	{
 	  $lastyear = $year = $1;
-	  # ignore non-initial commits with < 10 inserted or deleted lines
+	  # ignore non-initial commits with < 5 inserted or deleted lines
 	  undef $year if (m=lines: \+(\d+) \-(\d+)= && $1 < $OPTIONS{'copyright-trivial-lines'} && $2 < $OPTIONS{'copyright-trivial-lines'});
 	  # always insert initial commit year, regardless of comments
 	  $sigyears{$year} = 1 unless (m=lines:=);
@@ -544,17 +544,18 @@ for all files (e.g. 2001-2011); this is selected by --copyright-range
 --copyright-range-start=2001 --copyright-range-end=2011.
 
 There are also different opinions on what is required for a file to
-have been modified in a given year.  For some, very small (e.g. 10 or
-fewer) line changes don't count (this is the default, use
---copyright-trivial-lines=NUMBER to change this threshold; setting it
-to zero will cause any change to be considered non-trivial).  For
-others, changes explicitly marked as being trivial (with the word
-"trivial" or "Trivial" in the commit message) do not count; use
---disable-trivial-message-skip to disable this.  Any changes
-committed with CHCOPY (uppercase) in the first line of the commit
-message (which you should always do when committing changes made by
-this program) will not count towards computing any copyright dates
-after the first year.
+have been modified in a given year.  For some, changes of only a few
+lines don't count.  The default is that only changes inserting 5 or
+more lines (or deleting 5 or more lines) count for computing
+non-initial dates; use --copyright-trivial-lines=NUMBER to change this
+threshold - setting it to zero will cause any change to be considered
+non-trivial.  For others, changes explicitly marked as being trivial
+(with the word "trivial" or "Trivial" in the commit message) do not
+count.  This is also the default; use --disable-trivial-message-skip
+to disable this.  Changes committed with CHCOPY (uppercase) in the
+first line of the commit message (which you should always do when
+committing changes made by this program) never count for computing
+non-initial copyright dates.
 
 Modification information is taken from the current source code
 management system: RCS, CVS, and git are supported.
