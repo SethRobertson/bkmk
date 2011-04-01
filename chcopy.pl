@@ -362,14 +362,34 @@ while (<>)
       # http://perldoc.perl.org/perlunicode.html#Important-Caveats
       $override_csym_final = 1;
     }
-    my $CHARACTER_SET_CLASS = '\w:.()-'; # Source http://www.iana.org/assignments/character-sets
+    # From http://www.iana.org/assignments/character-sets
+    my $CHARACTER_SET_CLASS = '\w:.()-';
+    # See also http://www.w3.org/International/tutorials/tutorial-char-enc/ and
+    # http://www.w3.org/International/questions/qa-html-encoding-declarations
     if ($. < 40 && !$override_csym_final &&
-	(/\<\?xml [^>]*(?<= )encoding=[\'\"]?([$CHARACTER_SET_CLASS]+)/ ||	# XHTML only http://wiki.whatwg.org/wiki/FAQ#How_do_I_specify_the_character_encoding.3F
-	 /\@charset "([^\"]*)"/ ||						# CSS only http://www.w3.org/TR/CSS21/syndata.html#x57
-	 /^\s*use\s+(utf8)\s*;/ ||						# Perl only
-	 /^\s*use\s+encoding\s+[\'\"]?([$CHARACTER_SET_CLASS]+)/ ||		# Perl only
-	 /^\=encoding +([$CHARACTER_SET_CLASS]+)/ ||				# Perl (POD) only
-	 /\<meta [^>]*\bcharset=["']?([$CHARACTER_SET_CLASS]+)/i))		# X?HTML http://wiki.whatwg.org/wiki/FAQ#How_do_I_specify_the_character_encoding.3F http://blog.whatwg.org/the-road-to-html-5-character-encoding
+	(
+	 # X(HT)?ML: http://www.w3.org/International/O-charset
+	 /\<\?xml [^>]*(?<= )encoding=[\'\"]?([$CHARACTER_SET_CLASS]+)/ ||
+	 # X?HTML: http://blog.whatwg.org/the-road-to-html-5-character-encoding
+	 /\<meta [^>]*\bcharset=["']?([$CHARACTER_SET_CLASS]+)/i ||
+	 # CSS: http://www.w3.org/International/questions/qa-css-charset
+	 /\@charset "([^\"]*)"/ ||
+	 # Perl: http://perldoc.perl.org/utf8.html
+	 /^\s*use\s+(utf8)\s*;/ ||
+	 # Perl: http://perldoc.perl.org/encoding.html
+	 /^\s*use\s+encoding\s+[\'\"]?([$CHARACTER_SET_CLASS]+)/ ||
+	 # Perl (POD): http://perldoc.perl.org/perlpod.html#Command-Paragraph
+	 /^\=encoding +([$CHARACTER_SET_CLASS]+)/ ||
+	 # PostgreSQL: http://www.postgresql.org/docs/9.0/static/multibyte.html
+	 /^\\encoding +(\w+)$/ ||
+	 /^\s*set +client_encoding +(?:=|to) +\'(\w+)/i ||
+	 # SQL: http://www.destructor.de/firebird/charsets.htm
+	 /^\s*set +names +\'?(\w+)/i ||
+	 # MySQL: http://dev.mysql.com/doc/refman/5.0/en/charset-connection.html
+	 /^\s*set +character_set_client *= *\'?(\w+)/i ||
+	 /^\s*set +character +set +\'?(\w+)/i ||
+	 0 # linefeed fodder
+	))
     {
       my ($encoding) = $1;
 
