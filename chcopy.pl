@@ -373,7 +373,8 @@ while (<>)
     {
       my ($encoding) = $1;
 
-      $override_csym_final = 1 if ($1 eq "use");
+      # Perl use pragma takes precedence over POD =encoding
+      $override_csym_final = 1 if (/^\s*use\s/);
 
       if ($encoding =~ /^utf-?8$/i)
       {
