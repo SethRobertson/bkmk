@@ -116,7 +116,7 @@
 	* chcopy.pl: #6989: compute years from CVS logs (trunk commits);
 	preserve existing (c)/© in UTF-8/8859-1/whatever; update with current
 	temporary address
-	
+
 2007-09-22  James Tanis  <jtt@counterstorm.com>
 
 	* Make.Linux-2.6-pre: Fedora has removed 'Core' from it's name
@@ -158,7 +158,7 @@
 	source files (dozens of .lo files) forcing us to implement both phases
 	in one rule.  this only happens when installing directly into an
 	absolute RPATH appearing in the vpath commands (e.g. /usr/local/lib).
-	
+
 2006-07-22  James Tanis  <jtt@counterstorm.com>
 
 	* Make.config.in, configure*: WANT_STATIC=true gcc 4.1.1 fixes
@@ -288,15 +288,15 @@
 
 	* aclocal.m4 (AC_DEV_FD): rework to distinguish fdescfd-style /dev/fd/
 	and ensure that no dependencies on compilation environment screw us
-	
+
 2005-01-11  Alexander Dupuy  <dupuy@sysdetect.com>
 
 	* Make.targets: exclude CVS directories from replication, along with a
 	lot of other junk files [including *.htm but not *.html, which is okay]
-	
+
 	* Make.variables (BK_EXCLUDE): variable for files to exclude from tars;
 	exclude ChangeLog as well...
-	
+
 2005-01-07  James Tanis  <jtt@blue.sysdetect.com>
 
 	* Make.targets: New "target variable" $(BK_REPLICATE) which causes
@@ -310,7 +310,7 @@
 
 	* acaux/ltmain.sh: when determining installation prefix, don't get
 	confused by embedded // - treat them identically to /
-	
+
 2004-12-29  James Tanis  <jtt@blue.sysdetect.com>
 
 	* Make.GNUmakefile (INSTALLBASE): Provide hook for installing
