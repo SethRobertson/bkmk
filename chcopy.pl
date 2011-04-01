@@ -347,11 +347,20 @@ while (<>)
   # (Only try header stuff for first five lines)
   if ($OPTIONS{'match-file-encoding'})
   {
-    # <TODO>Recognize UTF-16 or UTF-32 BOM (note: this requires not only
-    # changing the copyright symbol, but re-encoding all replacement text</TODO>
+    # <TODO>Recognize UTF-16 or UTF-32 Byte Order Mark (BOM) (note: this
+    # requires not only changing the copyright symbol, but re-encoding all
+    # replacement text into 16-bit coding.</TODO>
+
     if ($. == 1 && /^\357\273\277/) # UTF-8 BOM
     {
       $OVERRIDE_CSYM = $utf8csymbol;
+
+      # HTML5 specifies that BOM overrides in-document character encoding;
+      # http://www.w3.org/International/questions/qa-html-encoding-declarations
+      # Perl auto-detects BOM, but it is rarely used as it conflicts with #!;
+      # for a file that actually has a BOM, it trumps use pragmas and POD.
+      # http://perldoc.perl.org/perlunicode.html#Important-Caveats
+      $override_csym_final = 1;
     }
     my $CHARACTER_SET_CLASS = '\w:.()-'; # Source http://www.iana.org/assignments/character-sets
     if ($. < 40 && !$override_csym_final &&
