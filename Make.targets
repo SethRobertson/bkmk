@@ -482,6 +482,7 @@ subtags:: $(BK_SIMPLE_CSRC) $(BK_LARGE_CSRC) $(BK_LARGE_LIBCSRC) $(BK_LOCAL_CSRC
 #
 # XML lint support
 #
+XMLLINT=xmllint
 XMLLINTCHECK=--valid
 AWB_XMLLINTFILES=$(AWB_FSETFILES) $(AWB_JOBFILES) $(AWB_MODELFILES)
 
@@ -489,7 +490,7 @@ xmllint: $(AWB_XMLLINTFILES)
 	@ERR=0;							     \
 	for X in $(AWB_XMLLINTFILES);				     \
 	do							     \
-	  if xmllint --noout $(XMLLINTCHECK) $$X; then		     \
+	  if $(XMLLINT) --noout $(XMLLINTCHECK) $$X; then	     \
 	    echo $$X;						     \
 	  else							     \
 	    ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) break ;; esac; \
