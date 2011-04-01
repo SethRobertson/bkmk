@@ -400,7 +400,7 @@ while (<>)
       {
 	$OVERRIDE_CSYM = $utf8csymbol;
       }
-      elsif ($encoding =~ /^(iso[-_]?8859-([1789]|1[345])\b|latin[15789]|greek|hebrew|windows-1252)/i)
+      elsif ($encoding =~ /^(iso[-_]?8859[-_]([1789]|1[3456])\b|latin[-_]?[15789]|greek|hebrew|(windows|cp)[-_]?1252)/i)
       {
 	$OVERRIDE_CSYM = $latin1csymbol;
       }
@@ -617,10 +617,10 @@ copyright symbol - © - the actual bytes in a file will be different
 depending on whether it is encoded with Latin-1 (ISO 8859-1) as <A9>,
 or UTF-8 as <C2 A9>.  (Note that the <A9> representation also works
 for 8859-7 (Greek), 8859-8 (Hebrew), 8859-9 (Latin-5), 8859-13
-(Latin-7), 8859-14 (Latin-8), 8859-15 (Latin-9 aka Latin0), and even
-Windows Code Page 1252.)  You must choose which symbol/encoding to
-use, with --use-ascii-copyright-symbol, --use-latin-copyright-symbol,
-or --use-utf8-copyright-symbol.
+(Latin-7), 8859-14 (Latin-8), 8859-15 (Latin-9), 8859-16 (Latin-10),
+and even Windows Code Page 1252.)  You must choose a symbol/encoding
+with --use-ascii-copyright-symbol (-a), --use-latin-copyright-symbol
+(-l), or --use-utf8-copyright-symbol (-u).
 
 If you have problems with use of certain encodings in certain files,
 you can also specify --keep-copyright-symbol to keep the current
