@@ -210,7 +210,8 @@ else
 
 install:: install-first install-normal install-last
 
-install-first::
+install-first:: install-first-subdir
+install-first-subdir:
 	@for d in $(BK_ALL_FIRST_DIRS) strict_sh_fodder;		      \
 	do								      \
 	  if [ $$d = "strict_sh_fodder" ]; then				      \
@@ -246,7 +247,8 @@ install-first::
 	  fi;								      \
 	done; exit $$ERR
 
-install-normal::
+install-normal:: install-normal-subdir
+install-normal-subdir: | install-first-subdir
 	@for d in $(BK_SUBDIR) strict_sh_fodder;			      \
 	do								      \
 	  if [ $$d = "strict_sh_fodder" ]; then				      \
@@ -266,7 +268,8 @@ install-normal::
 	  done;								      \
 	$(MAKE) actual_install && exit $$ERR
 
-install-last::
+install-last:: install-last-subdir
+install-last-subdir:: | install-normal-subdir
 	@for d in $(BK_ALL_LAST_DIRS) strict_sh_fodder;			      \
 	do								      \
 	  if [ $$d = "strict_sh_fodder" ]; then				      \
@@ -629,7 +632,39 @@ $(BK_REALTOP)/bkmk/.timestamp:
 #
 # Prevent targets from being files
 #
-.PHONY : DEFAULT all default nuke clean neat depend nukedepend dotdepend \
-	build install actual_install \
-	nukeetags nukectags etags ctags tag tags subtags preprocess \
-	xmllint xref doxygen viewdox test help local_rule
+.PHONY :
+	DEFAULT					\
+	actual_install				\
+	all					\
+	build					\
+	clean					\
+	ctags					\
+	default					\
+	depend					\
+	dotdepend				\
+	doxygen					\
+	etags					\
+	help					\
+	install					\
+	install-first				\
+	install-first-subdir			\
+	install-last				\
+	install-last-subdir			\
+	install-normal				\
+	install-normal-subdir			\
+	jtest					\
+	local_rule				\
+	neat					\
+	nuke					\
+	nukectags				\
+	nukedepend				\
+	nukeetags				\
+	preprocess				\
+	subtags					\
+	tag					\
+	tags					\
+	test					\
+	viewdox					\
+	xmllint					\
+	xref					\
+# Line eater fodder
