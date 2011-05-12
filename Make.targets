@@ -242,7 +242,7 @@ install-first-subdir:
 	   { ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; }  \
 	  fi;								      \
 	  if [ -f $$d/Makefile -o -f $$d/GNUmakefile ]; then		      \
-	    PWD=$$PWD/$$d $(MAKE) -C $$d $@ ||				      \
+	    PWD=$$PWD/$$d $(MAKE) -C $$d install-first ||		      \
 	    { ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; } \
 	  fi;								      \
 	done; exit $$ERR
@@ -262,7 +262,7 @@ install-normal-subdir: | install-first-subdir
 	   { ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; }  \
 	  fi;								      \
 	  if [ -f $$d/Makefile -o -f $$d/GNUmakefile ]; then		      \
-	    PWD=$$PWD/$$d $(MAKE) -C $$d $@ ||				      \
+	    PWD=$$PWD/$$d $(MAKE) -C $$d install-normal ||		      \
 	    { ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; } \
 	    fi;								      \
 	  done;								      \
@@ -293,7 +293,7 @@ install-last-subdir:: | install-normal-subdir
 		continue;						      \
 	  fi;								      \
 	  if [ -f $$d/Makefile -o -f $$d/GNUmakefile ]; then		      \
-	    PWD=$$PWD/$$d $(MAKE) -C $$d $@ ||				      \
+	    PWD=$$PWD/$$d $(MAKE) -C $$d install-last ||		      \
 	    { ERR=$$?; case "$(MFLAGS)" in *k*) : ;; *) exit $$ERR ;; esac; } \
 	  fi;								      \
 	done; exit $$ERR
