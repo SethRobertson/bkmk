@@ -661,13 +661,12 @@ ifeq ($(BK_NO_MALLOC_WRAP),true)
 BK_DEFINES+=-DBK_NO_MALLOC_WRAP
 endif
 CC=$(INSURE)
-endif # BK_USING_INSURE
 
-# We now have a circular dependency which Insure can't deal with. So add
-# another libbk (at the end) instance to resolve it.
-ifneq ($(strip $(BK_USING_INSURE)),false)
+ifneq ($(NO_STDBKCCSTUFF),true)
 LDLIBS+=-lbk
 endif
+
+endif # BK_USING_INSURE
 
 
 ifeq ($(BK_NO_USER_SHARED_LIBS),true)
