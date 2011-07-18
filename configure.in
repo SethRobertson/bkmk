@@ -358,6 +358,17 @@ else
 fi
 AC_SUBST(HAVE_ORACLE)
 
+# Ruby-specific shared lib extension check
+AC_PATH_PROG(RUBY, ruby, $FALSE)
+if test "$RUBY" != "$FALSE"; then
+  eval ruby_shlibext="."`$RUBY -r rbconfig -e "print RbConfig::MAKEFILE_CONFIG@<:@'DLEXT'@:>@"`
+else
+  eval ruby_shlibext=$shlibext
+fi
+AC_DEFINE_UNQUOTED(RUBY_SHLIBEXT, "$ruby_shlibext")
+AC_SUBST(ruby_shlibext)
+
+
 # Check if install supports -p
 INSTALL_FILE=/tmp/bkinstall.$$
 

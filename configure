@@ -464,7 +464,7 @@ ac_includes_default="\
 # include <unistd.h>
 #endif"
 
-ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT CXX CXXFLAGS ac_ct_CXX LEX LEXLIB LEX_OUTPUT_ROOT YACC CPP CXXCPP AWK build build_cpu build_vendor build_os host host_cpu host_vendor host_os LIBM HAVE_LIBSSL HAVE_LIBRT RT_LIBS HAVE_KRB5SUPPORT HAVE_PROJ_POSTGRES ALIGN_FUNCTIONS_SWITCH NO_POINTER_SIGN_WARN EGREP HAVE_OVERZEALOUS_CHAR_SUBSCRIPT BK_SPECIAL_DEBUG BK_NO_STRICT_PROTOTYPES INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA LN_S PAWD ECHO AR ac_ct_AR RANLIB ac_ct_RANLIB STRIP ac_ct_STRIP DLLTOOL ac_ct_DLLTOOL AS ac_ct_AS OBJDUMP ac_ct_OBJDUMP F77 FFLAGS ac_ct_F77 LIBTOOL shlibpath_var shlibext modulext lt_prog_compiler_static LIBOBJS PTHREAD_CC PTHREAD_LIBS PTHREAD_CFLAGS HAVE_PTHREADS PROFILED_LIBS ALLOCA TRUE FALSE TEST RM TOUCH CP MV MKDIR LS GTAR TAR GZIP CVS GIT GITS UNAME CHMOD JOIN FMT CAT BASENAME SED PERL GREP FIND SORT UNIQ XARGS TEE EXPR XML2CONFIG BGCC PARASOFT INSURE JTEST JAVAC JAR JAVADOC JHINDEXER DOXYGEN HAVE_DOT BROWSER HEAD OINKMASTER ADDSID CREATE_SIDMAP PTHREAD_WITH_BAD_EMPTY_LOOPS ORACLE_HOME HAVE_ORACLE INSTALL_PRESERVE LTLIBOBJS'
+ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT CXX CXXFLAGS ac_ct_CXX LEX LEXLIB LEX_OUTPUT_ROOT YACC CPP CXXCPP AWK build build_cpu build_vendor build_os host host_cpu host_vendor host_os LIBM HAVE_LIBSSL HAVE_LIBRT RT_LIBS HAVE_KRB5SUPPORT HAVE_PROJ_POSTGRES ALIGN_FUNCTIONS_SWITCH NO_POINTER_SIGN_WARN EGREP HAVE_OVERZEALOUS_CHAR_SUBSCRIPT BK_SPECIAL_DEBUG BK_NO_STRICT_PROTOTYPES INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA LN_S PAWD ECHO AR ac_ct_AR RANLIB ac_ct_RANLIB STRIP ac_ct_STRIP DLLTOOL ac_ct_DLLTOOL AS ac_ct_AS OBJDUMP ac_ct_OBJDUMP F77 FFLAGS ac_ct_F77 LIBTOOL shlibpath_var shlibext modulext lt_prog_compiler_static LIBOBJS PTHREAD_CC PTHREAD_LIBS PTHREAD_CFLAGS HAVE_PTHREADS PROFILED_LIBS ALLOCA TRUE FALSE TEST RM TOUCH CP MV MKDIR LS GTAR TAR GZIP CVS GIT GITS UNAME CHMOD JOIN FMT CAT BASENAME SED PERL GREP FIND SORT UNIQ XARGS TEE EXPR XML2CONFIG BGCC PARASOFT INSURE JTEST JAVAC JAR JAVADOC JHINDEXER DOXYGEN HAVE_DOT BROWSER HEAD OINKMASTER ADDSID CREATE_SIDMAP PTHREAD_WITH_BAD_EMPTY_LOOPS ORACLE_HOME HAVE_ORACLE RUBY ruby_shlibext INSTALL_PRESERVE LTLIBOBJS'
 ac_subst_files=''
 
 # Initialize some variables set by options.
@@ -32170,6 +32170,59 @@ else
 fi
 
 
+# Ruby-specific shared lib extension check
+# Extract the first word of "ruby", so it can be a program name with args.
+set dummy ruby; ac_word=$2
+echo "$as_me:$LINENO: checking for $ac_word" >&5
+echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6
+if test "${ac_cv_path_RUBY+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  case $RUBY in
+  [\\/]* | ?:[\\/]*)
+  ac_cv_path_RUBY="$RUBY" # Let the user override the test with a path.
+  ;;
+  *)
+  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+  for ac_exec_ext in '' $ac_executable_extensions; do
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
+    ac_cv_path_RUBY="$as_dir/$ac_word$ac_exec_ext"
+    echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+done
+
+  test -z "$ac_cv_path_RUBY" && ac_cv_path_RUBY="$FALSE"
+  ;;
+esac
+fi
+RUBY=$ac_cv_path_RUBY
+
+if test -n "$RUBY"; then
+  echo "$as_me:$LINENO: result: $RUBY" >&5
+echo "${ECHO_T}$RUBY" >&6
+else
+  echo "$as_me:$LINENO: result: no" >&5
+echo "${ECHO_T}no" >&6
+fi
+
+if test "$RUBY" != "$FALSE"; then
+  eval ruby_shlibext="."`$RUBY -r rbconfig -e "print RbConfig::MAKEFILE_CONFIG['DLEXT']"`
+else
+  eval ruby_shlibext=$shlibext
+fi
+cat >>confdefs.h <<_ACEOF
+#define RUBY_SHLIBEXT "$ruby_shlibext"
+_ACEOF
+
+
+
+
 # Check if install supports -p
 INSTALL_FILE=/tmp/bkinstall.$$
 
@@ -32930,6 +32983,8 @@ s,@CREATE_SIDMAP@,$CREATE_SIDMAP,;t t
 s,@PTHREAD_WITH_BAD_EMPTY_LOOPS@,$PTHREAD_WITH_BAD_EMPTY_LOOPS,;t t
 s,@ORACLE_HOME@,$ORACLE_HOME,;t t
 s,@HAVE_ORACLE@,$HAVE_ORACLE,;t t
+s,@RUBY@,$RUBY,;t t
+s,@ruby_shlibext@,$ruby_shlibext,;t t
 s,@INSTALL_PRESERVE@,$INSTALL_PRESERVE,;t t
 s,@LTLIBOBJS@,$LTLIBOBJS,;t t
 CEOF
