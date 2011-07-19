@@ -783,7 +783,7 @@ vpath %$(LIBEXT) $(BK_VPATH_A)
 vpath %.la $(BK_VPATH_A)
 
 # -l library extensions pattern rule to recognize libtool libraries
-.LIBPATTERNS=lib%$(LIBEXT) lib%.so lib%.a
+.LIBPATTERNS=lib%$(LIBEXT) lib%.so lib%.a lib%.dylib
 ifneq ($(strip $(OS_LIBEXT)),)
   .LIBPATTERNS+=lib%$(OS_LIBEXT)
 endif

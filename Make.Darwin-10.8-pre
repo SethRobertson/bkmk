@@ -1,0 +1,26 @@
+# -*- makefile -*-
+#
+#
+#
+# ++Copyright BAKA++
+#
+# Copyright © 2004-2011 The Authors. All rights reserved.
+#
+# This source code is licensed to you under the terms of the file
+# LICENSE.TXT in this release for further details.
+#
+# Send e-mail to <projectbaka@baka.org> for further information.
+#
+# - -Copyright BAKA- -
+#
+#
+# OS-specific Variables
+#
+OS_INCS=-I/sw/include
+OS_LDS=-L/sw/lib
+OS_LIBS=
+OS_LIBEXT=.dylib
+
+COPTDEBUG+=-no-cpp-precomp
+#LT_LDFLAGS+=-multiply_defined suppress
+LT_LDLIBS+=-lintl
