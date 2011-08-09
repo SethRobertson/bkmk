@@ -79,7 +79,7 @@ $(BK_SIMPLE_INTERNALPROGS) $(BK_SIMPLE_PROGS): %: %$(OBJEXT) $(filter -l%,$(BK_A
 	$(LTLD) $(LINK.c) $(LT_LDFLAGS) -o $@ $@$(OBJEXT) $(LDLIBS) -rpath $(BK_INSTALLRPATH)
 else
 $(BK_SIMPLE_INTERNALPROGS) $(BK_SIMPLE_PROGS): %: %.c $(filter -l%,$(BK_ALLLIBS))
-	$(LTLD) $(LINK.c) $(LT_LDFLAGS) -o $@ $@.c $(LDLIBS) -rpath $(BK_INSTALLRPATH)
+	$(LTLD) $(LINK.c) $(LT_LDFLAGS) -o $@ $@.c $(LDLIBS) -rpath $(BK_INSTALLRPATH) $(BK_EXTERNAL_RPATH)
 endif
 else
 ifeq ($(BK_USING_INSURE),true)
@@ -190,7 +190,7 @@ $(filter %.la,$(BK_LARGE_LIB)): $(BK_LARGE_LIBOBJ)
 $(BK_LARGE_MODULE): $(BK_LARGE_LIBOBJ)
 	-@$(MKDIR) $(BK_INSTALLRDIR) >/dev/null 2>&1
 	$(LIBTOOL_LINK) $(LINK.c) $(LT_M_LDFLAGS) -o $@ $^ $(LT_LDLIBS) \
-	 -rpath $(BK_INSTALLRPATH)
+	 -rpath $(BK_INSTALLRPATH) $(BK_EXTERNAL_RPATH)
 else
 $(BK_LARGE_MODULE): $(BK_LARGE_LIBOBJ)
 	@if [ -f $@ ]; then \
