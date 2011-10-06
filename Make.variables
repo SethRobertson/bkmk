@@ -607,12 +607,14 @@ endif
 ifeq ($(BK_USING_GPROF),true)
 PROFILING=true
 CFLAGS += -pg
+LDFLAGS += -pg
 # We will add -lc_p to the lib line later to make sure it goes last
 endif # BK_USING_GPROF
 
 ifeq ($(BK_USING_PROF),true)
 PROFILING=true
 CFLAGS += -p
+LDFLAGS += -p
 # We will add -lc_p to the lib line later to make sure it goes last
 endif # BK_USING_PROF
 
