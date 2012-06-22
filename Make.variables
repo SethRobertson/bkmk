@@ -348,6 +348,10 @@ else
 BK_DEFINES+= -DNO_SSL
 endif
 
+ifneq ($(strip $(HAVE_LIBXML2)),true)
+override WANT_BK_XML=false
+endif
+
 ifneq ($(strip $(WANT_BK_XML)),false)
 BK_LIBS+= -lbkxml
 endif
