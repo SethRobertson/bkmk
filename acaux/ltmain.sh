@@ -3086,7 +3086,7 @@ EOF
 	    build_libtool_libs=no
 	    build_old_libs=yes
 	  fi
-	  shared_no_undefined_flag_spec=
+	  shared_cv_no_undefined_flag_spec=
 	else
 	  # Don't allow undefined symbols.
 	  allow_undefined_flag="$no_undefined_flag"
@@ -3181,7 +3181,7 @@ EOF
 	    # Do not include libc as only one of libc/libc_r may be used.
 	    # (we make an exception for threaded code if -no-undefined)
 	    if test "$build_libtool_need_lc" = "yes"; then
-	      if test -n "$shared_no_undefined_flag_spec"; then
+	      if test -n "$shared_cv_no_undefined_flag_spec"; then
 		if test "$pthread" = yes; then
 		  # if you ask for -pthread -no-undefined, you should not be
 		  # upset by a dependency on -lc_r (even if it's unnecessary)
@@ -3189,7 +3189,7 @@ EOF
 		else
 		  # by principle of least annoyance, rather than creating
 		  # a dependency on non-threaded -lc, just drop -no-undefined
-		  shared_no_undefined_flag_spec=
+		  shared_cv_no_undefined_flag_spec=
 		  # :BAD: deplibs="$deplibs -lc"
 		fi
 	      fi
